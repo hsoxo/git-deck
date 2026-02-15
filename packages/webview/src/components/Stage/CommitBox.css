@@ -1,0 +1,93 @@
+.commit-box {
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    padding: 12px;
+    margin-top: auto;
+}
+
+.commit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.commit-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.commit-options {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.commit-amend-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.commit-amend-label input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.commit-amend-label input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.commit-hint {
+    font-size: 11px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-message {
+    width: 100%;
+    padding: 8px;
+    font-size: 13px;
+    font-family: var(--vscode-editor-font-family);
+    background-color: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 2px;
+    resize: vertical;
+    margin-bottom: 8px;
+}
+
+.commit-message:focus {
+    outline: 1px solid var(--vscode-focusBorder);
+}
+
+.commit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.commit-info {
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-button {
+    padding: 6px 16px;
+    font-size: 13px;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.commit-button:hover:not(:disabled) {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+.commit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

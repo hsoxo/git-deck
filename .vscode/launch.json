@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}/packages/extension"],
+            "outFiles": ["${workspaceFolder}/packages/extension/dist/**/*.js"],
+            "preLaunchTask": "npm: build"
+        },
+        {
+            "name": "Debug Unit Tests",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "test:unit", "--", "--run"],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Debug E2E Tests",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}/packages/extension",
+                "--extensionTestsPath=${workspaceFolder}/tests/e2e/dist/index"
+            ],
+            "outFiles": ["${workspaceFolder}/tests/e2e/dist/**/*.js"],
+            "preLaunchTask": "npm: test:e2e - tests/e2e"
+        }
+    ]
+}

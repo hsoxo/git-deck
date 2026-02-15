@@ -1,0 +1,128 @@
+{
+    "name": "git-gui",
+    "displayName": "Git GUI",
+    "description": "Visual Git GUI for VS Code",
+    "version": "0.1.0",
+    "publisher": "git-gui",
+    "engines": {
+        "vscode": "1.80.0"
+    },
+    "categories": [
+        "SCM Providers"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "views": {
+            "scm": [
+                {
+                    "type": "webview",
+                    "id": "gitGui.view",
+                    "name": "Git GUI"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "gitGui.refresh",
+                "title": "Git GUI: Refresh",
+                "icon": "$(refresh)"
+            },
+            {
+                "command": "gitGui.rebase",
+                "title": "Git GUI: Rebase"
+            },
+            {
+                "command": "gitGui.cherryPick",
+                "title": "Git GUI: Cherry-pick"
+            }
+        ],
+        "configuration": {
+            "title": "Git GUI",
+            "properties": {
+                "gitGui.logLevel": {
+                    "type": "string",
+                    "enum": [
+                        "debug",
+                        "info",
+                        "warn",
+                        "error"
+                    ],
+                    "default": "info",
+                    "description": "Log level for Git GUI extension"
+                },
+                "gitGui.maxLogCount": {
+                    "type": "number",
+                    "default": 100,
+                    "minimum": 10,
+                    "maximum": 1000,
+                    "description": "Maximum number of commits to load in history"
+                },
+                "gitGui.enableCache": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable caching for read-only operations"
+                },
+                "gitGui.cacheTTL": {
+                    "type": "number",
+                    "default": 1000,
+                    "minimum": 100,
+                    "maximum": 10000,
+                    "description": "Cache time-to-live in milliseconds"
+                },
+                "gitGui.rpcTimeout": {
+                    "type": "number",
+                    "default": 30000,
+                    "minimum": 5000,
+                    "maximum": 120000,
+                    "description": "RPC request timeout in milliseconds"
+                },
+                "gitGui.autoRefresh": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Automatically refresh git status"
+                },
+                "gitGui.autoRefreshInterval": {
+                    "type": "number",
+                    "default": 5000,
+                    "minimum": 1000,
+                    "maximum": 60000,
+                    "description": "Auto refresh interval in milliseconds"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "package": "vsce package",
+        "test": "vitest --run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest --run --coverage"
+    },
+    "dependencies": {
+        "@git-gui/shared": "*",
+        "chokidar": "3.5.3",
+        "simple-git": "3.22.0"
+    },
+    "devDependencies": {
+        "@types/node": "20.11.5",
+        "@types/vscode": "1.80.0",
+        "@typescript-eslint/eslint-plugin": "8.55.0",
+        "@typescript-eslint/parser": "8.55.0",
+        "@vitest/coverage-v8": "1.2.0",
+        "@vscode/test-electron": "2.3.9",
+        "@vscode/vsce": "2.22.0",
+        "eslint": "9.39.2",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-prettier": "5.5.5",
+        "eslint-plugin-react": "7.37.5",
+        "eslint-plugin-react-hooks": "7.0.1",
+        "prettier": "3.8.1",
+        "tsup": "8.0.1",
+        "typescript": "5.3.3",
+        "vitest": "1.2.0"
+    }
+}

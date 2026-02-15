@@ -1,0 +1,133 @@
+.commit-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+}
+
+.commit-list-empty {
+    padding: 32px;
+    text-align: center;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-item {
+    display: flex;
+    padding: 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.commit-item:last-child {
+    border-bottom: none;
+}
+
+.commit-item:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+.commit-item.selected {
+    background-color: var(--vscode-list-activeSelectionBackground);
+    color: var(--vscode-list-activeSelectionForeground);
+}
+
+.commit-item.head {
+    font-weight: 600;
+}
+
+.commit-graph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 12px;
+    width: 20px;
+}
+
+.commit-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--vscode-gitDecoration-addedResourceForeground);
+    border: 2px solid var(--vscode-editor-background);
+    flex-shrink: 0;
+}
+
+.commit-line {
+    width: 2px;
+    flex: 1;
+    background-color: var(--vscode-panel-border);
+    margin-top: 4px;
+}
+
+.commit-item:last-child .commit-line {
+    display: none;
+}
+
+.commit-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.commit-message {
+    font-size: 13px;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.commit-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-separator {
+    opacity: 0.5;
+}
+
+.commit-hash {
+    font-family: var(--vscode-editor-font-family);
+}
+
+.commit-refs {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.commit-ref {
+    padding: 2px 6px;
+    font-size: 10px;
+    background-color: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    border-radius: 3px;
+    font-family: var(--vscode-editor-font-family);
+}
+
+
+.commit-context-menu {
+    position: fixed;
+    background-color: var(--vscode-menu-background);
+    border: 1px solid var(--vscode-menu-border);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 180px;
+}
+
+.commit-context-menu-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--vscode-menu-foreground);
+}
+
+.commit-context-menu-item:hover {
+    background-color: var(--vscode-menu-selectionBackground);
+    color: var(--vscode-menu-selectionForeground);
+}

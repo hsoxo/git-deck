@@ -1,0 +1,45 @@
+{
+    "name": "git-gui-vscode",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Visual Git GUI for VS Code",
+    "workspaces": [
+        "packages/*",
+        "tests/*"
+    ],
+    "scripts": {
+        "build": "npm run build --workspaces --if-present",
+        "test": "npm run test --workspaces --if-present",
+        "test:unit": "npm run test --workspace=packages/extension --workspace=packages/webview",
+        "test:unit:coverage": "npm run test:coverage --workspace=packages/extension --workspace=packages/webview",
+        "test:integration": "npm run test --workspace=tests/integration",
+        "test:integration:coverage": "npm run test:coverage --workspace=tests/integration",
+        "test:e2e": "npm run test --workspace=tests/e2e",
+        "test:all": "npm run test:unit && npm run test:integration",
+        "test:all:coverage": "npm run test:unit:coverage && npm run test:integration:coverage",
+        "lint": "eslint . --ext .ts,.tsx",
+        "lint:fix": "eslint . --ext .ts,.tsx --fix",
+        "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+        "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
+        "dev:extension": "npm run dev --workspace=packages/extension",
+        "dev:webview": "npm run dev --workspace=packages/webview",
+        "package": "npm run package --workspace=packages/extension"
+    },
+    "devDependencies": {
+        "@types/node": "20.11.5",
+        "@typescript-eslint/eslint-plugin": "8.55.0",
+        "@typescript-eslint/parser": "8.55.0",
+        "eslint": "9.39.2",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-prettier": "5.5.5",
+        "eslint-plugin-react": "7.37.5",
+        "eslint-plugin-react-hooks": "7.0.1",
+        "prettier": "3.8.1",
+        "typescript": "5.3.3",
+        "vitest": "1.2.0"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=9.0.0"
+    }
+}

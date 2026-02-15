@@ -1,0 +1,39 @@
+{
+    "name": "@git-gui/webview",
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "test": "vitest --run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest --run --coverage"
+    },
+    "dependencies": {
+        "@git-gui/shared": "*",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "zustand": "5.0.1"
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "6.2.0",
+        "@testing-library/react": "14.1.2",
+        "@types/react": "18.3.12",
+        "@types/react-dom": "18.3.1",
+        "@typescript-eslint/eslint-plugin": "8.55.0",
+        "@typescript-eslint/parser": "8.55.0",
+        "@vitejs/plugin-react": "4.2.1",
+        "@vitest/coverage-v8": "1.2.0",
+        "eslint": "9.39.2",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-prettier": "5.5.5",
+        "eslint-plugin-react": "7.37.5",
+        "eslint-plugin-react-hooks": "7.0.1",
+        "jsdom": "24.0.0",
+        "prettier": "3.8.1",
+        "typescript": "5.3.3",
+        "vite": "5.0.11",
+        "vitest": "1.2.0"
+    }
+}

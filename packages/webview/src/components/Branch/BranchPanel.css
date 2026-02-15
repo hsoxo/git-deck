@@ -1,0 +1,272 @@
+.branch-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px;
+}
+
+.branch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.branch-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.create-branch-button {
+    padding: 6px 12px;
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.create-branch-button:hover {
+    background: var(--vscode-button-hoverBackground);
+}
+
+.branch-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.branch-section {
+    margin-bottom: 24px;
+}
+
+.branch-section h4 {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--vscode-descriptionForeground);
+    text-transform: uppercase;
+}
+
+.branch-item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+.branch-item:hover {
+    background: var(--vscode-list-hoverBackground);
+}
+
+.branch-item.current {
+    background: var(--vscode-list-activeSelectionBackground);
+}
+
+.branch-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.branch-icon {
+    font-size: 16px;
+}
+
+.branch-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.current-badge {
+    padding: 2px 6px;
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.branch-tracking {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    margin-left: 24px;
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.tracking-icon {
+    font-size: 12px;
+}
+
+.tracking-name {
+    flex: 1;
+}
+
+.ahead {
+    color: var(--vscode-gitDecoration-addedResourceForeground);
+    font-weight: 600;
+}
+
+.behind {
+    color: var(--vscode-gitDecoration-modifiedResourceForeground);
+    font-weight: 600;
+}
+
+.branch-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.action-button {
+    padding: 4px 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--vscode-foreground);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.branch-item:hover .action-button {
+    opacity: 1;
+}
+
+.action-button:hover {
+    background: var(--vscode-toolbar-hoverBackground);
+    border-radius: 4px;
+}
+
+.branch-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--vscode-menu-background);
+    border: 1px solid var(--vscode-menu-border);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    min-width: 150px;
+}
+
+.branch-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--vscode-menu-foreground);
+}
+
+.branch-menu button:hover {
+    background: var(--vscode-menu-selectionBackground);
+    color: var(--vscode-menu-selectionForeground);
+}
+
+.branch-menu button.danger {
+    color: var(--vscode-errorForeground);
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.dialog {
+    background: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 6px;
+    padding: 20px;
+    min-width: 400px;
+    max-width: 500px;
+}
+
+.dialog h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.form-group input[type='text'] {
+    width: 100%;
+    padding: 8px;
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.form-group input[type='text']:focus {
+    outline: none;
+    border-color: var(--vscode-focusBorder);
+}
+
+.form-group input[type='checkbox'] {
+    margin-right: 6px;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.dialog-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.dialog-actions button:first-child {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+}
+
+.dialog-actions button:first-child:hover {
+    background: var(--vscode-button-hoverBackground);
+}
+
+.dialog-actions button:last-child {
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+}
+
+.dialog-actions button:last-child:hover {
+    background: var(--vscode-button-secondaryHoverBackground);
+}

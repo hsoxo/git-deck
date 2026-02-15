@@ -1,0 +1,32 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.app-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    background-color: var(--vscode-sideBar-background);
+}
+
+.app-header h1 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.app-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.panel-container {
+    flex: 1;
+    overflow: auto;
+    border-right: 1px solid var(--vscode-panel-border);
+}
+
+.panel-container:last-child {
+    border-right: none;
+}

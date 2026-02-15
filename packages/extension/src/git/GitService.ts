@@ -1,0 +1,299 @@
+import simpleGit, { SimpleGit, LogResult, StatusResult } from 'simple-git';
+import * as path from 'path';
+import type { GitStatus, CommitNode, LogOptions, BranchInfo } from '@git-gui/shared';
+import { logger } from '../utils/Logger';
+import { ErrorHandler } from '../utils/ErrorHandler';
+
+export class GitService {
+    private git: SimpleGit;
+    private repoPath: string;
+
+    constructor(repoPath: string) {
+        this.repoPath = repoPath;
+        this.git = simpleGit(repoPath);
+        logger.info(`GitService initialized for: ${repoPath}`);
+    }
+
+    async getStatus(): Promise<GitStatus> {
+        try {
+            logger.debug('Getting git status');
+            const status: StatusResult = await this.git.status();
+            return {
+                staged: status.staged,
+                unstaged: [...status.modified, ...status.deleted].filter(
+                    (f) => !status.staged.includes(f)
+                ),
+                untracked: status.not_added,
+                current: status.current,
+                tracking: status.tracking,
+            };
+        } catch (error) {
+            logger.error('Failed to get status', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Get status'));
+        }
+    }
+
+    async getLog(options: LogOptions = {}): Promise<CommitNode[]> {
+        try {
+            logger.debug('Getting git log', options);
+            const log: LogResult = await this.git.log({
+                maxCount: options.maxCount || 100,
+                from: options.from,
+                to: options.to,
+            });
+
+            const currentBranch = await this.getCurrentBranch();
+            const headHash = await this.getHeadHash();
+
+            return log.all.map((commit) => {
+                // 安全地获取 parents，处理可能不存在的情况
+                let parents: string[] = [];
+                if ('parents' in commit && commit.parents) {
+                    parents = Array.isArray(commit.parents) ? commit.parents : [];
+                }
+
+                return {
+                    hash: commit.hash,
+                    shortHash: commit.hash.substring(0, 7),
+                    message: commit.message,
+                    author: commit.author_name,
+                    email: commit.author_email,
+                    date: new Date(commit.date),
+                    parents,
+                    refs: this.parseRefs(commit.refs),
+                    isHead: commit.hash === headHash,
+                };
+            });
+        } catch (error) {
+            logger.error('Failed to get log', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Get log'));
+        }
+    }
+
+    async stageFiles(files: string[]): Promise<void> {
+        try {
+            // 验证输入
+            if (!files || files.length === 0) {
+                throw new Error('No files specified');
+            }
+
+            // 验证文件路径
+            for (const file of files) {
+                if (file.includes('..') || path.isAbsolute(file)) {
+                    throw new Error(`Invalid file path: ${file}`);
+                }
+            }
+
+            logger.debug('Staging files', files);
+            await this.git.add(files);
+        } catch (error) {
+            logger.error('Failed to stage files', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Stage files'));
+        }
+    }
+
+    async unstageFiles(files: string[]): Promise<void> {
+        try {
+            logger.debug('Unstaging files', files);
+            await this.git.reset(['HEAD', '--', ...files]);
+        } catch (error) {
+            logger.error('Failed to unstage files', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Unstage files'));
+        }
+    }
+
+    async stageAll(): Promise<void> {
+        try {
+            logger.debug('Staging all files');
+            await this.git.add('.');
+        } catch (error) {
+            logger.error('Failed to stage all', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Stage all'));
+        }
+    }
+
+    async unstageAll(): Promise<void> {
+        try {
+            logger.debug('Unstaging all files');
+            await this.git.reset(['HEAD']);
+        } catch (error) {
+            logger.error('Failed to unstage all', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Unstage all'));
+        }
+    }
+
+    async commit(message: string): Promise<void> {
+        try {
+            // 验证输入
+            if (!message || message.trim().length === 0) {
+                throw new Error('Commit message cannot be empty');
+            }
+
+            if (message.length > 5000) {
+                throw new Error('Commit message is too long (max 5000 characters)');
+            }
+
+            logger.debug('Creating commit', { message: message.substring(0, 100) });
+            await this.git.commit(message);
+        } catch (error) {
+            logger.error('Failed to commit', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Commit'));
+        }
+    }
+
+    async discardChanges(files: string[]): Promise<void> {
+        try {
+            logger.debug('Discarding changes', files);
+            await this.git.checkout(['--', ...files]);
+        } catch (error) {
+            logger.error('Failed to discard changes', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Discard changes'));
+        }
+    }
+
+    async getBranches(): Promise<BranchInfo[]> {
+        try {
+            logger.debug('Getting branches');
+            const branches = await this.git.branch();
+            return branches.all.map((name) => ({
+                name,
+                current: name === branches.current,
+                remote: name.startsWith('remotes/'),
+            }));
+        } catch (error) {
+            logger.error('Failed to get branches', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Get branches'));
+        }
+    }
+
+    async getCurrentBranch(): Promise<string | null> {
+        try {
+            const branches = await this.git.branch();
+            return branches.current;
+        } catch (error) {
+            logger.error('Failed to get current branch', error);
+            return null;
+        }
+    }
+
+    async getHeadHash(): Promise<string> {
+        try {
+            const log = await this.git.log({ maxCount: 1 });
+            return log.latest?.hash || '';
+        } catch (error) {
+            logger.error('Failed to get HEAD hash', error);
+            return '';
+        }
+    }
+
+    async amendCommit(message?: string): Promise<void> {
+        try {
+            logger.debug('Amending commit', { message });
+            if (message) {
+                await this.git.raw(['commit', '--amend', '-m', message]);
+            } else {
+                await this.git.raw(['commit', '--amend', '--no-edit']);
+            }
+        } catch (error) {
+            logger.error('Failed to amend commit', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Amend commit'));
+        }
+    }
+
+    async getFileDiff(file: string, staged: boolean = false): Promise<string> {
+        try {
+            logger.debug('Getting file diff', { file, staged });
+            const args = staged ? ['--cached', file] : [file];
+            return await this.git.diff(args);
+        } catch (error) {
+            logger.error('Failed to get file diff', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Get file diff'));
+        }
+    }
+
+    async revertCommits(commits: string[]): Promise<void> {
+        try {
+            logger.debug('Reverting commits', commits);
+            // Revert commits in reverse order (newest first)
+            for (const commit of commits.reverse()) {
+                await this.git.raw(['revert', '--no-edit', commit]);
+            }
+        } catch (error) {
+            logger.error('Failed to revert commits', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Revert commits'));
+        }
+    }
+
+    async createBranch(name: string, startPoint?: string): Promise<void> {
+        try {
+            logger.debug('Creating branch', { name, startPoint });
+            const args = [name];
+            if (startPoint) {
+                args.push(startPoint);
+            }
+            await this.git.branch(args);
+        } catch (error) {
+            logger.error('Failed to create branch', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Create branch'));
+        }
+    }
+
+    async deleteBranch(name: string, force: boolean = false): Promise<void> {
+        try {
+            logger.debug('Deleting branch', { name, force });
+            await this.git.branch([force ? '-D' : '-d', name]);
+        } catch (error) {
+            logger.error('Failed to delete branch', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Delete branch'));
+        }
+    }
+
+    async renameBranch(oldName: string, newName: string, force: boolean = false): Promise<void> {
+        try {
+            logger.debug('Renaming branch', { oldName, newName, force });
+            await this.git.branch([force ? '-M' : '-m', oldName, newName]);
+        } catch (error) {
+            logger.error('Failed to rename branch', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Rename branch'));
+        }
+    }
+
+    async checkoutBranch(name: string, create: boolean = false): Promise<void> {
+        try {
+            logger.debug('Checking out branch', { name, create });
+            if (create) {
+                await this.git.checkoutBranch(name, 'HEAD');
+            } else {
+                await this.git.checkout(name);
+            }
+        } catch (error) {
+            logger.error('Failed to checkout branch', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Checkout branch'));
+        }
+    }
+
+    async mergeBranch(branch: string, noFastForward: boolean = false): Promise<void> {
+        try {
+            logger.debug('Merging branch', { branch, noFastForward });
+            const args = [branch];
+            if (noFastForward) {
+                args.unshift('--no-ff');
+            }
+            await this.git.merge(args);
+        } catch (error) {
+            logger.error('Failed to merge branch', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Merge branch'));
+        }
+    }
+
+    private parseRefs(refs: string): string[] {
+        if (!refs) {
+            return [];
+        }
+        return refs.split(',').map((r) => r.trim());
+    }
+
+    getRepoPath(): string {
+        return this.repoPath;
+    }
+}

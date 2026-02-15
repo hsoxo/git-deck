@@ -1,0 +1,21 @@
+{
+    "name": "@git-gui/integration-tests",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "test": "vitest --run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest --run --coverage"
+    },
+    "dependencies": {
+        "@git-gui/shared": "*",
+        "simple-git": "3.22.0"
+    },
+    "devDependencies": {
+        "@types/node": "20.11.5",
+        "@vitest/coverage-v8": "1.2.0",
+        "typescript": "5.3.3",
+        "vitest": "1.2.0"
+    }
+}
