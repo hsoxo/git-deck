@@ -45,6 +45,35 @@
             {
                 "command": "gitGui.cherryPick",
                 "title": "Git GUI: Cherry-pick"
+            },
+            {
+                "command": "gitGui.stageFile",
+                "title": "Stage File",
+                "icon": "$(add)"
+            },
+            {
+                "command": "gitGui.unstageFile",
+                "title": "Unstage File",
+                "icon": "$(remove)"
+            },
+            {
+                "command": "gitGui.stageAll",
+                "title": "Stage All Changes",
+                "icon": "$(add)"
+            },
+            {
+                "command": "gitGui.unstageAll",
+                "title": "Unstage All Changes",
+                "icon": "$(remove)"
+            },
+            {
+                "command": "gitGui.openDiff",
+                "title": "Open Diff"
+            },
+            {
+                "command": "gitGui.discardChanges",
+                "title": "Discard Changes",
+                "icon": "$(discard)"
             }
         ],
         "viewsContainers": {
@@ -62,6 +91,10 @@
                     "id": "gitGui.welcome",
                     "name": "Git GUI",
                     "type": "webview"
+                },
+                {
+                    "id": "gitGui.changes",
+                    "name": "Changes"
                 }
             ]
         },
@@ -74,6 +107,22 @@
                 {
                     "command": "gitGui.refresh",
                     "when": "workspaceFolderCount != 0"
+                },
+                {
+                    "command": "gitGui.stageFile",
+                    "when": "false"
+                },
+                {
+                    "command": "gitGui.unstageFile",
+                    "when": "false"
+                },
+                {
+                    "command": "gitGui.openDiff",
+                    "when": "false"
+                },
+                {
+                    "command": "gitGui.discardChanges",
+                    "when": "false"
                 }
             ],
             "view/title": [
@@ -84,8 +133,38 @@
                 },
                 {
                     "command": "gitGui.refresh",
-                    "when": "view == gitGui.welcome",
+                    "when": "view == gitGui.welcome || view == gitGui.changes",
                     "group": "navigation"
+                },
+                {
+                    "command": "gitGui.stageAll",
+                    "when": "view == gitGui.changes",
+                    "group": "navigation"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "gitGui.stageFile",
+                    "when": "view == gitGui.changes && viewItem == unstagedFile",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitGui.unstageFile",
+                    "when": "view == gitGui.changes && viewItem == stagedFile",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitGui.discardChanges",
+                    "when": "view == gitGui.changes && viewItem == unstagedFile",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitGui.stageAll",
+                    "when": "view == gitGui.changes && viewItem == unstaged"
+                },
+                {
+                    "command": "gitGui.unstageAll",
+                    "when": "view == gitGui.changes && viewItem == staged"
                 }
             ],
             "scm/title": [
