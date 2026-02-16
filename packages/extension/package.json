@@ -4,6 +4,10 @@
     "description": "Visual Git GUI for VS Code",
     "version": "0.1.0",
     "publisher": "git-gui",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-org/git-gui-vscode.git"
+    },
     "engines": {
         "vscode": "1.80.0"
     },
@@ -97,7 +101,7 @@
     "scripts": {
         "build": "tsup",
         "dev": "tsup --watch",
-        "package": "vsce package",
+        "package": "vsce package --allow-missing-repository --no-dependencies",
         "test": "vitest --run",
         "test:watch": "vitest",
         "test:coverage": "vitest --run --coverage"

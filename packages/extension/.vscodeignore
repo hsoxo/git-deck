@@ -1,0 +1,7 @@
+# Only include dist and essential files
+**/*
+!dist/**
+!LICENSE
+!README.md
+!package.json
+!CHANGELOG.md
