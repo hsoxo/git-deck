@@ -47,7 +47,21 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.registerTreeDataProvider('gitGui.changes', changesTreeProvider)
             );
 
-            logger.info('Changes tree view registered');
+            // 监听文件变化
+            const fileWatcher = vscode.workspace.createFileSystemWatcher('**/*');
+
+            const refreshChanges = () => {
+                changesTreeProvider?.refresh();
+                GitGuiPanel.refresh();
+            };
+
+            fileWatcher.onDidChange(refreshChanges);
+            fileWatcher.onDidCreate(refreshChanges);
+            fileWatcher.onDidDelete(refreshChanges);
+
+            context.subscriptions.push(fileWatcher);
+
+            logger.info('Changes tree view registered with file watcher');
         } catch (error) {
             logger.error('Failed to initialize Git service', error);
         }
@@ -164,16 +178,41 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand('gitGui.openDiff', async (filePath: string, staged: boolean) => {
-            if (gitService) {
-                try {
-                    const diff = await gitService.getDiff(filePath, staged);
-                    const uri = vscode.Uri.parse(`git-gui-diff:${filePath}`);
-                    const doc = await vscode.workspace.openTextDocument(uri);
-                    await vscode.window.showTextDocument(doc);
-                } catch (error) {
-                    logger.error('Failed to open diff', error);
-                    vscode.window.showErrorMessage(`Failed to open diff: ${error}`);
+            if (!workspaceFolder) {
+                return;
+            }
+
+            try {
+                const fileUri = vscode.Uri.file(vscode.Uri.joinPath(workspaceFolder.uri, filePath).fsPath);
+
+                // 使用 VS Code 原生的 Git diff
+                // 对于 unstaged 文件：比较工作区和 HEAD
+                // 对于 staged 文件：比较 index 和 HEAD
+                if (staged) {
+                    // Staged: 比较 index (HEAD) 和 staged version
+                    const headUri = fileUri.with({ scheme: 'git', query: 'HEAD' });
+                    const indexUri = fileUri.with({ scheme: 'git', query: '' });
+                    await vscode.commands.executeCommand(
+                        'vscode.diff',
+                        headUri,
+                        indexUri,
+                        `${filePath} (Index ↔ HEAD)`,
+                        { preview: true }
+                    );
+                } else {
+                    // Unstaged: 比较工作区和 index
+                    const indexUri = fileUri.with({ scheme: 'git', query: '' });
+                    await vscode.commands.executeCommand(
+                        'vscode.diff',
+                        indexUri,
+                        fileUri,
+                        `${filePath} (Working Tree ↔ Index)`,
+                        { preview: true }
+                    );
                 }
+            } catch (error) {
+                logger.error('Failed to open diff', error);
+                vscode.window.showErrorMessage(`Failed to open diff: ${error}`);
             }
         })
     );

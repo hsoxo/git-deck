@@ -58,7 +58,6 @@ export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
             } else {
                 // File in folder(s)
                 let currentPath = '';
-                let currentLevel = rootItems;
                 let parentFolder: FolderItem | null = null;
 
                 for (let i = 0; i < parts.length - 1; i++) {
@@ -78,7 +77,6 @@ export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
                     }
 
                     parentFolder = folder;
-                    currentLevel = folder.children;
                 }
 
                 // Add the file
@@ -91,17 +89,26 @@ export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
             }
         });
 
-        return this.sortTreeItems(rootItems);
+        // Sort root items and recursively sort all folder children
+        this.sortTreeItemsRecursive(rootItems);
+        return rootItems;
     }
 
-    private sortTreeItems(items: TreeItem[]): TreeItem[] {
-        return items.sort((a, b) => {
+    private sortTreeItemsRecursive(items: TreeItem[]): void {
+        items.sort((a, b) => {
             // Folders first
             if (a instanceof FolderItem && !(b instanceof FolderItem)) return -1;
             if (!(a instanceof FolderItem) && b instanceof FolderItem) return 1;
 
             // Then alphabetically
             return a.label.toString().localeCompare(b.label.toString());
+        });
+
+        // Recursively sort children of folders
+        items.forEach(item => {
+            if (item instanceof FolderItem && item.children.length > 0) {
+                this.sortTreeItemsRecursive(item.children);
+            }
         });
     }
 }

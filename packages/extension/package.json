@@ -89,7 +89,7 @@
             "git-gui": [
                 {
                     "id": "gitGui.welcome",
-                    "name": "Git GUI",
+                    "name": "Welcome",
                     "type": "webview"
                 },
                 {
