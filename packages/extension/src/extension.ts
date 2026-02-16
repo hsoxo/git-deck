@@ -183,15 +183,24 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             try {
-                const fileUri = vscode.Uri.file(vscode.Uri.joinPath(workspaceFolder.uri, filePath).fsPath);
+                // 构建完整的文件路径
+                const fullPath = vscode.Uri.joinPath(workspaceFolder.uri, filePath).fsPath;
+                const fileUri = vscode.Uri.file(fullPath);
 
-                // 使用 VS Code 原生的 Git diff
-                // 对于 unstaged 文件：比较工作区和 HEAD
-                // 对于 staged 文件：比较 index 和 HEAD
                 if (staged) {
-                    // Staged: 比较 index (HEAD) 和 staged version
-                    const headUri = fileUri.with({ scheme: 'git', query: 'HEAD' });
-                    const indexUri = fileUri.with({ scheme: 'git', query: '' });
+                    // Staged: 比较 HEAD 和 Index (staged version)
+                    // 使用 vscode.git.toGitUri 来创建正确的 git URI
+                    const headUri = fileUri.with({
+                        scheme: 'git',
+                        path: fullPath,
+                        query: JSON.stringify({ path: fullPath, ref: 'HEAD' })
+                    });
+                    const indexUri = fileUri.with({
+                        scheme: 'git',
+                        path: fullPath,
+                        query: JSON.stringify({ path: fullPath, ref: '' })
+                    });
+
                     await vscode.commands.executeCommand(
                         'vscode.diff',
                         headUri,
@@ -200,8 +209,13 @@ export function activate(context: vscode.ExtensionContext) {
                         { preview: true }
                     );
                 } else {
-                    // Unstaged: 比较工作区和 index
-                    const indexUri = fileUri.with({ scheme: 'git', query: '' });
+                    // Unstaged: 比较 Index 和 Working Tree
+                    const indexUri = fileUri.with({
+                        scheme: 'git',
+                        path: fullPath,
+                        query: JSON.stringify({ path: fullPath, ref: '' })
+                    });
+
                     await vscode.commands.executeCommand(
                         'vscode.diff',
                         indexUri,
