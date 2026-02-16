@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { GitStatus, CommitNode, BranchInfo } from '@git-gui/shared';
+import type { GitStatus, CommitNode, BranchInfo, RemoteInfo } from '@git-gui/shared';
 import { rpcClient } from '../services/rpcClient';
 
 interface GitState {
@@ -48,6 +48,15 @@ interface GitState {
     renameBranch: (oldName: string, newName: string, force?: boolean) => Promise<void>;
     checkoutBranch: (name: string, create?: boolean) => Promise<void>;
     mergeBranch: (branch: string, noFastForward?: boolean) => Promise<void>;
+    
+    // Remote operations
+    remotes: RemoteInfo[];
+    fetchRemotes: () => Promise<void>;
+    addRemote: (name: string, url: string) => Promise<void>;
+    removeRemote: (name: string) => Promise<void>;
+    fetch: (remote?: string, prune?: boolean) => Promise<void>;
+    pull: (remote?: string, branch?: string, rebase?: boolean) => Promise<void>;
+    push: (remote?: string, branch?: string, force?: boolean, setUpstream?: boolean) => Promise<void>;
 }
 
 export const useGitStore = create<GitState>((set, get) => ({
@@ -60,6 +69,7 @@ export const useGitStore = create<GitState>((set, get) => ({
     hasMore: true,
     searchQuery: null,
     currentBranch: null,
+    remotes: [],
 
     fetchStatus: async () => {
         try {
@@ -449,6 +459,79 @@ export const useGitStore = create<GitState>((set, get) => ({
             await rpcClient.call('git.mergeBranch', branch, noFastForward);
             await get().fetchHistory();
             await get().fetchStatus();
+            set({ loading: false });
+        } catch (error) {
+            set({ error: (error as Error).message, loading: false });
+            throw error;
+        }
+    },
+
+    // Remote operations
+    fetchRemotes: async () => {
+        try {
+            set({ loading: true, error: null });
+            const remotes = await rpcClient.call('git.listRemotes');
+            set({ remotes, loading: false });
+        } catch (error) {
+            set({ error: (error as Error).message, loading: false });
+        }
+    },
+
+    addRemote: async (name: string, url: string) => {
+        try {
+            set({ loading: true, error: null });
+            await rpcClient.call('git.addRemote', name, url);
+            await get().fetchRemotes();
+            set({ loading: false });
+        } catch (error) {
+            set({ error: (error as Error).message, loading: false });
+            throw error;
+        }
+    },
+
+    removeRemote: async (name: string) => {
+        try {
+            set({ loading: true, error: null });
+            await rpcClient.call('git.removeRemote', name);
+            await get().fetchRemotes();
+            set({ loading: false });
+        } catch (error) {
+            set({ error: (error as Error).message, loading: false });
+            throw error;
+        }
+    },
+
+    fetch: async (remote?: string, prune?: boolean) => {
+        try {
+            set({ loading: true, error: null });
+            await rpcClient.call('git.fetch', remote, prune);
+            await get().fetchHistory();
+            await get().fetchBranches();
+            set({ loading: false });
+        } catch (error) {
+            set({ error: (error as Error).message, loading: false });
+            throw error;
+        }
+    },
+
+    pull: async (remote?: string, branch?: string, rebase?: boolean) => {
+        try {
+            set({ loading: true, error: null });
+            await rpcClient.call('git.pull', remote, branch, rebase);
+            await get().fetchHistory();
+            await get().fetchStatus();
+            set({ loading: false });
+        } catch (error) {
+            set({ error: (error as Error).message, loading: false });
+            throw error;
+        }
+    },
+
+    push: async (remote?: string, branch?: string, force?: boolean, setUpstream?: boolean) => {
+        try {
+            set({ loading: true, error: null });
+            await rpcClient.call('git.push', remote, branch, force, setUpstream);
+            await get().fetchBranches();
             set({ loading: false });
         } catch (error) {
             set({ error: (error as Error).message, loading: false });

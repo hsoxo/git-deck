@@ -15,6 +15,7 @@ A visual Git management tool deeply integrated into VS Code, providing a graphic
 - ↩️ **Revert** - Safe commit reverting with confirmation dialog
 - 💾 **Stash Management** - Create, apply, and manage stashes
 - 🌿 **Branch Operations** - Create, switch, and manage branches
+- 🌐 **Remote Operations** - Fetch, pull, and push to remote repositories (SSH/HTTPS)
 - 🔍 **Diff Viewer** - Syntax-highlighted diff display
     - View unstaged/staged changes
     - Double-click files to preview

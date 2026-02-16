@@ -9,6 +9,7 @@ import { RevertOperations } from '../git/operations/RevertOperations';
 import { DiffOperations } from '../git/operations/DiffOperations';
 import { LogOperations } from '../git/operations/LogOperations';
 import { BranchOperations } from '../git/operations/BranchOperations';
+import { RemoteOperations } from '../git/operations/RemoteOperations';
 import simpleGit from 'simple-git';
 
 export class GitGuiViewProvider implements vscode.WebviewViewProvider {
@@ -22,6 +23,7 @@ export class GitGuiViewProvider implements vscode.WebviewViewProvider {
     private diffOps: DiffOperations;
     private logOps: LogOperations;
     private branchOps: BranchOperations;
+    private remoteOps: RemoteOperations;
 
     constructor(
         private readonly extensionUri: vscode.Uri,
@@ -38,6 +40,7 @@ export class GitGuiViewProvider implements vscode.WebviewViewProvider {
         this.diffOps = new DiffOperations(git);
         this.logOps = new LogOperations(git);
         this.branchOps = new BranchOperations(git);
+        this.remoteOps = new RemoteOperations(git);
 
         this.registerRPCHandlers();
     }
@@ -180,6 +183,22 @@ export class GitGuiViewProvider implements vscode.WebviewViewProvider {
             this.branchOps.mergeBranch(branch, noFastForward)
         );
         this.rpcServer.register('git.getCurrentBranch', () => this.branchOps.getCurrentBranch());
+
+        // Remote 操作
+        this.rpcServer.register('git.listRemotes', () => this.remoteOps.listRemotes());
+        this.rpcServer.register('git.addRemote', (name, url) =>
+            this.remoteOps.addRemote(name, url)
+        );
+        this.rpcServer.register('git.removeRemote', (name) => this.remoteOps.removeRemote(name));
+        this.rpcServer.register('git.fetch', (remote, prune) =>
+            this.remoteOps.fetch(remote, prune)
+        );
+        this.rpcServer.register('git.pull', (remote, branch, rebase) =>
+            this.remoteOps.pull(remote, branch, rebase)
+        );
+        this.rpcServer.register('git.push', (remote, branch, force, setUpstream) =>
+            this.remoteOps.push(remote, branch, force, setUpstream)
+        );
     }
 
     private getHtmlForWebview(webview: vscode.Webview): string {

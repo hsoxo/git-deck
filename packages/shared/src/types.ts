@@ -41,6 +41,13 @@ export interface BranchInfo {
     behind?: number;
 }
 
+// Remote 相关类型
+export interface RemoteInfo {
+    name: string;
+    fetchUrl: string;
+    pushUrl: string;
+}
+
 // Stash 相关类型
 export interface StashInfo {
     index: number;
