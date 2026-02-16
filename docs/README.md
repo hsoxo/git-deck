@@ -2,20 +2,22 @@
 
 ## 文档结构
 
-本项目文档已重新整理,按照逻辑顺序组织为以下核心文档:
+本项目文档按照逻辑顺序组织为以下核心文档:
 
 ### 📋 核心文档 (按阅读顺序)
 
-1. **[01-PROJECT_OVERVIEW.md](./01-PROJECT_OVERVIEW.md)** - 项目背景和需求
-   - 产品定位和核心价值
-   - 用户研究和使用场景
-   - 功能需求详细设计
-   - MVP 范围和成功指标
+1. **[01-PROJECT_OVERVIEW.md](./01-PROJECT_OVERVIEW.md)** - 项目概述
+   - 项目简介和核心价值
+   - 目标用户和痛点
+   - 核心功能清单
+   - 技术栈和架构
+   - 开发进度和质量指标
 
-2. **[02-TECHNICAL_ROADMAP.md](./02-TECHNICAL_ROADMAP.md)** - 技术实现路线
+2. **[02-TECHNICAL_ROADMAP.md](./02-TECHNICAL_ROADMAP.md)** - 技术路线图
    - 技术架构设计
    - 技术选型说明
    - 核心模块实现
+   - 通信协议
    - 性能优化策略
    - 发布流程
 
@@ -29,29 +31,34 @@
 4. **[04-IMPLEMENTED_FEATURES.md](./04-IMPLEMENTED_FEATURES.md)** - 已实现功能
    - 各 Phase 完成功能清单
    - 测试覆盖情况
+   - 构建产物
    - 已知限制
    - 下一步计划
 
-5. **[05-OPTIMIZATION_PLAN.md](./05-OPTIMIZATION_PLAN.md)** - 优化和打磨计划
-   - 代码审查发现的问题
+5. **[05-OPTIMIZATION_PLAN.md](./05-OPTIMIZATION_PLAN.md)** - 优化计划
    - 安全问题和解决方案
+   - 代码质量改进
    - 性能优化计划
    - 架构改进建议
+   - 测试改进
    - 实施时间表
+
+6. **[06-DEPLOYMENT_AND_INSTALL.md](./06-DEPLOYMENT_AND_INSTALL.md)** - 部署与安装
+   - 前置要求
+   - 快速安装（用户）
+   - 从源码构建（开发者）
+   - 配置和使用
+   - 故障排除
+   - 发布流程
 
 ### 📊 状态报告
 
 - **[PROJECT_PROGRESS.md](./PROJECT_PROGRESS.md)** - 项目进度跟踪
   - 实时更新的项目进度
   - 各 Phase 完成状态
+  - Sprint 1 完成总结
   - 测试统计
-  - 更新日志
-
-- **[FINAL_COVERAGE_REPORT.md](./FINAL_COVERAGE_REPORT.md)** - 测试覆盖率报告
-  - 详细的测试覆盖率数据
-  - 测试文件清单
-  - 覆盖率对比
-  - 测试质量评估
+  - 后续计划
 
 ---
 
@@ -74,68 +81,77 @@
 **有哪些需要优化的地方?**
 → 阅读 [05-OPTIMIZATION_PLAN.md](./05-OPTIMIZATION_PLAN.md)
 
+**如何部署和安装?**
+→ 阅读 [06-DEPLOYMENT_AND_INSTALL.md](./06-DEPLOYMENT_AND_INSTALL.md)
+
 **当前项目进度如何?**
 → 阅读 [PROJECT_PROGRESS.md](./PROJECT_PROGRESS.md)
-
-**测试覆盖率怎么样?**
-→ 阅读 [FINAL_COVERAGE_REPORT.md](./FINAL_COVERAGE_REPORT.md)
 
 ---
 
 ## 文档更新历史
 
-### 2026-02-15 - 文档重构
+### 2026-02-15 - 文档整理与合并
 
-**新增文档:**
+**整合完成:**
+- ✅ 合并 DEPLOYMENT_GUIDE.md → 06-DEPLOYMENT_AND_INSTALL.md
+- ✅ 整合 Sprint 1 完成报告到 PROJECT_PROGRESS.md
+- ✅ 删除过时的阶段性报告文档
+
+**删除文档:**
+- ❌ CYCLE1_COMPLETION.md (已整合到 PROJECT_PROGRESS.md)
+- ❌ CYCLE2_COMPLETION.md (已整合到 PROJECT_PROGRESS.md)
+- ❌ CYCLE3_COMPLETION.md (已整合到 PROJECT_PROGRESS.md)
+- ❌ CYCLE4_SECURITY_TESTING_COMPLETE.md (已整合到 PROJECT_PROGRESS.md)
+- ❌ 01-SPRINT1_COMPLETE.md (已整合到 PROJECT_PROGRESS.md)
+- ❌ FINAL_COMPLETION_REPORT.md (已整合到 PROJECT_PROGRESS.md)
+- ❌ FINAL_COVERAGE_REPORT.md (已整合到 PROJECT_PROGRESS.md)
+- ❌ DEPLOYMENT_GUIDE.md (已合并到 06-DEPLOYMENT_AND_INSTALL.md)
+
+**保留核心文档:**
 - ✅ 01-PROJECT_OVERVIEW.md
 - ✅ 02-TECHNICAL_ROADMAP.md
 - ✅ 03-DEVELOPER_GUIDE.md
 - ✅ 04-IMPLEMENTED_FEATURES.md
 - ✅ 05-OPTIMIZATION_PLAN.md
-
-**删除过期文档:**
-- ❌ 需求文档.md (整合到 01)
-- ❌ 技术实现计划.md (整合到 02)
-- ❌ ARCHITECTURE.md (整合到 02)
-- ❌ DEVELOPMENT.md (整合到 03)
-- ❌ TESTING.md (整合到 03)
-- ❌ QUICK_START.md (整合到 03)
-- ❌ PHASE3_COMPLETE.md (整合到 04)
-- ❌ PHASE4_COMPLETE.md (整合到 04)
-- ❌ PHASE5_COMPLETE.md (整合到 04)
-- ❌ PHASE6_COMPLETE.md (整合到 04)
-
-**保留文档:**
+- ✅ 06-DEPLOYMENT_AND_INSTALL.md
 - ✅ PROJECT_PROGRESS.md (持续更新)
-- ✅ FINAL_COVERAGE_REPORT.md (测试报告)
+- ✅ README.md (本文档)
 
 ---
 
 ## 项目概况
 
 **当前版本**: 0.1.0  
-**完成度**: 86% (6/7 Phases)  
-**测试数量**: 215 个自动化测试  
+**完成度**: 100% (7/7 Phases)  
+**测试数量**: 492 个自动化测试  
 **测试覆盖**: Extension 75.6%, Webview 15.36%  
-**构建大小**: ~235 KB
+**构建大小**: ~246 KB
 
 ### 已完成功能
 
 ✅ Stage & Commit 管理  
 ✅ Commit History 可视化  
-✅ Rebase 操作  
+✅ Rebase 操作（含交互式）  
 ✅ Cherry-pick & Stash  
 ✅ Branch Management  
 ✅ Diff 查看  
-✅ Revert 操作
+✅ Revert 操作  
+✅ 输入验证（安全）  
+✅ RPC 安全（速率限制、参数验证）
 
-### 进行中
+### Sprint 1 完成
 
-🔄 Phase 7: 优化与完善
-- 安全加固
-- 性能优化
-- 测试覆盖提升
-- 文档完善
+✅ 输入验证（防止路径遍历、命令注入）  
+✅ RPC 安全（速率限制、参数验证）  
+✅ Interactive Rebase 修复（无竞态条件）  
+✅ 安全测试（176 个自动化测试）
+
+### 后续计划
+
+🔄 Sprint 2: 性能与代码质量 (P1)  
+🔄 Sprint 3: 架构与测试 (P2)  
+🔄 Sprint 4: 用户体验与文档 (P3)
 
 ---
 
@@ -143,9 +159,10 @@
 
 1. 阅读 [03-DEVELOPER_GUIDE.md](./03-DEVELOPER_GUIDE.md) 了解开发流程
 2. 查看 [05-OPTIMIZATION_PLAN.md](./05-OPTIMIZATION_PLAN.md) 了解待改进项
-3. 遵循代码规范和提交规范
-4. 编写测试并确保通过
-5. 更新相关文档
+3. 查看 [PROJECT_PROGRESS.md](./PROJECT_PROGRESS.md) 了解当前进度
+4. 遵循代码规范和提交规范
+5. 编写测试并确保通过
+6. 更新相关文档
 
 ---
 
