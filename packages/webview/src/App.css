@@ -30,3 +30,113 @@
 .panel-container:last-child {
     border-right: none;
 }
+
+
+/* Loading state */
+.app-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: var(--vscode-foreground);
+}
+
+.app-loading .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--vscode-progressBar-background);
+    border-top: 3px solid var(--vscode-button-background);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.app-loading p {
+    font-size: 14px;
+    color: var(--vscode-descriptionForeground);
+}
+
+/* Error state */
+.app-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 40px;
+    text-align: center;
+    color: var(--vscode-foreground);
+}
+
+.app-error .error-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.app-error h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--vscode-errorForeground);
+    margin-bottom: 12px;
+}
+
+.app-error .error-message {
+    font-size: 13px;
+    color: var(--vscode-descriptionForeground);
+    margin-bottom: 24px;
+    max-width: 500px;
+    word-wrap: break-word;
+}
+
+.app-error .error-actions {
+    margin-bottom: 32px;
+}
+
+.app-error .error-actions button {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.app-error .error-actions button:hover {
+    background: var(--vscode-button-hoverBackground);
+}
+
+.app-error .error-help {
+    max-width: 500px;
+    text-align: left;
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+    background: var(--vscode-textBlockQuote-background);
+    border-left: 3px solid var(--vscode-textBlockQuote-border);
+    padding: 16px;
+    border-radius: 2px;
+}
+
+.app-error .error-help p {
+    margin: 8px 0;
+}
+
+.app-error .error-help ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.app-error .error-help li {
+    margin: 4px 0;
+}

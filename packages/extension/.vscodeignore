@@ -1,7 +1,6 @@
 # Only include dist and essential files
 **/*
 !dist/**
-!test-extension.js
 !webview-dist/**
 !LICENSE
 !README.md

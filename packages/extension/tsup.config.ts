@@ -8,4 +8,6 @@ export default defineConfig({
     sourcemap: true,
     clean: true,
     minify: false,
+    bundle: true,
+    noExternal: ['simple-git', 'chokidar', '@git-gui/shared'],
 });

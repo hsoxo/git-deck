@@ -1,41 +1,11345 @@
-var cc=Object.defineProperty;var fc=(e,t,n)=>t in e?cc(e,t,{enumerable:!0,configurable:!0,writable:!0,value:n}):e[t]=n;var q=(e,t,n)=>(fc(e,typeof t!="symbol"?t+"":t,n),n);(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const l of document.querySelectorAll('link[rel="modulepreload"]'))r(l);new MutationObserver(l=>{for(const i of l)if(i.type==="childList")for(const s of i.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&r(s)}).observe(document,{childList:!0,subtree:!0});function n(l){const i={};return l.integrity&&(i.integrity=l.integrity),l.referrerPolicy&&(i.referrerPolicy=l.referrerPolicy),l.crossOrigin==="use-credentials"?i.credentials="include":l.crossOrigin==="anonymous"?i.credentials="omit":i.credentials="same-origin",i}function r(l){if(l.ep)return;l.ep=!0;const i=n(l);fetch(l.href,i)}})();function dc(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}var Jo={exports:{}},rl={},qo={exports:{}},D={};/**
- * @license React
- * react.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */var Jn=Symbol.for("react.element"),hc=Symbol.for("react.portal"),pc=Symbol.for("react.fragment"),mc=Symbol.for("react.strict_mode"),vc=Symbol.for("react.profiler"),gc=Symbol.for("react.provider"),yc=Symbol.for("react.context"),wc=Symbol.for("react.forward_ref"),xc=Symbol.for("react.suspense"),Sc=Symbol.for("react.memo"),kc=Symbol.for("react.lazy"),Fs=Symbol.iterator;function Cc(e){return e===null||typeof e!="object"?null:(e=Fs&&e[Fs]||e["@@iterator"],typeof e=="function"?e:null)}var bo={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},eu=Object.assign,tu={};function un(e,t,n){this.props=e,this.context=t,this.refs=tu,this.updater=n||bo}un.prototype.isReactComponent={};un.prototype.setState=function(e,t){if(typeof e!="object"&&typeof e!="function"&&e!=null)throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,e,t,"setState")};un.prototype.forceUpdate=function(e){this.updater.enqueueForceUpdate(this,e,"forceUpdate")};function nu(){}nu.prototype=un.prototype;function $i(e,t,n){this.props=e,this.context=t,this.refs=tu,this.updater=n||bo}var Wi=$i.prototype=new nu;Wi.constructor=$i;eu(Wi,un.prototype);Wi.isPureReactComponent=!0;var As=Array.isArray,ru=Object.prototype.hasOwnProperty,Vi={current:null},lu={key:!0,ref:!0,__self:!0,__source:!0};function iu(e,t,n){var r,l={},i=null,s=null;if(t!=null)for(r in t.ref!==void 0&&(s=t.ref),t.key!==void 0&&(i=""+t.key),t)ru.call(t,r)&&!lu.hasOwnProperty(r)&&(l[r]=t[r]);var o=arguments.length-2;if(o===1)l.children=n;else if(1<o){for(var u=Array(o),f=0;f<o;f++)u[f]=arguments[f+2];l.children=u}if(e&&e.defaultProps)for(r in o=e.defaultProps,o)l[r]===void 0&&(l[r]=o[r]);return{$$typeof:Jn,type:e,key:i,ref:s,props:l,_owner:Vi.current}}function Nc(e,t){return{$$typeof:Jn,type:e.type,key:t,ref:e.ref,props:e.props,_owner:e._owner}}function Qi(e){return typeof e=="object"&&e!==null&&e.$$typeof===Jn}function Ec(e){var t={"=":"=0",":":"=2"};return"$"+e.replace(/[=:]/g,function(n){return t[n]})}var Us=/\/+/g;function kl(e,t){return typeof e=="object"&&e!==null&&e.key!=null?Ec(""+e.key):t.toString(36)}function Sr(e,t,n,r,l){var i=typeof e;(i==="undefined"||i==="boolean")&&(e=null);var s=!1;if(e===null)s=!0;else switch(i){case"string":case"number":s=!0;break;case"object":switch(e.$$typeof){case Jn:case hc:s=!0}}if(s)return s=e,l=l(s),e=r===""?"."+kl(s,0):r,As(l)?(n="",e!=null&&(n=e.replace(Us,"$&/")+"/"),Sr(l,t,n,"",function(f){return f})):l!=null&&(Qi(l)&&(l=Nc(l,n+(!l.key||s&&s.key===l.key?"":(""+l.key).replace(Us,"$&/")+"/")+e)),t.push(l)),1;if(s=0,r=r===""?".":r+":",As(e))for(var o=0;o<e.length;o++){i=e[o];var u=r+kl(i,o);s+=Sr(i,t,n,u,l)}else if(u=Cc(e),typeof u=="function")for(e=u.call(e),o=0;!(i=e.next()).done;)i=i.value,u=r+kl(i,o++),s+=Sr(i,t,n,u,l);else if(i==="object")throw t=String(e),Error("Objects are not valid as a React child (found: "+(t==="[object Object]"?"object with keys {"+Object.keys(e).join(", ")+"}":t)+"). If you meant to render a collection of children, use an array instead.");return s}function lr(e,t,n){if(e==null)return e;var r=[],l=0;return Sr(e,r,"","",function(i){return t.call(n,i,l++)}),r}function jc(e){if(e._status===-1){var t=e._result;t=t(),t.then(function(n){(e._status===0||e._status===-1)&&(e._status=1,e._result=n)},function(n){(e._status===0||e._status===-1)&&(e._status=2,e._result=n)}),e._status===-1&&(e._status=0,e._result=t)}if(e._status===1)return e._result.default;throw e._result}var ce={current:null},kr={transition:null},_c={ReactCurrentDispatcher:ce,ReactCurrentBatchConfig:kr,ReactCurrentOwner:Vi};function su(){throw Error("act(...) is not supported in production builds of React.")}D.Children={map:lr,forEach:function(e,t,n){lr(e,function(){t.apply(this,arguments)},n)},count:function(e){var t=0;return lr(e,function(){t++}),t},toArray:function(e){return lr(e,function(t){return t})||[]},only:function(e){if(!Qi(e))throw Error("React.Children.only expected to receive a single React element child.");return e}};D.Component=un;D.Fragment=pc;D.Profiler=vc;D.PureComponent=$i;D.StrictMode=mc;D.Suspense=xc;D.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=_c;D.act=su;D.cloneElement=function(e,t,n){if(e==null)throw Error("React.cloneElement(...): The argument must be a React element, but you passed "+e+".");var r=eu({},e.props),l=e.key,i=e.ref,s=e._owner;if(t!=null){if(t.ref!==void 0&&(i=t.ref,s=Vi.current),t.key!==void 0&&(l=""+t.key),e.type&&e.type.defaultProps)var o=e.type.defaultProps;for(u in t)ru.call(t,u)&&!lu.hasOwnProperty(u)&&(r[u]=t[u]===void 0&&o!==void 0?o[u]:t[u])}var u=arguments.length-2;if(u===1)r.children=n;else if(1<u){o=Array(u);for(var f=0;f<u;f++)o[f]=arguments[f+2];r.children=o}return{$$typeof:Jn,type:e.type,key:l,ref:i,props:r,_owner:s}};D.createContext=function(e){return e={$$typeof:yc,_currentValue:e,_currentValue2:e,_threadCount:0,Provider:null,Consumer:null,_defaultValue:null,_globalName:null},e.Provider={$$typeof:gc,_context:e},e.Consumer=e};D.createElement=iu;D.createFactory=function(e){var t=iu.bind(null,e);return t.type=e,t};D.createRef=function(){return{current:null}};D.forwardRef=function(e){return{$$typeof:wc,render:e}};D.isValidElement=Qi;D.lazy=function(e){return{$$typeof:kc,_payload:{_status:-1,_result:e},_init:jc}};D.memo=function(e,t){return{$$typeof:Sc,type:e,compare:t===void 0?null:t}};D.startTransition=function(e){var t=kr.transition;kr.transition={};try{e()}finally{kr.transition=t}};D.unstable_act=su;D.useCallback=function(e,t){return ce.current.useCallback(e,t)};D.useContext=function(e){return ce.current.useContext(e)};D.useDebugValue=function(){};D.useDeferredValue=function(e){return ce.current.useDeferredValue(e)};D.useEffect=function(e,t){return ce.current.useEffect(e,t)};D.useId=function(){return ce.current.useId()};D.useImperativeHandle=function(e,t,n){return ce.current.useImperativeHandle(e,t,n)};D.useInsertionEffect=function(e,t){return ce.current.useInsertionEffect(e,t)};D.useLayoutEffect=function(e,t){return ce.current.useLayoutEffect(e,t)};D.useMemo=function(e,t){return ce.current.useMemo(e,t)};D.useReducer=function(e,t,n){return ce.current.useReducer(e,t,n)};D.useRef=function(e){return ce.current.useRef(e)};D.useState=function(e){return ce.current.useState(e)};D.useSyncExternalStore=function(e,t,n){return ce.current.useSyncExternalStore(e,t,n)};D.useTransition=function(){return ce.current.useTransition()};D.version="18.3.1";qo.exports=D;var P=qo.exports;const Xl=dc(P);/**
- * @license React
- * react-jsx-runtime.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */var Pc=P,Lc=Symbol.for("react.element"),Tc=Symbol.for("react.fragment"),zc=Object.prototype.hasOwnProperty,Rc=Pc.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,Mc={key:!0,ref:!0,__self:!0,__source:!0};function ou(e,t,n){var r,l={},i=null,s=null;n!==void 0&&(i=""+n),t.key!==void 0&&(i=""+t.key),t.ref!==void 0&&(s=t.ref);for(r in t)zc.call(t,r)&&!Mc.hasOwnProperty(r)&&(l[r]=t[r]);if(e&&e.defaultProps)for(r in t=e.defaultProps,t)l[r]===void 0&&(l[r]=t[r]);return{$$typeof:Lc,type:e,key:i,ref:s,props:l,_owner:Rc.current}}rl.Fragment=Tc;rl.jsx=ou;rl.jsxs=ou;Jo.exports=rl;var a=Jo.exports,Gl={},uu={exports:{}},Se={},au={exports:{}},cu={};/**
- * @license React
- * scheduler.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */(function(e){function t(j,T){var M=j.length;j.push(T);e:for(;0<M;){var K=M-1>>>1,J=j[K];if(0<l(J,T))j[K]=T,j[M]=J,M=K;else break e}}function n(j){return j.length===0?null:j[0]}function r(j){if(j.length===0)return null;var T=j[0],M=j.pop();if(M!==T){j[0]=M;e:for(var K=0,J=j.length,nr=J>>>1;K<nr;){var yt=2*(K+1)-1,Sl=j[yt],wt=yt+1,rr=j[wt];if(0>l(Sl,M))wt<J&&0>l(rr,Sl)?(j[K]=rr,j[wt]=M,K=wt):(j[K]=Sl,j[yt]=M,K=yt);else if(wt<J&&0>l(rr,M))j[K]=rr,j[wt]=M,K=wt;else break e}}return T}function l(j,T){var M=j.sortIndex-T.sortIndex;return M!==0?M:j.id-T.id}if(typeof performance=="object"&&typeof performance.now=="function"){var i=performance;e.unstable_now=function(){return i.now()}}else{var s=Date,o=s.now();e.unstable_now=function(){return s.now()-o}}var u=[],f=[],v=1,g=null,m=3,k=!1,S=!1,w=!1,L=typeof setTimeout=="function"?setTimeout:null,h=typeof clearTimeout=="function"?clearTimeout:null,c=typeof setImmediate<"u"?setImmediate:null;typeof navigator<"u"&&navigator.scheduling!==void 0&&navigator.scheduling.isInputPending!==void 0&&navigator.scheduling.isInputPending.bind(navigator.scheduling);function d(j){for(var T=n(f);T!==null;){if(T.callback===null)r(f);else if(T.startTime<=j)r(f),T.sortIndex=T.expirationTime,t(u,T);else break;T=n(f)}}function p(j){if(w=!1,d(j),!S)if(n(u)!==null)S=!0,wl(y);else{var T=n(f);T!==null&&xl(p,T.startTime-j)}}function y(j,T){S=!1,w&&(w=!1,h(_),_=-1),k=!0;var M=m;try{for(d(T),g=n(u);g!==null&&(!(g.expirationTime>T)||j&&!Le());){var K=g.callback;if(typeof K=="function"){g.callback=null,m=g.priorityLevel;var J=K(g.expirationTime<=T);T=e.unstable_now(),typeof J=="function"?g.callback=J:g===n(u)&&r(u),d(T)}else r(u);g=n(u)}if(g!==null)var nr=!0;else{var yt=n(f);yt!==null&&xl(p,yt.startTime-T),nr=!1}return nr}finally{g=null,m=M,k=!1}}var N=!1,C=null,_=-1,F=5,R=-1;function Le(){return!(e.unstable_now()-R<F)}function fn(){if(C!==null){var j=e.unstable_now();R=j;var T=!0;try{T=C(!0,j)}finally{T?dn():(N=!1,C=null)}}else N=!1}var dn;if(typeof c=="function")dn=function(){c(fn)};else if(typeof MessageChannel<"u"){var Os=new MessageChannel,ac=Os.port2;Os.port1.onmessage=fn,dn=function(){ac.postMessage(null)}}else dn=function(){L(fn,0)};function wl(j){C=j,N||(N=!0,dn())}function xl(j,T){_=L(function(){j(e.unstable_now())},T)}e.unstable_IdlePriority=5,e.unstable_ImmediatePriority=1,e.unstable_LowPriority=4,e.unstable_NormalPriority=3,e.unstable_Profiling=null,e.unstable_UserBlockingPriority=2,e.unstable_cancelCallback=function(j){j.callback=null},e.unstable_continueExecution=function(){S||k||(S=!0,wl(y))},e.unstable_forceFrameRate=function(j){0>j||125<j?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):F=0<j?Math.floor(1e3/j):5},e.unstable_getCurrentPriorityLevel=function(){return m},e.unstable_getFirstCallbackNode=function(){return n(u)},e.unstable_next=function(j){switch(m){case 1:case 2:case 3:var T=3;break;default:T=m}var M=m;m=T;try{return j()}finally{m=M}},e.unstable_pauseExecution=function(){},e.unstable_requestPaint=function(){},e.unstable_runWithPriority=function(j,T){switch(j){case 1:case 2:case 3:case 4:case 5:break;default:j=3}var M=m;m=j;try{return T()}finally{m=M}},e.unstable_scheduleCallback=function(j,T,M){var K=e.unstable_now();switch(typeof M=="object"&&M!==null?(M=M.delay,M=typeof M=="number"&&0<M?K+M:K):M=K,j){case 1:var J=-1;break;case 2:J=250;break;case 5:J=1073741823;break;case 4:J=1e4;break;default:J=5e3}return J=M+J,j={id:v++,callback:T,priorityLevel:j,startTime:M,expirationTime:J,sortIndex:-1},M>K?(j.sortIndex=M,t(f,j),n(u)===null&&j===n(f)&&(w?(h(_),_=-1):w=!0,xl(p,M-K))):(j.sortIndex=J,t(u,j),S||k||(S=!0,wl(y))),j},e.unstable_shouldYield=Le,e.unstable_wrapCallback=function(j){var T=m;return function(){var M=m;m=T;try{return j.apply(this,arguments)}finally{m=M}}}})(cu);au.exports=cu;var Dc=au.exports;/**
- * @license React
- * react-dom.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */var Ic=P,xe=Dc;function x(e){for(var t="https://reactjs.org/docs/error-decoder.html?invariant="+e,n=1;n<arguments.length;n++)t+="&args[]="+encodeURIComponent(arguments[n]);return"Minified React error #"+e+"; visit "+t+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var fu=new Set,Dn={};function Rt(e,t){en(e,t),en(e+"Capture",t)}function en(e,t){for(Dn[e]=t,e=0;e<t.length;e++)fu.add(t[e])}var Ye=!(typeof window>"u"||typeof window.document>"u"||typeof window.document.createElement>"u"),Zl=Object.prototype.hasOwnProperty,Oc=/^[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\-.0-9\u00B7\u0300-\u036F\u203F-\u2040]*$/,Hs={},Bs={};function Fc(e){return Zl.call(Bs,e)?!0:Zl.call(Hs,e)?!1:Oc.test(e)?Bs[e]=!0:(Hs[e]=!0,!1)}function Ac(e,t,n,r){if(n!==null&&n.type===0)return!1;switch(typeof t){case"function":case"symbol":return!0;case"boolean":return r?!1:n!==null?!n.acceptsBooleans:(e=e.toLowerCase().slice(0,5),e!=="data-"&&e!=="aria-");default:return!1}}function Uc(e,t,n,r){if(t===null||typeof t>"u"||Ac(e,t,n,r))return!0;if(r)return!1;if(n!==null)switch(n.type){case 3:return!t;case 4:return t===!1;case 5:return isNaN(t);case 6:return isNaN(t)||1>t}return!1}function fe(e,t,n,r,l,i,s){this.acceptsBooleans=t===2||t===3||t===4,this.attributeName=r,this.attributeNamespace=l,this.mustUseProperty=n,this.propertyName=e,this.type=t,this.sanitizeURL=i,this.removeEmptyString=s}var re={};"children dangerouslySetInnerHTML defaultValue defaultChecked innerHTML suppressContentEditableWarning suppressHydrationWarning style".split(" ").forEach(function(e){re[e]=new fe(e,0,!1,e,null,!1,!1)});[["acceptCharset","accept-charset"],["className","class"],["htmlFor","for"],["httpEquiv","http-equiv"]].forEach(function(e){var t=e[0];re[t]=new fe(t,1,!1,e[1],null,!1,!1)});["contentEditable","draggable","spellCheck","value"].forEach(function(e){re[e]=new fe(e,2,!1,e.toLowerCase(),null,!1,!1)});["autoReverse","externalResourcesRequired","focusable","preserveAlpha"].forEach(function(e){re[e]=new fe(e,2,!1,e,null,!1,!1)});"allowFullScreen async autoFocus autoPlay controls default defer disabled disablePictureInPicture disableRemotePlayback formNoValidate hidden loop noModule noValidate open playsInline readOnly required reversed scoped seamless itemScope".split(" ").forEach(function(e){re[e]=new fe(e,3,!1,e.toLowerCase(),null,!1,!1)});["checked","multiple","muted","selected"].forEach(function(e){re[e]=new fe(e,3,!0,e,null,!1,!1)});["capture","download"].forEach(function(e){re[e]=new fe(e,4,!1,e,null,!1,!1)});["cols","rows","size","span"].forEach(function(e){re[e]=new fe(e,6,!1,e,null,!1,!1)});["rowSpan","start"].forEach(function(e){re[e]=new fe(e,5,!1,e.toLowerCase(),null,!1,!1)});var Ki=/[\-:]([a-z])/g;function Yi(e){return e[1].toUpperCase()}"accent-height alignment-baseline arabic-form baseline-shift cap-height clip-path clip-rule color-interpolation color-interpolation-filters color-profile color-rendering dominant-baseline enable-background fill-opacity fill-rule flood-color flood-opacity font-family font-size font-size-adjust font-stretch font-style font-variant font-weight glyph-name glyph-orientation-horizontal glyph-orientation-vertical horiz-adv-x horiz-origin-x image-rendering letter-spacing lighting-color marker-end marker-mid marker-start overline-position overline-thickness paint-order panose-1 pointer-events rendering-intent shape-rendering stop-color stop-opacity strikethrough-position strikethrough-thickness stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit stroke-opacity stroke-width text-anchor text-decoration text-rendering underline-position underline-thickness unicode-bidi unicode-range units-per-em v-alphabetic v-hanging v-ideographic v-mathematical vector-effect vert-adv-y vert-origin-x vert-origin-y word-spacing writing-mode xmlns:xlink x-height".split(" ").forEach(function(e){var t=e.replace(Ki,Yi);re[t]=new fe(t,1,!1,e,null,!1,!1)});"xlink:actuate xlink:arcrole xlink:role xlink:show xlink:title xlink:type".split(" ").forEach(function(e){var t=e.replace(Ki,Yi);re[t]=new fe(t,1,!1,e,"http://www.w3.org/1999/xlink",!1,!1)});["xml:base","xml:lang","xml:space"].forEach(function(e){var t=e.replace(Ki,Yi);re[t]=new fe(t,1,!1,e,"http://www.w3.org/XML/1998/namespace",!1,!1)});["tabIndex","crossOrigin"].forEach(function(e){re[e]=new fe(e,1,!1,e.toLowerCase(),null,!1,!1)});re.xlinkHref=new fe("xlinkHref",1,!1,"xlink:href","http://www.w3.org/1999/xlink",!0,!1);["src","href","action","formAction"].forEach(function(e){re[e]=new fe(e,1,!1,e.toLowerCase(),null,!0,!0)});function Xi(e,t,n,r){var l=re.hasOwnProperty(t)?re[t]:null;(l!==null?l.type!==0:r||!(2<t.length)||t[0]!=="o"&&t[0]!=="O"||t[1]!=="n"&&t[1]!=="N")&&(Uc(t,n,l,r)&&(n=null),r||l===null?Fc(t)&&(n===null?e.removeAttribute(t):e.setAttribute(t,""+n)):l.mustUseProperty?e[l.propertyName]=n===null?l.type===3?!1:"":n:(t=l.attributeName,r=l.attributeNamespace,n===null?e.removeAttribute(t):(l=l.type,n=l===3||l===4&&n===!0?"":""+n,r?e.setAttributeNS(r,t,n):e.setAttribute(t,n))))}var Je=Ic.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED,ir=Symbol.for("react.element"),Ot=Symbol.for("react.portal"),Ft=Symbol.for("react.fragment"),Gi=Symbol.for("react.strict_mode"),Jl=Symbol.for("react.profiler"),du=Symbol.for("react.provider"),hu=Symbol.for("react.context"),Zi=Symbol.for("react.forward_ref"),ql=Symbol.for("react.suspense"),bl=Symbol.for("react.suspense_list"),Ji=Symbol.for("react.memo"),be=Symbol.for("react.lazy"),pu=Symbol.for("react.offscreen"),$s=Symbol.iterator;function hn(e){return e===null||typeof e!="object"?null:(e=$s&&e[$s]||e["@@iterator"],typeof e=="function"?e:null)}var V=Object.assign,Cl;function Sn(e){if(Cl===void 0)try{throw Error()}catch(n){var t=n.stack.trim().match(/\n( *(at )?)/);Cl=t&&t[1]||""}return`
-`+Cl+e}var Nl=!1;function El(e,t){if(!e||Nl)return"";Nl=!0;var n=Error.prepareStackTrace;Error.prepareStackTrace=void 0;try{if(t)if(t=function(){throw Error()},Object.defineProperty(t.prototype,"props",{set:function(){throw Error()}}),typeof Reflect=="object"&&Reflect.construct){try{Reflect.construct(t,[])}catch(f){var r=f}Reflect.construct(e,[],t)}else{try{t.call()}catch(f){r=f}e.call(t.prototype)}else{try{throw Error()}catch(f){r=f}e()}}catch(f){if(f&&r&&typeof f.stack=="string"){for(var l=f.stack.split(`
-`),i=r.stack.split(`
-`),s=l.length-1,o=i.length-1;1<=s&&0<=o&&l[s]!==i[o];)o--;for(;1<=s&&0<=o;s--,o--)if(l[s]!==i[o]){if(s!==1||o!==1)do if(s--,o--,0>o||l[s]!==i[o]){var u=`
-`+l[s].replace(" at new "," at ");return e.displayName&&u.includes("<anonymous>")&&(u=u.replace("<anonymous>",e.displayName)),u}while(1<=s&&0<=o);break}}}finally{Nl=!1,Error.prepareStackTrace=n}return(e=e?e.displayName||e.name:"")?Sn(e):""}function Hc(e){switch(e.tag){case 5:return Sn(e.type);case 16:return Sn("Lazy");case 13:return Sn("Suspense");case 19:return Sn("SuspenseList");case 0:case 2:case 15:return e=El(e.type,!1),e;case 11:return e=El(e.type.render,!1),e;case 1:return e=El(e.type,!0),e;default:return""}}function ei(e){if(e==null)return null;if(typeof e=="function")return e.displayName||e.name||null;if(typeof e=="string")return e;switch(e){case Ft:return"Fragment";case Ot:return"Portal";case Jl:return"Profiler";case Gi:return"StrictMode";case ql:return"Suspense";case bl:return"SuspenseList"}if(typeof e=="object")switch(e.$$typeof){case hu:return(e.displayName||"Context")+".Consumer";case du:return(e._context.displayName||"Context")+".Provider";case Zi:var t=e.render;return e=e.displayName,e||(e=t.displayName||t.name||"",e=e!==""?"ForwardRef("+e+")":"ForwardRef"),e;case Ji:return t=e.displayName||null,t!==null?t:ei(e.type)||"Memo";case be:t=e._payload,e=e._init;try{return ei(e(t))}catch{}}return null}function Bc(e){var t=e.type;switch(e.tag){case 24:return"Cache";case 9:return(t.displayName||"Context")+".Consumer";case 10:return(t._context.displayName||"Context")+".Provider";case 18:return"DehydratedFragment";case 11:return e=t.render,e=e.displayName||e.name||"",t.displayName||(e!==""?"ForwardRef("+e+")":"ForwardRef");case 7:return"Fragment";case 5:return t;case 4:return"Portal";case 3:return"Root";case 6:return"Text";case 16:return ei(t);case 8:return t===Gi?"StrictMode":"Mode";case 22:return"Offscreen";case 12:return"Profiler";case 21:return"Scope";case 13:return"Suspense";case 19:return"SuspenseList";case 25:return"TracingMarker";case 1:case 0:case 17:case 2:case 14:case 15:if(typeof t=="function")return t.displayName||t.name||null;if(typeof t=="string")return t}return null}function ht(e){switch(typeof e){case"boolean":case"number":case"string":case"undefined":return e;case"object":return e;default:return""}}function mu(e){var t=e.type;return(e=e.nodeName)&&e.toLowerCase()==="input"&&(t==="checkbox"||t==="radio")}function $c(e){var t=mu(e)?"checked":"value",n=Object.getOwnPropertyDescriptor(e.constructor.prototype,t),r=""+e[t];if(!e.hasOwnProperty(t)&&typeof n<"u"&&typeof n.get=="function"&&typeof n.set=="function"){var l=n.get,i=n.set;return Object.defineProperty(e,t,{configurable:!0,get:function(){return l.call(this)},set:function(s){r=""+s,i.call(this,s)}}),Object.defineProperty(e,t,{enumerable:n.enumerable}),{getValue:function(){return r},setValue:function(s){r=""+s},stopTracking:function(){e._valueTracker=null,delete e[t]}}}}function sr(e){e._valueTracker||(e._valueTracker=$c(e))}function vu(e){if(!e)return!1;var t=e._valueTracker;if(!t)return!0;var n=t.getValue(),r="";return e&&(r=mu(e)?e.checked?"true":"false":e.value),e=r,e!==n?(t.setValue(e),!0):!1}function Mr(e){if(e=e||(typeof document<"u"?document:void 0),typeof e>"u")return null;try{return e.activeElement||e.body}catch{return e.body}}function ti(e,t){var n=t.checked;return V({},t,{defaultChecked:void 0,defaultValue:void 0,value:void 0,checked:n??e._wrapperState.initialChecked})}function Ws(e,t){var n=t.defaultValue==null?"":t.defaultValue,r=t.checked!=null?t.checked:t.defaultChecked;n=ht(t.value!=null?t.value:n),e._wrapperState={initialChecked:r,initialValue:n,controlled:t.type==="checkbox"||t.type==="radio"?t.checked!=null:t.value!=null}}function gu(e,t){t=t.checked,t!=null&&Xi(e,"checked",t,!1)}function ni(e,t){gu(e,t);var n=ht(t.value),r=t.type;if(n!=null)r==="number"?(n===0&&e.value===""||e.value!=n)&&(e.value=""+n):e.value!==""+n&&(e.value=""+n);else if(r==="submit"||r==="reset"){e.removeAttribute("value");return}t.hasOwnProperty("value")?ri(e,t.type,n):t.hasOwnProperty("defaultValue")&&ri(e,t.type,ht(t.defaultValue)),t.checked==null&&t.defaultChecked!=null&&(e.defaultChecked=!!t.defaultChecked)}function Vs(e,t,n){if(t.hasOwnProperty("value")||t.hasOwnProperty("defaultValue")){var r=t.type;if(!(r!=="submit"&&r!=="reset"||t.value!==void 0&&t.value!==null))return;t=""+e._wrapperState.initialValue,n||t===e.value||(e.value=t),e.defaultValue=t}n=e.name,n!==""&&(e.name=""),e.defaultChecked=!!e._wrapperState.initialChecked,n!==""&&(e.name=n)}function ri(e,t,n){(t!=="number"||Mr(e.ownerDocument)!==e)&&(n==null?e.defaultValue=""+e._wrapperState.initialValue:e.defaultValue!==""+n&&(e.defaultValue=""+n))}var kn=Array.isArray;function Xt(e,t,n,r){if(e=e.options,t){t={};for(var l=0;l<n.length;l++)t["$"+n[l]]=!0;for(n=0;n<e.length;n++)l=t.hasOwnProperty("$"+e[n].value),e[n].selected!==l&&(e[n].selected=l),l&&r&&(e[n].defaultSelected=!0)}else{for(n=""+ht(n),t=null,l=0;l<e.length;l++){if(e[l].value===n){e[l].selected=!0,r&&(e[l].defaultSelected=!0);return}t!==null||e[l].disabled||(t=e[l])}t!==null&&(t.selected=!0)}}function li(e,t){if(t.dangerouslySetInnerHTML!=null)throw Error(x(91));return V({},t,{value:void 0,defaultValue:void 0,children:""+e._wrapperState.initialValue})}function Qs(e,t){var n=t.value;if(n==null){if(n=t.children,t=t.defaultValue,n!=null){if(t!=null)throw Error(x(92));if(kn(n)){if(1<n.length)throw Error(x(93));n=n[0]}t=n}t==null&&(t=""),n=t}e._wrapperState={initialValue:ht(n)}}function yu(e,t){var n=ht(t.value),r=ht(t.defaultValue);n!=null&&(n=""+n,n!==e.value&&(e.value=n),t.defaultValue==null&&e.defaultValue!==n&&(e.defaultValue=n)),r!=null&&(e.defaultValue=""+r)}function Ks(e){var t=e.textContent;t===e._wrapperState.initialValue&&t!==""&&t!==null&&(e.value=t)}function wu(e){switch(e){case"svg":return"http://www.w3.org/2000/svg";case"math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}function ii(e,t){return e==null||e==="http://www.w3.org/1999/xhtml"?wu(t):e==="http://www.w3.org/2000/svg"&&t==="foreignObject"?"http://www.w3.org/1999/xhtml":e}var or,xu=function(e){return typeof MSApp<"u"&&MSApp.execUnsafeLocalFunction?function(t,n,r,l){MSApp.execUnsafeLocalFunction(function(){return e(t,n,r,l)})}:e}(function(e,t){if(e.namespaceURI!=="http://www.w3.org/2000/svg"||"innerHTML"in e)e.innerHTML=t;else{for(or=or||document.createElement("div"),or.innerHTML="<svg>"+t.valueOf().toString()+"</svg>",t=or.firstChild;e.firstChild;)e.removeChild(e.firstChild);for(;t.firstChild;)e.appendChild(t.firstChild)}});function In(e,t){if(t){var n=e.firstChild;if(n&&n===e.lastChild&&n.nodeType===3){n.nodeValue=t;return}}e.textContent=t}var En={animationIterationCount:!0,aspectRatio:!0,borderImageOutset:!0,borderImageSlice:!0,borderImageWidth:!0,boxFlex:!0,boxFlexGroup:!0,boxOrdinalGroup:!0,columnCount:!0,columns:!0,flex:!0,flexGrow:!0,flexPositive:!0,flexShrink:!0,flexNegative:!0,flexOrder:!0,gridArea:!0,gridRow:!0,gridRowEnd:!0,gridRowSpan:!0,gridRowStart:!0,gridColumn:!0,gridColumnEnd:!0,gridColumnSpan:!0,gridColumnStart:!0,fontWeight:!0,lineClamp:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,tabSize:!0,widows:!0,zIndex:!0,zoom:!0,fillOpacity:!0,floodOpacity:!0,stopOpacity:!0,strokeDasharray:!0,strokeDashoffset:!0,strokeMiterlimit:!0,strokeOpacity:!0,strokeWidth:!0},Wc=["Webkit","ms","Moz","O"];Object.keys(En).forEach(function(e){Wc.forEach(function(t){t=t+e.charAt(0).toUpperCase()+e.substring(1),En[t]=En[e]})});function Su(e,t,n){return t==null||typeof t=="boolean"||t===""?"":n||typeof t!="number"||t===0||En.hasOwnProperty(e)&&En[e]?(""+t).trim():t+"px"}function ku(e,t){e=e.style;for(var n in t)if(t.hasOwnProperty(n)){var r=n.indexOf("--")===0,l=Su(n,t[n],r);n==="float"&&(n="cssFloat"),r?e.setProperty(n,l):e[n]=l}}var Vc=V({menuitem:!0},{area:!0,base:!0,br:!0,col:!0,embed:!0,hr:!0,img:!0,input:!0,keygen:!0,link:!0,meta:!0,param:!0,source:!0,track:!0,wbr:!0});function si(e,t){if(t){if(Vc[e]&&(t.children!=null||t.dangerouslySetInnerHTML!=null))throw Error(x(137,e));if(t.dangerouslySetInnerHTML!=null){if(t.children!=null)throw Error(x(60));if(typeof t.dangerouslySetInnerHTML!="object"||!("__html"in t.dangerouslySetInnerHTML))throw Error(x(61))}if(t.style!=null&&typeof t.style!="object")throw Error(x(62))}}function oi(e,t){if(e.indexOf("-")===-1)return typeof t.is=="string";switch(e){case"annotation-xml":case"color-profile":case"font-face":case"font-face-src":case"font-face-uri":case"font-face-format":case"font-face-name":case"missing-glyph":return!1;default:return!0}}var ui=null;function qi(e){return e=e.target||e.srcElement||window,e.correspondingUseElement&&(e=e.correspondingUseElement),e.nodeType===3?e.parentNode:e}var ai=null,Gt=null,Zt=null;function Ys(e){if(e=er(e)){if(typeof ai!="function")throw Error(x(280));var t=e.stateNode;t&&(t=ul(t),ai(e.stateNode,e.type,t))}}function Cu(e){Gt?Zt?Zt.push(e):Zt=[e]:Gt=e}function Nu(){if(Gt){var e=Gt,t=Zt;if(Zt=Gt=null,Ys(e),t)for(e=0;e<t.length;e++)Ys(t[e])}}function Eu(e,t){return e(t)}function ju(){}var jl=!1;function _u(e,t,n){if(jl)return e(t,n);jl=!0;try{return Eu(e,t,n)}finally{jl=!1,(Gt!==null||Zt!==null)&&(ju(),Nu())}}function On(e,t){var n=e.stateNode;if(n===null)return null;var r=ul(n);if(r===null)return null;n=r[t];e:switch(t){case"onClick":case"onClickCapture":case"onDoubleClick":case"onDoubleClickCapture":case"onMouseDown":case"onMouseDownCapture":case"onMouseMove":case"onMouseMoveCapture":case"onMouseUp":case"onMouseUpCapture":case"onMouseEnter":(r=!r.disabled)||(e=e.type,r=!(e==="button"||e==="input"||e==="select"||e==="textarea")),e=!r;break e;default:e=!1}if(e)return null;if(n&&typeof n!="function")throw Error(x(231,t,typeof n));return n}var ci=!1;if(Ye)try{var pn={};Object.defineProperty(pn,"passive",{get:function(){ci=!0}}),window.addEventListener("test",pn,pn),window.removeEventListener("test",pn,pn)}catch{ci=!1}function Qc(e,t,n,r,l,i,s,o,u){var f=Array.prototype.slice.call(arguments,3);try{t.apply(n,f)}catch(v){this.onError(v)}}var jn=!1,Dr=null,Ir=!1,fi=null,Kc={onError:function(e){jn=!0,Dr=e}};function Yc(e,t,n,r,l,i,s,o,u){jn=!1,Dr=null,Qc.apply(Kc,arguments)}function Xc(e,t,n,r,l,i,s,o,u){if(Yc.apply(this,arguments),jn){if(jn){var f=Dr;jn=!1,Dr=null}else throw Error(x(198));Ir||(Ir=!0,fi=f)}}function Mt(e){var t=e,n=e;if(e.alternate)for(;t.return;)t=t.return;else{e=t;do t=e,t.flags&4098&&(n=t.return),e=t.return;while(e)}return t.tag===3?n:null}function Pu(e){if(e.tag===13){var t=e.memoizedState;if(t===null&&(e=e.alternate,e!==null&&(t=e.memoizedState)),t!==null)return t.dehydrated}return null}function Xs(e){if(Mt(e)!==e)throw Error(x(188))}function Gc(e){var t=e.alternate;if(!t){if(t=Mt(e),t===null)throw Error(x(188));return t!==e?null:e}for(var n=e,r=t;;){var l=n.return;if(l===null)break;var i=l.alternate;if(i===null){if(r=l.return,r!==null){n=r;continue}break}if(l.child===i.child){for(i=l.child;i;){if(i===n)return Xs(l),e;if(i===r)return Xs(l),t;i=i.sibling}throw Error(x(188))}if(n.return!==r.return)n=l,r=i;else{for(var s=!1,o=l.child;o;){if(o===n){s=!0,n=l,r=i;break}if(o===r){s=!0,r=l,n=i;break}o=o.sibling}if(!s){for(o=i.child;o;){if(o===n){s=!0,n=i,r=l;break}if(o===r){s=!0,r=i,n=l;break}o=o.sibling}if(!s)throw Error(x(189))}}if(n.alternate!==r)throw Error(x(190))}if(n.tag!==3)throw Error(x(188));return n.stateNode.current===n?e:t}function Lu(e){return e=Gc(e),e!==null?Tu(e):null}function Tu(e){if(e.tag===5||e.tag===6)return e;for(e=e.child;e!==null;){var t=Tu(e);if(t!==null)return t;e=e.sibling}return null}var zu=xe.unstable_scheduleCallback,Gs=xe.unstable_cancelCallback,Zc=xe.unstable_shouldYield,Jc=xe.unstable_requestPaint,Y=xe.unstable_now,qc=xe.unstable_getCurrentPriorityLevel,bi=xe.unstable_ImmediatePriority,Ru=xe.unstable_UserBlockingPriority,Or=xe.unstable_NormalPriority,bc=xe.unstable_LowPriority,Mu=xe.unstable_IdlePriority,ll=null,He=null;function ef(e){if(He&&typeof He.onCommitFiberRoot=="function")try{He.onCommitFiberRoot(ll,e,void 0,(e.current.flags&128)===128)}catch{}}var De=Math.clz32?Math.clz32:rf,tf=Math.log,nf=Math.LN2;function rf(e){return e>>>=0,e===0?32:31-(tf(e)/nf|0)|0}var ur=64,ar=4194304;function Cn(e){switch(e&-e){case 1:return 1;case 2:return 2;case 4:return 4;case 8:return 8;case 16:return 16;case 32:return 32;case 64:case 128:case 256:case 512:case 1024:case 2048:case 4096:case 8192:case 16384:case 32768:case 65536:case 131072:case 262144:case 524288:case 1048576:case 2097152:return e&4194240;case 4194304:case 8388608:case 16777216:case 33554432:case 67108864:return e&130023424;case 134217728:return 134217728;case 268435456:return 268435456;case 536870912:return 536870912;case 1073741824:return 1073741824;default:return e}}function Fr(e,t){var n=e.pendingLanes;if(n===0)return 0;var r=0,l=e.suspendedLanes,i=e.pingedLanes,s=n&268435455;if(s!==0){var o=s&~l;o!==0?r=Cn(o):(i&=s,i!==0&&(r=Cn(i)))}else s=n&~l,s!==0?r=Cn(s):i!==0&&(r=Cn(i));if(r===0)return 0;if(t!==0&&t!==r&&!(t&l)&&(l=r&-r,i=t&-t,l>=i||l===16&&(i&4194240)!==0))return t;if(r&4&&(r|=n&16),t=e.entangledLanes,t!==0)for(e=e.entanglements,t&=r;0<t;)n=31-De(t),l=1<<n,r|=e[n],t&=~l;return r}function lf(e,t){switch(e){case 1:case 2:case 4:return t+250;case 8:case 16:case 32:case 64:case 128:case 256:case 512:case 1024:case 2048:case 4096:case 8192:case 16384:case 32768:case 65536:case 131072:case 262144:case 524288:case 1048576:case 2097152:return t+5e3;case 4194304:case 8388608:case 16777216:case 33554432:case 67108864:return-1;case 134217728:case 268435456:case 536870912:case 1073741824:return-1;default:return-1}}function sf(e,t){for(var n=e.suspendedLanes,r=e.pingedLanes,l=e.expirationTimes,i=e.pendingLanes;0<i;){var s=31-De(i),o=1<<s,u=l[s];u===-1?(!(o&n)||o&r)&&(l[s]=lf(o,t)):u<=t&&(e.expiredLanes|=o),i&=~o}}function di(e){return e=e.pendingLanes&-1073741825,e!==0?e:e&1073741824?1073741824:0}function Du(){var e=ur;return ur<<=1,!(ur&4194240)&&(ur=64),e}function _l(e){for(var t=[],n=0;31>n;n++)t.push(e);return t}function qn(e,t,n){e.pendingLanes|=t,t!==536870912&&(e.suspendedLanes=0,e.pingedLanes=0),e=e.eventTimes,t=31-De(t),e[t]=n}function of(e,t){var n=e.pendingLanes&~t;e.pendingLanes=t,e.suspendedLanes=0,e.pingedLanes=0,e.expiredLanes&=t,e.mutableReadLanes&=t,e.entangledLanes&=t,t=e.entanglements;var r=e.eventTimes;for(e=e.expirationTimes;0<n;){var l=31-De(n),i=1<<l;t[l]=0,r[l]=-1,e[l]=-1,n&=~i}}function es(e,t){var n=e.entangledLanes|=t;for(e=e.entanglements;n;){var r=31-De(n),l=1<<r;l&t|e[r]&t&&(e[r]|=t),n&=~l}}var O=0;function Iu(e){return e&=-e,1<e?4<e?e&268435455?16:536870912:4:1}var Ou,ts,Fu,Au,Uu,hi=!1,cr=[],it=null,st=null,ot=null,Fn=new Map,An=new Map,tt=[],uf="mousedown mouseup touchcancel touchend touchstart auxclick dblclick pointercancel pointerdown pointerup dragend dragstart drop compositionend compositionstart keydown keypress keyup input textInput copy cut paste click change contextmenu reset submit".split(" ");function Zs(e,t){switch(e){case"focusin":case"focusout":it=null;break;case"dragenter":case"dragleave":st=null;break;case"mouseover":case"mouseout":ot=null;break;case"pointerover":case"pointerout":Fn.delete(t.pointerId);break;case"gotpointercapture":case"lostpointercapture":An.delete(t.pointerId)}}function mn(e,t,n,r,l,i){return e===null||e.nativeEvent!==i?(e={blockedOn:t,domEventName:n,eventSystemFlags:r,nativeEvent:i,targetContainers:[l]},t!==null&&(t=er(t),t!==null&&ts(t)),e):(e.eventSystemFlags|=r,t=e.targetContainers,l!==null&&t.indexOf(l)===-1&&t.push(l),e)}function af(e,t,n,r,l){switch(t){case"focusin":return it=mn(it,e,t,n,r,l),!0;case"dragenter":return st=mn(st,e,t,n,r,l),!0;case"mouseover":return ot=mn(ot,e,t,n,r,l),!0;case"pointerover":var i=l.pointerId;return Fn.set(i,mn(Fn.get(i)||null,e,t,n,r,l)),!0;case"gotpointercapture":return i=l.pointerId,An.set(i,mn(An.get(i)||null,e,t,n,r,l)),!0}return!1}function Hu(e){var t=kt(e.target);if(t!==null){var n=Mt(t);if(n!==null){if(t=n.tag,t===13){if(t=Pu(n),t!==null){e.blockedOn=t,Uu(e.priority,function(){Fu(n)});return}}else if(t===3&&n.stateNode.current.memoizedState.isDehydrated){e.blockedOn=n.tag===3?n.stateNode.containerInfo:null;return}}}e.blockedOn=null}function Cr(e){if(e.blockedOn!==null)return!1;for(var t=e.targetContainers;0<t.length;){var n=pi(e.domEventName,e.eventSystemFlags,t[0],e.nativeEvent);if(n===null){n=e.nativeEvent;var r=new n.constructor(n.type,n);ui=r,n.target.dispatchEvent(r),ui=null}else return t=er(n),t!==null&&ts(t),e.blockedOn=n,!1;t.shift()}return!0}function Js(e,t,n){Cr(e)&&n.delete(t)}function cf(){hi=!1,it!==null&&Cr(it)&&(it=null),st!==null&&Cr(st)&&(st=null),ot!==null&&Cr(ot)&&(ot=null),Fn.forEach(Js),An.forEach(Js)}function vn(e,t){e.blockedOn===t&&(e.blockedOn=null,hi||(hi=!0,xe.unstable_scheduleCallback(xe.unstable_NormalPriority,cf)))}function Un(e){function t(l){return vn(l,e)}if(0<cr.length){vn(cr[0],e);for(var n=1;n<cr.length;n++){var r=cr[n];r.blockedOn===e&&(r.blockedOn=null)}}for(it!==null&&vn(it,e),st!==null&&vn(st,e),ot!==null&&vn(ot,e),Fn.forEach(t),An.forEach(t),n=0;n<tt.length;n++)r=tt[n],r.blockedOn===e&&(r.blockedOn=null);for(;0<tt.length&&(n=tt[0],n.blockedOn===null);)Hu(n),n.blockedOn===null&&tt.shift()}var Jt=Je.ReactCurrentBatchConfig,Ar=!0;function ff(e,t,n,r){var l=O,i=Jt.transition;Jt.transition=null;try{O=1,ns(e,t,n,r)}finally{O=l,Jt.transition=i}}function df(e,t,n,r){var l=O,i=Jt.transition;Jt.transition=null;try{O=4,ns(e,t,n,r)}finally{O=l,Jt.transition=i}}function ns(e,t,n,r){if(Ar){var l=pi(e,t,n,r);if(l===null)Fl(e,t,r,Ur,n),Zs(e,r);else if(af(l,e,t,n,r))r.stopPropagation();else if(Zs(e,r),t&4&&-1<uf.indexOf(e)){for(;l!==null;){var i=er(l);if(i!==null&&Ou(i),i=pi(e,t,n,r),i===null&&Fl(e,t,r,Ur,n),i===l)break;l=i}l!==null&&r.stopPropagation()}else Fl(e,t,r,null,n)}}var Ur=null;function pi(e,t,n,r){if(Ur=null,e=qi(r),e=kt(e),e!==null)if(t=Mt(e),t===null)e=null;else if(n=t.tag,n===13){if(e=Pu(t),e!==null)return e;e=null}else if(n===3){if(t.stateNode.current.memoizedState.isDehydrated)return t.tag===3?t.stateNode.containerInfo:null;e=null}else t!==e&&(e=null);return Ur=e,null}function Bu(e){switch(e){case"cancel":case"click":case"close":case"contextmenu":case"copy":case"cut":case"auxclick":case"dblclick":case"dragend":case"dragstart":case"drop":case"focusin":case"focusout":case"input":case"invalid":case"keydown":case"keypress":case"keyup":case"mousedown":case"mouseup":case"paste":case"pause":case"play":case"pointercancel":case"pointerdown":case"pointerup":case"ratechange":case"reset":case"resize":case"seeked":case"submit":case"touchcancel":case"touchend":case"touchstart":case"volumechange":case"change":case"selectionchange":case"textInput":case"compositionstart":case"compositionend":case"compositionupdate":case"beforeblur":case"afterblur":case"beforeinput":case"blur":case"fullscreenchange":case"focus":case"hashchange":case"popstate":case"select":case"selectstart":return 1;case"drag":case"dragenter":case"dragexit":case"dragleave":case"dragover":case"mousemove":case"mouseout":case"mouseover":case"pointermove":case"pointerout":case"pointerover":case"scroll":case"toggle":case"touchmove":case"wheel":case"mouseenter":case"mouseleave":case"pointerenter":case"pointerleave":return 4;case"message":switch(qc()){case bi:return 1;case Ru:return 4;case Or:case bc:return 16;case Mu:return 536870912;default:return 16}default:return 16}}var rt=null,rs=null,Nr=null;function $u(){if(Nr)return Nr;var e,t=rs,n=t.length,r,l="value"in rt?rt.value:rt.textContent,i=l.length;for(e=0;e<n&&t[e]===l[e];e++);var s=n-e;for(r=1;r<=s&&t[n-r]===l[i-r];r++);return Nr=l.slice(e,1<r?1-r:void 0)}function Er(e){var t=e.keyCode;return"charCode"in e?(e=e.charCode,e===0&&t===13&&(e=13)):e=t,e===10&&(e=13),32<=e||e===13?e:0}function fr(){return!0}function qs(){return!1}function ke(e){function t(n,r,l,i,s){this._reactName=n,this._targetInst=l,this.type=r,this.nativeEvent=i,this.target=s,this.currentTarget=null;for(var o in e)e.hasOwnProperty(o)&&(n=e[o],this[o]=n?n(i):i[o]);return this.isDefaultPrevented=(i.defaultPrevented!=null?i.defaultPrevented:i.returnValue===!1)?fr:qs,this.isPropagationStopped=qs,this}return V(t.prototype,{preventDefault:function(){this.defaultPrevented=!0;var n=this.nativeEvent;n&&(n.preventDefault?n.preventDefault():typeof n.returnValue!="unknown"&&(n.returnValue=!1),this.isDefaultPrevented=fr)},stopPropagation:function(){var n=this.nativeEvent;n&&(n.stopPropagation?n.stopPropagation():typeof n.cancelBubble!="unknown"&&(n.cancelBubble=!0),this.isPropagationStopped=fr)},persist:function(){},isPersistent:fr}),t}var an={eventPhase:0,bubbles:0,cancelable:0,timeStamp:function(e){return e.timeStamp||Date.now()},defaultPrevented:0,isTrusted:0},ls=ke(an),bn=V({},an,{view:0,detail:0}),hf=ke(bn),Pl,Ll,gn,il=V({},bn,{screenX:0,screenY:0,clientX:0,clientY:0,pageX:0,pageY:0,ctrlKey:0,shiftKey:0,altKey:0,metaKey:0,getModifierState:is,button:0,buttons:0,relatedTarget:function(e){return e.relatedTarget===void 0?e.fromElement===e.srcElement?e.toElement:e.fromElement:e.relatedTarget},movementX:function(e){return"movementX"in e?e.movementX:(e!==gn&&(gn&&e.type==="mousemove"?(Pl=e.screenX-gn.screenX,Ll=e.screenY-gn.screenY):Ll=Pl=0,gn=e),Pl)},movementY:function(e){return"movementY"in e?e.movementY:Ll}}),bs=ke(il),pf=V({},il,{dataTransfer:0}),mf=ke(pf),vf=V({},bn,{relatedTarget:0}),Tl=ke(vf),gf=V({},an,{animationName:0,elapsedTime:0,pseudoElement:0}),yf=ke(gf),wf=V({},an,{clipboardData:function(e){return"clipboardData"in e?e.clipboardData:window.clipboardData}}),xf=ke(wf),Sf=V({},an,{data:0}),eo=ke(Sf),kf={Esc:"Escape",Spacebar:" ",Left:"ArrowLeft",Up:"ArrowUp",Right:"ArrowRight",Down:"ArrowDown",Del:"Delete",Win:"OS",Menu:"ContextMenu",Apps:"ContextMenu",Scroll:"ScrollLock",MozPrintableKey:"Unidentified"},Cf={8:"Backspace",9:"Tab",12:"Clear",13:"Enter",16:"Shift",17:"Control",18:"Alt",19:"Pause",20:"CapsLock",27:"Escape",32:" ",33:"PageUp",34:"PageDown",35:"End",36:"Home",37:"ArrowLeft",38:"ArrowUp",39:"ArrowRight",40:"ArrowDown",45:"Insert",46:"Delete",112:"F1",113:"F2",114:"F3",115:"F4",116:"F5",117:"F6",118:"F7",119:"F8",120:"F9",121:"F10",122:"F11",123:"F12",144:"NumLock",145:"ScrollLock",224:"Meta"},Nf={Alt:"altKey",Control:"ctrlKey",Meta:"metaKey",Shift:"shiftKey"};function Ef(e){var t=this.nativeEvent;return t.getModifierState?t.getModifierState(e):(e=Nf[e])?!!t[e]:!1}function is(){return Ef}var jf=V({},bn,{key:function(e){if(e.key){var t=kf[e.key]||e.key;if(t!=="Unidentified")return t}return e.type==="keypress"?(e=Er(e),e===13?"Enter":String.fromCharCode(e)):e.type==="keydown"||e.type==="keyup"?Cf[e.keyCode]||"Unidentified":""},code:0,location:0,ctrlKey:0,shiftKey:0,altKey:0,metaKey:0,repeat:0,locale:0,getModifierState:is,charCode:function(e){return e.type==="keypress"?Er(e):0},keyCode:function(e){return e.type==="keydown"||e.type==="keyup"?e.keyCode:0},which:function(e){return e.type==="keypress"?Er(e):e.type==="keydown"||e.type==="keyup"?e.keyCode:0}}),_f=ke(jf),Pf=V({},il,{pointerId:0,width:0,height:0,pressure:0,tangentialPressure:0,tiltX:0,tiltY:0,twist:0,pointerType:0,isPrimary:0}),to=ke(Pf),Lf=V({},bn,{touches:0,targetTouches:0,changedTouches:0,altKey:0,metaKey:0,ctrlKey:0,shiftKey:0,getModifierState:is}),Tf=ke(Lf),zf=V({},an,{propertyName:0,elapsedTime:0,pseudoElement:0}),Rf=ke(zf),Mf=V({},il,{deltaX:function(e){return"deltaX"in e?e.deltaX:"wheelDeltaX"in e?-e.wheelDeltaX:0},deltaY:function(e){return"deltaY"in e?e.deltaY:"wheelDeltaY"in e?-e.wheelDeltaY:"wheelDelta"in e?-e.wheelDelta:0},deltaZ:0,deltaMode:0}),Df=ke(Mf),If=[9,13,27,32],ss=Ye&&"CompositionEvent"in window,_n=null;Ye&&"documentMode"in document&&(_n=document.documentMode);var Of=Ye&&"TextEvent"in window&&!_n,Wu=Ye&&(!ss||_n&&8<_n&&11>=_n),no=" ",ro=!1;function Vu(e,t){switch(e){case"keyup":return If.indexOf(t.keyCode)!==-1;case"keydown":return t.keyCode!==229;case"keypress":case"mousedown":case"focusout":return!0;default:return!1}}function Qu(e){return e=e.detail,typeof e=="object"&&"data"in e?e.data:null}var At=!1;function Ff(e,t){switch(e){case"compositionend":return Qu(t);case"keypress":return t.which!==32?null:(ro=!0,no);case"textInput":return e=t.data,e===no&&ro?null:e;default:return null}}function Af(e,t){if(At)return e==="compositionend"||!ss&&Vu(e,t)?(e=$u(),Nr=rs=rt=null,At=!1,e):null;switch(e){case"paste":return null;case"keypress":if(!(t.ctrlKey||t.altKey||t.metaKey)||t.ctrlKey&&t.altKey){if(t.char&&1<t.char.length)return t.char;if(t.which)return String.fromCharCode(t.which)}return null;case"compositionend":return Wu&&t.locale!=="ko"?null:t.data;default:return null}}var Uf={color:!0,date:!0,datetime:!0,"datetime-local":!0,email:!0,month:!0,number:!0,password:!0,range:!0,search:!0,tel:!0,text:!0,time:!0,url:!0,week:!0};function lo(e){var t=e&&e.nodeName&&e.nodeName.toLowerCase();return t==="input"?!!Uf[e.type]:t==="textarea"}function Ku(e,t,n,r){Cu(r),t=Hr(t,"onChange"),0<t.length&&(n=new ls("onChange","change",null,n,r),e.push({event:n,listeners:t}))}var Pn=null,Hn=null;function Hf(e){ra(e,0)}function sl(e){var t=Bt(e);if(vu(t))return e}function Bf(e,t){if(e==="change")return t}var Yu=!1;if(Ye){var zl;if(Ye){var Rl="oninput"in document;if(!Rl){var io=document.createElement("div");io.setAttribute("oninput","return;"),Rl=typeof io.oninput=="function"}zl=Rl}else zl=!1;Yu=zl&&(!document.documentMode||9<document.documentMode)}function so(){Pn&&(Pn.detachEvent("onpropertychange",Xu),Hn=Pn=null)}function Xu(e){if(e.propertyName==="value"&&sl(Hn)){var t=[];Ku(t,Hn,e,qi(e)),_u(Hf,t)}}function $f(e,t,n){e==="focusin"?(so(),Pn=t,Hn=n,Pn.attachEvent("onpropertychange",Xu)):e==="focusout"&&so()}function Wf(e){if(e==="selectionchange"||e==="keyup"||e==="keydown")return sl(Hn)}function Vf(e,t){if(e==="click")return sl(t)}function Qf(e,t){if(e==="input"||e==="change")return sl(t)}function Kf(e,t){return e===t&&(e!==0||1/e===1/t)||e!==e&&t!==t}var Oe=typeof Object.is=="function"?Object.is:Kf;function Bn(e,t){if(Oe(e,t))return!0;if(typeof e!="object"||e===null||typeof t!="object"||t===null)return!1;var n=Object.keys(e),r=Object.keys(t);if(n.length!==r.length)return!1;for(r=0;r<n.length;r++){var l=n[r];if(!Zl.call(t,l)||!Oe(e[l],t[l]))return!1}return!0}function oo(e){for(;e&&e.firstChild;)e=e.firstChild;return e}function uo(e,t){var n=oo(e);e=0;for(var r;n;){if(n.nodeType===3){if(r=e+n.textContent.length,e<=t&&r>=t)return{node:n,offset:t-e};e=r}e:{for(;n;){if(n.nextSibling){n=n.nextSibling;break e}n=n.parentNode}n=void 0}n=oo(n)}}function Gu(e,t){return e&&t?e===t?!0:e&&e.nodeType===3?!1:t&&t.nodeType===3?Gu(e,t.parentNode):"contains"in e?e.contains(t):e.compareDocumentPosition?!!(e.compareDocumentPosition(t)&16):!1:!1}function Zu(){for(var e=window,t=Mr();t instanceof e.HTMLIFrameElement;){try{var n=typeof t.contentWindow.location.href=="string"}catch{n=!1}if(n)e=t.contentWindow;else break;t=Mr(e.document)}return t}function os(e){var t=e&&e.nodeName&&e.nodeName.toLowerCase();return t&&(t==="input"&&(e.type==="text"||e.type==="search"||e.type==="tel"||e.type==="url"||e.type==="password")||t==="textarea"||e.contentEditable==="true")}function Yf(e){var t=Zu(),n=e.focusedElem,r=e.selectionRange;if(t!==n&&n&&n.ownerDocument&&Gu(n.ownerDocument.documentElement,n)){if(r!==null&&os(n)){if(t=r.start,e=r.end,e===void 0&&(e=t),"selectionStart"in n)n.selectionStart=t,n.selectionEnd=Math.min(e,n.value.length);else if(e=(t=n.ownerDocument||document)&&t.defaultView||window,e.getSelection){e=e.getSelection();var l=n.textContent.length,i=Math.min(r.start,l);r=r.end===void 0?i:Math.min(r.end,l),!e.extend&&i>r&&(l=r,r=i,i=l),l=uo(n,i);var s=uo(n,r);l&&s&&(e.rangeCount!==1||e.anchorNode!==l.node||e.anchorOffset!==l.offset||e.focusNode!==s.node||e.focusOffset!==s.offset)&&(t=t.createRange(),t.setStart(l.node,l.offset),e.removeAllRanges(),i>r?(e.addRange(t),e.extend(s.node,s.offset)):(t.setEnd(s.node,s.offset),e.addRange(t)))}}for(t=[],e=n;e=e.parentNode;)e.nodeType===1&&t.push({element:e,left:e.scrollLeft,top:e.scrollTop});for(typeof n.focus=="function"&&n.focus(),n=0;n<t.length;n++)e=t[n],e.element.scrollLeft=e.left,e.element.scrollTop=e.top}}var Xf=Ye&&"documentMode"in document&&11>=document.documentMode,Ut=null,mi=null,Ln=null,vi=!1;function ao(e,t,n){var r=n.window===n?n.document:n.nodeType===9?n:n.ownerDocument;vi||Ut==null||Ut!==Mr(r)||(r=Ut,"selectionStart"in r&&os(r)?r={start:r.selectionStart,end:r.selectionEnd}:(r=(r.ownerDocument&&r.ownerDocument.defaultView||window).getSelection(),r={anchorNode:r.anchorNode,anchorOffset:r.anchorOffset,focusNode:r.focusNode,focusOffset:r.focusOffset}),Ln&&Bn(Ln,r)||(Ln=r,r=Hr(mi,"onSelect"),0<r.length&&(t=new ls("onSelect","select",null,t,n),e.push({event:t,listeners:r}),t.target=Ut)))}function dr(e,t){var n={};return n[e.toLowerCase()]=t.toLowerCase(),n["Webkit"+e]="webkit"+t,n["Moz"+e]="moz"+t,n}var Ht={animationend:dr("Animation","AnimationEnd"),animationiteration:dr("Animation","AnimationIteration"),animationstart:dr("Animation","AnimationStart"),transitionend:dr("Transition","TransitionEnd")},Ml={},Ju={};Ye&&(Ju=document.createElement("div").style,"AnimationEvent"in window||(delete Ht.animationend.animation,delete Ht.animationiteration.animation,delete Ht.animationstart.animation),"TransitionEvent"in window||delete Ht.transitionend.transition);function ol(e){if(Ml[e])return Ml[e];if(!Ht[e])return e;var t=Ht[e],n;for(n in t)if(t.hasOwnProperty(n)&&n in Ju)return Ml[e]=t[n];return e}var qu=ol("animationend"),bu=ol("animationiteration"),ea=ol("animationstart"),ta=ol("transitionend"),na=new Map,co="abort auxClick cancel canPlay canPlayThrough click close contextMenu copy cut drag dragEnd dragEnter dragExit dragLeave dragOver dragStart drop durationChange emptied encrypted ended error gotPointerCapture input invalid keyDown keyPress keyUp load loadedData loadedMetadata loadStart lostPointerCapture mouseDown mouseMove mouseOut mouseOver mouseUp paste pause play playing pointerCancel pointerDown pointerMove pointerOut pointerOver pointerUp progress rateChange reset resize seeked seeking stalled submit suspend timeUpdate touchCancel touchEnd touchStart volumeChange scroll toggle touchMove waiting wheel".split(" ");function mt(e,t){na.set(e,t),Rt(t,[e])}for(var Dl=0;Dl<co.length;Dl++){var Il=co[Dl],Gf=Il.toLowerCase(),Zf=Il[0].toUpperCase()+Il.slice(1);mt(Gf,"on"+Zf)}mt(qu,"onAnimationEnd");mt(bu,"onAnimationIteration");mt(ea,"onAnimationStart");mt("dblclick","onDoubleClick");mt("focusin","onFocus");mt("focusout","onBlur");mt(ta,"onTransitionEnd");en("onMouseEnter",["mouseout","mouseover"]);en("onMouseLeave",["mouseout","mouseover"]);en("onPointerEnter",["pointerout","pointerover"]);en("onPointerLeave",["pointerout","pointerover"]);Rt("onChange","change click focusin focusout input keydown keyup selectionchange".split(" "));Rt("onSelect","focusout contextmenu dragend focusin keydown keyup mousedown mouseup selectionchange".split(" "));Rt("onBeforeInput",["compositionend","keypress","textInput","paste"]);Rt("onCompositionEnd","compositionend focusout keydown keypress keyup mousedown".split(" "));Rt("onCompositionStart","compositionstart focusout keydown keypress keyup mousedown".split(" "));Rt("onCompositionUpdate","compositionupdate focusout keydown keypress keyup mousedown".split(" "));var Nn="abort canplay canplaythrough durationchange emptied encrypted ended error loadeddata loadedmetadata loadstart pause play playing progress ratechange resize seeked seeking stalled suspend timeupdate volumechange waiting".split(" "),Jf=new Set("cancel close invalid load scroll toggle".split(" ").concat(Nn));function fo(e,t,n){var r=e.type||"unknown-event";e.currentTarget=n,Xc(r,t,void 0,e),e.currentTarget=null}function ra(e,t){t=(t&4)!==0;for(var n=0;n<e.length;n++){var r=e[n],l=r.event;r=r.listeners;e:{var i=void 0;if(t)for(var s=r.length-1;0<=s;s--){var o=r[s],u=o.instance,f=o.currentTarget;if(o=o.listener,u!==i&&l.isPropagationStopped())break e;fo(l,o,f),i=u}else for(s=0;s<r.length;s++){if(o=r[s],u=o.instance,f=o.currentTarget,o=o.listener,u!==i&&l.isPropagationStopped())break e;fo(l,o,f),i=u}}}if(Ir)throw e=fi,Ir=!1,fi=null,e}function U(e,t){var n=t[Si];n===void 0&&(n=t[Si]=new Set);var r=e+"__bubble";n.has(r)||(la(t,e,2,!1),n.add(r))}function Ol(e,t,n){var r=0;t&&(r|=4),la(n,e,r,t)}var hr="_reactListening"+Math.random().toString(36).slice(2);function $n(e){if(!e[hr]){e[hr]=!0,fu.forEach(function(n){n!=="selectionchange"&&(Jf.has(n)||Ol(n,!1,e),Ol(n,!0,e))});var t=e.nodeType===9?e:e.ownerDocument;t===null||t[hr]||(t[hr]=!0,Ol("selectionchange",!1,t))}}function la(e,t,n,r){switch(Bu(t)){case 1:var l=ff;break;case 4:l=df;break;default:l=ns}n=l.bind(null,t,n,e),l=void 0,!ci||t!=="touchstart"&&t!=="touchmove"&&t!=="wheel"||(l=!0),r?l!==void 0?e.addEventListener(t,n,{capture:!0,passive:l}):e.addEventListener(t,n,!0):l!==void 0?e.addEventListener(t,n,{passive:l}):e.addEventListener(t,n,!1)}function Fl(e,t,n,r,l){var i=r;if(!(t&1)&&!(t&2)&&r!==null)e:for(;;){if(r===null)return;var s=r.tag;if(s===3||s===4){var o=r.stateNode.containerInfo;if(o===l||o.nodeType===8&&o.parentNode===l)break;if(s===4)for(s=r.return;s!==null;){var u=s.tag;if((u===3||u===4)&&(u=s.stateNode.containerInfo,u===l||u.nodeType===8&&u.parentNode===l))return;s=s.return}for(;o!==null;){if(s=kt(o),s===null)return;if(u=s.tag,u===5||u===6){r=i=s;continue e}o=o.parentNode}}r=r.return}_u(function(){var f=i,v=qi(n),g=[];e:{var m=na.get(e);if(m!==void 0){var k=ls,S=e;switch(e){case"keypress":if(Er(n)===0)break e;case"keydown":case"keyup":k=_f;break;case"focusin":S="focus",k=Tl;break;case"focusout":S="blur",k=Tl;break;case"beforeblur":case"afterblur":k=Tl;break;case"click":if(n.button===2)break e;case"auxclick":case"dblclick":case"mousedown":case"mousemove":case"mouseup":case"mouseout":case"mouseover":case"contextmenu":k=bs;break;case"drag":case"dragend":case"dragenter":case"dragexit":case"dragleave":case"dragover":case"dragstart":case"drop":k=mf;break;case"touchcancel":case"touchend":case"touchmove":case"touchstart":k=Tf;break;case qu:case bu:case ea:k=yf;break;case ta:k=Rf;break;case"scroll":k=hf;break;case"wheel":k=Df;break;case"copy":case"cut":case"paste":k=xf;break;case"gotpointercapture":case"lostpointercapture":case"pointercancel":case"pointerdown":case"pointermove":case"pointerout":case"pointerover":case"pointerup":k=to}var w=(t&4)!==0,L=!w&&e==="scroll",h=w?m!==null?m+"Capture":null:m;w=[];for(var c=f,d;c!==null;){d=c;var p=d.stateNode;if(d.tag===5&&p!==null&&(d=p,h!==null&&(p=On(c,h),p!=null&&w.push(Wn(c,p,d)))),L)break;c=c.return}0<w.length&&(m=new k(m,S,null,n,v),g.push({event:m,listeners:w}))}}if(!(t&7)){e:{if(m=e==="mouseover"||e==="pointerover",k=e==="mouseout"||e==="pointerout",m&&n!==ui&&(S=n.relatedTarget||n.fromElement)&&(kt(S)||S[Xe]))break e;if((k||m)&&(m=v.window===v?v:(m=v.ownerDocument)?m.defaultView||m.parentWindow:window,k?(S=n.relatedTarget||n.toElement,k=f,S=S?kt(S):null,S!==null&&(L=Mt(S),S!==L||S.tag!==5&&S.tag!==6)&&(S=null)):(k=null,S=f),k!==S)){if(w=bs,p="onMouseLeave",h="onMouseEnter",c="mouse",(e==="pointerout"||e==="pointerover")&&(w=to,p="onPointerLeave",h="onPointerEnter",c="pointer"),L=k==null?m:Bt(k),d=S==null?m:Bt(S),m=new w(p,c+"leave",k,n,v),m.target=L,m.relatedTarget=d,p=null,kt(v)===f&&(w=new w(h,c+"enter",S,n,v),w.target=d,w.relatedTarget=L,p=w),L=p,k&&S)t:{for(w=k,h=S,c=0,d=w;d;d=It(d))c++;for(d=0,p=h;p;p=It(p))d++;for(;0<c-d;)w=It(w),c--;for(;0<d-c;)h=It(h),d--;for(;c--;){if(w===h||h!==null&&w===h.alternate)break t;w=It(w),h=It(h)}w=null}else w=null;k!==null&&ho(g,m,k,w,!1),S!==null&&L!==null&&ho(g,L,S,w,!0)}}e:{if(m=f?Bt(f):window,k=m.nodeName&&m.nodeName.toLowerCase(),k==="select"||k==="input"&&m.type==="file")var y=Bf;else if(lo(m))if(Yu)y=Qf;else{y=Wf;var N=$f}else(k=m.nodeName)&&k.toLowerCase()==="input"&&(m.type==="checkbox"||m.type==="radio")&&(y=Vf);if(y&&(y=y(e,f))){Ku(g,y,n,v);break e}N&&N(e,m,f),e==="focusout"&&(N=m._wrapperState)&&N.controlled&&m.type==="number"&&ri(m,"number",m.value)}switch(N=f?Bt(f):window,e){case"focusin":(lo(N)||N.contentEditable==="true")&&(Ut=N,mi=f,Ln=null);break;case"focusout":Ln=mi=Ut=null;break;case"mousedown":vi=!0;break;case"contextmenu":case"mouseup":case"dragend":vi=!1,ao(g,n,v);break;case"selectionchange":if(Xf)break;case"keydown":case"keyup":ao(g,n,v)}var C;if(ss)e:{switch(e){case"compositionstart":var _="onCompositionStart";break e;case"compositionend":_="onCompositionEnd";break e;case"compositionupdate":_="onCompositionUpdate";break e}_=void 0}else At?Vu(e,n)&&(_="onCompositionEnd"):e==="keydown"&&n.keyCode===229&&(_="onCompositionStart");_&&(Wu&&n.locale!=="ko"&&(At||_!=="onCompositionStart"?_==="onCompositionEnd"&&At&&(C=$u()):(rt=v,rs="value"in rt?rt.value:rt.textContent,At=!0)),N=Hr(f,_),0<N.length&&(_=new eo(_,e,null,n,v),g.push({event:_,listeners:N}),C?_.data=C:(C=Qu(n),C!==null&&(_.data=C)))),(C=Of?Ff(e,n):Af(e,n))&&(f=Hr(f,"onBeforeInput"),0<f.length&&(v=new eo("onBeforeInput","beforeinput",null,n,v),g.push({event:v,listeners:f}),v.data=C))}ra(g,t)})}function Wn(e,t,n){return{instance:e,listener:t,currentTarget:n}}function Hr(e,t){for(var n=t+"Capture",r=[];e!==null;){var l=e,i=l.stateNode;l.tag===5&&i!==null&&(l=i,i=On(e,n),i!=null&&r.unshift(Wn(e,i,l)),i=On(e,t),i!=null&&r.push(Wn(e,i,l))),e=e.return}return r}function It(e){if(e===null)return null;do e=e.return;while(e&&e.tag!==5);return e||null}function ho(e,t,n,r,l){for(var i=t._reactName,s=[];n!==null&&n!==r;){var o=n,u=o.alternate,f=o.stateNode;if(u!==null&&u===r)break;o.tag===5&&f!==null&&(o=f,l?(u=On(n,i),u!=null&&s.unshift(Wn(n,u,o))):l||(u=On(n,i),u!=null&&s.push(Wn(n,u,o)))),n=n.return}s.length!==0&&e.push({event:t,listeners:s})}var qf=/\r\n?/g,bf=/\u0000|\uFFFD/g;function po(e){return(typeof e=="string"?e:""+e).replace(qf,`
-`).replace(bf,"")}function pr(e,t,n){if(t=po(t),po(e)!==t&&n)throw Error(x(425))}function Br(){}var gi=null,yi=null;function wi(e,t){return e==="textarea"||e==="noscript"||typeof t.children=="string"||typeof t.children=="number"||typeof t.dangerouslySetInnerHTML=="object"&&t.dangerouslySetInnerHTML!==null&&t.dangerouslySetInnerHTML.__html!=null}var xi=typeof setTimeout=="function"?setTimeout:void 0,ed=typeof clearTimeout=="function"?clearTimeout:void 0,mo=typeof Promise=="function"?Promise:void 0,td=typeof queueMicrotask=="function"?queueMicrotask:typeof mo<"u"?function(e){return mo.resolve(null).then(e).catch(nd)}:xi;function nd(e){setTimeout(function(){throw e})}function Al(e,t){var n=t,r=0;do{var l=n.nextSibling;if(e.removeChild(n),l&&l.nodeType===8)if(n=l.data,n==="/$"){if(r===0){e.removeChild(l),Un(t);return}r--}else n!=="$"&&n!=="$?"&&n!=="$!"||r++;n=l}while(n);Un(t)}function ut(e){for(;e!=null;e=e.nextSibling){var t=e.nodeType;if(t===1||t===3)break;if(t===8){if(t=e.data,t==="$"||t==="$!"||t==="$?")break;if(t==="/$")return null}}return e}function vo(e){e=e.previousSibling;for(var t=0;e;){if(e.nodeType===8){var n=e.data;if(n==="$"||n==="$!"||n==="$?"){if(t===0)return e;t--}else n==="/$"&&t++}e=e.previousSibling}return null}var cn=Math.random().toString(36).slice(2),Ue="__reactFiber$"+cn,Vn="__reactProps$"+cn,Xe="__reactContainer$"+cn,Si="__reactEvents$"+cn,rd="__reactListeners$"+cn,ld="__reactHandles$"+cn;function kt(e){var t=e[Ue];if(t)return t;for(var n=e.parentNode;n;){if(t=n[Xe]||n[Ue]){if(n=t.alternate,t.child!==null||n!==null&&n.child!==null)for(e=vo(e);e!==null;){if(n=e[Ue])return n;e=vo(e)}return t}e=n,n=e.parentNode}return null}function er(e){return e=e[Ue]||e[Xe],!e||e.tag!==5&&e.tag!==6&&e.tag!==13&&e.tag!==3?null:e}function Bt(e){if(e.tag===5||e.tag===6)return e.stateNode;throw Error(x(33))}function ul(e){return e[Vn]||null}var ki=[],$t=-1;function vt(e){return{current:e}}function H(e){0>$t||(e.current=ki[$t],ki[$t]=null,$t--)}function A(e,t){$t++,ki[$t]=e.current,e.current=t}var pt={},oe=vt(pt),pe=vt(!1),_t=pt;function tn(e,t){var n=e.type.contextTypes;if(!n)return pt;var r=e.stateNode;if(r&&r.__reactInternalMemoizedUnmaskedChildContext===t)return r.__reactInternalMemoizedMaskedChildContext;var l={},i;for(i in n)l[i]=t[i];return r&&(e=e.stateNode,e.__reactInternalMemoizedUnmaskedChildContext=t,e.__reactInternalMemoizedMaskedChildContext=l),l}function me(e){return e=e.childContextTypes,e!=null}function $r(){H(pe),H(oe)}function go(e,t,n){if(oe.current!==pt)throw Error(x(168));A(oe,t),A(pe,n)}function ia(e,t,n){var r=e.stateNode;if(t=t.childContextTypes,typeof r.getChildContext!="function")return n;r=r.getChildContext();for(var l in r)if(!(l in t))throw Error(x(108,Bc(e)||"Unknown",l));return V({},n,r)}function Wr(e){return e=(e=e.stateNode)&&e.__reactInternalMemoizedMergedChildContext||pt,_t=oe.current,A(oe,e),A(pe,pe.current),!0}function yo(e,t,n){var r=e.stateNode;if(!r)throw Error(x(169));n?(e=ia(e,t,_t),r.__reactInternalMemoizedMergedChildContext=e,H(pe),H(oe),A(oe,e)):H(pe),A(pe,n)}var We=null,al=!1,Ul=!1;function sa(e){We===null?We=[e]:We.push(e)}function id(e){al=!0,sa(e)}function gt(){if(!Ul&&We!==null){Ul=!0;var e=0,t=O;try{var n=We;for(O=1;e<n.length;e++){var r=n[e];do r=r(!0);while(r!==null)}We=null,al=!1}catch(l){throw We!==null&&(We=We.slice(e+1)),zu(bi,gt),l}finally{O=t,Ul=!1}}return null}var Wt=[],Vt=0,Vr=null,Qr=0,Ce=[],Ne=0,Pt=null,Ve=1,Qe="";function xt(e,t){Wt[Vt++]=Qr,Wt[Vt++]=Vr,Vr=e,Qr=t}function oa(e,t,n){Ce[Ne++]=Ve,Ce[Ne++]=Qe,Ce[Ne++]=Pt,Pt=e;var r=Ve;e=Qe;var l=32-De(r)-1;r&=~(1<<l),n+=1;var i=32-De(t)+l;if(30<i){var s=l-l%5;i=(r&(1<<s)-1).toString(32),r>>=s,l-=s,Ve=1<<32-De(t)+l|n<<l|r,Qe=i+e}else Ve=1<<i|n<<l|r,Qe=e}function us(e){e.return!==null&&(xt(e,1),oa(e,1,0))}function as(e){for(;e===Vr;)Vr=Wt[--Vt],Wt[Vt]=null,Qr=Wt[--Vt],Wt[Vt]=null;for(;e===Pt;)Pt=Ce[--Ne],Ce[Ne]=null,Qe=Ce[--Ne],Ce[Ne]=null,Ve=Ce[--Ne],Ce[Ne]=null}var we=null,ye=null,B=!1,Me=null;function ua(e,t){var n=Ee(5,null,null,0);n.elementType="DELETED",n.stateNode=t,n.return=e,t=e.deletions,t===null?(e.deletions=[n],e.flags|=16):t.push(n)}function wo(e,t){switch(e.tag){case 5:var n=e.type;return t=t.nodeType!==1||n.toLowerCase()!==t.nodeName.toLowerCase()?null:t,t!==null?(e.stateNode=t,we=e,ye=ut(t.firstChild),!0):!1;case 6:return t=e.pendingProps===""||t.nodeType!==3?null:t,t!==null?(e.stateNode=t,we=e,ye=null,!0):!1;case 13:return t=t.nodeType!==8?null:t,t!==null?(n=Pt!==null?{id:Ve,overflow:Qe}:null,e.memoizedState={dehydrated:t,treeContext:n,retryLane:1073741824},n=Ee(18,null,null,0),n.stateNode=t,n.return=e,e.child=n,we=e,ye=null,!0):!1;default:return!1}}function Ci(e){return(e.mode&1)!==0&&(e.flags&128)===0}function Ni(e){if(B){var t=ye;if(t){var n=t;if(!wo(e,t)){if(Ci(e))throw Error(x(418));t=ut(n.nextSibling);var r=we;t&&wo(e,t)?ua(r,n):(e.flags=e.flags&-4097|2,B=!1,we=e)}}else{if(Ci(e))throw Error(x(418));e.flags=e.flags&-4097|2,B=!1,we=e}}}function xo(e){for(e=e.return;e!==null&&e.tag!==5&&e.tag!==3&&e.tag!==13;)e=e.return;we=e}function mr(e){if(e!==we)return!1;if(!B)return xo(e),B=!0,!1;var t;if((t=e.tag!==3)&&!(t=e.tag!==5)&&(t=e.type,t=t!=="head"&&t!=="body"&&!wi(e.type,e.memoizedProps)),t&&(t=ye)){if(Ci(e))throw aa(),Error(x(418));for(;t;)ua(e,t),t=ut(t.nextSibling)}if(xo(e),e.tag===13){if(e=e.memoizedState,e=e!==null?e.dehydrated:null,!e)throw Error(x(317));e:{for(e=e.nextSibling,t=0;e;){if(e.nodeType===8){var n=e.data;if(n==="/$"){if(t===0){ye=ut(e.nextSibling);break e}t--}else n!=="$"&&n!=="$!"&&n!=="$?"||t++}e=e.nextSibling}ye=null}}else ye=we?ut(e.stateNode.nextSibling):null;return!0}function aa(){for(var e=ye;e;)e=ut(e.nextSibling)}function nn(){ye=we=null,B=!1}function cs(e){Me===null?Me=[e]:Me.push(e)}var sd=Je.ReactCurrentBatchConfig;function yn(e,t,n){if(e=n.ref,e!==null&&typeof e!="function"&&typeof e!="object"){if(n._owner){if(n=n._owner,n){if(n.tag!==1)throw Error(x(309));var r=n.stateNode}if(!r)throw Error(x(147,e));var l=r,i=""+e;return t!==null&&t.ref!==null&&typeof t.ref=="function"&&t.ref._stringRef===i?t.ref:(t=function(s){var o=l.refs;s===null?delete o[i]:o[i]=s},t._stringRef=i,t)}if(typeof e!="string")throw Error(x(284));if(!n._owner)throw Error(x(290,e))}return e}function vr(e,t){throw e=Object.prototype.toString.call(t),Error(x(31,e==="[object Object]"?"object with keys {"+Object.keys(t).join(", ")+"}":e))}function So(e){var t=e._init;return t(e._payload)}function ca(e){function t(h,c){if(e){var d=h.deletions;d===null?(h.deletions=[c],h.flags|=16):d.push(c)}}function n(h,c){if(!e)return null;for(;c!==null;)t(h,c),c=c.sibling;return null}function r(h,c){for(h=new Map;c!==null;)c.key!==null?h.set(c.key,c):h.set(c.index,c),c=c.sibling;return h}function l(h,c){return h=dt(h,c),h.index=0,h.sibling=null,h}function i(h,c,d){return h.index=d,e?(d=h.alternate,d!==null?(d=d.index,d<c?(h.flags|=2,c):d):(h.flags|=2,c)):(h.flags|=1048576,c)}function s(h){return e&&h.alternate===null&&(h.flags|=2),h}function o(h,c,d,p){return c===null||c.tag!==6?(c=Kl(d,h.mode,p),c.return=h,c):(c=l(c,d),c.return=h,c)}function u(h,c,d,p){var y=d.type;return y===Ft?v(h,c,d.props.children,p,d.key):c!==null&&(c.elementType===y||typeof y=="object"&&y!==null&&y.$$typeof===be&&So(y)===c.type)?(p=l(c,d.props),p.ref=yn(h,c,d),p.return=h,p):(p=Rr(d.type,d.key,d.props,null,h.mode,p),p.ref=yn(h,c,d),p.return=h,p)}function f(h,c,d,p){return c===null||c.tag!==4||c.stateNode.containerInfo!==d.containerInfo||c.stateNode.implementation!==d.implementation?(c=Yl(d,h.mode,p),c.return=h,c):(c=l(c,d.children||[]),c.return=h,c)}function v(h,c,d,p,y){return c===null||c.tag!==7?(c=jt(d,h.mode,p,y),c.return=h,c):(c=l(c,d),c.return=h,c)}function g(h,c,d){if(typeof c=="string"&&c!==""||typeof c=="number")return c=Kl(""+c,h.mode,d),c.return=h,c;if(typeof c=="object"&&c!==null){switch(c.$$typeof){case ir:return d=Rr(c.type,c.key,c.props,null,h.mode,d),d.ref=yn(h,null,c),d.return=h,d;case Ot:return c=Yl(c,h.mode,d),c.return=h,c;case be:var p=c._init;return g(h,p(c._payload),d)}if(kn(c)||hn(c))return c=jt(c,h.mode,d,null),c.return=h,c;vr(h,c)}return null}function m(h,c,d,p){var y=c!==null?c.key:null;if(typeof d=="string"&&d!==""||typeof d=="number")return y!==null?null:o(h,c,""+d,p);if(typeof d=="object"&&d!==null){switch(d.$$typeof){case ir:return d.key===y?u(h,c,d,p):null;case Ot:return d.key===y?f(h,c,d,p):null;case be:return y=d._init,m(h,c,y(d._payload),p)}if(kn(d)||hn(d))return y!==null?null:v(h,c,d,p,null);vr(h,d)}return null}function k(h,c,d,p,y){if(typeof p=="string"&&p!==""||typeof p=="number")return h=h.get(d)||null,o(c,h,""+p,y);if(typeof p=="object"&&p!==null){switch(p.$$typeof){case ir:return h=h.get(p.key===null?d:p.key)||null,u(c,h,p,y);case Ot:return h=h.get(p.key===null?d:p.key)||null,f(c,h,p,y);case be:var N=p._init;return k(h,c,d,N(p._payload),y)}if(kn(p)||hn(p))return h=h.get(d)||null,v(c,h,p,y,null);vr(c,p)}return null}function S(h,c,d,p){for(var y=null,N=null,C=c,_=c=0,F=null;C!==null&&_<d.length;_++){C.index>_?(F=C,C=null):F=C.sibling;var R=m(h,C,d[_],p);if(R===null){C===null&&(C=F);break}e&&C&&R.alternate===null&&t(h,C),c=i(R,c,_),N===null?y=R:N.sibling=R,N=R,C=F}if(_===d.length)return n(h,C),B&&xt(h,_),y;if(C===null){for(;_<d.length;_++)C=g(h,d[_],p),C!==null&&(c=i(C,c,_),N===null?y=C:N.sibling=C,N=C);return B&&xt(h,_),y}for(C=r(h,C);_<d.length;_++)F=k(C,h,_,d[_],p),F!==null&&(e&&F.alternate!==null&&C.delete(F.key===null?_:F.key),c=i(F,c,_),N===null?y=F:N.sibling=F,N=F);return e&&C.forEach(function(Le){return t(h,Le)}),B&&xt(h,_),y}function w(h,c,d,p){var y=hn(d);if(typeof y!="function")throw Error(x(150));if(d=y.call(d),d==null)throw Error(x(151));for(var N=y=null,C=c,_=c=0,F=null,R=d.next();C!==null&&!R.done;_++,R=d.next()){C.index>_?(F=C,C=null):F=C.sibling;var Le=m(h,C,R.value,p);if(Le===null){C===null&&(C=F);break}e&&C&&Le.alternate===null&&t(h,C),c=i(Le,c,_),N===null?y=Le:N.sibling=Le,N=Le,C=F}if(R.done)return n(h,C),B&&xt(h,_),y;if(C===null){for(;!R.done;_++,R=d.next())R=g(h,R.value,p),R!==null&&(c=i(R,c,_),N===null?y=R:N.sibling=R,N=R);return B&&xt(h,_),y}for(C=r(h,C);!R.done;_++,R=d.next())R=k(C,h,_,R.value,p),R!==null&&(e&&R.alternate!==null&&C.delete(R.key===null?_:R.key),c=i(R,c,_),N===null?y=R:N.sibling=R,N=R);return e&&C.forEach(function(fn){return t(h,fn)}),B&&xt(h,_),y}function L(h,c,d,p){if(typeof d=="object"&&d!==null&&d.type===Ft&&d.key===null&&(d=d.props.children),typeof d=="object"&&d!==null){switch(d.$$typeof){case ir:e:{for(var y=d.key,N=c;N!==null;){if(N.key===y){if(y=d.type,y===Ft){if(N.tag===7){n(h,N.sibling),c=l(N,d.props.children),c.return=h,h=c;break e}}else if(N.elementType===y||typeof y=="object"&&y!==null&&y.$$typeof===be&&So(y)===N.type){n(h,N.sibling),c=l(N,d.props),c.ref=yn(h,N,d),c.return=h,h=c;break e}n(h,N);break}else t(h,N);N=N.sibling}d.type===Ft?(c=jt(d.props.children,h.mode,p,d.key),c.return=h,h=c):(p=Rr(d.type,d.key,d.props,null,h.mode,p),p.ref=yn(h,c,d),p.return=h,h=p)}return s(h);case Ot:e:{for(N=d.key;c!==null;){if(c.key===N)if(c.tag===4&&c.stateNode.containerInfo===d.containerInfo&&c.stateNode.implementation===d.implementation){n(h,c.sibling),c=l(c,d.children||[]),c.return=h,h=c;break e}else{n(h,c);break}else t(h,c);c=c.sibling}c=Yl(d,h.mode,p),c.return=h,h=c}return s(h);case be:return N=d._init,L(h,c,N(d._payload),p)}if(kn(d))return S(h,c,d,p);if(hn(d))return w(h,c,d,p);vr(h,d)}return typeof d=="string"&&d!==""||typeof d=="number"?(d=""+d,c!==null&&c.tag===6?(n(h,c.sibling),c=l(c,d),c.return=h,h=c):(n(h,c),c=Kl(d,h.mode,p),c.return=h,h=c),s(h)):n(h,c)}return L}var rn=ca(!0),fa=ca(!1),Kr=vt(null),Yr=null,Qt=null,fs=null;function ds(){fs=Qt=Yr=null}function hs(e){var t=Kr.current;H(Kr),e._currentValue=t}function Ei(e,t,n){for(;e!==null;){var r=e.alternate;if((e.childLanes&t)!==t?(e.childLanes|=t,r!==null&&(r.childLanes|=t)):r!==null&&(r.childLanes&t)!==t&&(r.childLanes|=t),e===n)break;e=e.return}}function qt(e,t){Yr=e,fs=Qt=null,e=e.dependencies,e!==null&&e.firstContext!==null&&(e.lanes&t&&(he=!0),e.firstContext=null)}function _e(e){var t=e._currentValue;if(fs!==e)if(e={context:e,memoizedValue:t,next:null},Qt===null){if(Yr===null)throw Error(x(308));Qt=e,Yr.dependencies={lanes:0,firstContext:e}}else Qt=Qt.next=e;return t}var Ct=null;function ps(e){Ct===null?Ct=[e]:Ct.push(e)}function da(e,t,n,r){var l=t.interleaved;return l===null?(n.next=n,ps(t)):(n.next=l.next,l.next=n),t.interleaved=n,Ge(e,r)}function Ge(e,t){e.lanes|=t;var n=e.alternate;for(n!==null&&(n.lanes|=t),n=e,e=e.return;e!==null;)e.childLanes|=t,n=e.alternate,n!==null&&(n.childLanes|=t),n=e,e=e.return;return n.tag===3?n.stateNode:null}var et=!1;function ms(e){e.updateQueue={baseState:e.memoizedState,firstBaseUpdate:null,lastBaseUpdate:null,shared:{pending:null,interleaved:null,lanes:0},effects:null}}function ha(e,t){e=e.updateQueue,t.updateQueue===e&&(t.updateQueue={baseState:e.baseState,firstBaseUpdate:e.firstBaseUpdate,lastBaseUpdate:e.lastBaseUpdate,shared:e.shared,effects:e.effects})}function Ke(e,t){return{eventTime:e,lane:t,tag:0,payload:null,callback:null,next:null}}function at(e,t,n){var r=e.updateQueue;if(r===null)return null;if(r=r.shared,I&2){var l=r.pending;return l===null?t.next=t:(t.next=l.next,l.next=t),r.pending=t,Ge(e,n)}return l=r.interleaved,l===null?(t.next=t,ps(r)):(t.next=l.next,l.next=t),r.interleaved=t,Ge(e,n)}function jr(e,t,n){if(t=t.updateQueue,t!==null&&(t=t.shared,(n&4194240)!==0)){var r=t.lanes;r&=e.pendingLanes,n|=r,t.lanes=n,es(e,n)}}function ko(e,t){var n=e.updateQueue,r=e.alternate;if(r!==null&&(r=r.updateQueue,n===r)){var l=null,i=null;if(n=n.firstBaseUpdate,n!==null){do{var s={eventTime:n.eventTime,lane:n.lane,tag:n.tag,payload:n.payload,callback:n.callback,next:null};i===null?l=i=s:i=i.next=s,n=n.next}while(n!==null);i===null?l=i=t:i=i.next=t}else l=i=t;n={baseState:r.baseState,firstBaseUpdate:l,lastBaseUpdate:i,shared:r.shared,effects:r.effects},e.updateQueue=n;return}e=n.lastBaseUpdate,e===null?n.firstBaseUpdate=t:e.next=t,n.lastBaseUpdate=t}function Xr(e,t,n,r){var l=e.updateQueue;et=!1;var i=l.firstBaseUpdate,s=l.lastBaseUpdate,o=l.shared.pending;if(o!==null){l.shared.pending=null;var u=o,f=u.next;u.next=null,s===null?i=f:s.next=f,s=u;var v=e.alternate;v!==null&&(v=v.updateQueue,o=v.lastBaseUpdate,o!==s&&(o===null?v.firstBaseUpdate=f:o.next=f,v.lastBaseUpdate=u))}if(i!==null){var g=l.baseState;s=0,v=f=u=null,o=i;do{var m=o.lane,k=o.eventTime;if((r&m)===m){v!==null&&(v=v.next={eventTime:k,lane:0,tag:o.tag,payload:o.payload,callback:o.callback,next:null});e:{var S=e,w=o;switch(m=t,k=n,w.tag){case 1:if(S=w.payload,typeof S=="function"){g=S.call(k,g,m);break e}g=S;break e;case 3:S.flags=S.flags&-65537|128;case 0:if(S=w.payload,m=typeof S=="function"?S.call(k,g,m):S,m==null)break e;g=V({},g,m);break e;case 2:et=!0}}o.callback!==null&&o.lane!==0&&(e.flags|=64,m=l.effects,m===null?l.effects=[o]:m.push(o))}else k={eventTime:k,lane:m,tag:o.tag,payload:o.payload,callback:o.callback,next:null},v===null?(f=v=k,u=g):v=v.next=k,s|=m;if(o=o.next,o===null){if(o=l.shared.pending,o===null)break;m=o,o=m.next,m.next=null,l.lastBaseUpdate=m,l.shared.pending=null}}while(!0);if(v===null&&(u=g),l.baseState=u,l.firstBaseUpdate=f,l.lastBaseUpdate=v,t=l.shared.interleaved,t!==null){l=t;do s|=l.lane,l=l.next;while(l!==t)}else i===null&&(l.shared.lanes=0);Tt|=s,e.lanes=s,e.memoizedState=g}}function Co(e,t,n){if(e=t.effects,t.effects=null,e!==null)for(t=0;t<e.length;t++){var r=e[t],l=r.callback;if(l!==null){if(r.callback=null,r=n,typeof l!="function")throw Error(x(191,l));l.call(r)}}}var tr={},Be=vt(tr),Qn=vt(tr),Kn=vt(tr);function Nt(e){if(e===tr)throw Error(x(174));return e}function vs(e,t){switch(A(Kn,t),A(Qn,e),A(Be,tr),e=t.nodeType,e){case 9:case 11:t=(t=t.documentElement)?t.namespaceURI:ii(null,"");break;default:e=e===8?t.parentNode:t,t=e.namespaceURI||null,e=e.tagName,t=ii(t,e)}H(Be),A(Be,t)}function ln(){H(Be),H(Qn),H(Kn)}function pa(e){Nt(Kn.current);var t=Nt(Be.current),n=ii(t,e.type);t!==n&&(A(Qn,e),A(Be,n))}function gs(e){Qn.current===e&&(H(Be),H(Qn))}var $=vt(0);function Gr(e){for(var t=e;t!==null;){if(t.tag===13){var n=t.memoizedState;if(n!==null&&(n=n.dehydrated,n===null||n.data==="$?"||n.data==="$!"))return t}else if(t.tag===19&&t.memoizedProps.revealOrder!==void 0){if(t.flags&128)return t}else if(t.child!==null){t.child.return=t,t=t.child;continue}if(t===e)break;for(;t.sibling===null;){if(t.return===null||t.return===e)return null;t=t.return}t.sibling.return=t.return,t=t.sibling}return null}var Hl=[];function ys(){for(var e=0;e<Hl.length;e++)Hl[e]._workInProgressVersionPrimary=null;Hl.length=0}var _r=Je.ReactCurrentDispatcher,Bl=Je.ReactCurrentBatchConfig,Lt=0,W=null,G=null,b=null,Zr=!1,Tn=!1,Yn=0,od=0;function le(){throw Error(x(321))}function ws(e,t){if(t===null)return!1;for(var n=0;n<t.length&&n<e.length;n++)if(!Oe(e[n],t[n]))return!1;return!0}function xs(e,t,n,r,l,i){if(Lt=i,W=t,t.memoizedState=null,t.updateQueue=null,t.lanes=0,_r.current=e===null||e.memoizedState===null?fd:dd,e=n(r,l),Tn){i=0;do{if(Tn=!1,Yn=0,25<=i)throw Error(x(301));i+=1,b=G=null,t.updateQueue=null,_r.current=hd,e=n(r,l)}while(Tn)}if(_r.current=Jr,t=G!==null&&G.next!==null,Lt=0,b=G=W=null,Zr=!1,t)throw Error(x(300));return e}function Ss(){var e=Yn!==0;return Yn=0,e}function Ae(){var e={memoizedState:null,baseState:null,baseQueue:null,queue:null,next:null};return b===null?W.memoizedState=b=e:b=b.next=e,b}function Pe(){if(G===null){var e=W.alternate;e=e!==null?e.memoizedState:null}else e=G.next;var t=b===null?W.memoizedState:b.next;if(t!==null)b=t,G=e;else{if(e===null)throw Error(x(310));G=e,e={memoizedState:G.memoizedState,baseState:G.baseState,baseQueue:G.baseQueue,queue:G.queue,next:null},b===null?W.memoizedState=b=e:b=b.next=e}return b}function Xn(e,t){return typeof t=="function"?t(e):t}function $l(e){var t=Pe(),n=t.queue;if(n===null)throw Error(x(311));n.lastRenderedReducer=e;var r=G,l=r.baseQueue,i=n.pending;if(i!==null){if(l!==null){var s=l.next;l.next=i.next,i.next=s}r.baseQueue=l=i,n.pending=null}if(l!==null){i=l.next,r=r.baseState;var o=s=null,u=null,f=i;do{var v=f.lane;if((Lt&v)===v)u!==null&&(u=u.next={lane:0,action:f.action,hasEagerState:f.hasEagerState,eagerState:f.eagerState,next:null}),r=f.hasEagerState?f.eagerState:e(r,f.action);else{var g={lane:v,action:f.action,hasEagerState:f.hasEagerState,eagerState:f.eagerState,next:null};u===null?(o=u=g,s=r):u=u.next=g,W.lanes|=v,Tt|=v}f=f.next}while(f!==null&&f!==i);u===null?s=r:u.next=o,Oe(r,t.memoizedState)||(he=!0),t.memoizedState=r,t.baseState=s,t.baseQueue=u,n.lastRenderedState=r}if(e=n.interleaved,e!==null){l=e;do i=l.lane,W.lanes|=i,Tt|=i,l=l.next;while(l!==e)}else l===null&&(n.lanes=0);return[t.memoizedState,n.dispatch]}function Wl(e){var t=Pe(),n=t.queue;if(n===null)throw Error(x(311));n.lastRenderedReducer=e;var r=n.dispatch,l=n.pending,i=t.memoizedState;if(l!==null){n.pending=null;var s=l=l.next;do i=e(i,s.action),s=s.next;while(s!==l);Oe(i,t.memoizedState)||(he=!0),t.memoizedState=i,t.baseQueue===null&&(t.baseState=i),n.lastRenderedState=i}return[i,r]}function ma(){}function va(e,t){var n=W,r=Pe(),l=t(),i=!Oe(r.memoizedState,l);if(i&&(r.memoizedState=l,he=!0),r=r.queue,ks(wa.bind(null,n,r,e),[e]),r.getSnapshot!==t||i||b!==null&&b.memoizedState.tag&1){if(n.flags|=2048,Gn(9,ya.bind(null,n,r,l,t),void 0,null),ee===null)throw Error(x(349));Lt&30||ga(n,t,l)}return l}function ga(e,t,n){e.flags|=16384,e={getSnapshot:t,value:n},t=W.updateQueue,t===null?(t={lastEffect:null,stores:null},W.updateQueue=t,t.stores=[e]):(n=t.stores,n===null?t.stores=[e]:n.push(e))}function ya(e,t,n,r){t.value=n,t.getSnapshot=r,xa(t)&&Sa(e)}function wa(e,t,n){return n(function(){xa(t)&&Sa(e)})}function xa(e){var t=e.getSnapshot;e=e.value;try{var n=t();return!Oe(e,n)}catch{return!0}}function Sa(e){var t=Ge(e,1);t!==null&&Ie(t,e,1,-1)}function No(e){var t=Ae();return typeof e=="function"&&(e=e()),t.memoizedState=t.baseState=e,e={pending:null,interleaved:null,lanes:0,dispatch:null,lastRenderedReducer:Xn,lastRenderedState:e},t.queue=e,e=e.dispatch=cd.bind(null,W,e),[t.memoizedState,e]}function Gn(e,t,n,r){return e={tag:e,create:t,destroy:n,deps:r,next:null},t=W.updateQueue,t===null?(t={lastEffect:null,stores:null},W.updateQueue=t,t.lastEffect=e.next=e):(n=t.lastEffect,n===null?t.lastEffect=e.next=e:(r=n.next,n.next=e,e.next=r,t.lastEffect=e)),e}function ka(){return Pe().memoizedState}function Pr(e,t,n,r){var l=Ae();W.flags|=e,l.memoizedState=Gn(1|t,n,void 0,r===void 0?null:r)}function cl(e,t,n,r){var l=Pe();r=r===void 0?null:r;var i=void 0;if(G!==null){var s=G.memoizedState;if(i=s.destroy,r!==null&&ws(r,s.deps)){l.memoizedState=Gn(t,n,i,r);return}}W.flags|=e,l.memoizedState=Gn(1|t,n,i,r)}function Eo(e,t){return Pr(8390656,8,e,t)}function ks(e,t){return cl(2048,8,e,t)}function Ca(e,t){return cl(4,2,e,t)}function Na(e,t){return cl(4,4,e,t)}function Ea(e,t){if(typeof t=="function")return e=e(),t(e),function(){t(null)};if(t!=null)return e=e(),t.current=e,function(){t.current=null}}function ja(e,t,n){return n=n!=null?n.concat([e]):null,cl(4,4,Ea.bind(null,t,e),n)}function Cs(){}function _a(e,t){var n=Pe();t=t===void 0?null:t;var r=n.memoizedState;return r!==null&&t!==null&&ws(t,r[1])?r[0]:(n.memoizedState=[e,t],e)}function Pa(e,t){var n=Pe();t=t===void 0?null:t;var r=n.memoizedState;return r!==null&&t!==null&&ws(t,r[1])?r[0]:(e=e(),n.memoizedState=[e,t],e)}function La(e,t,n){return Lt&21?(Oe(n,t)||(n=Du(),W.lanes|=n,Tt|=n,e.baseState=!0),t):(e.baseState&&(e.baseState=!1,he=!0),e.memoizedState=n)}function ud(e,t){var n=O;O=n!==0&&4>n?n:4,e(!0);var r=Bl.transition;Bl.transition={};try{e(!1),t()}finally{O=n,Bl.transition=r}}function Ta(){return Pe().memoizedState}function ad(e,t,n){var r=ft(e);if(n={lane:r,action:n,hasEagerState:!1,eagerState:null,next:null},za(e))Ra(t,n);else if(n=da(e,t,n,r),n!==null){var l=ae();Ie(n,e,r,l),Ma(n,t,r)}}function cd(e,t,n){var r=ft(e),l={lane:r,action:n,hasEagerState:!1,eagerState:null,next:null};if(za(e))Ra(t,l);else{var i=e.alternate;if(e.lanes===0&&(i===null||i.lanes===0)&&(i=t.lastRenderedReducer,i!==null))try{var s=t.lastRenderedState,o=i(s,n);if(l.hasEagerState=!0,l.eagerState=o,Oe(o,s)){var u=t.interleaved;u===null?(l.next=l,ps(t)):(l.next=u.next,u.next=l),t.interleaved=l;return}}catch{}finally{}n=da(e,t,l,r),n!==null&&(l=ae(),Ie(n,e,r,l),Ma(n,t,r))}}function za(e){var t=e.alternate;return e===W||t!==null&&t===W}function Ra(e,t){Tn=Zr=!0;var n=e.pending;n===null?t.next=t:(t.next=n.next,n.next=t),e.pending=t}function Ma(e,t,n){if(n&4194240){var r=t.lanes;r&=e.pendingLanes,n|=r,t.lanes=n,es(e,n)}}var Jr={readContext:_e,useCallback:le,useContext:le,useEffect:le,useImperativeHandle:le,useInsertionEffect:le,useLayoutEffect:le,useMemo:le,useReducer:le,useRef:le,useState:le,useDebugValue:le,useDeferredValue:le,useTransition:le,useMutableSource:le,useSyncExternalStore:le,useId:le,unstable_isNewReconciler:!1},fd={readContext:_e,useCallback:function(e,t){return Ae().memoizedState=[e,t===void 0?null:t],e},useContext:_e,useEffect:Eo,useImperativeHandle:function(e,t,n){return n=n!=null?n.concat([e]):null,Pr(4194308,4,Ea.bind(null,t,e),n)},useLayoutEffect:function(e,t){return Pr(4194308,4,e,t)},useInsertionEffect:function(e,t){return Pr(4,2,e,t)},useMemo:function(e,t){var n=Ae();return t=t===void 0?null:t,e=e(),n.memoizedState=[e,t],e},useReducer:function(e,t,n){var r=Ae();return t=n!==void 0?n(t):t,r.memoizedState=r.baseState=t,e={pending:null,interleaved:null,lanes:0,dispatch:null,lastRenderedReducer:e,lastRenderedState:t},r.queue=e,e=e.dispatch=ad.bind(null,W,e),[r.memoizedState,e]},useRef:function(e){var t=Ae();return e={current:e},t.memoizedState=e},useState:No,useDebugValue:Cs,useDeferredValue:function(e){return Ae().memoizedState=e},useTransition:function(){var e=No(!1),t=e[0];return e=ud.bind(null,e[1]),Ae().memoizedState=e,[t,e]},useMutableSource:function(){},useSyncExternalStore:function(e,t,n){var r=W,l=Ae();if(B){if(n===void 0)throw Error(x(407));n=n()}else{if(n=t(),ee===null)throw Error(x(349));Lt&30||ga(r,t,n)}l.memoizedState=n;var i={value:n,getSnapshot:t};return l.queue=i,Eo(wa.bind(null,r,i,e),[e]),r.flags|=2048,Gn(9,ya.bind(null,r,i,n,t),void 0,null),n},useId:function(){var e=Ae(),t=ee.identifierPrefix;if(B){var n=Qe,r=Ve;n=(r&~(1<<32-De(r)-1)).toString(32)+n,t=":"+t+"R"+n,n=Yn++,0<n&&(t+="H"+n.toString(32)),t+=":"}else n=od++,t=":"+t+"r"+n.toString(32)+":";return e.memoizedState=t},unstable_isNewReconciler:!1},dd={readContext:_e,useCallback:_a,useContext:_e,useEffect:ks,useImperativeHandle:ja,useInsertionEffect:Ca,useLayoutEffect:Na,useMemo:Pa,useReducer:$l,useRef:ka,useState:function(){return $l(Xn)},useDebugValue:Cs,useDeferredValue:function(e){var t=Pe();return La(t,G.memoizedState,e)},useTransition:function(){var e=$l(Xn)[0],t=Pe().memoizedState;return[e,t]},useMutableSource:ma,useSyncExternalStore:va,useId:Ta,unstable_isNewReconciler:!1},hd={readContext:_e,useCallback:_a,useContext:_e,useEffect:ks,useImperativeHandle:ja,useInsertionEffect:Ca,useLayoutEffect:Na,useMemo:Pa,useReducer:Wl,useRef:ka,useState:function(){return Wl(Xn)},useDebugValue:Cs,useDeferredValue:function(e){var t=Pe();return G===null?t.memoizedState=e:La(t,G.memoizedState,e)},useTransition:function(){var e=Wl(Xn)[0],t=Pe().memoizedState;return[e,t]},useMutableSource:ma,useSyncExternalStore:va,useId:Ta,unstable_isNewReconciler:!1};function ze(e,t){if(e&&e.defaultProps){t=V({},t),e=e.defaultProps;for(var n in e)t[n]===void 0&&(t[n]=e[n]);return t}return t}function ji(e,t,n,r){t=e.memoizedState,n=n(r,t),n=n==null?t:V({},t,n),e.memoizedState=n,e.lanes===0&&(e.updateQueue.baseState=n)}var fl={isMounted:function(e){return(e=e._reactInternals)?Mt(e)===e:!1},enqueueSetState:function(e,t,n){e=e._reactInternals;var r=ae(),l=ft(e),i=Ke(r,l);i.payload=t,n!=null&&(i.callback=n),t=at(e,i,l),t!==null&&(Ie(t,e,l,r),jr(t,e,l))},enqueueReplaceState:function(e,t,n){e=e._reactInternals;var r=ae(),l=ft(e),i=Ke(r,l);i.tag=1,i.payload=t,n!=null&&(i.callback=n),t=at(e,i,l),t!==null&&(Ie(t,e,l,r),jr(t,e,l))},enqueueForceUpdate:function(e,t){e=e._reactInternals;var n=ae(),r=ft(e),l=Ke(n,r);l.tag=2,t!=null&&(l.callback=t),t=at(e,l,r),t!==null&&(Ie(t,e,r,n),jr(t,e,r))}};function jo(e,t,n,r,l,i,s){return e=e.stateNode,typeof e.shouldComponentUpdate=="function"?e.shouldComponentUpdate(r,i,s):t.prototype&&t.prototype.isPureReactComponent?!Bn(n,r)||!Bn(l,i):!0}function Da(e,t,n){var r=!1,l=pt,i=t.contextType;return typeof i=="object"&&i!==null?i=_e(i):(l=me(t)?_t:oe.current,r=t.contextTypes,i=(r=r!=null)?tn(e,l):pt),t=new t(n,i),e.memoizedState=t.state!==null&&t.state!==void 0?t.state:null,t.updater=fl,e.stateNode=t,t._reactInternals=e,r&&(e=e.stateNode,e.__reactInternalMemoizedUnmaskedChildContext=l,e.__reactInternalMemoizedMaskedChildContext=i),t}function _o(e,t,n,r){e=t.state,typeof t.componentWillReceiveProps=="function"&&t.componentWillReceiveProps(n,r),typeof t.UNSAFE_componentWillReceiveProps=="function"&&t.UNSAFE_componentWillReceiveProps(n,r),t.state!==e&&fl.enqueueReplaceState(t,t.state,null)}function _i(e,t,n,r){var l=e.stateNode;l.props=n,l.state=e.memoizedState,l.refs={},ms(e);var i=t.contextType;typeof i=="object"&&i!==null?l.context=_e(i):(i=me(t)?_t:oe.current,l.context=tn(e,i)),l.state=e.memoizedState,i=t.getDerivedStateFromProps,typeof i=="function"&&(ji(e,t,i,n),l.state=e.memoizedState),typeof t.getDerivedStateFromProps=="function"||typeof l.getSnapshotBeforeUpdate=="function"||typeof l.UNSAFE_componentWillMount!="function"&&typeof l.componentWillMount!="function"||(t=l.state,typeof l.componentWillMount=="function"&&l.componentWillMount(),typeof l.UNSAFE_componentWillMount=="function"&&l.UNSAFE_componentWillMount(),t!==l.state&&fl.enqueueReplaceState(l,l.state,null),Xr(e,n,l,r),l.state=e.memoizedState),typeof l.componentDidMount=="function"&&(e.flags|=4194308)}function sn(e,t){try{var n="",r=t;do n+=Hc(r),r=r.return;while(r);var l=n}catch(i){l=`
-Error generating stack: `+i.message+`
-`+i.stack}return{value:e,source:t,stack:l,digest:null}}function Vl(e,t,n){return{value:e,source:null,stack:n??null,digest:t??null}}function Pi(e,t){try{console.error(t.value)}catch(n){setTimeout(function(){throw n})}}var pd=typeof WeakMap=="function"?WeakMap:Map;function Ia(e,t,n){n=Ke(-1,n),n.tag=3,n.payload={element:null};var r=t.value;return n.callback=function(){br||(br=!0,Ai=r),Pi(e,t)},n}function Oa(e,t,n){n=Ke(-1,n),n.tag=3;var r=e.type.getDerivedStateFromError;if(typeof r=="function"){var l=t.value;n.payload=function(){return r(l)},n.callback=function(){Pi(e,t)}}var i=e.stateNode;return i!==null&&typeof i.componentDidCatch=="function"&&(n.callback=function(){Pi(e,t),typeof r!="function"&&(ct===null?ct=new Set([this]):ct.add(this));var s=t.stack;this.componentDidCatch(t.value,{componentStack:s!==null?s:""})}),n}function Po(e,t,n){var r=e.pingCache;if(r===null){r=e.pingCache=new pd;var l=new Set;r.set(t,l)}else l=r.get(t),l===void 0&&(l=new Set,r.set(t,l));l.has(n)||(l.add(n),e=Pd.bind(null,e,t,n),t.then(e,e))}function Lo(e){do{var t;if((t=e.tag===13)&&(t=e.memoizedState,t=t!==null?t.dehydrated!==null:!0),t)return e;e=e.return}while(e!==null);return null}function To(e,t,n,r,l){return e.mode&1?(e.flags|=65536,e.lanes=l,e):(e===t?e.flags|=65536:(e.flags|=128,n.flags|=131072,n.flags&=-52805,n.tag===1&&(n.alternate===null?n.tag=17:(t=Ke(-1,1),t.tag=2,at(n,t,1))),n.lanes|=1),e)}var md=Je.ReactCurrentOwner,he=!1;function ue(e,t,n,r){t.child=e===null?fa(t,null,n,r):rn(t,e.child,n,r)}function zo(e,t,n,r,l){n=n.render;var i=t.ref;return qt(t,l),r=xs(e,t,n,r,i,l),n=Ss(),e!==null&&!he?(t.updateQueue=e.updateQueue,t.flags&=-2053,e.lanes&=~l,Ze(e,t,l)):(B&&n&&us(t),t.flags|=1,ue(e,t,r,l),t.child)}function Ro(e,t,n,r,l){if(e===null){var i=n.type;return typeof i=="function"&&!zs(i)&&i.defaultProps===void 0&&n.compare===null&&n.defaultProps===void 0?(t.tag=15,t.type=i,Fa(e,t,i,r,l)):(e=Rr(n.type,null,r,t,t.mode,l),e.ref=t.ref,e.return=t,t.child=e)}if(i=e.child,!(e.lanes&l)){var s=i.memoizedProps;if(n=n.compare,n=n!==null?n:Bn,n(s,r)&&e.ref===t.ref)return Ze(e,t,l)}return t.flags|=1,e=dt(i,r),e.ref=t.ref,e.return=t,t.child=e}function Fa(e,t,n,r,l){if(e!==null){var i=e.memoizedProps;if(Bn(i,r)&&e.ref===t.ref)if(he=!1,t.pendingProps=r=i,(e.lanes&l)!==0)e.flags&131072&&(he=!0);else return t.lanes=e.lanes,Ze(e,t,l)}return Li(e,t,n,r,l)}function Aa(e,t,n){var r=t.pendingProps,l=r.children,i=e!==null?e.memoizedState:null;if(r.mode==="hidden")if(!(t.mode&1))t.memoizedState={baseLanes:0,cachePool:null,transitions:null},A(Yt,ge),ge|=n;else{if(!(n&1073741824))return e=i!==null?i.baseLanes|n:n,t.lanes=t.childLanes=1073741824,t.memoizedState={baseLanes:e,cachePool:null,transitions:null},t.updateQueue=null,A(Yt,ge),ge|=e,null;t.memoizedState={baseLanes:0,cachePool:null,transitions:null},r=i!==null?i.baseLanes:n,A(Yt,ge),ge|=r}else i!==null?(r=i.baseLanes|n,t.memoizedState=null):r=n,A(Yt,ge),ge|=r;return ue(e,t,l,n),t.child}function Ua(e,t){var n=t.ref;(e===null&&n!==null||e!==null&&e.ref!==n)&&(t.flags|=512,t.flags|=2097152)}function Li(e,t,n,r,l){var i=me(n)?_t:oe.current;return i=tn(t,i),qt(t,l),n=xs(e,t,n,r,i,l),r=Ss(),e!==null&&!he?(t.updateQueue=e.updateQueue,t.flags&=-2053,e.lanes&=~l,Ze(e,t,l)):(B&&r&&us(t),t.flags|=1,ue(e,t,n,l),t.child)}function Mo(e,t,n,r,l){if(me(n)){var i=!0;Wr(t)}else i=!1;if(qt(t,l),t.stateNode===null)Lr(e,t),Da(t,n,r),_i(t,n,r,l),r=!0;else if(e===null){var s=t.stateNode,o=t.memoizedProps;s.props=o;var u=s.context,f=n.contextType;typeof f=="object"&&f!==null?f=_e(f):(f=me(n)?_t:oe.current,f=tn(t,f));var v=n.getDerivedStateFromProps,g=typeof v=="function"||typeof s.getSnapshotBeforeUpdate=="function";g||typeof s.UNSAFE_componentWillReceiveProps!="function"&&typeof s.componentWillReceiveProps!="function"||(o!==r||u!==f)&&_o(t,s,r,f),et=!1;var m=t.memoizedState;s.state=m,Xr(t,r,s,l),u=t.memoizedState,o!==r||m!==u||pe.current||et?(typeof v=="function"&&(ji(t,n,v,r),u=t.memoizedState),(o=et||jo(t,n,o,r,m,u,f))?(g||typeof s.UNSAFE_componentWillMount!="function"&&typeof s.componentWillMount!="function"||(typeof s.componentWillMount=="function"&&s.componentWillMount(),typeof s.UNSAFE_componentWillMount=="function"&&s.UNSAFE_componentWillMount()),typeof s.componentDidMount=="function"&&(t.flags|=4194308)):(typeof s.componentDidMount=="function"&&(t.flags|=4194308),t.memoizedProps=r,t.memoizedState=u),s.props=r,s.state=u,s.context=f,r=o):(typeof s.componentDidMount=="function"&&(t.flags|=4194308),r=!1)}else{s=t.stateNode,ha(e,t),o=t.memoizedProps,f=t.type===t.elementType?o:ze(t.type,o),s.props=f,g=t.pendingProps,m=s.context,u=n.contextType,typeof u=="object"&&u!==null?u=_e(u):(u=me(n)?_t:oe.current,u=tn(t,u));var k=n.getDerivedStateFromProps;(v=typeof k=="function"||typeof s.getSnapshotBeforeUpdate=="function")||typeof s.UNSAFE_componentWillReceiveProps!="function"&&typeof s.componentWillReceiveProps!="function"||(o!==g||m!==u)&&_o(t,s,r,u),et=!1,m=t.memoizedState,s.state=m,Xr(t,r,s,l);var S=t.memoizedState;o!==g||m!==S||pe.current||et?(typeof k=="function"&&(ji(t,n,k,r),S=t.memoizedState),(f=et||jo(t,n,f,r,m,S,u)||!1)?(v||typeof s.UNSAFE_componentWillUpdate!="function"&&typeof s.componentWillUpdate!="function"||(typeof s.componentWillUpdate=="function"&&s.componentWillUpdate(r,S,u),typeof s.UNSAFE_componentWillUpdate=="function"&&s.UNSAFE_componentWillUpdate(r,S,u)),typeof s.componentDidUpdate=="function"&&(t.flags|=4),typeof s.getSnapshotBeforeUpdate=="function"&&(t.flags|=1024)):(typeof s.componentDidUpdate!="function"||o===e.memoizedProps&&m===e.memoizedState||(t.flags|=4),typeof s.getSnapshotBeforeUpdate!="function"||o===e.memoizedProps&&m===e.memoizedState||(t.flags|=1024),t.memoizedProps=r,t.memoizedState=S),s.props=r,s.state=S,s.context=u,r=f):(typeof s.componentDidUpdate!="function"||o===e.memoizedProps&&m===e.memoizedState||(t.flags|=4),typeof s.getSnapshotBeforeUpdate!="function"||o===e.memoizedProps&&m===e.memoizedState||(t.flags|=1024),r=!1)}return Ti(e,t,n,r,i,l)}function Ti(e,t,n,r,l,i){Ua(e,t);var s=(t.flags&128)!==0;if(!r&&!s)return l&&yo(t,n,!1),Ze(e,t,i);r=t.stateNode,md.current=t;var o=s&&typeof n.getDerivedStateFromError!="function"?null:r.render();return t.flags|=1,e!==null&&s?(t.child=rn(t,e.child,null,i),t.child=rn(t,null,o,i)):ue(e,t,o,i),t.memoizedState=r.state,l&&yo(t,n,!0),t.child}function Ha(e){var t=e.stateNode;t.pendingContext?go(e,t.pendingContext,t.pendingContext!==t.context):t.context&&go(e,t.context,!1),vs(e,t.containerInfo)}function Do(e,t,n,r,l){return nn(),cs(l),t.flags|=256,ue(e,t,n,r),t.child}var zi={dehydrated:null,treeContext:null,retryLane:0};function Ri(e){return{baseLanes:e,cachePool:null,transitions:null}}function Ba(e,t,n){var r=t.pendingProps,l=$.current,i=!1,s=(t.flags&128)!==0,o;if((o=s)||(o=e!==null&&e.memoizedState===null?!1:(l&2)!==0),o?(i=!0,t.flags&=-129):(e===null||e.memoizedState!==null)&&(l|=1),A($,l&1),e===null)return Ni(t),e=t.memoizedState,e!==null&&(e=e.dehydrated,e!==null)?(t.mode&1?e.data==="$!"?t.lanes=8:t.lanes=1073741824:t.lanes=1,null):(s=r.children,e=r.fallback,i?(r=t.mode,i=t.child,s={mode:"hidden",children:s},!(r&1)&&i!==null?(i.childLanes=0,i.pendingProps=s):i=pl(s,r,0,null),e=jt(e,r,n,null),i.return=t,e.return=t,i.sibling=e,t.child=i,t.child.memoizedState=Ri(n),t.memoizedState=zi,e):Ns(t,s));if(l=e.memoizedState,l!==null&&(o=l.dehydrated,o!==null))return vd(e,t,s,r,o,l,n);if(i){i=r.fallback,s=t.mode,l=e.child,o=l.sibling;var u={mode:"hidden",children:r.children};return!(s&1)&&t.child!==l?(r=t.child,r.childLanes=0,r.pendingProps=u,t.deletions=null):(r=dt(l,u),r.subtreeFlags=l.subtreeFlags&14680064),o!==null?i=dt(o,i):(i=jt(i,s,n,null),i.flags|=2),i.return=t,r.return=t,r.sibling=i,t.child=r,r=i,i=t.child,s=e.child.memoizedState,s=s===null?Ri(n):{baseLanes:s.baseLanes|n,cachePool:null,transitions:s.transitions},i.memoizedState=s,i.childLanes=e.childLanes&~n,t.memoizedState=zi,r}return i=e.child,e=i.sibling,r=dt(i,{mode:"visible",children:r.children}),!(t.mode&1)&&(r.lanes=n),r.return=t,r.sibling=null,e!==null&&(n=t.deletions,n===null?(t.deletions=[e],t.flags|=16):n.push(e)),t.child=r,t.memoizedState=null,r}function Ns(e,t){return t=pl({mode:"visible",children:t},e.mode,0,null),t.return=e,e.child=t}function gr(e,t,n,r){return r!==null&&cs(r),rn(t,e.child,null,n),e=Ns(t,t.pendingProps.children),e.flags|=2,t.memoizedState=null,e}function vd(e,t,n,r,l,i,s){if(n)return t.flags&256?(t.flags&=-257,r=Vl(Error(x(422))),gr(e,t,s,r)):t.memoizedState!==null?(t.child=e.child,t.flags|=128,null):(i=r.fallback,l=t.mode,r=pl({mode:"visible",children:r.children},l,0,null),i=jt(i,l,s,null),i.flags|=2,r.return=t,i.return=t,r.sibling=i,t.child=r,t.mode&1&&rn(t,e.child,null,s),t.child.memoizedState=Ri(s),t.memoizedState=zi,i);if(!(t.mode&1))return gr(e,t,s,null);if(l.data==="$!"){if(r=l.nextSibling&&l.nextSibling.dataset,r)var o=r.dgst;return r=o,i=Error(x(419)),r=Vl(i,r,void 0),gr(e,t,s,r)}if(o=(s&e.childLanes)!==0,he||o){if(r=ee,r!==null){switch(s&-s){case 4:l=2;break;case 16:l=8;break;case 64:case 128:case 256:case 512:case 1024:case 2048:case 4096:case 8192:case 16384:case 32768:case 65536:case 131072:case 262144:case 524288:case 1048576:case 2097152:case 4194304:case 8388608:case 16777216:case 33554432:case 67108864:l=32;break;case 536870912:l=268435456;break;default:l=0}l=l&(r.suspendedLanes|s)?0:l,l!==0&&l!==i.retryLane&&(i.retryLane=l,Ge(e,l),Ie(r,e,l,-1))}return Ts(),r=Vl(Error(x(421))),gr(e,t,s,r)}return l.data==="$?"?(t.flags|=128,t.child=e.child,t=Ld.bind(null,e),l._reactRetry=t,null):(e=i.treeContext,ye=ut(l.nextSibling),we=t,B=!0,Me=null,e!==null&&(Ce[Ne++]=Ve,Ce[Ne++]=Qe,Ce[Ne++]=Pt,Ve=e.id,Qe=e.overflow,Pt=t),t=Ns(t,r.children),t.flags|=4096,t)}function Io(e,t,n){e.lanes|=t;var r=e.alternate;r!==null&&(r.lanes|=t),Ei(e.return,t,n)}function Ql(e,t,n,r,l){var i=e.memoizedState;i===null?e.memoizedState={isBackwards:t,rendering:null,renderingStartTime:0,last:r,tail:n,tailMode:l}:(i.isBackwards=t,i.rendering=null,i.renderingStartTime=0,i.last=r,i.tail=n,i.tailMode=l)}function $a(e,t,n){var r=t.pendingProps,l=r.revealOrder,i=r.tail;if(ue(e,t,r.children,n),r=$.current,r&2)r=r&1|2,t.flags|=128;else{if(e!==null&&e.flags&128)e:for(e=t.child;e!==null;){if(e.tag===13)e.memoizedState!==null&&Io(e,n,t);else if(e.tag===19)Io(e,n,t);else if(e.child!==null){e.child.return=e,e=e.child;continue}if(e===t)break e;for(;e.sibling===null;){if(e.return===null||e.return===t)break e;e=e.return}e.sibling.return=e.return,e=e.sibling}r&=1}if(A($,r),!(t.mode&1))t.memoizedState=null;else switch(l){case"forwards":for(n=t.child,l=null;n!==null;)e=n.alternate,e!==null&&Gr(e)===null&&(l=n),n=n.sibling;n=l,n===null?(l=t.child,t.child=null):(l=n.sibling,n.sibling=null),Ql(t,!1,l,n,i);break;case"backwards":for(n=null,l=t.child,t.child=null;l!==null;){if(e=l.alternate,e!==null&&Gr(e)===null){t.child=l;break}e=l.sibling,l.sibling=n,n=l,l=e}Ql(t,!0,n,null,i);break;case"together":Ql(t,!1,null,null,void 0);break;default:t.memoizedState=null}return t.child}function Lr(e,t){!(t.mode&1)&&e!==null&&(e.alternate=null,t.alternate=null,t.flags|=2)}function Ze(e,t,n){if(e!==null&&(t.dependencies=e.dependencies),Tt|=t.lanes,!(n&t.childLanes))return null;if(e!==null&&t.child!==e.child)throw Error(x(153));if(t.child!==null){for(e=t.child,n=dt(e,e.pendingProps),t.child=n,n.return=t;e.sibling!==null;)e=e.sibling,n=n.sibling=dt(e,e.pendingProps),n.return=t;n.sibling=null}return t.child}function gd(e,t,n){switch(t.tag){case 3:Ha(t),nn();break;case 5:pa(t);break;case 1:me(t.type)&&Wr(t);break;case 4:vs(t,t.stateNode.containerInfo);break;case 10:var r=t.type._context,l=t.memoizedProps.value;A(Kr,r._currentValue),r._currentValue=l;break;case 13:if(r=t.memoizedState,r!==null)return r.dehydrated!==null?(A($,$.current&1),t.flags|=128,null):n&t.child.childLanes?Ba(e,t,n):(A($,$.current&1),e=Ze(e,t,n),e!==null?e.sibling:null);A($,$.current&1);break;case 19:if(r=(n&t.childLanes)!==0,e.flags&128){if(r)return $a(e,t,n);t.flags|=128}if(l=t.memoizedState,l!==null&&(l.rendering=null,l.tail=null,l.lastEffect=null),A($,$.current),r)break;return null;case 22:case 23:return t.lanes=0,Aa(e,t,n)}return Ze(e,t,n)}var Wa,Mi,Va,Qa;Wa=function(e,t){for(var n=t.child;n!==null;){if(n.tag===5||n.tag===6)e.appendChild(n.stateNode);else if(n.tag!==4&&n.child!==null){n.child.return=n,n=n.child;continue}if(n===t)break;for(;n.sibling===null;){if(n.return===null||n.return===t)return;n=n.return}n.sibling.return=n.return,n=n.sibling}};Mi=function(){};Va=function(e,t,n,r){var l=e.memoizedProps;if(l!==r){e=t.stateNode,Nt(Be.current);var i=null;switch(n){case"input":l=ti(e,l),r=ti(e,r),i=[];break;case"select":l=V({},l,{value:void 0}),r=V({},r,{value:void 0}),i=[];break;case"textarea":l=li(e,l),r=li(e,r),i=[];break;default:typeof l.onClick!="function"&&typeof r.onClick=="function"&&(e.onclick=Br)}si(n,r);var s;n=null;for(f in l)if(!r.hasOwnProperty(f)&&l.hasOwnProperty(f)&&l[f]!=null)if(f==="style"){var o=l[f];for(s in o)o.hasOwnProperty(s)&&(n||(n={}),n[s]="")}else f!=="dangerouslySetInnerHTML"&&f!=="children"&&f!=="suppressContentEditableWarning"&&f!=="suppressHydrationWarning"&&f!=="autoFocus"&&(Dn.hasOwnProperty(f)?i||(i=[]):(i=i||[]).push(f,null));for(f in r){var u=r[f];if(o=l!=null?l[f]:void 0,r.hasOwnProperty(f)&&u!==o&&(u!=null||o!=null))if(f==="style")if(o){for(s in o)!o.hasOwnProperty(s)||u&&u.hasOwnProperty(s)||(n||(n={}),n[s]="");for(s in u)u.hasOwnProperty(s)&&o[s]!==u[s]&&(n||(n={}),n[s]=u[s])}else n||(i||(i=[]),i.push(f,n)),n=u;else f==="dangerouslySetInnerHTML"?(u=u?u.__html:void 0,o=o?o.__html:void 0,u!=null&&o!==u&&(i=i||[]).push(f,u)):f==="children"?typeof u!="string"&&typeof u!="number"||(i=i||[]).push(f,""+u):f!=="suppressContentEditableWarning"&&f!=="suppressHydrationWarning"&&(Dn.hasOwnProperty(f)?(u!=null&&f==="onScroll"&&U("scroll",e),i||o===u||(i=[])):(i=i||[]).push(f,u))}n&&(i=i||[]).push("style",n);var f=i;(t.updateQueue=f)&&(t.flags|=4)}};Qa=function(e,t,n,r){n!==r&&(t.flags|=4)};function wn(e,t){if(!B)switch(e.tailMode){case"hidden":t=e.tail;for(var n=null;t!==null;)t.alternate!==null&&(n=t),t=t.sibling;n===null?e.tail=null:n.sibling=null;break;case"collapsed":n=e.tail;for(var r=null;n!==null;)n.alternate!==null&&(r=n),n=n.sibling;r===null?t||e.tail===null?e.tail=null:e.tail.sibling=null:r.sibling=null}}function ie(e){var t=e.alternate!==null&&e.alternate.child===e.child,n=0,r=0;if(t)for(var l=e.child;l!==null;)n|=l.lanes|l.childLanes,r|=l.subtreeFlags&14680064,r|=l.flags&14680064,l.return=e,l=l.sibling;else for(l=e.child;l!==null;)n|=l.lanes|l.childLanes,r|=l.subtreeFlags,r|=l.flags,l.return=e,l=l.sibling;return e.subtreeFlags|=r,e.childLanes=n,t}function yd(e,t,n){var r=t.pendingProps;switch(as(t),t.tag){case 2:case 16:case 15:case 0:case 11:case 7:case 8:case 12:case 9:case 14:return ie(t),null;case 1:return me(t.type)&&$r(),ie(t),null;case 3:return r=t.stateNode,ln(),H(pe),H(oe),ys(),r.pendingContext&&(r.context=r.pendingContext,r.pendingContext=null),(e===null||e.child===null)&&(mr(t)?t.flags|=4:e===null||e.memoizedState.isDehydrated&&!(t.flags&256)||(t.flags|=1024,Me!==null&&(Bi(Me),Me=null))),Mi(e,t),ie(t),null;case 5:gs(t);var l=Nt(Kn.current);if(n=t.type,e!==null&&t.stateNode!=null)Va(e,t,n,r,l),e.ref!==t.ref&&(t.flags|=512,t.flags|=2097152);else{if(!r){if(t.stateNode===null)throw Error(x(166));return ie(t),null}if(e=Nt(Be.current),mr(t)){r=t.stateNode,n=t.type;var i=t.memoizedProps;switch(r[Ue]=t,r[Vn]=i,e=(t.mode&1)!==0,n){case"dialog":U("cancel",r),U("close",r);break;case"iframe":case"object":case"embed":U("load",r);break;case"video":case"audio":for(l=0;l<Nn.length;l++)U(Nn[l],r);break;case"source":U("error",r);break;case"img":case"image":case"link":U("error",r),U("load",r);break;case"details":U("toggle",r);break;case"input":Ws(r,i),U("invalid",r);break;case"select":r._wrapperState={wasMultiple:!!i.multiple},U("invalid",r);break;case"textarea":Qs(r,i),U("invalid",r)}si(n,i),l=null;for(var s in i)if(i.hasOwnProperty(s)){var o=i[s];s==="children"?typeof o=="string"?r.textContent!==o&&(i.suppressHydrationWarning!==!0&&pr(r.textContent,o,e),l=["children",o]):typeof o=="number"&&r.textContent!==""+o&&(i.suppressHydrationWarning!==!0&&pr(r.textContent,o,e),l=["children",""+o]):Dn.hasOwnProperty(s)&&o!=null&&s==="onScroll"&&U("scroll",r)}switch(n){case"input":sr(r),Vs(r,i,!0);break;case"textarea":sr(r),Ks(r);break;case"select":case"option":break;default:typeof i.onClick=="function"&&(r.onclick=Br)}r=l,t.updateQueue=r,r!==null&&(t.flags|=4)}else{s=l.nodeType===9?l:l.ownerDocument,e==="http://www.w3.org/1999/xhtml"&&(e=wu(n)),e==="http://www.w3.org/1999/xhtml"?n==="script"?(e=s.createElement("div"),e.innerHTML="<script><\/script>",e=e.removeChild(e.firstChild)):typeof r.is=="string"?e=s.createElement(n,{is:r.is}):(e=s.createElement(n),n==="select"&&(s=e,r.multiple?s.multiple=!0:r.size&&(s.size=r.size))):e=s.createElementNS(e,n),e[Ue]=t,e[Vn]=r,Wa(e,t,!1,!1),t.stateNode=e;e:{switch(s=oi(n,r),n){case"dialog":U("cancel",e),U("close",e),l=r;break;case"iframe":case"object":case"embed":U("load",e),l=r;break;case"video":case"audio":for(l=0;l<Nn.length;l++)U(Nn[l],e);l=r;break;case"source":U("error",e),l=r;break;case"img":case"image":case"link":U("error",e),U("load",e),l=r;break;case"details":U("toggle",e),l=r;break;case"input":Ws(e,r),l=ti(e,r),U("invalid",e);break;case"option":l=r;break;case"select":e._wrapperState={wasMultiple:!!r.multiple},l=V({},r,{value:void 0}),U("invalid",e);break;case"textarea":Qs(e,r),l=li(e,r),U("invalid",e);break;default:l=r}si(n,l),o=l;for(i in o)if(o.hasOwnProperty(i)){var u=o[i];i==="style"?ku(e,u):i==="dangerouslySetInnerHTML"?(u=u?u.__html:void 0,u!=null&&xu(e,u)):i==="children"?typeof u=="string"?(n!=="textarea"||u!=="")&&In(e,u):typeof u=="number"&&In(e,""+u):i!=="suppressContentEditableWarning"&&i!=="suppressHydrationWarning"&&i!=="autoFocus"&&(Dn.hasOwnProperty(i)?u!=null&&i==="onScroll"&&U("scroll",e):u!=null&&Xi(e,i,u,s))}switch(n){case"input":sr(e),Vs(e,r,!1);break;case"textarea":sr(e),Ks(e);break;case"option":r.value!=null&&e.setAttribute("value",""+ht(r.value));break;case"select":e.multiple=!!r.multiple,i=r.value,i!=null?Xt(e,!!r.multiple,i,!1):r.defaultValue!=null&&Xt(e,!!r.multiple,r.defaultValue,!0);break;default:typeof l.onClick=="function"&&(e.onclick=Br)}switch(n){case"button":case"input":case"select":case"textarea":r=!!r.autoFocus;break e;case"img":r=!0;break e;default:r=!1}}r&&(t.flags|=4)}t.ref!==null&&(t.flags|=512,t.flags|=2097152)}return ie(t),null;case 6:if(e&&t.stateNode!=null)Qa(e,t,e.memoizedProps,r);else{if(typeof r!="string"&&t.stateNode===null)throw Error(x(166));if(n=Nt(Kn.current),Nt(Be.current),mr(t)){if(r=t.stateNode,n=t.memoizedProps,r[Ue]=t,(i=r.nodeValue!==n)&&(e=we,e!==null))switch(e.tag){case 3:pr(r.nodeValue,n,(e.mode&1)!==0);break;case 5:e.memoizedProps.suppressHydrationWarning!==!0&&pr(r.nodeValue,n,(e.mode&1)!==0)}i&&(t.flags|=4)}else r=(n.nodeType===9?n:n.ownerDocument).createTextNode(r),r[Ue]=t,t.stateNode=r}return ie(t),null;case 13:if(H($),r=t.memoizedState,e===null||e.memoizedState!==null&&e.memoizedState.dehydrated!==null){if(B&&ye!==null&&t.mode&1&&!(t.flags&128))aa(),nn(),t.flags|=98560,i=!1;else if(i=mr(t),r!==null&&r.dehydrated!==null){if(e===null){if(!i)throw Error(x(318));if(i=t.memoizedState,i=i!==null?i.dehydrated:null,!i)throw Error(x(317));i[Ue]=t}else nn(),!(t.flags&128)&&(t.memoizedState=null),t.flags|=4;ie(t),i=!1}else Me!==null&&(Bi(Me),Me=null),i=!0;if(!i)return t.flags&65536?t:null}return t.flags&128?(t.lanes=n,t):(r=r!==null,r!==(e!==null&&e.memoizedState!==null)&&r&&(t.child.flags|=8192,t.mode&1&&(e===null||$.current&1?Z===0&&(Z=3):Ts())),t.updateQueue!==null&&(t.flags|=4),ie(t),null);case 4:return ln(),Mi(e,t),e===null&&$n(t.stateNode.containerInfo),ie(t),null;case 10:return hs(t.type._context),ie(t),null;case 17:return me(t.type)&&$r(),ie(t),null;case 19:if(H($),i=t.memoizedState,i===null)return ie(t),null;if(r=(t.flags&128)!==0,s=i.rendering,s===null)if(r)wn(i,!1);else{if(Z!==0||e!==null&&e.flags&128)for(e=t.child;e!==null;){if(s=Gr(e),s!==null){for(t.flags|=128,wn(i,!1),r=s.updateQueue,r!==null&&(t.updateQueue=r,t.flags|=4),t.subtreeFlags=0,r=n,n=t.child;n!==null;)i=n,e=r,i.flags&=14680066,s=i.alternate,s===null?(i.childLanes=0,i.lanes=e,i.child=null,i.subtreeFlags=0,i.memoizedProps=null,i.memoizedState=null,i.updateQueue=null,i.dependencies=null,i.stateNode=null):(i.childLanes=s.childLanes,i.lanes=s.lanes,i.child=s.child,i.subtreeFlags=0,i.deletions=null,i.memoizedProps=s.memoizedProps,i.memoizedState=s.memoizedState,i.updateQueue=s.updateQueue,i.type=s.type,e=s.dependencies,i.dependencies=e===null?null:{lanes:e.lanes,firstContext:e.firstContext}),n=n.sibling;return A($,$.current&1|2),t.child}e=e.sibling}i.tail!==null&&Y()>on&&(t.flags|=128,r=!0,wn(i,!1),t.lanes=4194304)}else{if(!r)if(e=Gr(s),e!==null){if(t.flags|=128,r=!0,n=e.updateQueue,n!==null&&(t.updateQueue=n,t.flags|=4),wn(i,!0),i.tail===null&&i.tailMode==="hidden"&&!s.alternate&&!B)return ie(t),null}else 2*Y()-i.renderingStartTime>on&&n!==1073741824&&(t.flags|=128,r=!0,wn(i,!1),t.lanes=4194304);i.isBackwards?(s.sibling=t.child,t.child=s):(n=i.last,n!==null?n.sibling=s:t.child=s,i.last=s)}return i.tail!==null?(t=i.tail,i.rendering=t,i.tail=t.sibling,i.renderingStartTime=Y(),t.sibling=null,n=$.current,A($,r?n&1|2:n&1),t):(ie(t),null);case 22:case 23:return Ls(),r=t.memoizedState!==null,e!==null&&e.memoizedState!==null!==r&&(t.flags|=8192),r&&t.mode&1?ge&1073741824&&(ie(t),t.subtreeFlags&6&&(t.flags|=8192)):ie(t),null;case 24:return null;case 25:return null}throw Error(x(156,t.tag))}function wd(e,t){switch(as(t),t.tag){case 1:return me(t.type)&&$r(),e=t.flags,e&65536?(t.flags=e&-65537|128,t):null;case 3:return ln(),H(pe),H(oe),ys(),e=t.flags,e&65536&&!(e&128)?(t.flags=e&-65537|128,t):null;case 5:return gs(t),null;case 13:if(H($),e=t.memoizedState,e!==null&&e.dehydrated!==null){if(t.alternate===null)throw Error(x(340));nn()}return e=t.flags,e&65536?(t.flags=e&-65537|128,t):null;case 19:return H($),null;case 4:return ln(),null;case 10:return hs(t.type._context),null;case 22:case 23:return Ls(),null;case 24:return null;default:return null}}var yr=!1,se=!1,xd=typeof WeakSet=="function"?WeakSet:Set,E=null;function Kt(e,t){var n=e.ref;if(n!==null)if(typeof n=="function")try{n(null)}catch(r){Q(e,t,r)}else n.current=null}function Di(e,t,n){try{n()}catch(r){Q(e,t,r)}}var Oo=!1;function Sd(e,t){if(gi=Ar,e=Zu(),os(e)){if("selectionStart"in e)var n={start:e.selectionStart,end:e.selectionEnd};else e:{n=(n=e.ownerDocument)&&n.defaultView||window;var r=n.getSelection&&n.getSelection();if(r&&r.rangeCount!==0){n=r.anchorNode;var l=r.anchorOffset,i=r.focusNode;r=r.focusOffset;try{n.nodeType,i.nodeType}catch{n=null;break e}var s=0,o=-1,u=-1,f=0,v=0,g=e,m=null;t:for(;;){for(var k;g!==n||l!==0&&g.nodeType!==3||(o=s+l),g!==i||r!==0&&g.nodeType!==3||(u=s+r),g.nodeType===3&&(s+=g.nodeValue.length),(k=g.firstChild)!==null;)m=g,g=k;for(;;){if(g===e)break t;if(m===n&&++f===l&&(o=s),m===i&&++v===r&&(u=s),(k=g.nextSibling)!==null)break;g=m,m=g.parentNode}g=k}n=o===-1||u===-1?null:{start:o,end:u}}else n=null}n=n||{start:0,end:0}}else n=null;for(yi={focusedElem:e,selectionRange:n},Ar=!1,E=t;E!==null;)if(t=E,e=t.child,(t.subtreeFlags&1028)!==0&&e!==null)e.return=t,E=e;else for(;E!==null;){t=E;try{var S=t.alternate;if(t.flags&1024)switch(t.tag){case 0:case 11:case 15:break;case 1:if(S!==null){var w=S.memoizedProps,L=S.memoizedState,h=t.stateNode,c=h.getSnapshotBeforeUpdate(t.elementType===t.type?w:ze(t.type,w),L);h.__reactInternalSnapshotBeforeUpdate=c}break;case 3:var d=t.stateNode.containerInfo;d.nodeType===1?d.textContent="":d.nodeType===9&&d.documentElement&&d.removeChild(d.documentElement);break;case 5:case 6:case 4:case 17:break;default:throw Error(x(163))}}catch(p){Q(t,t.return,p)}if(e=t.sibling,e!==null){e.return=t.return,E=e;break}E=t.return}return S=Oo,Oo=!1,S}function zn(e,t,n){var r=t.updateQueue;if(r=r!==null?r.lastEffect:null,r!==null){var l=r=r.next;do{if((l.tag&e)===e){var i=l.destroy;l.destroy=void 0,i!==void 0&&Di(t,n,i)}l=l.next}while(l!==r)}}function dl(e,t){if(t=t.updateQueue,t=t!==null?t.lastEffect:null,t!==null){var n=t=t.next;do{if((n.tag&e)===e){var r=n.create;n.destroy=r()}n=n.next}while(n!==t)}}function Ii(e){var t=e.ref;if(t!==null){var n=e.stateNode;switch(e.tag){case 5:e=n;break;default:e=n}typeof t=="function"?t(e):t.current=e}}function Ka(e){var t=e.alternate;t!==null&&(e.alternate=null,Ka(t)),e.child=null,e.deletions=null,e.sibling=null,e.tag===5&&(t=e.stateNode,t!==null&&(delete t[Ue],delete t[Vn],delete t[Si],delete t[rd],delete t[ld])),e.stateNode=null,e.return=null,e.dependencies=null,e.memoizedProps=null,e.memoizedState=null,e.pendingProps=null,e.stateNode=null,e.updateQueue=null}function Ya(e){return e.tag===5||e.tag===3||e.tag===4}function Fo(e){e:for(;;){for(;e.sibling===null;){if(e.return===null||Ya(e.return))return null;e=e.return}for(e.sibling.return=e.return,e=e.sibling;e.tag!==5&&e.tag!==6&&e.tag!==18;){if(e.flags&2||e.child===null||e.tag===4)continue e;e.child.return=e,e=e.child}if(!(e.flags&2))return e.stateNode}}function Oi(e,t,n){var r=e.tag;if(r===5||r===6)e=e.stateNode,t?n.nodeType===8?n.parentNode.insertBefore(e,t):n.insertBefore(e,t):(n.nodeType===8?(t=n.parentNode,t.insertBefore(e,n)):(t=n,t.appendChild(e)),n=n._reactRootContainer,n!=null||t.onclick!==null||(t.onclick=Br));else if(r!==4&&(e=e.child,e!==null))for(Oi(e,t,n),e=e.sibling;e!==null;)Oi(e,t,n),e=e.sibling}function Fi(e,t,n){var r=e.tag;if(r===5||r===6)e=e.stateNode,t?n.insertBefore(e,t):n.appendChild(e);else if(r!==4&&(e=e.child,e!==null))for(Fi(e,t,n),e=e.sibling;e!==null;)Fi(e,t,n),e=e.sibling}var te=null,Re=!1;function qe(e,t,n){for(n=n.child;n!==null;)Xa(e,t,n),n=n.sibling}function Xa(e,t,n){if(He&&typeof He.onCommitFiberUnmount=="function")try{He.onCommitFiberUnmount(ll,n)}catch{}switch(n.tag){case 5:se||Kt(n,t);case 6:var r=te,l=Re;te=null,qe(e,t,n),te=r,Re=l,te!==null&&(Re?(e=te,n=n.stateNode,e.nodeType===8?e.parentNode.removeChild(n):e.removeChild(n)):te.removeChild(n.stateNode));break;case 18:te!==null&&(Re?(e=te,n=n.stateNode,e.nodeType===8?Al(e.parentNode,n):e.nodeType===1&&Al(e,n),Un(e)):Al(te,n.stateNode));break;case 4:r=te,l=Re,te=n.stateNode.containerInfo,Re=!0,qe(e,t,n),te=r,Re=l;break;case 0:case 11:case 14:case 15:if(!se&&(r=n.updateQueue,r!==null&&(r=r.lastEffect,r!==null))){l=r=r.next;do{var i=l,s=i.destroy;i=i.tag,s!==void 0&&(i&2||i&4)&&Di(n,t,s),l=l.next}while(l!==r)}qe(e,t,n);break;case 1:if(!se&&(Kt(n,t),r=n.stateNode,typeof r.componentWillUnmount=="function"))try{r.props=n.memoizedProps,r.state=n.memoizedState,r.componentWillUnmount()}catch(o){Q(n,t,o)}qe(e,t,n);break;case 21:qe(e,t,n);break;case 22:n.mode&1?(se=(r=se)||n.memoizedState!==null,qe(e,t,n),se=r):qe(e,t,n);break;default:qe(e,t,n)}}function Ao(e){var t=e.updateQueue;if(t!==null){e.updateQueue=null;var n=e.stateNode;n===null&&(n=e.stateNode=new xd),t.forEach(function(r){var l=Td.bind(null,e,r);n.has(r)||(n.add(r),r.then(l,l))})}}function Te(e,t){var n=t.deletions;if(n!==null)for(var r=0;r<n.length;r++){var l=n[r];try{var i=e,s=t,o=s;e:for(;o!==null;){switch(o.tag){case 5:te=o.stateNode,Re=!1;break e;case 3:te=o.stateNode.containerInfo,Re=!0;break e;case 4:te=o.stateNode.containerInfo,Re=!0;break e}o=o.return}if(te===null)throw Error(x(160));Xa(i,s,l),te=null,Re=!1;var u=l.alternate;u!==null&&(u.return=null),l.return=null}catch(f){Q(l,t,f)}}if(t.subtreeFlags&12854)for(t=t.child;t!==null;)Ga(t,e),t=t.sibling}function Ga(e,t){var n=e.alternate,r=e.flags;switch(e.tag){case 0:case 11:case 14:case 15:if(Te(t,e),Fe(e),r&4){try{zn(3,e,e.return),dl(3,e)}catch(w){Q(e,e.return,w)}try{zn(5,e,e.return)}catch(w){Q(e,e.return,w)}}break;case 1:Te(t,e),Fe(e),r&512&&n!==null&&Kt(n,n.return);break;case 5:if(Te(t,e),Fe(e),r&512&&n!==null&&Kt(n,n.return),e.flags&32){var l=e.stateNode;try{In(l,"")}catch(w){Q(e,e.return,w)}}if(r&4&&(l=e.stateNode,l!=null)){var i=e.memoizedProps,s=n!==null?n.memoizedProps:i,o=e.type,u=e.updateQueue;if(e.updateQueue=null,u!==null)try{o==="input"&&i.type==="radio"&&i.name!=null&&gu(l,i),oi(o,s);var f=oi(o,i);for(s=0;s<u.length;s+=2){var v=u[s],g=u[s+1];v==="style"?ku(l,g):v==="dangerouslySetInnerHTML"?xu(l,g):v==="children"?In(l,g):Xi(l,v,g,f)}switch(o){case"input":ni(l,i);break;case"textarea":yu(l,i);break;case"select":var m=l._wrapperState.wasMultiple;l._wrapperState.wasMultiple=!!i.multiple;var k=i.value;k!=null?Xt(l,!!i.multiple,k,!1):m!==!!i.multiple&&(i.defaultValue!=null?Xt(l,!!i.multiple,i.defaultValue,!0):Xt(l,!!i.multiple,i.multiple?[]:"",!1))}l[Vn]=i}catch(w){Q(e,e.return,w)}}break;case 6:if(Te(t,e),Fe(e),r&4){if(e.stateNode===null)throw Error(x(162));l=e.stateNode,i=e.memoizedProps;try{l.nodeValue=i}catch(w){Q(e,e.return,w)}}break;case 3:if(Te(t,e),Fe(e),r&4&&n!==null&&n.memoizedState.isDehydrated)try{Un(t.containerInfo)}catch(w){Q(e,e.return,w)}break;case 4:Te(t,e),Fe(e);break;case 13:Te(t,e),Fe(e),l=e.child,l.flags&8192&&(i=l.memoizedState!==null,l.stateNode.isHidden=i,!i||l.alternate!==null&&l.alternate.memoizedState!==null||(_s=Y())),r&4&&Ao(e);break;case 22:if(v=n!==null&&n.memoizedState!==null,e.mode&1?(se=(f=se)||v,Te(t,e),se=f):Te(t,e),Fe(e),r&8192){if(f=e.memoizedState!==null,(e.stateNode.isHidden=f)&&!v&&e.mode&1)for(E=e,v=e.child;v!==null;){for(g=E=v;E!==null;){switch(m=E,k=m.child,m.tag){case 0:case 11:case 14:case 15:zn(4,m,m.return);break;case 1:Kt(m,m.return);var S=m.stateNode;if(typeof S.componentWillUnmount=="function"){r=m,n=m.return;try{t=r,S.props=t.memoizedProps,S.state=t.memoizedState,S.componentWillUnmount()}catch(w){Q(r,n,w)}}break;case 5:Kt(m,m.return);break;case 22:if(m.memoizedState!==null){Ho(g);continue}}k!==null?(k.return=m,E=k):Ho(g)}v=v.sibling}e:for(v=null,g=e;;){if(g.tag===5){if(v===null){v=g;try{l=g.stateNode,f?(i=l.style,typeof i.setProperty=="function"?i.setProperty("display","none","important"):i.display="none"):(o=g.stateNode,u=g.memoizedProps.style,s=u!=null&&u.hasOwnProperty("display")?u.display:null,o.style.display=Su("display",s))}catch(w){Q(e,e.return,w)}}}else if(g.tag===6){if(v===null)try{g.stateNode.nodeValue=f?"":g.memoizedProps}catch(w){Q(e,e.return,w)}}else if((g.tag!==22&&g.tag!==23||g.memoizedState===null||g===e)&&g.child!==null){g.child.return=g,g=g.child;continue}if(g===e)break e;for(;g.sibling===null;){if(g.return===null||g.return===e)break e;v===g&&(v=null),g=g.return}v===g&&(v=null),g.sibling.return=g.return,g=g.sibling}}break;case 19:Te(t,e),Fe(e),r&4&&Ao(e);break;case 21:break;default:Te(t,e),Fe(e)}}function Fe(e){var t=e.flags;if(t&2){try{e:{for(var n=e.return;n!==null;){if(Ya(n)){var r=n;break e}n=n.return}throw Error(x(160))}switch(r.tag){case 5:var l=r.stateNode;r.flags&32&&(In(l,""),r.flags&=-33);var i=Fo(e);Fi(e,i,l);break;case 3:case 4:var s=r.stateNode.containerInfo,o=Fo(e);Oi(e,o,s);break;default:throw Error(x(161))}}catch(u){Q(e,e.return,u)}e.flags&=-3}t&4096&&(e.flags&=-4097)}function kd(e,t,n){E=e,Za(e)}function Za(e,t,n){for(var r=(e.mode&1)!==0;E!==null;){var l=E,i=l.child;if(l.tag===22&&r){var s=l.memoizedState!==null||yr;if(!s){var o=l.alternate,u=o!==null&&o.memoizedState!==null||se;o=yr;var f=se;if(yr=s,(se=u)&&!f)for(E=l;E!==null;)s=E,u=s.child,s.tag===22&&s.memoizedState!==null?Bo(l):u!==null?(u.return=s,E=u):Bo(l);for(;i!==null;)E=i,Za(i),i=i.sibling;E=l,yr=o,se=f}Uo(e)}else l.subtreeFlags&8772&&i!==null?(i.return=l,E=i):Uo(e)}}function Uo(e){for(;E!==null;){var t=E;if(t.flags&8772){var n=t.alternate;try{if(t.flags&8772)switch(t.tag){case 0:case 11:case 15:se||dl(5,t);break;case 1:var r=t.stateNode;if(t.flags&4&&!se)if(n===null)r.componentDidMount();else{var l=t.elementType===t.type?n.memoizedProps:ze(t.type,n.memoizedProps);r.componentDidUpdate(l,n.memoizedState,r.__reactInternalSnapshotBeforeUpdate)}var i=t.updateQueue;i!==null&&Co(t,i,r);break;case 3:var s=t.updateQueue;if(s!==null){if(n=null,t.child!==null)switch(t.child.tag){case 5:n=t.child.stateNode;break;case 1:n=t.child.stateNode}Co(t,s,n)}break;case 5:var o=t.stateNode;if(n===null&&t.flags&4){n=o;var u=t.memoizedProps;switch(t.type){case"button":case"input":case"select":case"textarea":u.autoFocus&&n.focus();break;case"img":u.src&&(n.src=u.src)}}break;case 6:break;case 4:break;case 12:break;case 13:if(t.memoizedState===null){var f=t.alternate;if(f!==null){var v=f.memoizedState;if(v!==null){var g=v.dehydrated;g!==null&&Un(g)}}}break;case 19:case 17:case 21:case 22:case 23:case 25:break;default:throw Error(x(163))}se||t.flags&512&&Ii(t)}catch(m){Q(t,t.return,m)}}if(t===e){E=null;break}if(n=t.sibling,n!==null){n.return=t.return,E=n;break}E=t.return}}function Ho(e){for(;E!==null;){var t=E;if(t===e){E=null;break}var n=t.sibling;if(n!==null){n.return=t.return,E=n;break}E=t.return}}function Bo(e){for(;E!==null;){var t=E;try{switch(t.tag){case 0:case 11:case 15:var n=t.return;try{dl(4,t)}catch(u){Q(t,n,u)}break;case 1:var r=t.stateNode;if(typeof r.componentDidMount=="function"){var l=t.return;try{r.componentDidMount()}catch(u){Q(t,l,u)}}var i=t.return;try{Ii(t)}catch(u){Q(t,i,u)}break;case 5:var s=t.return;try{Ii(t)}catch(u){Q(t,s,u)}}}catch(u){Q(t,t.return,u)}if(t===e){E=null;break}var o=t.sibling;if(o!==null){o.return=t.return,E=o;break}E=t.return}}var Cd=Math.ceil,qr=Je.ReactCurrentDispatcher,Es=Je.ReactCurrentOwner,je=Je.ReactCurrentBatchConfig,I=0,ee=null,X=null,ne=0,ge=0,Yt=vt(0),Z=0,Zn=null,Tt=0,hl=0,js=0,Rn=null,de=null,_s=0,on=1/0,$e=null,br=!1,Ai=null,ct=null,wr=!1,lt=null,el=0,Mn=0,Ui=null,Tr=-1,zr=0;function ae(){return I&6?Y():Tr!==-1?Tr:Tr=Y()}function ft(e){return e.mode&1?I&2&&ne!==0?ne&-ne:sd.transition!==null?(zr===0&&(zr=Du()),zr):(e=O,e!==0||(e=window.event,e=e===void 0?16:Bu(e.type)),e):1}function Ie(e,t,n,r){if(50<Mn)throw Mn=0,Ui=null,Error(x(185));qn(e,n,r),(!(I&2)||e!==ee)&&(e===ee&&(!(I&2)&&(hl|=n),Z===4&&nt(e,ne)),ve(e,r),n===1&&I===0&&!(t.mode&1)&&(on=Y()+500,al&&gt()))}function ve(e,t){var n=e.callbackNode;sf(e,t);var r=Fr(e,e===ee?ne:0);if(r===0)n!==null&&Gs(n),e.callbackNode=null,e.callbackPriority=0;else if(t=r&-r,e.callbackPriority!==t){if(n!=null&&Gs(n),t===1)e.tag===0?id($o.bind(null,e)):sa($o.bind(null,e)),td(function(){!(I&6)&&gt()}),n=null;else{switch(Iu(r)){case 1:n=bi;break;case 4:n=Ru;break;case 16:n=Or;break;case 536870912:n=Mu;break;default:n=Or}n=lc(n,Ja.bind(null,e))}e.callbackPriority=t,e.callbackNode=n}}function Ja(e,t){if(Tr=-1,zr=0,I&6)throw Error(x(327));var n=e.callbackNode;if(bt()&&e.callbackNode!==n)return null;var r=Fr(e,e===ee?ne:0);if(r===0)return null;if(r&30||r&e.expiredLanes||t)t=tl(e,r);else{t=r;var l=I;I|=2;var i=ba();(ee!==e||ne!==t)&&($e=null,on=Y()+500,Et(e,t));do try{jd();break}catch(o){qa(e,o)}while(!0);ds(),qr.current=i,I=l,X!==null?t=0:(ee=null,ne=0,t=Z)}if(t!==0){if(t===2&&(l=di(e),l!==0&&(r=l,t=Hi(e,l))),t===1)throw n=Zn,Et(e,0),nt(e,r),ve(e,Y()),n;if(t===6)nt(e,r);else{if(l=e.current.alternate,!(r&30)&&!Nd(l)&&(t=tl(e,r),t===2&&(i=di(e),i!==0&&(r=i,t=Hi(e,i))),t===1))throw n=Zn,Et(e,0),nt(e,r),ve(e,Y()),n;switch(e.finishedWork=l,e.finishedLanes=r,t){case 0:case 1:throw Error(x(345));case 2:St(e,de,$e);break;case 3:if(nt(e,r),(r&130023424)===r&&(t=_s+500-Y(),10<t)){if(Fr(e,0)!==0)break;if(l=e.suspendedLanes,(l&r)!==r){ae(),e.pingedLanes|=e.suspendedLanes&l;break}e.timeoutHandle=xi(St.bind(null,e,de,$e),t);break}St(e,de,$e);break;case 4:if(nt(e,r),(r&4194240)===r)break;for(t=e.eventTimes,l=-1;0<r;){var s=31-De(r);i=1<<s,s=t[s],s>l&&(l=s),r&=~i}if(r=l,r=Y()-r,r=(120>r?120:480>r?480:1080>r?1080:1920>r?1920:3e3>r?3e3:4320>r?4320:1960*Cd(r/1960))-r,10<r){e.timeoutHandle=xi(St.bind(null,e,de,$e),r);break}St(e,de,$e);break;case 5:St(e,de,$e);break;default:throw Error(x(329))}}}return ve(e,Y()),e.callbackNode===n?Ja.bind(null,e):null}function Hi(e,t){var n=Rn;return e.current.memoizedState.isDehydrated&&(Et(e,t).flags|=256),e=tl(e,t),e!==2&&(t=de,de=n,t!==null&&Bi(t)),e}function Bi(e){de===null?de=e:de.push.apply(de,e)}function Nd(e){for(var t=e;;){if(t.flags&16384){var n=t.updateQueue;if(n!==null&&(n=n.stores,n!==null))for(var r=0;r<n.length;r++){var l=n[r],i=l.getSnapshot;l=l.value;try{if(!Oe(i(),l))return!1}catch{return!1}}}if(n=t.child,t.subtreeFlags&16384&&n!==null)n.return=t,t=n;else{if(t===e)break;for(;t.sibling===null;){if(t.return===null||t.return===e)return!0;t=t.return}t.sibling.return=t.return,t=t.sibling}}return!0}function nt(e,t){for(t&=~js,t&=~hl,e.suspendedLanes|=t,e.pingedLanes&=~t,e=e.expirationTimes;0<t;){var n=31-De(t),r=1<<n;e[n]=-1,t&=~r}}function $o(e){if(I&6)throw Error(x(327));bt();var t=Fr(e,0);if(!(t&1))return ve(e,Y()),null;var n=tl(e,t);if(e.tag!==0&&n===2){var r=di(e);r!==0&&(t=r,n=Hi(e,r))}if(n===1)throw n=Zn,Et(e,0),nt(e,t),ve(e,Y()),n;if(n===6)throw Error(x(345));return e.finishedWork=e.current.alternate,e.finishedLanes=t,St(e,de,$e),ve(e,Y()),null}function Ps(e,t){var n=I;I|=1;try{return e(t)}finally{I=n,I===0&&(on=Y()+500,al&&gt())}}function zt(e){lt!==null&&lt.tag===0&&!(I&6)&&bt();var t=I;I|=1;var n=je.transition,r=O;try{if(je.transition=null,O=1,e)return e()}finally{O=r,je.transition=n,I=t,!(I&6)&&gt()}}function Ls(){ge=Yt.current,H(Yt)}function Et(e,t){e.finishedWork=null,e.finishedLanes=0;var n=e.timeoutHandle;if(n!==-1&&(e.timeoutHandle=-1,ed(n)),X!==null)for(n=X.return;n!==null;){var r=n;switch(as(r),r.tag){case 1:r=r.type.childContextTypes,r!=null&&$r();break;case 3:ln(),H(pe),H(oe),ys();break;case 5:gs(r);break;case 4:ln();break;case 13:H($);break;case 19:H($);break;case 10:hs(r.type._context);break;case 22:case 23:Ls()}n=n.return}if(ee=e,X=e=dt(e.current,null),ne=ge=t,Z=0,Zn=null,js=hl=Tt=0,de=Rn=null,Ct!==null){for(t=0;t<Ct.length;t++)if(n=Ct[t],r=n.interleaved,r!==null){n.interleaved=null;var l=r.next,i=n.pending;if(i!==null){var s=i.next;i.next=l,r.next=s}n.pending=r}Ct=null}return e}function qa(e,t){do{var n=X;try{if(ds(),_r.current=Jr,Zr){for(var r=W.memoizedState;r!==null;){var l=r.queue;l!==null&&(l.pending=null),r=r.next}Zr=!1}if(Lt=0,b=G=W=null,Tn=!1,Yn=0,Es.current=null,n===null||n.return===null){Z=1,Zn=t,X=null;break}e:{var i=e,s=n.return,o=n,u=t;if(t=ne,o.flags|=32768,u!==null&&typeof u=="object"&&typeof u.then=="function"){var f=u,v=o,g=v.tag;if(!(v.mode&1)&&(g===0||g===11||g===15)){var m=v.alternate;m?(v.updateQueue=m.updateQueue,v.memoizedState=m.memoizedState,v.lanes=m.lanes):(v.updateQueue=null,v.memoizedState=null)}var k=Lo(s);if(k!==null){k.flags&=-257,To(k,s,o,i,t),k.mode&1&&Po(i,f,t),t=k,u=f;var S=t.updateQueue;if(S===null){var w=new Set;w.add(u),t.updateQueue=w}else S.add(u);break e}else{if(!(t&1)){Po(i,f,t),Ts();break e}u=Error(x(426))}}else if(B&&o.mode&1){var L=Lo(s);if(L!==null){!(L.flags&65536)&&(L.flags|=256),To(L,s,o,i,t),cs(sn(u,o));break e}}i=u=sn(u,o),Z!==4&&(Z=2),Rn===null?Rn=[i]:Rn.push(i),i=s;do{switch(i.tag){case 3:i.flags|=65536,t&=-t,i.lanes|=t;var h=Ia(i,u,t);ko(i,h);break e;case 1:o=u;var c=i.type,d=i.stateNode;if(!(i.flags&128)&&(typeof c.getDerivedStateFromError=="function"||d!==null&&typeof d.componentDidCatch=="function"&&(ct===null||!ct.has(d)))){i.flags|=65536,t&=-t,i.lanes|=t;var p=Oa(i,o,t);ko(i,p);break e}}i=i.return}while(i!==null)}tc(n)}catch(y){t=y,X===n&&n!==null&&(X=n=n.return);continue}break}while(!0)}function ba(){var e=qr.current;return qr.current=Jr,e===null?Jr:e}function Ts(){(Z===0||Z===3||Z===2)&&(Z=4),ee===null||!(Tt&268435455)&&!(hl&268435455)||nt(ee,ne)}function tl(e,t){var n=I;I|=2;var r=ba();(ee!==e||ne!==t)&&($e=null,Et(e,t));do try{Ed();break}catch(l){qa(e,l)}while(!0);if(ds(),I=n,qr.current=r,X!==null)throw Error(x(261));return ee=null,ne=0,Z}function Ed(){for(;X!==null;)ec(X)}function jd(){for(;X!==null&&!Zc();)ec(X)}function ec(e){var t=rc(e.alternate,e,ge);e.memoizedProps=e.pendingProps,t===null?tc(e):X=t,Es.current=null}function tc(e){var t=e;do{var n=t.alternate;if(e=t.return,t.flags&32768){if(n=wd(n,t),n!==null){n.flags&=32767,X=n;return}if(e!==null)e.flags|=32768,e.subtreeFlags=0,e.deletions=null;else{Z=6,X=null;return}}else if(n=yd(n,t,ge),n!==null){X=n;return}if(t=t.sibling,t!==null){X=t;return}X=t=e}while(t!==null);Z===0&&(Z=5)}function St(e,t,n){var r=O,l=je.transition;try{je.transition=null,O=1,_d(e,t,n,r)}finally{je.transition=l,O=r}return null}function _d(e,t,n,r){do bt();while(lt!==null);if(I&6)throw Error(x(327));n=e.finishedWork;var l=e.finishedLanes;if(n===null)return null;if(e.finishedWork=null,e.finishedLanes=0,n===e.current)throw Error(x(177));e.callbackNode=null,e.callbackPriority=0;var i=n.lanes|n.childLanes;if(of(e,i),e===ee&&(X=ee=null,ne=0),!(n.subtreeFlags&2064)&&!(n.flags&2064)||wr||(wr=!0,lc(Or,function(){return bt(),null})),i=(n.flags&15990)!==0,n.subtreeFlags&15990||i){i=je.transition,je.transition=null;var s=O;O=1;var o=I;I|=4,Es.current=null,Sd(e,n),Ga(n,e),Yf(yi),Ar=!!gi,yi=gi=null,e.current=n,kd(n),Jc(),I=o,O=s,je.transition=i}else e.current=n;if(wr&&(wr=!1,lt=e,el=l),i=e.pendingLanes,i===0&&(ct=null),ef(n.stateNode),ve(e,Y()),t!==null)for(r=e.onRecoverableError,n=0;n<t.length;n++)l=t[n],r(l.value,{componentStack:l.stack,digest:l.digest});if(br)throw br=!1,e=Ai,Ai=null,e;return el&1&&e.tag!==0&&bt(),i=e.pendingLanes,i&1?e===Ui?Mn++:(Mn=0,Ui=e):Mn=0,gt(),null}function bt(){if(lt!==null){var e=Iu(el),t=je.transition,n=O;try{if(je.transition=null,O=16>e?16:e,lt===null)var r=!1;else{if(e=lt,lt=null,el=0,I&6)throw Error(x(331));var l=I;for(I|=4,E=e.current;E!==null;){var i=E,s=i.child;if(E.flags&16){var o=i.deletions;if(o!==null){for(var u=0;u<o.length;u++){var f=o[u];for(E=f;E!==null;){var v=E;switch(v.tag){case 0:case 11:case 15:zn(8,v,i)}var g=v.child;if(g!==null)g.return=v,E=g;else for(;E!==null;){v=E;var m=v.sibling,k=v.return;if(Ka(v),v===f){E=null;break}if(m!==null){m.return=k,E=m;break}E=k}}}var S=i.alternate;if(S!==null){var w=S.child;if(w!==null){S.child=null;do{var L=w.sibling;w.sibling=null,w=L}while(w!==null)}}E=i}}if(i.subtreeFlags&2064&&s!==null)s.return=i,E=s;else e:for(;E!==null;){if(i=E,i.flags&2048)switch(i.tag){case 0:case 11:case 15:zn(9,i,i.return)}var h=i.sibling;if(h!==null){h.return=i.return,E=h;break e}E=i.return}}var c=e.current;for(E=c;E!==null;){s=E;var d=s.child;if(s.subtreeFlags&2064&&d!==null)d.return=s,E=d;else e:for(s=c;E!==null;){if(o=E,o.flags&2048)try{switch(o.tag){case 0:case 11:case 15:dl(9,o)}}catch(y){Q(o,o.return,y)}if(o===s){E=null;break e}var p=o.sibling;if(p!==null){p.return=o.return,E=p;break e}E=o.return}}if(I=l,gt(),He&&typeof He.onPostCommitFiberRoot=="function")try{He.onPostCommitFiberRoot(ll,e)}catch{}r=!0}return r}finally{O=n,je.transition=t}}return!1}function Wo(e,t,n){t=sn(n,t),t=Ia(e,t,1),e=at(e,t,1),t=ae(),e!==null&&(qn(e,1,t),ve(e,t))}function Q(e,t,n){if(e.tag===3)Wo(e,e,n);else for(;t!==null;){if(t.tag===3){Wo(t,e,n);break}else if(t.tag===1){var r=t.stateNode;if(typeof t.type.getDerivedStateFromError=="function"||typeof r.componentDidCatch=="function"&&(ct===null||!ct.has(r))){e=sn(n,e),e=Oa(t,e,1),t=at(t,e,1),e=ae(),t!==null&&(qn(t,1,e),ve(t,e));break}}t=t.return}}function Pd(e,t,n){var r=e.pingCache;r!==null&&r.delete(t),t=ae(),e.pingedLanes|=e.suspendedLanes&n,ee===e&&(ne&n)===n&&(Z===4||Z===3&&(ne&130023424)===ne&&500>Y()-_s?Et(e,0):js|=n),ve(e,t)}function nc(e,t){t===0&&(e.mode&1?(t=ar,ar<<=1,!(ar&130023424)&&(ar=4194304)):t=1);var n=ae();e=Ge(e,t),e!==null&&(qn(e,t,n),ve(e,n))}function Ld(e){var t=e.memoizedState,n=0;t!==null&&(n=t.retryLane),nc(e,n)}function Td(e,t){var n=0;switch(e.tag){case 13:var r=e.stateNode,l=e.memoizedState;l!==null&&(n=l.retryLane);break;case 19:r=e.stateNode;break;default:throw Error(x(314))}r!==null&&r.delete(t),nc(e,n)}var rc;rc=function(e,t,n){if(e!==null)if(e.memoizedProps!==t.pendingProps||pe.current)he=!0;else{if(!(e.lanes&n)&&!(t.flags&128))return he=!1,gd(e,t,n);he=!!(e.flags&131072)}else he=!1,B&&t.flags&1048576&&oa(t,Qr,t.index);switch(t.lanes=0,t.tag){case 2:var r=t.type;Lr(e,t),e=t.pendingProps;var l=tn(t,oe.current);qt(t,n),l=xs(null,t,r,e,l,n);var i=Ss();return t.flags|=1,typeof l=="object"&&l!==null&&typeof l.render=="function"&&l.$$typeof===void 0?(t.tag=1,t.memoizedState=null,t.updateQueue=null,me(r)?(i=!0,Wr(t)):i=!1,t.memoizedState=l.state!==null&&l.state!==void 0?l.state:null,ms(t),l.updater=fl,t.stateNode=l,l._reactInternals=t,_i(t,r,e,n),t=Ti(null,t,r,!0,i,n)):(t.tag=0,B&&i&&us(t),ue(null,t,l,n),t=t.child),t;case 16:r=t.elementType;e:{switch(Lr(e,t),e=t.pendingProps,l=r._init,r=l(r._payload),t.type=r,l=t.tag=Rd(r),e=ze(r,e),l){case 0:t=Li(null,t,r,e,n);break e;case 1:t=Mo(null,t,r,e,n);break e;case 11:t=zo(null,t,r,e,n);break e;case 14:t=Ro(null,t,r,ze(r.type,e),n);break e}throw Error(x(306,r,""))}return t;case 0:return r=t.type,l=t.pendingProps,l=t.elementType===r?l:ze(r,l),Li(e,t,r,l,n);case 1:return r=t.type,l=t.pendingProps,l=t.elementType===r?l:ze(r,l),Mo(e,t,r,l,n);case 3:e:{if(Ha(t),e===null)throw Error(x(387));r=t.pendingProps,i=t.memoizedState,l=i.element,ha(e,t),Xr(t,r,null,n);var s=t.memoizedState;if(r=s.element,i.isDehydrated)if(i={element:r,isDehydrated:!1,cache:s.cache,pendingSuspenseBoundaries:s.pendingSuspenseBoundaries,transitions:s.transitions},t.updateQueue.baseState=i,t.memoizedState=i,t.flags&256){l=sn(Error(x(423)),t),t=Do(e,t,r,n,l);break e}else if(r!==l){l=sn(Error(x(424)),t),t=Do(e,t,r,n,l);break e}else for(ye=ut(t.stateNode.containerInfo.firstChild),we=t,B=!0,Me=null,n=fa(t,null,r,n),t.child=n;n;)n.flags=n.flags&-3|4096,n=n.sibling;else{if(nn(),r===l){t=Ze(e,t,n);break e}ue(e,t,r,n)}t=t.child}return t;case 5:return pa(t),e===null&&Ni(t),r=t.type,l=t.pendingProps,i=e!==null?e.memoizedProps:null,s=l.children,wi(r,l)?s=null:i!==null&&wi(r,i)&&(t.flags|=32),Ua(e,t),ue(e,t,s,n),t.child;case 6:return e===null&&Ni(t),null;case 13:return Ba(e,t,n);case 4:return vs(t,t.stateNode.containerInfo),r=t.pendingProps,e===null?t.child=rn(t,null,r,n):ue(e,t,r,n),t.child;case 11:return r=t.type,l=t.pendingProps,l=t.elementType===r?l:ze(r,l),zo(e,t,r,l,n);case 7:return ue(e,t,t.pendingProps,n),t.child;case 8:return ue(e,t,t.pendingProps.children,n),t.child;case 12:return ue(e,t,t.pendingProps.children,n),t.child;case 10:e:{if(r=t.type._context,l=t.pendingProps,i=t.memoizedProps,s=l.value,A(Kr,r._currentValue),r._currentValue=s,i!==null)if(Oe(i.value,s)){if(i.children===l.children&&!pe.current){t=Ze(e,t,n);break e}}else for(i=t.child,i!==null&&(i.return=t);i!==null;){var o=i.dependencies;if(o!==null){s=i.child;for(var u=o.firstContext;u!==null;){if(u.context===r){if(i.tag===1){u=Ke(-1,n&-n),u.tag=2;var f=i.updateQueue;if(f!==null){f=f.shared;var v=f.pending;v===null?u.next=u:(u.next=v.next,v.next=u),f.pending=u}}i.lanes|=n,u=i.alternate,u!==null&&(u.lanes|=n),Ei(i.return,n,t),o.lanes|=n;break}u=u.next}}else if(i.tag===10)s=i.type===t.type?null:i.child;else if(i.tag===18){if(s=i.return,s===null)throw Error(x(341));s.lanes|=n,o=s.alternate,o!==null&&(o.lanes|=n),Ei(s,n,t),s=i.sibling}else s=i.child;if(s!==null)s.return=i;else for(s=i;s!==null;){if(s===t){s=null;break}if(i=s.sibling,i!==null){i.return=s.return,s=i;break}s=s.return}i=s}ue(e,t,l.children,n),t=t.child}return t;case 9:return l=t.type,r=t.pendingProps.children,qt(t,n),l=_e(l),r=r(l),t.flags|=1,ue(e,t,r,n),t.child;case 14:return r=t.type,l=ze(r,t.pendingProps),l=ze(r.type,l),Ro(e,t,r,l,n);case 15:return Fa(e,t,t.type,t.pendingProps,n);case 17:return r=t.type,l=t.pendingProps,l=t.elementType===r?l:ze(r,l),Lr(e,t),t.tag=1,me(r)?(e=!0,Wr(t)):e=!1,qt(t,n),Da(t,r,l),_i(t,r,l,n),Ti(null,t,r,!0,e,n);case 19:return $a(e,t,n);case 22:return Aa(e,t,n)}throw Error(x(156,t.tag))};function lc(e,t){return zu(e,t)}function zd(e,t,n,r){this.tag=e,this.key=n,this.sibling=this.child=this.return=this.stateNode=this.type=this.elementType=null,this.index=0,this.ref=null,this.pendingProps=t,this.dependencies=this.memoizedState=this.updateQueue=this.memoizedProps=null,this.mode=r,this.subtreeFlags=this.flags=0,this.deletions=null,this.childLanes=this.lanes=0,this.alternate=null}function Ee(e,t,n,r){return new zd(e,t,n,r)}function zs(e){return e=e.prototype,!(!e||!e.isReactComponent)}function Rd(e){if(typeof e=="function")return zs(e)?1:0;if(e!=null){if(e=e.$$typeof,e===Zi)return 11;if(e===Ji)return 14}return 2}function dt(e,t){var n=e.alternate;return n===null?(n=Ee(e.tag,t,e.key,e.mode),n.elementType=e.elementType,n.type=e.type,n.stateNode=e.stateNode,n.alternate=e,e.alternate=n):(n.pendingProps=t,n.type=e.type,n.flags=0,n.subtreeFlags=0,n.deletions=null),n.flags=e.flags&14680064,n.childLanes=e.childLanes,n.lanes=e.lanes,n.child=e.child,n.memoizedProps=e.memoizedProps,n.memoizedState=e.memoizedState,n.updateQueue=e.updateQueue,t=e.dependencies,n.dependencies=t===null?null:{lanes:t.lanes,firstContext:t.firstContext},n.sibling=e.sibling,n.index=e.index,n.ref=e.ref,n}function Rr(e,t,n,r,l,i){var s=2;if(r=e,typeof e=="function")zs(e)&&(s=1);else if(typeof e=="string")s=5;else e:switch(e){case Ft:return jt(n.children,l,i,t);case Gi:s=8,l|=8;break;case Jl:return e=Ee(12,n,t,l|2),e.elementType=Jl,e.lanes=i,e;case ql:return e=Ee(13,n,t,l),e.elementType=ql,e.lanes=i,e;case bl:return e=Ee(19,n,t,l),e.elementType=bl,e.lanes=i,e;case pu:return pl(n,l,i,t);default:if(typeof e=="object"&&e!==null)switch(e.$$typeof){case du:s=10;break e;case hu:s=9;break e;case Zi:s=11;break e;case Ji:s=14;break e;case be:s=16,r=null;break e}throw Error(x(130,e==null?e:typeof e,""))}return t=Ee(s,n,t,l),t.elementType=e,t.type=r,t.lanes=i,t}function jt(e,t,n,r){return e=Ee(7,e,r,t),e.lanes=n,e}function pl(e,t,n,r){return e=Ee(22,e,r,t),e.elementType=pu,e.lanes=n,e.stateNode={isHidden:!1},e}function Kl(e,t,n){return e=Ee(6,e,null,t),e.lanes=n,e}function Yl(e,t,n){return t=Ee(4,e.children!==null?e.children:[],e.key,t),t.lanes=n,t.stateNode={containerInfo:e.containerInfo,pendingChildren:null,implementation:e.implementation},t}function Md(e,t,n,r,l){this.tag=t,this.containerInfo=e,this.finishedWork=this.pingCache=this.current=this.pendingChildren=null,this.timeoutHandle=-1,this.callbackNode=this.pendingContext=this.context=null,this.callbackPriority=0,this.eventTimes=_l(0),this.expirationTimes=_l(-1),this.entangledLanes=this.finishedLanes=this.mutableReadLanes=this.expiredLanes=this.pingedLanes=this.suspendedLanes=this.pendingLanes=0,this.entanglements=_l(0),this.identifierPrefix=r,this.onRecoverableError=l,this.mutableSourceEagerHydrationData=null}function Rs(e,t,n,r,l,i,s,o,u){return e=new Md(e,t,n,o,u),t===1?(t=1,i===!0&&(t|=8)):t=0,i=Ee(3,null,null,t),e.current=i,i.stateNode=e,i.memoizedState={element:r,isDehydrated:n,cache:null,transitions:null,pendingSuspenseBoundaries:null},ms(i),e}function Dd(e,t,n){var r=3<arguments.length&&arguments[3]!==void 0?arguments[3]:null;return{$$typeof:Ot,key:r==null?null:""+r,children:e,containerInfo:t,implementation:n}}function ic(e){if(!e)return pt;e=e._reactInternals;e:{if(Mt(e)!==e||e.tag!==1)throw Error(x(170));var t=e;do{switch(t.tag){case 3:t=t.stateNode.context;break e;case 1:if(me(t.type)){t=t.stateNode.__reactInternalMemoizedMergedChildContext;break e}}t=t.return}while(t!==null);throw Error(x(171))}if(e.tag===1){var n=e.type;if(me(n))return ia(e,n,t)}return t}function sc(e,t,n,r,l,i,s,o,u){return e=Rs(n,r,!0,e,l,i,s,o,u),e.context=ic(null),n=e.current,r=ae(),l=ft(n),i=Ke(r,l),i.callback=t??null,at(n,i,l),e.current.lanes=l,qn(e,l,r),ve(e,r),e}function ml(e,t,n,r){var l=t.current,i=ae(),s=ft(l);return n=ic(n),t.context===null?t.context=n:t.pendingContext=n,t=Ke(i,s),t.payload={element:e},r=r===void 0?null:r,r!==null&&(t.callback=r),e=at(l,t,s),e!==null&&(Ie(e,l,s,i),jr(e,l,s)),s}function nl(e){if(e=e.current,!e.child)return null;switch(e.child.tag){case 5:return e.child.stateNode;default:return e.child.stateNode}}function Vo(e,t){if(e=e.memoizedState,e!==null&&e.dehydrated!==null){var n=e.retryLane;e.retryLane=n!==0&&n<t?n:t}}function Ms(e,t){Vo(e,t),(e=e.alternate)&&Vo(e,t)}function Id(){return null}var oc=typeof reportError=="function"?reportError:function(e){console.error(e)};function Ds(e){this._internalRoot=e}vl.prototype.render=Ds.prototype.render=function(e){var t=this._internalRoot;if(t===null)throw Error(x(409));ml(e,t,null,null)};vl.prototype.unmount=Ds.prototype.unmount=function(){var e=this._internalRoot;if(e!==null){this._internalRoot=null;var t=e.containerInfo;zt(function(){ml(null,e,null,null)}),t[Xe]=null}};function vl(e){this._internalRoot=e}vl.prototype.unstable_scheduleHydration=function(e){if(e){var t=Au();e={blockedOn:null,target:e,priority:t};for(var n=0;n<tt.length&&t!==0&&t<tt[n].priority;n++);tt.splice(n,0,e),n===0&&Hu(e)}};function Is(e){return!(!e||e.nodeType!==1&&e.nodeType!==9&&e.nodeType!==11)}function gl(e){return!(!e||e.nodeType!==1&&e.nodeType!==9&&e.nodeType!==11&&(e.nodeType!==8||e.nodeValue!==" react-mount-point-unstable "))}function Qo(){}function Od(e,t,n,r,l){if(l){if(typeof r=="function"){var i=r;r=function(){var f=nl(s);i.call(f)}}var s=sc(t,r,e,0,null,!1,!1,"",Qo);return e._reactRootContainer=s,e[Xe]=s.current,$n(e.nodeType===8?e.parentNode:e),zt(),s}for(;l=e.lastChild;)e.removeChild(l);if(typeof r=="function"){var o=r;r=function(){var f=nl(u);o.call(f)}}var u=Rs(e,0,!1,null,null,!1,!1,"",Qo);return e._reactRootContainer=u,e[Xe]=u.current,$n(e.nodeType===8?e.parentNode:e),zt(function(){ml(t,u,n,r)}),u}function yl(e,t,n,r,l){var i=n._reactRootContainer;if(i){var s=i;if(typeof l=="function"){var o=l;l=function(){var u=nl(s);o.call(u)}}ml(t,s,e,l)}else s=Od(n,t,e,l,r);return nl(s)}Ou=function(e){switch(e.tag){case 3:var t=e.stateNode;if(t.current.memoizedState.isDehydrated){var n=Cn(t.pendingLanes);n!==0&&(es(t,n|1),ve(t,Y()),!(I&6)&&(on=Y()+500,gt()))}break;case 13:zt(function(){var r=Ge(e,1);if(r!==null){var l=ae();Ie(r,e,1,l)}}),Ms(e,1)}};ts=function(e){if(e.tag===13){var t=Ge(e,134217728);if(t!==null){var n=ae();Ie(t,e,134217728,n)}Ms(e,134217728)}};Fu=function(e){if(e.tag===13){var t=ft(e),n=Ge(e,t);if(n!==null){var r=ae();Ie(n,e,t,r)}Ms(e,t)}};Au=function(){return O};Uu=function(e,t){var n=O;try{return O=e,t()}finally{O=n}};ai=function(e,t,n){switch(t){case"input":if(ni(e,n),t=n.name,n.type==="radio"&&t!=null){for(n=e;n.parentNode;)n=n.parentNode;for(n=n.querySelectorAll("input[name="+JSON.stringify(""+t)+'][type="radio"]'),t=0;t<n.length;t++){var r=n[t];if(r!==e&&r.form===e.form){var l=ul(r);if(!l)throw Error(x(90));vu(r),ni(r,l)}}}break;case"textarea":yu(e,n);break;case"select":t=n.value,t!=null&&Xt(e,!!n.multiple,t,!1)}};Eu=Ps;ju=zt;var Fd={usingClientEntryPoint:!1,Events:[er,Bt,ul,Cu,Nu,Ps]},xn={findFiberByHostInstance:kt,bundleType:0,version:"18.3.1",rendererPackageName:"react-dom"},Ad={bundleType:xn.bundleType,version:xn.version,rendererPackageName:xn.rendererPackageName,rendererConfig:xn.rendererConfig,overrideHookState:null,overrideHookStateDeletePath:null,overrideHookStateRenamePath:null,overrideProps:null,overridePropsDeletePath:null,overridePropsRenamePath:null,setErrorHandler:null,setSuspenseHandler:null,scheduleUpdate:null,currentDispatcherRef:Je.ReactCurrentDispatcher,findHostInstanceByFiber:function(e){return e=Lu(e),e===null?null:e.stateNode},findFiberByHostInstance:xn.findFiberByHostInstance||Id,findHostInstancesForRefresh:null,scheduleRefresh:null,scheduleRoot:null,setRefreshHandler:null,getCurrentFiber:null,reconcilerVersion:"18.3.1-next-f1338f8080-20240426"};if(typeof __REACT_DEVTOOLS_GLOBAL_HOOK__<"u"){var xr=__REACT_DEVTOOLS_GLOBAL_HOOK__;if(!xr.isDisabled&&xr.supportsFiber)try{ll=xr.inject(Ad),He=xr}catch{}}Se.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=Fd;Se.createPortal=function(e,t){var n=2<arguments.length&&arguments[2]!==void 0?arguments[2]:null;if(!Is(t))throw Error(x(200));return Dd(e,t,null,n)};Se.createRoot=function(e,t){if(!Is(e))throw Error(x(299));var n=!1,r="",l=oc;return t!=null&&(t.unstable_strictMode===!0&&(n=!0),t.identifierPrefix!==void 0&&(r=t.identifierPrefix),t.onRecoverableError!==void 0&&(l=t.onRecoverableError)),t=Rs(e,1,!1,null,null,n,!1,r,l),e[Xe]=t.current,$n(e.nodeType===8?e.parentNode:e),new Ds(t)};Se.findDOMNode=function(e){if(e==null)return null;if(e.nodeType===1)return e;var t=e._reactInternals;if(t===void 0)throw typeof e.render=="function"?Error(x(188)):(e=Object.keys(e).join(","),Error(x(268,e)));return e=Lu(t),e=e===null?null:e.stateNode,e};Se.flushSync=function(e){return zt(e)};Se.hydrate=function(e,t,n){if(!gl(t))throw Error(x(200));return yl(null,e,t,!0,n)};Se.hydrateRoot=function(e,t,n){if(!Is(e))throw Error(x(405));var r=n!=null&&n.hydratedSources||null,l=!1,i="",s=oc;if(n!=null&&(n.unstable_strictMode===!0&&(l=!0),n.identifierPrefix!==void 0&&(i=n.identifierPrefix),n.onRecoverableError!==void 0&&(s=n.onRecoverableError)),t=sc(t,null,e,1,n??null,l,!1,i,s),e[Xe]=t.current,$n(e),r)for(e=0;e<r.length;e++)n=r[e],l=n._getVersion,l=l(n._source),t.mutableSourceEagerHydrationData==null?t.mutableSourceEagerHydrationData=[n,l]:t.mutableSourceEagerHydrationData.push(n,l);return new vl(t)};Se.render=function(e,t,n){if(!gl(t))throw Error(x(200));return yl(null,e,t,!1,n)};Se.unmountComponentAtNode=function(e){if(!gl(e))throw Error(x(40));return e._reactRootContainer?(zt(function(){yl(null,null,e,!1,function(){e._reactRootContainer=null,e[Xe]=null})}),!0):!1};Se.unstable_batchedUpdates=Ps;Se.unstable_renderSubtreeIntoContainer=function(e,t,n,r){if(!gl(n))throw Error(x(200));if(e==null||e._reactInternals===void 0)throw Error(x(38));return yl(e,t,n,!1,r)};Se.version="18.3.1-next-f1338f8080-20240426";function uc(){if(!(typeof __REACT_DEVTOOLS_GLOBAL_HOOK__>"u"||typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE!="function"))try{__REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(uc)}catch(e){console.error(e)}}uc(),uu.exports=Se;var Ud=uu.exports,Ko=Ud;Gl.createRoot=Ko.createRoot,Gl.hydrateRoot=Ko.hydrateRoot;const Yo=e=>{let t;const n=new Set,r=(f,v)=>{const g=typeof f=="function"?f(t):f;if(!Object.is(g,t)){const m=t;t=v??(typeof g!="object"||g===null)?g:Object.assign({},t,g),n.forEach(k=>k(t,m))}},l=()=>t,o={setState:r,getState:l,getInitialState:()=>u,subscribe:f=>(n.add(f),()=>n.delete(f))},u=t=e(r,l,o);return o},Hd=e=>e?Yo(e):Yo,Bd=e=>e;function $d(e,t=Bd){const n=Xl.useSyncExternalStore(e.subscribe,()=>t(e.getState()),()=>t(e.getInitialState()));return Xl.useDebugValue(n),n}const Xo=e=>{const t=Hd(e),n=r=>$d(t,r);return Object.assign(n,t),n},Wd=e=>e?Xo(e):Xo;class Vd{constructor(){q(this,"vscode");q(this,"requestId",0);q(this,"pending",new Map);q(this,"requestCache",new Map);q(this,"CACHE_TTL",1e3);q(this,"REQUEST_TIMEOUT",3e4);typeof acquireVsCodeApi<"u"&&(this.vscode=acquireVsCodeApi(),window.addEventListener("message",this.handleMessage.bind(this)))}async call(t,...n){if(!this.vscode)throw new Error("VS Code API not available");if(this.isReadOnlyMethod(t)){const i=this.getCacheKey(t,n),s=this.requestCache.get(i);if(s&&Date.now()-s.timestamp<this.CACHE_TTL)return s.result}const r=++this.requestId,l={id:r,method:t,params:n};return new Promise((i,s)=>{const o=setTimeout(()=>{this.pending.delete(r),s(new Error(`RPC timeout: ${t}`))},this.REQUEST_TIMEOUT);this.pending.set(r,{resolve:u=>{if(clearTimeout(o),this.pending.delete(r),this.isReadOnlyMethod(t)){const f=this.getCacheKey(t,n);this.requestCache.set(f,{result:u,timestamp:Date.now()})}i(u)},reject:u=>{clearTimeout(o),this.pending.delete(r),s(u)}}),this.vscode.postMessage(l)})}clearCache(t){if(t)for(const n of this.requestCache.keys())n.startsWith(t)&&this.requestCache.delete(n);else this.requestCache.clear()}isReadOnlyMethod(t){return t.startsWith("git.get")||t.startsWith("git.list")||t==="git.getStatus"||t==="git.getLog"||t==="git.getBranches"}getCacheKey(t,n){return`${t}:${JSON.stringify(n)}`}handleMessage(t){const n=t.data;if(!n.id)return;const r=this.pending.get(n.id);r&&(n.error?r.reject(new Error(n.error)):r.resolve(n.result),this.pending.delete(n.id))}}const z=new Vd,Dt=Wd((e,t)=>({status:null,commits:[],branches:[],selectedCommits:[],loading:!1,error:null,hasMore:!0,searchQuery:null,currentBranch:null,fetchStatus:async()=>{try{e({loading:!0,error:null});const n=await z.call("git.getStatus");e({status:n,loading:!1})}catch(n){e({error:n.message,loading:!1})}},fetchHistory:async(n={})=>{try{e({loading:!0,error:null});const r=await z.call("git.getCommitLog",n);e({commits:r,loading:!1})}catch(r){e({error:r.message,loading:!1})}},fetchBranches:async()=>{var n;try{const r=await z.call("git.getBranches"),l=((n=r.find(i=>i.current))==null?void 0:n.name)||null;e({branches:r,currentBranch:l})}catch(r){e({error:r.message})}},stageFiles:async n=>{try{await z.call("git.stageFiles",n),await t().fetchStatus()}catch(r){e({error:r.message})}},unstageFiles:async n=>{try{await z.call("git.unstageFiles",n),await t().fetchStatus()}catch(r){e({error:r.message})}},stageAll:async()=>{try{await z.call("git.stageAll"),await t().fetchStatus()}catch(n){e({error:n.message})}},unstageAll:async()=>{try{await z.call("git.unstageAll"),await t().fetchStatus()}catch(n){e({error:n.message})}},commit:async n=>{try{await z.call("git.commit",n),await t().fetchStatus(),await t().fetchHistory()}catch(r){e({error:r.message})}},discardFiles:async n=>{try{await z.call("git.discard",n),await t().fetchStatus()}catch(r){e({error:r.message})}},selectCommit:(n,r)=>{const{selectedCommits:l}=t();r?l.includes(n)?e({selectedCommits:l.filter(i=>i!==n)}):e({selectedCommits:[...l,n]}):e({selectedCommits:[n]})},clearSelection:()=>{e({selectedCommits:[]})},amendCommit:async n=>{try{await z.call("git.amendCommit",n),await t().fetchStatus(),await t().fetchHistory()}catch(r){e({error:r.message})}},revertCommits:async n=>{try{await z.call("git.revert",n),await t().fetchHistory()}catch(r){e({error:r.message})}},getFileDiff:async(n,r=!1)=>{try{return await z.call("git.getFileDiff",n,r)}catch(l){return e({error:l.message}),""}},searchCommits:async(n,r)=>{try{e({loading:!0,error:null,searchQuery:n});let l;r==="author"?l=await z.call("git.getCommitsByAuthor",n,{maxCount:100}):r==="hash"?l=t().commits.filter(s=>s.hash.toLowerCase().includes(n.toLowerCase())||s.shortHash.toLowerCase().includes(n.toLowerCase())):l=await z.call("git.searchCommits",n,{maxCount:100}),e({commits:l,loading:!1,hasMore:!1})}catch(l){e({error:l.message,loading:!1})}},clearSearch:async()=>{e({searchQuery:null}),await t().fetchHistory({maxCount:100})},loadMore:async()=>{const{commits:n,loading:r,hasMore:l,searchQuery:i}=t();if(!(r||!l||i))try{e({loading:!0});const s=await z.call("git.getCommitLog",{maxCount:50,skip:n.length});s.length===0?e({hasMore:!1,loading:!1}):e({commits:[...n,...s],loading:!1,hasMore:s.length===50})}catch(s){e({error:s.message,loading:!1})}},startRebase:async(n,r,l)=>{try{e({loading:!0,error:null}),r&&l?await z.call("git.interactiveRebase",n,l):await z.call("git.rebase",n,r),await t().fetchHistory(),await t().fetchStatus(),e({loading:!1})}catch(i){throw e({error:i.message,loading:!1}),i}},continueRebase:async()=>{try{e({loading:!0,error:null}),await z.call("git.rebaseContinue"),await t().fetchHistory(),await t().fetchStatus(),e({loading:!1})}catch(n){throw e({error:n.message,loading:!1}),n}},abortRebase:async()=>{try{e({loading:!0,error:null}),await z.call("git.rebaseAbort"),await t().fetchHistory(),await t().fetchStatus(),e({loading:!1})}catch(n){throw e({error:n.message,loading:!1}),n}},skipRebase:async()=>{try{e({loading:!0,error:null}),await z.call("git.rebaseSkip"),await t().fetchHistory(),await t().fetchStatus(),e({loading:!1})}catch(n){throw e({error:n.message,loading:!1}),n}},getRebaseState:async()=>{try{return await z.call("git.getRebaseState")}catch(n){return e({error:n.message}),{type:"idle"}}},isRebasing:async()=>{try{return await z.call("git.isRebasing")}catch(n){return e({error:n.message}),!1}},cherryPick:async n=>{try{e({loading:!0,error:null}),await z.call("git.cherryPick",n),await t().fetchHistory(),await t().fetchStatus(),e({loading:!1})}catch(r){throw e({error:r.message,loading:!1}),r}},getStashes:async()=>{try{return await z.call("git.stashList")}catch(n){return e({error:n.message}),[]}},createStash:async(n,r=!1)=>{try{e({loading:!0,error:null}),await z.call("git.stashPush",n,r),await t().fetchStatus(),e({loading:!1})}catch(l){throw e({error:l.message,loading:!1}),l}},applyStash:async n=>{try{e({loading:!0,error:null}),await z.call("git.stashApply",n),await t().fetchStatus(),e({loading:!1})}catch(r){throw e({error:r.message,loading:!1}),r}},popStash:async n=>{try{e({loading:!0,error:null}),await z.call("git.stashPop",n),await t().fetchStatus(),e({loading:!1})}catch(r){throw e({error:r.message,loading:!1}),r}},dropStash:async n=>{try{e({loading:!0,error:null}),await z.call("git.stashDrop",n),e({loading:!1})}catch(r){throw e({error:r.message,loading:!1}),r}},createBranch:async(n,r)=>{try{e({loading:!0,error:null}),await z.call("git.createBranch",n,r),await t().fetchBranches(),e({loading:!1})}catch(l){throw e({error:l.message,loading:!1}),l}},deleteBranch:async(n,r=!1)=>{try{e({loading:!0,error:null}),await z.call("git.deleteBranch",n,r),await t().fetchBranches(),e({loading:!1})}catch(l){throw e({error:l.message,loading:!1}),l}},renameBranch:async(n,r,l=!1)=>{try{e({loading:!0,error:null}),await z.call("git.renameBranch",n,r,l),await t().fetchBranches(),e({loading:!1})}catch(i){throw e({error:i.message,loading:!1}),i}},checkoutBranch:async(n,r=!1)=>{try{e({loading:!0,error:null}),await z.call("git.checkoutBranch",n,r),await t().fetchBranches(),await t().fetchStatus(),await t().fetchHistory(),e({loading:!1})}catch(l){throw e({error:l.message,loading:!1}),l}},mergeBranch:async(n,r=!1)=>{try{e({loading:!0,error:null}),await z.call("git.mergeBranch",n,r),await t().fetchHistory(),await t().fetchStatus(),e({loading:!1})}catch(l){throw e({error:l.message,loading:!1}),l}}}));function Qd({file:e,staged:t=!1,onClose:n}){const[r,l]=P.useState(""),[i,s]=P.useState(!0),{getFileDiff:o}=Dt();P.useEffect(()=>{u()},[e,t]);const u=async()=>{s(!0);const v=await o(e,t);l(v),s(!1)},f=v=>v.split(`
-`).map((m,k)=>{let S="diff-line";return m.startsWith("+")&&!m.startsWith("+++")?S+=" diff-addition":m.startsWith("-")&&!m.startsWith("---")?S+=" diff-deletion":m.startsWith("@@")&&(S+=" diff-hunk"),a.jsx("div",{className:S,children:m||" "},k)});return a.jsx("div",{className:"diff-viewer-overlay",onClick:n,children:a.jsxs("div",{className:"diff-viewer",onClick:v=>v.stopPropagation(),children:[a.jsxs("div",{className:"diff-viewer-header",children:[a.jsx("h3",{children:e}),a.jsx("span",{className:"diff-viewer-badge",children:t?"Staged":"Unstaged"}),a.jsx("button",{className:"diff-viewer-close",onClick:n,children:"×"})]}),a.jsx("div",{className:"diff-viewer-content",children:i?a.jsx("div",{className:"diff-viewer-loading",children:"Loading diff..."}):r?a.jsx("pre",{className:"diff-viewer-pre",children:f(r)}):a.jsx("div",{className:"diff-viewer-empty",children:"No changes"})})]})})}function Go({files:e,onAction:t,actionLabel:n,onDiscard:r,staged:l=!1}){const[i,s]=P.useState(new Set),[o,u]=P.useState(null),f=(w,L)=>{if(L.ctrlKey||L.metaKey){const h=new Set(i);h.has(w)?h.delete(w):h.add(w),s(h)}else s(new Set([w]))},v=w=>{u(w)},g=w=>{t([w]),s(new Set)},m=()=>{i.size>0&&(t(Array.from(i)),s(new Set))},k=w=>{r&&(r([w]),s(new Set))},S=()=>{r&&i.size>0&&(r(Array.from(i)),s(new Set))};return e.length===0?a.jsx("div",{className:"file-list-empty",children:"No changes"}):a.jsxs(a.Fragment,{children:[a.jsxs("div",{className:"file-list",children:[i.size>0&&a.jsxs("div",{className:"file-list-actions",children:[a.jsxs("button",{onClick:m,children:[n," ",i.size," file(s)"]}),r&&!l&&a.jsxs("button",{className:"file-list-discard",onClick:S,children:["Discard ",i.size," file(s)"]})]}),a.jsx("div",{className:"file-list-items",children:e.map(w=>a.jsxs("div",{className:`file-item ${i.has(w)?"selected":""}`,onClick:L=>f(w,L),onDoubleClick:()=>v(w),title:"Double-click to view diff",children:[a.jsx("span",{className:"file-name",children:w}),a.jsxs("div",{className:"file-actions",children:[a.jsx("button",{className:"file-action",onClick:L=>{L.stopPropagation(),g(w)},children:n}),r&&!l&&a.jsx("button",{className:"file-action file-action-discard",onClick:L=>{L.stopPropagation(),k(w)},children:"Discard"})]})]},w))})]}),o&&a.jsx(Qd,{file:o,staged:l,onClose:()=>u(null)})]})}function Kd(){const[e,t]=P.useState(""),[n,r]=P.useState(!1),{status:l,commit:i,amendCommit:s,commits:o}=Dt();P.useEffect(()=>{n&&o.length>0?t(o[0].message):n||t("")},[n,o]);const u=async()=>{e.trim()&&(n?await s(e):l&&l.staged.length>0&&await i(e),t(""),r(!1))},f=g=>{(g.ctrlKey||g.metaKey)&&g.key==="Enter"&&u()},v=e.trim().length>0&&(n||l&&l.staged.length>0);return a.jsxs("div",{className:"commit-box",children:[a.jsxs("div",{className:"commit-header",children:[a.jsx("h3",{children:"Commit Message"}),a.jsxs("div",{className:"commit-options",children:[a.jsxs("label",{className:"commit-amend-label",children:[a.jsx("input",{type:"checkbox",checked:n,onChange:g=>r(g.target.checked),disabled:o.length===0}),a.jsx("span",{children:"Amend last commit"})]}),a.jsx("span",{className:"commit-hint",children:"Ctrl+Enter to commit"})]})]}),a.jsx("textarea",{className:"commit-message",placeholder:n?"Edit commit message...":"Enter commit message...",value:e,onChange:g=>t(g.target.value),onKeyDown:f,rows:4}),a.jsxs("div",{className:"commit-footer",children:[a.jsx("span",{className:"commit-info",children:n?"Amending last commit":`${(l==null?void 0:l.staged.length)||0} file(s) staged`}),a.jsx("button",{className:"commit-button",onClick:u,disabled:!v,children:n?"Amend Commit":"Commit"})]})]})}function Yd(){const{status:e,stageFiles:t,unstageFiles:n,stageAll:r,unstageAll:l,discardFiles:i}=Dt();return e?a.jsxs("div",{className:"stage-panel",children:[a.jsxs("div",{className:"stage-section",children:[a.jsxs("div",{className:"section-header",children:[a.jsx("h3",{children:"Unstaged Changes"}),a.jsx("button",{onClick:r,disabled:e.unstaged.length===0,children:"Stage All"})]}),a.jsx(Go,{files:[...e.unstaged,...e.untracked],onAction:t,onDiscard:i,actionLabel:"Stage",staged:!1})]}),a.jsxs("div",{className:"stage-section",children:[a.jsxs("div",{className:"section-header",children:[a.jsx("h3",{children:"Staged Changes"}),a.jsx("button",{onClick:l,disabled:e.staged.length===0,children:"Unstage All"})]}),a.jsx(Go,{files:e.staged,onAction:n,actionLabel:"Unstage",staged:!0})]}),a.jsx(Kd,{})]}):a.jsx("div",{className:"stage-panel",children:"Loading..."})}function Xd({commits:e,onClose:t}){const[n,r]=P.useState(!1),{revertCommits:l}=Dt(),i=async()=>{r(!0);try{await l(e.map(s=>s.hash)),t()}catch(s){console.error("Revert failed:",s)}finally{r(!1)}};return a.jsx("div",{className:"revert-dialog-overlay",onClick:t,children:a.jsxs("div",{className:"revert-dialog",onClick:s=>s.stopPropagation(),children:[a.jsx("div",{className:"revert-dialog-header",children:a.jsxs("h3",{children:["Revert Commit",e.length>1?"s":""]})}),a.jsxs("div",{className:"revert-dialog-content",children:[a.jsxs("p",{children:["Are you sure you want to revert the following commit",e.length>1?"s":"","?"]}),a.jsx("div",{className:"revert-dialog-commits",children:e.map(s=>a.jsxs("div",{className:"revert-dialog-commit",children:[a.jsx("span",{className:"revert-dialog-commit-hash",children:s.shortHash}),a.jsx("span",{className:"revert-dialog-commit-message",children:s.message})]},s.hash))}),a.jsxs("p",{className:"revert-dialog-note",children:["This will create new commit",e.length>1?"s":""," that undo",e.length===1?"es":""," these changes."]})]}),a.jsxs("div",{className:"revert-dialog-footer",children:[a.jsx("button",{onClick:t,disabled:n,children:"Cancel"}),a.jsx("button",{className:"revert-dialog-confirm",onClick:i,disabled:n,children:n?"Reverting...":"Revert"})]})]})})}const Gd=({currentBranch:e,branches:t,onClose:n,onSuccess:r})=>{const[l,i]=P.useState(""),[s,o]=P.useState([]),[u,f]=P.useState(!1),[v,g]=P.useState(null),[m,k]=P.useState(!1);P.useEffect(()=>{if(!l){o([]);return}(async()=>{try{const p=await z.call("git.getRebaseCommits",l);o(p)}catch(p){console.error("Failed to load rebase commits:",p),o([])}})()},[l]);const S=async()=>{if(!l){g("Please select a branch");return}f(!0),g(null);try{m&&s.length>0?await z.call("git.interactiveRebase",l,s):await z.call("git.rebase",l,!1),r(),n()}catch(d){g(d.message)}finally{f(!1)}},w=(d,p)=>{const y=[...s];y[d].action=p,o(y)},L=d=>{if(d===0)return;const p=[...s];[p[d-1],p[d]]=[p[d],p[d-1]],o(p)},h=d=>{if(d===s.length-1)return;const p=[...s];[p[d],p[d+1]]=[p[d+1],p[d]],o(p)},c=t.filter(d=>!d.current);return a.jsx("div",{className:"rebase-dialog-overlay",onClick:n,children:a.jsxs("div",{className:"rebase-dialog",onClick:d=>d.stopPropagation(),children:[a.jsxs("div",{className:"rebase-dialog-header",children:[a.jsx("h3",{children:"Rebase Branch"}),a.jsx("button",{className:"close-button",onClick:n,children:"×"})]}),a.jsxs("div",{className:"rebase-dialog-content",children:[v&&a.jsx("div",{className:"error-message",children:v}),a.jsxs("div",{className:"form-group",children:[a.jsx("label",{children:"Current Branch:"}),a.jsx("div",{className:"current-branch",children:e})]}),a.jsxs("div",{className:"form-group",children:[a.jsx("label",{children:"Rebase onto:"}),a.jsxs("select",{value:l,onChange:d=>i(d.target.value),disabled:u,children:[a.jsx("option",{value:"",children:"Select a branch..."}),c.map(d=>a.jsx("option",{value:d.name,children:d.name},d.name))]})]}),s.length>0&&a.jsxs(a.Fragment,{children:[a.jsx("div",{className:"form-group",children:a.jsxs("label",{children:[a.jsx("input",{type:"checkbox",checked:m,onChange:d=>k(d.target.checked),disabled:u}),"Interactive Rebase"]})}),m&&a.jsxs("div",{className:"commits-list",children:[a.jsx("div",{className:"commits-header",children:a.jsxs("span",{children:["Commits to rebase (",s.length,")"]})}),s.map((d,p)=>a.jsxs("div",{className:"commit-item",children:[a.jsxs("div",{className:"commit-controls",children:[a.jsx("button",{className:"move-button",onClick:()=>L(p),disabled:p===0||u,title:"Move up",children:"↑"}),a.jsx("button",{className:"move-button",onClick:()=>h(p),disabled:p===s.length-1||u,title:"Move down",children:"↓"})]}),a.jsxs("select",{className:"action-select",value:d.action,onChange:y=>w(p,y.target.value),disabled:u,children:[a.jsx("option",{value:"pick",children:"pick"}),a.jsx("option",{value:"reword",children:"reword"}),a.jsx("option",{value:"edit",children:"edit"}),a.jsx("option",{value:"squash",children:"squash"}),a.jsx("option",{value:"fixup",children:"fixup"}),a.jsx("option",{value:"drop",children:"drop"})]}),a.jsx("span",{className:"commit-hash",children:d.shortHash}),a.jsx("span",{className:"commit-message",children:d.message})]},d.hash))]}),!m&&a.jsxs("div",{className:"info-message",children:[s.length," commit",s.length!==1?"s":""," will be rebased"]})]})]}),a.jsxs("div",{className:"rebase-dialog-footer",children:[a.jsx("button",{className:"button button-secondary",onClick:n,disabled:u,children:"Cancel"}),a.jsx("button",{className:"button button-primary",onClick:S,disabled:!l||u,children:u?"Rebasing...":"Start Rebase"})]})]})})},Zd=({commits:e,onClose:t,onSuccess:n})=>{const[r,l]=P.useState(!1),[i,s]=P.useState(null),o=async()=>{l(!0),s(null);try{const u=e.map(f=>f.hash);await z.call("git.cherryPick",u),n(),t()}catch(u){s(u.message)}finally{l(!1)}};return a.jsx("div",{className:"cherry-pick-dialog-overlay",onClick:t,children:a.jsxs("div",{className:"cherry-pick-dialog",onClick:u=>u.stopPropagation(),children:[a.jsxs("div",{className:"cherry-pick-dialog-header",children:[a.jsx("h3",{children:"Cherry-pick Commits"}),a.jsx("button",{className:"close-button",onClick:t,children:"×"})]}),a.jsxs("div",{className:"cherry-pick-dialog-content",children:[i&&a.jsx("div",{className:"error-message",children:i}),a.jsxs("div",{className:"info-message",children:["Cherry-pick will apply the following ",e.length," commit",e.length!==1?"s":""," to the current branch:"]}),a.jsx("div",{className:"commits-list",children:e.map(u=>a.jsxs("div",{className:"commit-item",children:[a.jsx("span",{className:"commit-hash",children:u.shortHash}),a.jsx("span",{className:"commit-message",children:u.message}),a.jsx("span",{className:"commit-author",children:u.author})]},u.hash))}),a.jsx("div",{className:"warning-message",children:"Note: If conflicts occur, you will need to resolve them manually."})]}),a.jsxs("div",{className:"cherry-pick-dialog-footer",children:[a.jsx("button",{className:"button button-secondary",onClick:t,disabled:r,children:"Cancel"}),a.jsx("button",{className:"button button-primary",onClick:o,disabled:r,children:r?"Cherry-picking...":"Cherry-pick"})]})]})})};function Jd({commits:e,branches:t,currentBranch:n}){const{selectedCommits:r,selectCommit:l}=Dt(),[i,s]=P.useState(!1),[o,u]=P.useState(!1),[f,v]=P.useState(!1),[g,m]=P.useState(null),k=(p,y)=>{const N=y.ctrlKey||y.metaKey;l(p,N)},S=(p,y)=>{p.preventDefault(),m({x:p.clientX,y:p.clientY,commit:y})},w=()=>{s(!0),m(null)},L=()=>{u(!0),m(null)},h=()=>{v(!0),m(null)},c=p=>{const y=new Date(p),C=new Date().getTime()-y.getTime(),_=Math.floor(C/(1e3*60*60*24));if(_===0){const F=Math.floor(C/36e5);if(F===0){const R=Math.floor(C/6e4);return`${R} minute${R!==1?"s":""} ago`}return`${F} hour${F!==1?"s":""} ago`}else return _===1?"yesterday":_<7?`${_} days ago`:y.toLocaleDateString()},d=()=>e.filter(p=>r.includes(p.hash));return e.length===0?a.jsx("div",{className:"commit-list-empty",children:"No commits yet"}):a.jsxs(a.Fragment,{children:[a.jsx("div",{className:"commit-list",onClick:()=>m(null),children:e.map(p=>a.jsxs("div",{className:`commit-item ${r.includes(p.hash)?"selected":""} ${p.isHead?"head":""}`,onClick:y=>k(p.hash,y),onContextMenu:y=>S(y,p),children:[a.jsxs("div",{className:"commit-graph",children:[a.jsx("div",{className:"commit-dot"}),a.jsx("div",{className:"commit-line"})]}),a.jsxs("div",{className:"commit-content",children:[a.jsx("div",{className:"commit-message",children:p.message}),a.jsxs("div",{className:"commit-meta",children:[a.jsx("span",{className:"commit-author",children:p.author}),a.jsx("span",{className:"commit-separator",children:"•"}),a.jsx("span",{className:"commit-hash",children:p.shortHash}),a.jsx("span",{className:"commit-separator",children:"•"}),a.jsx("span",{className:"commit-date",children:c(p.date)})]}),p.refs.length>0&&a.jsx("div",{className:"commit-refs",children:p.refs.map(y=>a.jsx("span",{className:"commit-ref",children:y},y))})]})]},p.hash))}),g&&a.jsxs("div",{className:"commit-context-menu",style:{top:g.y,left:g.x},onClick:p=>p.stopPropagation(),children:[a.jsxs("div",{className:"commit-context-menu-item",onClick:h,children:["Cherry-pick Commit",r.length>1?"s":""]}),a.jsxs("div",{className:"commit-context-menu-item",onClick:w,children:["Revert Commit",r.length>1?"s":""]}),a.jsx("div",{className:"commit-context-menu-item",onClick:L,children:"Rebase onto this Commit"})]}),i&&a.jsx(Xd,{commits:d(),onClose:()=>s(!1)}),o&&a.jsx(Gd,{currentBranch:n,branches:t,onClose:()=>u(!1),onSuccess:()=>{u(!1)}}),f&&a.jsx(Zd,{commits:d(),onClose:()=>v(!1),onSuccess:()=>{v(!1)}})]})}class qd{constructor(){q(this,"ROW_HEIGHT",50);q(this,"COLUMN_WIDTH",30);q(this,"NODE_RADIUS",5);q(this,"MAX_CACHE_SIZE",50);q(this,"CACHE_TTL",6e4);q(this,"layoutCache",new Map);q(this,"colors",["#4285F4","#EA4335","#FBBC04","#34A853","#FF6D00","#9C27B0","#00BCD4","#E91E63"])}calculateLayout(t){if(t.length===0)return{nodes:new Map,edges:[],lanes:0,height:0};const n=this.getCacheKey(t),r=this.layoutCache.get(n);if(r&&Date.now()-r.timestamp<this.CACHE_TTL)return r.accessCount++,r.result;const l=this.calculateLayoutInternal(t);return this.cacheResult(n,l),l}calculateLayoutInternal(t){const n=this.buildChildrenMap(t),r=this.assignLanes(t,n),l=this.calculateNodePositions(t,r),i=this.calculateEdges(t,l),s=Math.max(...Array.from(r.values()))+1,o=t.length*this.ROW_HEIGHT;return{nodes:l,edges:i,lanes:s,height:o}}getCacheKey(t){const n=t.slice(0,Math.min(10,t.length)),r=t.slice(Math.max(0,t.length-10)),l=[...n,...r].map(i=>i.hash);return`${t.length}:${l.join(",")}`}cacheResult(t,n){this.layoutCache.size>=this.MAX_CACHE_SIZE&&this.evictLRU(),this.layoutCache.set(t,{result:n,timestamp:Date.now(),accessCount:1})}evictLRU(){let t=null,n=1/0;for(const[r,l]of this.layoutCache.entries()){const i=l.timestamp/Math.max(1,l.accessCount);i<n&&(n=i,t=r)}t&&this.layoutCache.delete(t)}clearCache(){this.layoutCache.clear()}getCacheStats(){let t=0,n=0;for(const r of this.layoutCache.values())t+=r.accessCount,r.accessCount>1&&(n+=r.accessCount-1);return{size:this.layoutCache.size,maxSize:this.MAX_CACHE_SIZE,hitRate:t>0?n/t:0}}buildChildrenMap(t){const n=new Map;for(const r of t)for(const l of r.parents)n.has(l)||n.set(l,[]),n.get(l).push(r);return n}assignLanes(t,n){const r=new Map,l=new Map;for(let i=0;i<t.length;i++){const s=t[i];let o=null;if(s.parents.length>0){const v=s.parents[0],g=r.get(v);g!==void 0&&!l.has(g)&&(o=g)}if(o===null)for(o=0;l.has(o);)o++;r.set(s.hash,o),l.set(o,s.hash);const u=n.get(s.hash)||[],f=u.every(v=>r.has(v.hash));(u.length===0||f)&&l.get(o)===s.hash&&l.delete(o)}return r}calculateNodePositions(t,n){const r=new Map;return t.forEach((l,i)=>{const s=n.get(l.hash)||0,o=this.colors[s%this.colors.length];r.set(l.hash,{commit:l,x:s*this.COLUMN_WIDTH+this.COLUMN_WIDTH/2,y:i*this.ROW_HEIGHT+this.ROW_HEIGHT/2,color:o,lane:s})}),r}calculateEdges(t,n){const r=[];for(const l of t){const i=n.get(l.hash);if(i)for(const s of l.parents){const o=n.get(s);if(!o)continue;const u=this.calculateEdgePath(i,o);r.push({from:l.hash,to:s,path:u,color:i.color})}}return r}calculateEdgePath(t,n){const r=[];if(r.push({x:t.x,y:t.y}),t.x===n.x)return r.push({x:n.x,y:n.y}),r;const l=(t.y+n.y)/2;return r.push({x:t.x,y:l}),r.push({x:n.x,y:l}),r.push({x:n.x,y:n.y}),r}getColor(t){return this.colors[t%this.colors.length]}getConfig(){return{rowHeight:this.ROW_HEIGHT,columnWidth:this.COLUMN_WIDTH,nodeRadius:this.NODE_RADIUS,colors:this.colors}}}const Zo=new qd;class bd{constructor(t){q(this,"ctx");q(this,"scale",1);q(this,"offsetX",0);q(this,"offsetY",0);this.canvas=t;const n=t.getContext("2d");if(!n)throw new Error("Failed to get 2D context");this.ctx=n,this.setupCanvas()}setupCanvas(){const t=window.devicePixelRatio||1,n=this.canvas.getBoundingClientRect();this.canvas.width=n.width*t,this.canvas.height=n.height*t,this.ctx.scale(t,t),this.canvas.style.width=`${n.width}px`,this.canvas.style.height=`${n.height}px`}clear(){const t=this.canvas.getBoundingClientRect();this.ctx.clearRect(0,0,t.width,t.height)}render(t,n,r=new Set,l=null){this.clear(),this.ctx.save(),this.ctx.translate(this.offsetX,this.offsetY),this.ctx.scale(this.scale,this.scale);for(const i of n)this.drawEdge(i);for(const i of t.values()){const s=r.has(i.commit.hash),o=i.commit.hash===l;this.drawNode(i,s,o)}this.ctx.restore()}drawEdge(t){if(!(t.path.length<2)){if(this.ctx.beginPath(),this.ctx.strokeStyle=t.color,this.ctx.lineWidth=2,this.ctx.lineCap="round",this.ctx.lineJoin="round",this.ctx.moveTo(t.path[0].x,t.path[0].y),t.path.length===2)this.ctx.lineTo(t.path[1].x,t.path[1].y);else for(let n=1;n<t.path.length-2;n+=2){const r=t.path[n],l=t.path[n+1],i=t.path[n+2]||t.path[t.path.length-1];this.ctx.bezierCurveTo(r.x,r.y,l.x,l.y,i.x,i.y)}this.ctx.stroke()}}drawNode(t,n,r){this.ctx.beginPath(),this.ctx.arc(t.x,t.y,5,0,Math.PI*2),this.ctx.fillStyle=t.color,this.ctx.fill(),t.commit.isHead&&(this.ctx.beginPath(),this.ctx.arc(t.x,t.y,8,0,Math.PI*2),this.ctx.strokeStyle=t.color,this.ctx.lineWidth=2,this.ctx.stroke()),n&&(this.ctx.beginPath(),this.ctx.arc(t.x,t.y,10,0,Math.PI*2),this.ctx.strokeStyle="#FFD700",this.ctx.lineWidth=2,this.ctx.stroke()),r&&(this.ctx.beginPath(),this.ctx.arc(t.x,t.y,12,0,Math.PI*2),this.ctx.strokeStyle="rgba(255, 255, 255, 0.5)",this.ctx.lineWidth=2,this.ctx.stroke()),t.commit.refs.length>0&&this.drawRefs(t)}drawRefs(t){const n=t.commit.refs;let r=t.x+15;const l=t.y;for(const i of n){let s="#666",o="#fff";i.includes("HEAD")?s="#4285F4":i.startsWith("tag:")?(s="#FBBC04",o="#000"):i.includes("origin/")&&(s="#EA4335");const u=i.replace("tag: ","");this.ctx.font="11px sans-serif";const f=this.ctx.measureText(u),v=4,g=f.width+v*2,m=16;this.ctx.fillStyle=s,this.ctx.fillRect(r,l-m/2,g,m),this.ctx.fillStyle=o,this.ctx.textAlign="left",this.ctx.textBaseline="middle",this.ctx.fillText(u,r+v,l),r+=g+5}}setScale(t){this.scale=Math.max(.5,Math.min(2,t))}setOffset(t,n){this.offsetX=t,this.offsetY=n}getNodeAtPosition(t,n,r){const l=(t-this.offsetX)/this.scale,i=(n-this.offsetY)/this.scale,s=5;for(const o of r.values()){const u=l-o.x,f=i-o.y;if(Math.sqrt(u*u+f*f)<=s+5)return o}return null}resize(){this.setupCanvas()}destroy(){this.clear()}}const eh=({commits:e,selectedHashes:t,onCommitClick:n,onCommitDoubleClick:r})=>{const l=P.useRef(null),i=P.useRef(null),[s,o]=P.useState(null),[u,f]=P.useState(null);P.useEffect(()=>{if(e.length===0){f(null);return}const h=Zo.calculateLayout(e);f(h)},[e]),P.useEffect(()=>{if(!l.current)return;i.current=new bd(l.current);const h=()=>{var c;(c=i.current)==null||c.resize(),v()};return window.addEventListener("resize",h),()=>{var c;window.removeEventListener("resize",h),(c=i.current)==null||c.destroy()}},[]);const v=()=>{if(!u||!i.current)return;const h=new Set(t);i.current.render(u.nodes,u.edges,h,s)};P.useEffect(()=>{v()},[u,t,s]);const g=h=>{if(!u||!i.current)return;const c=l.current.getBoundingClientRect(),d=h.clientX-c.left,p=h.clientY-c.top,y=i.current.getNodeAtPosition(d,p,u.nodes);o(y?y.commit.hash:null),l.current.style.cursor=y?"pointer":"default"},m=()=>{o(null),l.current&&(l.current.style.cursor="default")},k=h=>{if(!u||!i.current)return;const c=l.current.getBoundingClientRect(),d=h.clientX-c.left,p=h.clientY-c.top,y=i.current.getNodeAtPosition(d,p,u.nodes);y&&n(y.commit.hash,h.ctrlKey||h.metaKey)},S=h=>{if(!u||!i.current)return;const c=l.current.getBoundingClientRect(),d=h.clientX-c.left,p=h.clientY-c.top,y=i.current.getNodeAtPosition(d,p,u.nodes);y&&r(y.commit.hash)},w=Zo.getConfig(),L=u?(u.lanes+1)*w.columnWidth:100;return a.jsx("div",{className:"commit-graph",children:a.jsx("canvas",{ref:l,className:"commit-graph-canvas",style:{width:`${L}px`},onMouseMove:g,onMouseLeave:m,onClick:k,onDoubleClick:S})})},th=({commit:e,onClose:t})=>{const[n,r]=P.useState([]),[l,i]=P.useState(null),[s,o]=P.useState(!1);if(P.useEffect(()=>{if(!e){r([]),i(null);return}(async()=>{o(!0);try{const[v,g]=await Promise.all([z.call("git.getCommitFiles",e.hash),z.call("git.getCommitStats",e.hash)]);r(v),i(g)}catch(v){console.error("Failed to load commit details:",v)}finally{o(!1)}})()},[e]),!e)return a.jsx("div",{className:"commit-details empty",children:a.jsx("p",{children:"Select a commit to view details"})});const u=f=>new Date(f).toLocaleString();return a.jsxs("div",{className:"commit-details",children:[a.jsxs("div",{className:"commit-details-header",children:[a.jsx("h3",{children:"Commit Details"}),a.jsx("button",{className:"close-button",onClick:t,title:"Close",children:"×"})]}),a.jsxs("div",{className:"commit-details-content",children:[a.jsxs("div",{className:"detail-section",children:[a.jsxs("div",{className:"detail-row",children:[a.jsx("span",{className:"detail-label",children:"Hash:"}),a.jsx("span",{className:"detail-value monospace",children:e.hash})]}),a.jsxs("div",{className:"detail-row",children:[a.jsx("span",{className:"detail-label",children:"Author:"}),a.jsx("span",{className:"detail-value",children:e.author})]}),a.jsxs("div",{className:"detail-row",children:[a.jsx("span",{className:"detail-label",children:"Email:"}),a.jsx("span",{className:"detail-value",children:e.email})]}),a.jsxs("div",{className:"detail-row",children:[a.jsx("span",{className:"detail-label",children:"Date:"}),a.jsx("span",{className:"detail-value",children:u(e.date)})]}),e.refs.length>0&&a.jsxs("div",{className:"detail-row",children:[a.jsx("span",{className:"detail-label",children:"Refs:"}),a.jsx("div",{className:"refs-list",children:e.refs.map((f,v)=>a.jsx("span",{className:"ref-tag",children:f},v))})]})]}),a.jsxs("div",{className:"detail-section",children:[a.jsx("h4",{children:"Message"}),a.jsx("div",{className:"commit-message",children:e.message})]}),l&&a.jsxs("div",{className:"detail-section",children:[a.jsx("h4",{children:"Changes"}),a.jsxs("div",{className:"commit-stats",children:[a.jsxs("span",{className:"stat-item",children:[a.jsx("span",{className:"stat-label",children:"Files:"}),a.jsx("span",{className:"stat-value",children:l.files})]}),a.jsxs("span",{className:"stat-item stat-additions",children:[a.jsx("span",{className:"stat-label",children:"+"}),a.jsx("span",{className:"stat-value",children:l.insertions})]}),a.jsxs("span",{className:"stat-item stat-deletions",children:[a.jsx("span",{className:"stat-label",children:"-"}),a.jsx("span",{className:"stat-value",children:l.deletions})]})]})]}),a.jsxs("div",{className:"detail-section",children:[a.jsxs("h4",{children:["Files Changed (",n.length,")"]}),s?a.jsx("div",{className:"loading",children:"Loading files..."}):a.jsx("div",{className:"files-list",children:n.map((f,v)=>a.jsx("div",{className:"file-item",children:f},v))})]}),e.parents.length>0&&a.jsxs("div",{className:"detail-section",children:[a.jsx("h4",{children:"Parents"}),a.jsx("div",{className:"parents-list",children:e.parents.map((f,v)=>a.jsx("div",{className:"parent-item monospace",children:f.substring(0,7)},v))})]})]})]})},nh=({onSearch:e,onClear:t})=>{const[n,r]=P.useState(""),[l,i]=P.useState("message"),s=P.useCallback(()=>{n.trim()&&e(n.trim(),l)},[n,l,e]),o=P.useCallback(()=>{r(""),t()},[t]),u=f=>{f.key==="Enter"?s():f.key==="Escape"&&o()};return a.jsxs("div",{className:"search-bar",children:[a.jsxs("div",{className:"search-input-group",children:[a.jsx("input",{type:"text",className:"search-input",placeholder:`Search by ${l}...`,value:n,onChange:f=>r(f.target.value),onKeyDown:u}),n&&a.jsx("button",{className:"clear-button",onClick:o,title:"Clear search",children:"×"})]}),a.jsxs("select",{className:"search-type-select",value:l,onChange:f=>i(f.target.value),children:[a.jsx("option",{value:"message",children:"Message"}),a.jsx("option",{value:"author",children:"Author"}),a.jsx("option",{value:"hash",children:"Hash"})]}),a.jsx("button",{className:"search-button",onClick:s,disabled:!n.trim(),children:"Search"})]})},rh=({itemCount:e,itemHeight:t,height:n,overscan:r=5,children:l,onLoadMore:i,hasMore:s=!1})=>{const o=P.useRef(null),[u,f]=P.useState(0),v=Math.floor(u/t),g=Math.ceil((u+n)/t),m=Math.max(0,v-r),k=Math.min(e,g+r),S=e*t,w=m*t,L=P.useCallback(c=>{const d=c.currentTarget;if(f(d.scrollTop),i&&s){const p=d.scrollTop+d.clientHeight,y=S-t*10;p>=y&&i()}},[i,s,S,t]),h=P.useCallback((c,d="smooth")=>{if(o.current){const p=c*t;o.current.scrollTo({top:p,behavior:d})}},[t]);return P.useEffect(()=>{o.current&&(o.current.scrollToIndex=h)},[h]),a.jsx("div",{ref:o,className:"virtual-scroll-container",style:{height:`${n}px`,overflow:"auto"},onScroll:L,children:a.jsx("div",{className:"virtual-scroll-spacer",style:{height:`${S}px`},children:a.jsx("div",{className:"virtual-scroll-content",style:{transform:`translateY(${w}px)`},children:l(m,k)})})})};function lh(){const{commits:e,branches:t,status:n,loading:r,selectedCommits:l,hasMore:i,searchQuery:s,fetchHistory:o,fetchBranches:u,selectCommit:f,searchCommits:v,clearSearch:g,loadMore:m}=Dt(),[k,S]=P.useState(null),[w,L]=P.useState(!1);P.useEffect(()=>{o({maxCount:100}),u()},[o,u]);const h=(N,C)=>{if(f(N,C),!C){const _=e.find(F=>F.hash===N);_&&(S(_),L(!0))}},c=N=>{const C=e.find(_=>_.hash===N);C&&(S(C),L(!0))},d=(N,C)=>{v(N,C)},p=()=>{g()},y=()=>{L(!1)};return a.jsxs("div",{className:"history-panel",children:[a.jsxs("div",{className:"history-header",children:[a.jsx("h3",{children:"Commit History"}),a.jsxs("span",{className:"commit-count",children:[e.length," commits",s&&" (filtered)"]})]}),a.jsx(nh,{onSearch:d,onClear:p}),a.jsxs("div",{className:"history-content",children:[a.jsxs("div",{className:"history-main",children:[a.jsx(eh,{commits:e,selectedHashes:l,onCommitClick:h,onCommitDoubleClick:c}),a.jsxs("div",{className:"commit-list-container",children:[a.jsx(rh,{itemCount:e.length,itemHeight:50,height:600,overscan:10,onLoadMore:m,hasMore:i&&!s,children:(N,C)=>a.jsx(Jd,{commits:e.slice(N,C),branches:t,currentBranch:(n==null?void 0:n.current)||"main",startIndex:N})}),r&&a.jsx("div",{className:"loading-indicator",children:"Loading more commits..."})]})]}),w&&a.jsx(th,{commit:k,onClose:y})]})]})}function ih(){const{fetchStatus:e,fetchHistory:t}=Dt();return P.useEffect(()=>{e(),t()},[e,t]),a.jsxs("div",{className:"app",children:[a.jsx("div",{className:"app-header",children:a.jsx("h1",{children:"Git GUI"})}),a.jsxs("div",{className:"app-content",children:[a.jsx("div",{className:"panel-container",children:a.jsx(Yd,{})}),a.jsx("div",{className:"panel-container",children:a.jsx(lh,{})})]})]})}Gl.createRoot(document.getElementById("root")).render(a.jsx(Xl.StrictMode,{children:a.jsx(ih,{})}));
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
+(function() {
+  "use strict";
+  var __vite_style__ = document.createElement("style");
+  __vite_style__.textContent = `.diff-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.diff-viewer {
+    background-color: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    width: 80%;
+    max-width: 1000px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.diff-viewer-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.diff-viewer-header h3 {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.diff-viewer-badge {
+    padding: 2px 8px;
+    font-size: 11px;
+    background-color: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    border-radius: 3px;
+}
+
+.diff-viewer-close {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--vscode-foreground);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+}
+
+.diff-viewer-close:hover {
+    background-color: var(--vscode-toolbar-hoverBackground);
+}
+
+.diff-viewer-content {
+    flex: 1;
+    overflow: auto;
+    padding: 16px;
+}
+
+.diff-viewer-loading,
+.diff-viewer-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--vscode-descriptionForeground);
+}
+
+.diff-viewer-pre {
+    margin: 0;
+    font-family: var(--vscode-editor-font-family);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.diff-line {
+    padding: 0 8px;
+    white-space: pre;
+}
+
+.diff-addition {
+    background-color: rgba(0, 255, 0, 0.1);
+    color: var(--vscode-gitDecoration-addedResourceForeground);
+}
+
+.diff-deletion {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--vscode-gitDecoration-deletedResourceForeground);
+}
+
+.diff-hunk {
+    background-color: var(--vscode-editor-lineHighlightBackground);
+    color: var(--vscode-descriptionForeground);
+    font-weight: 600;
+}.file-list {
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.file-list-empty {
+    padding: 16px;
+    text-align: center;
+    color: var(--vscode-descriptionForeground);
+    font-size: 13px;
+}
+
+.file-list-actions {
+    padding: 8px;
+    background-color: var(--vscode-editor-background);
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.file-list-actions button {
+    padding: 4px 12px;
+    font-size: 12px;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.file-list-items {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-item:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+.file-item.selected {
+    background-color: var(--vscode-list-activeSelectionBackground);
+    color: var(--vscode-list-activeSelectionForeground);
+}
+
+.file-name {
+    font-size: 13px;
+    font-family: var(--vscode-editor-font-family);
+}
+
+.file-action {
+    padding: 2px 8px;
+    font-size: 11px;
+    background-color: transparent;
+    color: var(--vscode-button-foreground);
+    border: 1px solid var(--vscode-button-border);
+    border-radius: 2px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+.file-item:hover .file-action {
+    opacity: 1;
+}
+
+.file-action:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+
+.file-list-discard {
+    background-color: var(--vscode-errorForeground) !important;
+    color: white !important;
+    margin-left: 8px;
+}
+
+.file-list-discard:hover {
+    opacity: 0.9;
+}
+
+.file-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.file-action-discard {
+    background-color: var(--vscode-errorForeground) !important;
+    color: white !important;
+    border-color: var(--vscode-errorForeground) !important;
+}
+
+.file-action-discard:hover {
+    opacity: 0.9;
+}.commit-box {
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    padding: 12px;
+    margin-top: auto;
+}
+
+.commit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.commit-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.commit-options {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.commit-amend-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.commit-amend-label input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.commit-amend-label input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.commit-hint {
+    font-size: 11px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-message {
+    width: 100%;
+    padding: 8px;
+    font-size: 13px;
+    font-family: var(--vscode-editor-font-family);
+    background-color: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 2px;
+    resize: vertical;
+    margin-bottom: 8px;
+}
+
+.commit-message:focus {
+    outline: 1px solid var(--vscode-focusBorder);
+}
+
+.commit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.commit-info {
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-button {
+    padding: 6px 16px;
+    font-size: 13px;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.commit-button:hover:not(:disabled) {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+.commit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}.stage-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px;
+}
+
+.stage-section {
+    margin-bottom: 24px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.section-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.section-header button {
+    padding: 4px 12px;
+    font-size: 12px;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.section-header button:hover:not(:disabled) {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+.section-header button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}.revert-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.revert-dialog {
+    background-color: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    width: 500px;
+    max-width: 90%;
+}
+
+.revert-dialog-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.revert-dialog-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.revert-dialog-content {
+    padding: 16px;
+}
+
+.revert-dialog-content p {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+}
+
+.revert-dialog-commits {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.revert-dialog-commit {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    display: flex;
+    gap: 12px;
+}
+
+.revert-dialog-commit:last-child {
+    border-bottom: none;
+}
+
+.revert-dialog-commit-hash {
+    font-family: var(--vscode-editor-font-family);
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+    flex-shrink: 0;
+}
+
+.revert-dialog-commit-message {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.revert-dialog-note {
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+    font-style: italic;
+}
+
+.revert-dialog-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--vscode-panel-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.revert-dialog-footer button {
+    padding: 6px 16px;
+    font-size: 13px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.revert-dialog-footer button:first-child {
+    background-color: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+}
+
+.revert-dialog-footer button:first-child:hover:not(:disabled) {
+    background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+.revert-dialog-confirm {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+}
+
+.revert-dialog-confirm:hover:not(:disabled) {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+.revert-dialog-footer button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}.rebase-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.rebase-dialog {
+    background: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.rebase-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.rebase-dialog-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--vscode-foreground);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+}
+
+.close-button:hover {
+    color: var(--vscode-errorForeground);
+}
+
+.rebase-dialog-content {
+    padding: 16px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.current-branch {
+    padding: 8px;
+    background: var(--vscode-input-background);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.commits-list {
+    margin-top: 16px;
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.commits-header {
+    padding: 8px 12px;
+    background: var(--vscode-editor-background);
+    border-bottom: 1px solid var(--vscode-panel-border);
+    font-weight: 600;
+}
+
+.commit-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    gap: 8px;
+}
+
+.commit-item:last-child {
+    border-bottom: none;
+}
+
+.commit-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.move-button {
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+    border: none;
+    border-radius: 3px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.move-button:hover:not(:disabled) {
+    background: var(--vscode-button-secondaryHoverBackground);
+}
+
+.move-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.action-select {
+    padding: 4px 8px;
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 3px;
+    font-size: 13px;
+    min-width: 80px;
+}
+
+.commit-hash {
+    font-family: monospace;
+    color: var(--vscode-textLink-foreground);
+    min-width: 60px;
+}
+
+.commit-message {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.info-message {
+    padding: 12px;
+    background: var(--vscode-inputValidation-infoBackground);
+    border: 1px solid var(--vscode-inputValidation-infoBorder);
+    border-radius: 4px;
+    margin-top: 16px;
+}
+
+.error-message {
+    padding: 12px;
+    background: var(--vscode-inputValidation-errorBackground);
+    border: 1px solid var(--vscode-inputValidation-errorBorder);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    color: var(--vscode-errorForeground);
+}
+
+.rebase-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px;
+    border-top: 1px solid var(--vscode-panel-border);
+}
+
+.button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button-primary {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+}
+
+.button-primary:hover:not(:disabled) {
+    background: var(--vscode-button-hoverBackground);
+}
+
+.button-secondary {
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+}
+
+.button-secondary:hover:not(:disabled) {
+    background: var(--vscode-button-secondaryHoverBackground);
+}.cherry-pick-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.cherry-pick-dialog {
+    background: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.cherry-pick-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.cherry-pick-dialog-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--vscode-foreground);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+}
+
+.close-button:hover {
+    color: var(--vscode-errorForeground);
+}
+
+.cherry-pick-dialog-content {
+    padding: 16px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.info-message {
+    padding: 12px;
+    background: var(--vscode-inputValidation-infoBackground);
+    border: 1px solid var(--vscode-inputValidation-infoBorder);
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.warning-message {
+    padding: 12px;
+    background: var(--vscode-inputValidation-warningBackground);
+    border: 1px solid var(--vscode-inputValidation-warningBorder);
+    border-radius: 4px;
+    margin-top: 16px;
+    color: var(--vscode-inputValidation-warningForeground);
+}
+
+.error-message {
+    padding: 12px;
+    background: var(--vscode-inputValidation-errorBackground);
+    border: 1px solid var(--vscode-inputValidation-errorBorder);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    color: var(--vscode-errorForeground);
+}
+
+.commits-list {
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.commit-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    gap: 12px;
+}
+
+.commit-item:last-child {
+    border-bottom: none;
+}
+
+.commit-hash {
+    font-family: monospace;
+    color: var(--vscode-textLink-foreground);
+    min-width: 60px;
+    font-size: 13px;
+}
+
+.commit-message {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.commit-author {
+    color: var(--vscode-descriptionForeground);
+    font-size: 12px;
+    min-width: 100px;
+    text-align: right;
+}
+
+.cherry-pick-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px;
+    border-top: 1px solid var(--vscode-panel-border);
+}
+
+.button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button-primary {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+}
+
+.button-primary:hover:not(:disabled) {
+    background: var(--vscode-button-hoverBackground);
+}
+
+.button-secondary {
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+}
+
+.button-secondary:hover:not(:disabled) {
+    background: var(--vscode-button-secondaryHoverBackground);
+}.commit-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+}
+
+.commit-list-empty {
+    padding: 32px;
+    text-align: center;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-item {
+    display: flex;
+    padding: 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.commit-item:last-child {
+    border-bottom: none;
+}
+
+.commit-item:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+.commit-item.selected {
+    background-color: var(--vscode-list-activeSelectionBackground);
+    color: var(--vscode-list-activeSelectionForeground);
+}
+
+.commit-item.head {
+    font-weight: 600;
+}
+
+.commit-graph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 12px;
+    width: 20px;
+}
+
+.commit-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--vscode-gitDecoration-addedResourceForeground);
+    border: 2px solid var(--vscode-editor-background);
+    flex-shrink: 0;
+}
+
+.commit-line {
+    width: 2px;
+    flex: 1;
+    background-color: var(--vscode-panel-border);
+    margin-top: 4px;
+}
+
+.commit-item:last-child .commit-line {
+    display: none;
+}
+
+.commit-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.commit-message {
+    font-size: 13px;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.commit-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-separator {
+    opacity: 0.5;
+}
+
+.commit-hash {
+    font-family: var(--vscode-editor-font-family);
+}
+
+.commit-refs {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.commit-ref {
+    padding: 2px 6px;
+    font-size: 10px;
+    background-color: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    border-radius: 3px;
+    font-family: var(--vscode-editor-font-family);
+}
+
+
+.commit-context-menu {
+    position: fixed;
+    background-color: var(--vscode-menu-background);
+    border: 1px solid var(--vscode-menu-border);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 180px;
+}
+
+.commit-context-menu-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--vscode-menu-foreground);
+}
+
+.commit-context-menu-item:hover {
+    background-color: var(--vscode-menu-selectionBackground);
+    color: var(--vscode-menu-selectionForeground);
+}.commit-graph {
+    flex-shrink: 0;
+    background: var(--vscode-editor-background);
+}
+
+.commit-graph-canvas {
+    display: block;
+    height: 100%;
+}.commit-details {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--vscode-editor-background);
+    border-left: 1px solid var(--vscode-panel-border);
+    overflow: hidden;
+}
+
+.commit-details.empty {
+    justify-content: center;
+    align-items: center;
+    color: var(--vscode-descriptionForeground);
+}
+
+.commit-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.commit-details-header h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--vscode-foreground);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.close-button:hover {
+    background: var(--vscode-toolbar-hoverBackground);
+}
+
+.commit-details-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.detail-section {
+    margin-bottom: 16px;
+}
+
+.detail-section h4 {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--vscode-foreground);
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 6px;
+    font-size: 12px;
+}
+
+.detail-label {
+    min-width: 60px;
+    color: var(--vscode-descriptionForeground);
+    font-weight: 500;
+}
+
+.detail-value {
+    flex: 1;
+    color: var(--vscode-foreground);
+    word-break: break-all;
+}
+
+.monospace {
+    font-family: var(--vscode-editor-font-family);
+    font-size: 11px;
+}
+
+.refs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.ref-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.commit-message {
+    padding: 8px;
+    background: var(--vscode-textCodeBlock-background);
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.commit-stats {
+    display: flex;
+    gap: 16px;
+    padding: 8px;
+    background: var(--vscode-textCodeBlock-background);
+    border-radius: 4px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.stat-label {
+    font-weight: 600;
+}
+
+.stat-value {
+    font-family: var(--vscode-editor-font-family);
+}
+
+.stat-additions {
+    color: #4caf50;
+}
+
+.stat-deletions {
+    color: #f44336;
+}
+
+.files-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.file-item {
+    padding: 4px 8px;
+    font-size: 11px;
+    font-family: var(--vscode-editor-font-family);
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-item:hover {
+    background: var(--vscode-list-hoverBackground);
+}
+
+.parents-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.parent-item {
+    padding: 4px 8px;
+    background: var(--vscode-textCodeBlock-background);
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.loading {
+    padding: 8px;
+    text-align: center;
+    color: var(--vscode-descriptionForeground);
+    font-size: 12px;
+}.search-bar {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--vscode-editor-background);
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.search-input-group {
+    position: relative;
+    flex: 1;
+}
+
+.search-input {
+    width: 100%;
+    padding: 4px 28px 4px 8px;
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 4px;
+    font-size: 12px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--vscode-focusBorder);
+}
+
+.clear-button {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--vscode-foreground);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+
+.clear-button:hover {
+    background: var(--vscode-toolbar-hoverBackground);
+}
+
+.search-type-select {
+    padding: 4px 8px;
+    background: var(--vscode-dropdown-background);
+    color: var(--vscode-dropdown-foreground);
+    border: 1px solid var(--vscode-dropdown-border);
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-type-select:focus {
+    border-color: var(--vscode-focusBorder);
+}
+
+.search-button {
+    padding: 4px 12px;
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.search-button:hover:not(:disabled) {
+    background: var(--vscode-button-hoverBackground);
+}
+
+.search-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}.virtual-scroll-container {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.virtual-scroll-spacer {
+    position: relative;
+    width: 100%;
+}
+
+.virtual-scroll-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    will-change: transform;
+}.history-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--vscode-editor-background);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.history-header h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.commit-count {
+    font-size: 11px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.history-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.history-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.commit-list-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.loading-indicator {
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+    border-top: 1px solid var(--vscode-panel-border);
+}.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.app-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    background-color: var(--vscode-sideBar-background);
+}
+
+.app-header h1 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.app-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.panel-container {
+    flex: 1;
+    overflow: auto;
+    border-right: 1px solid var(--vscode-panel-border);
+}
+
+.panel-container:last-child {
+    border-right: none;
+}
+
+
+/* Loading state */
+.app-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: var(--vscode-foreground);
+}
+
+.app-loading .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--vscode-progressBar-background);
+    border-top: 3px solid var(--vscode-button-background);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.app-loading p {
+    font-size: 14px;
+    color: var(--vscode-descriptionForeground);
+}
+
+/* Error state */
+.app-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 40px;
+    text-align: center;
+    color: var(--vscode-foreground);
+}
+
+.app-error .error-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.app-error h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--vscode-errorForeground);
+    margin-bottom: 12px;
+}
+
+.app-error .error-message {
+    font-size: 13px;
+    color: var(--vscode-descriptionForeground);
+    margin-bottom: 24px;
+    max-width: 500px;
+    word-wrap: break-word;
+}
+
+.app-error .error-actions {
+    margin-bottom: 32px;
+}
+
+.app-error .error-actions button {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.app-error .error-actions button:hover {
+    background: var(--vscode-button-hoverBackground);
+}
+
+.app-error .error-help {
+    max-width: 500px;
+    text-align: left;
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+    background: var(--vscode-textBlockQuote-background);
+    border-left: 3px solid var(--vscode-textBlockQuote-border);
+    padding: 16px;
+    border-radius: 2px;
+}
+
+.app-error .error-help p {
+    margin: 8px 0;
+}
+
+.app-error .error-help ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.app-error .error-help li {
+    margin: 4px 0;
+}* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--vscode-editor-background);
+    color: var(--vscode-editor-foreground);
+}
+
+#root {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}`;
+  document.head.appendChild(__vite_style__);
+  function getDefaultExportFromCjs(x2) {
+    return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
+  }
+  var jsxRuntime = { exports: {} };
+  var reactJsxRuntime_production_min = {};
+  var react = { exports: {} };
+  var react_production_min = {};
+  /**
+   * @license React
+   * react.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var l$1 = Symbol.for("react.element"), n$1 = Symbol.for("react.portal"), p$2 = Symbol.for("react.fragment"), q$1 = Symbol.for("react.strict_mode"), r = Symbol.for("react.profiler"), t = Symbol.for("react.provider"), u = Symbol.for("react.context"), v$1 = Symbol.for("react.forward_ref"), w = Symbol.for("react.suspense"), x = Symbol.for("react.memo"), y = Symbol.for("react.lazy"), z$1 = Symbol.iterator;
+  function A$1(a) {
+    if (null === a || "object" !== typeof a)
+      return null;
+    a = z$1 && a[z$1] || a["@@iterator"];
+    return "function" === typeof a ? a : null;
+  }
+  var B$1 = { isMounted: function() {
+    return false;
+  }, enqueueForceUpdate: function() {
+  }, enqueueReplaceState: function() {
+  }, enqueueSetState: function() {
+  } }, C$1 = Object.assign, D$1 = {};
+  function E$1(a, b, e) {
+    this.props = a;
+    this.context = b;
+    this.refs = D$1;
+    this.updater = e || B$1;
+  }
+  E$1.prototype.isReactComponent = {};
+  E$1.prototype.setState = function(a, b) {
+    if ("object" !== typeof a && "function" !== typeof a && null != a)
+      throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");
+    this.updater.enqueueSetState(this, a, b, "setState");
+  };
+  E$1.prototype.forceUpdate = function(a) {
+    this.updater.enqueueForceUpdate(this, a, "forceUpdate");
+  };
+  function F() {
+  }
+  F.prototype = E$1.prototype;
+  function G$1(a, b, e) {
+    this.props = a;
+    this.context = b;
+    this.refs = D$1;
+    this.updater = e || B$1;
+  }
+  var H$1 = G$1.prototype = new F();
+  H$1.constructor = G$1;
+  C$1(H$1, E$1.prototype);
+  H$1.isPureReactComponent = true;
+  var I$1 = Array.isArray, J = Object.prototype.hasOwnProperty, K$1 = { current: null }, L$1 = { key: true, ref: true, __self: true, __source: true };
+  function M$1(a, b, e) {
+    var d, c = {}, k2 = null, h = null;
+    if (null != b)
+      for (d in void 0 !== b.ref && (h = b.ref), void 0 !== b.key && (k2 = "" + b.key), b)
+        J.call(b, d) && !L$1.hasOwnProperty(d) && (c[d] = b[d]);
+    var g = arguments.length - 2;
+    if (1 === g)
+      c.children = e;
+    else if (1 < g) {
+      for (var f2 = Array(g), m2 = 0; m2 < g; m2++)
+        f2[m2] = arguments[m2 + 2];
+      c.children = f2;
+    }
+    if (a && a.defaultProps)
+      for (d in g = a.defaultProps, g)
+        void 0 === c[d] && (c[d] = g[d]);
+    return { $$typeof: l$1, type: a, key: k2, ref: h, props: c, _owner: K$1.current };
+  }
+  function N$1(a, b) {
+    return { $$typeof: l$1, type: a.type, key: b, ref: a.ref, props: a.props, _owner: a._owner };
+  }
+  function O$1(a) {
+    return "object" === typeof a && null !== a && a.$$typeof === l$1;
+  }
+  function escape(a) {
+    var b = { "=": "=0", ":": "=2" };
+    return "$" + a.replace(/[=:]/g, function(a2) {
+      return b[a2];
+    });
+  }
+  var P$1 = /\/+/g;
+  function Q$1(a, b) {
+    return "object" === typeof a && null !== a && null != a.key ? escape("" + a.key) : b.toString(36);
+  }
+  function R$1(a, b, e, d, c) {
+    var k2 = typeof a;
+    if ("undefined" === k2 || "boolean" === k2)
+      a = null;
+    var h = false;
+    if (null === a)
+      h = true;
+    else
+      switch (k2) {
+        case "string":
+        case "number":
+          h = true;
+          break;
+        case "object":
+          switch (a.$$typeof) {
+            case l$1:
+            case n$1:
+              h = true;
+          }
+      }
+    if (h)
+      return h = a, c = c(h), a = "" === d ? "." + Q$1(h, 0) : d, I$1(c) ? (e = "", null != a && (e = a.replace(P$1, "$&/") + "/"), R$1(c, b, e, "", function(a2) {
+        return a2;
+      })) : null != c && (O$1(c) && (c = N$1(c, e + (!c.key || h && h.key === c.key ? "" : ("" + c.key).replace(P$1, "$&/") + "/") + a)), b.push(c)), 1;
+    h = 0;
+    d = "" === d ? "." : d + ":";
+    if (I$1(a))
+      for (var g = 0; g < a.length; g++) {
+        k2 = a[g];
+        var f2 = d + Q$1(k2, g);
+        h += R$1(k2, b, e, f2, c);
+      }
+    else if (f2 = A$1(a), "function" === typeof f2)
+      for (a = f2.call(a), g = 0; !(k2 = a.next()).done; )
+        k2 = k2.value, f2 = d + Q$1(k2, g++), h += R$1(k2, b, e, f2, c);
+    else if ("object" === k2)
+      throw b = String(a), Error("Objects are not valid as a React child (found: " + ("[object Object]" === b ? "object with keys {" + Object.keys(a).join(", ") + "}" : b) + "). If you meant to render a collection of children, use an array instead.");
+    return h;
+  }
+  function S$1(a, b, e) {
+    if (null == a)
+      return a;
+    var d = [], c = 0;
+    R$1(a, d, "", "", function(a2) {
+      return b.call(e, a2, c++);
+    });
+    return d;
+  }
+  function T$1(a) {
+    if (-1 === a._status) {
+      var b = a._result;
+      b = b();
+      b.then(function(b2) {
+        if (0 === a._status || -1 === a._status)
+          a._status = 1, a._result = b2;
+      }, function(b2) {
+        if (0 === a._status || -1 === a._status)
+          a._status = 2, a._result = b2;
+      });
+      -1 === a._status && (a._status = 0, a._result = b);
+    }
+    if (1 === a._status)
+      return a._result.default;
+    throw a._result;
+  }
+  var U$1 = { current: null }, V$1 = { transition: null }, W$1 = { ReactCurrentDispatcher: U$1, ReactCurrentBatchConfig: V$1, ReactCurrentOwner: K$1 };
+  function X$1() {
+    throw Error("act(...) is not supported in production builds of React.");
+  }
+  react_production_min.Children = { map: S$1, forEach: function(a, b, e) {
+    S$1(a, function() {
+      b.apply(this, arguments);
+    }, e);
+  }, count: function(a) {
+    var b = 0;
+    S$1(a, function() {
+      b++;
+    });
+    return b;
+  }, toArray: function(a) {
+    return S$1(a, function(a2) {
+      return a2;
+    }) || [];
+  }, only: function(a) {
+    if (!O$1(a))
+      throw Error("React.Children.only expected to receive a single React element child.");
+    return a;
+  } };
+  react_production_min.Component = E$1;
+  react_production_min.Fragment = p$2;
+  react_production_min.Profiler = r;
+  react_production_min.PureComponent = G$1;
+  react_production_min.StrictMode = q$1;
+  react_production_min.Suspense = w;
+  react_production_min.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W$1;
+  react_production_min.act = X$1;
+  react_production_min.cloneElement = function(a, b, e) {
+    if (null === a || void 0 === a)
+      throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
+    var d = C$1({}, a.props), c = a.key, k2 = a.ref, h = a._owner;
+    if (null != b) {
+      void 0 !== b.ref && (k2 = b.ref, h = K$1.current);
+      void 0 !== b.key && (c = "" + b.key);
+      if (a.type && a.type.defaultProps)
+        var g = a.type.defaultProps;
+      for (f2 in b)
+        J.call(b, f2) && !L$1.hasOwnProperty(f2) && (d[f2] = void 0 === b[f2] && void 0 !== g ? g[f2] : b[f2]);
+    }
+    var f2 = arguments.length - 2;
+    if (1 === f2)
+      d.children = e;
+    else if (1 < f2) {
+      g = Array(f2);
+      for (var m2 = 0; m2 < f2; m2++)
+        g[m2] = arguments[m2 + 2];
+      d.children = g;
+    }
+    return { $$typeof: l$1, type: a.type, key: c, ref: k2, props: d, _owner: h };
+  };
+  react_production_min.createContext = function(a) {
+    a = { $$typeof: u, _currentValue: a, _currentValue2: a, _threadCount: 0, Provider: null, Consumer: null, _defaultValue: null, _globalName: null };
+    a.Provider = { $$typeof: t, _context: a };
+    return a.Consumer = a;
+  };
+  react_production_min.createElement = M$1;
+  react_production_min.createFactory = function(a) {
+    var b = M$1.bind(null, a);
+    b.type = a;
+    return b;
+  };
+  react_production_min.createRef = function() {
+    return { current: null };
+  };
+  react_production_min.forwardRef = function(a) {
+    return { $$typeof: v$1, render: a };
+  };
+  react_production_min.isValidElement = O$1;
+  react_production_min.lazy = function(a) {
+    return { $$typeof: y, _payload: { _status: -1, _result: a }, _init: T$1 };
+  };
+  react_production_min.memo = function(a, b) {
+    return { $$typeof: x, type: a, compare: void 0 === b ? null : b };
+  };
+  react_production_min.startTransition = function(a) {
+    var b = V$1.transition;
+    V$1.transition = {};
+    try {
+      a();
+    } finally {
+      V$1.transition = b;
+    }
+  };
+  react_production_min.unstable_act = X$1;
+  react_production_min.useCallback = function(a, b) {
+    return U$1.current.useCallback(a, b);
+  };
+  react_production_min.useContext = function(a) {
+    return U$1.current.useContext(a);
+  };
+  react_production_min.useDebugValue = function() {
+  };
+  react_production_min.useDeferredValue = function(a) {
+    return U$1.current.useDeferredValue(a);
+  };
+  react_production_min.useEffect = function(a, b) {
+    return U$1.current.useEffect(a, b);
+  };
+  react_production_min.useId = function() {
+    return U$1.current.useId();
+  };
+  react_production_min.useImperativeHandle = function(a, b, e) {
+    return U$1.current.useImperativeHandle(a, b, e);
+  };
+  react_production_min.useInsertionEffect = function(a, b) {
+    return U$1.current.useInsertionEffect(a, b);
+  };
+  react_production_min.useLayoutEffect = function(a, b) {
+    return U$1.current.useLayoutEffect(a, b);
+  };
+  react_production_min.useMemo = function(a, b) {
+    return U$1.current.useMemo(a, b);
+  };
+  react_production_min.useReducer = function(a, b, e) {
+    return U$1.current.useReducer(a, b, e);
+  };
+  react_production_min.useRef = function(a) {
+    return U$1.current.useRef(a);
+  };
+  react_production_min.useState = function(a) {
+    return U$1.current.useState(a);
+  };
+  react_production_min.useSyncExternalStore = function(a, b, e) {
+    return U$1.current.useSyncExternalStore(a, b, e);
+  };
+  react_production_min.useTransition = function() {
+    return U$1.current.useTransition();
+  };
+  react_production_min.version = "18.3.1";
+  {
+    react.exports = react_production_min;
+  }
+  var reactExports = react.exports;
+  const React = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
+  /**
+   * @license React
+   * react-jsx-runtime.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var f = reactExports, k = Symbol.for("react.element"), l = Symbol.for("react.fragment"), m$1 = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p$1 = { key: true, ref: true, __self: true, __source: true };
+  function q(c, a, g) {
+    var b, d = {}, e = null, h = null;
+    void 0 !== g && (e = "" + g);
+    void 0 !== a.key && (e = "" + a.key);
+    void 0 !== a.ref && (h = a.ref);
+    for (b in a)
+      m$1.call(a, b) && !p$1.hasOwnProperty(b) && (d[b] = a[b]);
+    if (c && c.defaultProps)
+      for (b in a = c.defaultProps, a)
+        void 0 === d[b] && (d[b] = a[b]);
+    return { $$typeof: k, type: c, key: e, ref: h, props: d, _owner: n.current };
+  }
+  reactJsxRuntime_production_min.Fragment = l;
+  reactJsxRuntime_production_min.jsx = q;
+  reactJsxRuntime_production_min.jsxs = q;
+  {
+    jsxRuntime.exports = reactJsxRuntime_production_min;
+  }
+  var jsxRuntimeExports = jsxRuntime.exports;
+  var client = {};
+  var reactDom = { exports: {} };
+  var reactDom_production_min = {};
+  var scheduler = { exports: {} };
+  var scheduler_production_min = {};
+  /**
+   * @license React
+   * scheduler.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  (function(exports$1) {
+    function f2(a, b) {
+      var c = a.length;
+      a.push(b);
+      a:
+        for (; 0 < c; ) {
+          var d = c - 1 >>> 1, e = a[d];
+          if (0 < g(e, b))
+            a[d] = b, a[c] = e, c = d;
+          else
+            break a;
+        }
+    }
+    function h(a) {
+      return 0 === a.length ? null : a[0];
+    }
+    function k2(a) {
+      if (0 === a.length)
+        return null;
+      var b = a[0], c = a.pop();
+      if (c !== b) {
+        a[0] = c;
+        a:
+          for (var d = 0, e = a.length, w2 = e >>> 1; d < w2; ) {
+            var m2 = 2 * (d + 1) - 1, C2 = a[m2], n2 = m2 + 1, x2 = a[n2];
+            if (0 > g(C2, c))
+              n2 < e && 0 > g(x2, C2) ? (a[d] = x2, a[n2] = c, d = n2) : (a[d] = C2, a[m2] = c, d = m2);
+            else if (n2 < e && 0 > g(x2, c))
+              a[d] = x2, a[n2] = c, d = n2;
+            else
+              break a;
+          }
+      }
+      return b;
+    }
+    function g(a, b) {
+      var c = a.sortIndex - b.sortIndex;
+      return 0 !== c ? c : a.id - b.id;
+    }
+    if ("object" === typeof performance && "function" === typeof performance.now) {
+      var l2 = performance;
+      exports$1.unstable_now = function() {
+        return l2.now();
+      };
+    } else {
+      var p2 = Date, q2 = p2.now();
+      exports$1.unstable_now = function() {
+        return p2.now() - q2;
+      };
+    }
+    var r2 = [], t2 = [], u2 = 1, v2 = null, y2 = 3, z2 = false, A2 = false, B2 = false, D2 = "function" === typeof setTimeout ? setTimeout : null, E2 = "function" === typeof clearTimeout ? clearTimeout : null, F2 = "undefined" !== typeof setImmediate ? setImmediate : null;
+    "undefined" !== typeof navigator && void 0 !== navigator.scheduling && void 0 !== navigator.scheduling.isInputPending && navigator.scheduling.isInputPending.bind(navigator.scheduling);
+    function G2(a) {
+      for (var b = h(t2); null !== b; ) {
+        if (null === b.callback)
+          k2(t2);
+        else if (b.startTime <= a)
+          k2(t2), b.sortIndex = b.expirationTime, f2(r2, b);
+        else
+          break;
+        b = h(t2);
+      }
+    }
+    function H2(a) {
+      B2 = false;
+      G2(a);
+      if (!A2)
+        if (null !== h(r2))
+          A2 = true, I2(J2);
+        else {
+          var b = h(t2);
+          null !== b && K2(H2, b.startTime - a);
+        }
+    }
+    function J2(a, b) {
+      A2 = false;
+      B2 && (B2 = false, E2(L2), L2 = -1);
+      z2 = true;
+      var c = y2;
+      try {
+        G2(b);
+        for (v2 = h(r2); null !== v2 && (!(v2.expirationTime > b) || a && !M2()); ) {
+          var d = v2.callback;
+          if ("function" === typeof d) {
+            v2.callback = null;
+            y2 = v2.priorityLevel;
+            var e = d(v2.expirationTime <= b);
+            b = exports$1.unstable_now();
+            "function" === typeof e ? v2.callback = e : v2 === h(r2) && k2(r2);
+            G2(b);
+          } else
+            k2(r2);
+          v2 = h(r2);
+        }
+        if (null !== v2)
+          var w2 = true;
+        else {
+          var m2 = h(t2);
+          null !== m2 && K2(H2, m2.startTime - b);
+          w2 = false;
+        }
+        return w2;
+      } finally {
+        v2 = null, y2 = c, z2 = false;
+      }
+    }
+    var N2 = false, O2 = null, L2 = -1, P2 = 5, Q2 = -1;
+    function M2() {
+      return exports$1.unstable_now() - Q2 < P2 ? false : true;
+    }
+    function R2() {
+      if (null !== O2) {
+        var a = exports$1.unstable_now();
+        Q2 = a;
+        var b = true;
+        try {
+          b = O2(true, a);
+        } finally {
+          b ? S2() : (N2 = false, O2 = null);
+        }
+      } else
+        N2 = false;
+    }
+    var S2;
+    if ("function" === typeof F2)
+      S2 = function() {
+        F2(R2);
+      };
+    else if ("undefined" !== typeof MessageChannel) {
+      var T2 = new MessageChannel(), U2 = T2.port2;
+      T2.port1.onmessage = R2;
+      S2 = function() {
+        U2.postMessage(null);
+      };
+    } else
+      S2 = function() {
+        D2(R2, 0);
+      };
+    function I2(a) {
+      O2 = a;
+      N2 || (N2 = true, S2());
+    }
+    function K2(a, b) {
+      L2 = D2(function() {
+        a(exports$1.unstable_now());
+      }, b);
+    }
+    exports$1.unstable_IdlePriority = 5;
+    exports$1.unstable_ImmediatePriority = 1;
+    exports$1.unstable_LowPriority = 4;
+    exports$1.unstable_NormalPriority = 3;
+    exports$1.unstable_Profiling = null;
+    exports$1.unstable_UserBlockingPriority = 2;
+    exports$1.unstable_cancelCallback = function(a) {
+      a.callback = null;
+    };
+    exports$1.unstable_continueExecution = function() {
+      A2 || z2 || (A2 = true, I2(J2));
+    };
+    exports$1.unstable_forceFrameRate = function(a) {
+      0 > a || 125 < a ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : P2 = 0 < a ? Math.floor(1e3 / a) : 5;
+    };
+    exports$1.unstable_getCurrentPriorityLevel = function() {
+      return y2;
+    };
+    exports$1.unstable_getFirstCallbackNode = function() {
+      return h(r2);
+    };
+    exports$1.unstable_next = function(a) {
+      switch (y2) {
+        case 1:
+        case 2:
+        case 3:
+          var b = 3;
+          break;
+        default:
+          b = y2;
+      }
+      var c = y2;
+      y2 = b;
+      try {
+        return a();
+      } finally {
+        y2 = c;
+      }
+    };
+    exports$1.unstable_pauseExecution = function() {
+    };
+    exports$1.unstable_requestPaint = function() {
+    };
+    exports$1.unstable_runWithPriority = function(a, b) {
+      switch (a) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+          break;
+        default:
+          a = 3;
+      }
+      var c = y2;
+      y2 = a;
+      try {
+        return b();
+      } finally {
+        y2 = c;
+      }
+    };
+    exports$1.unstable_scheduleCallback = function(a, b, c) {
+      var d = exports$1.unstable_now();
+      "object" === typeof c && null !== c ? (c = c.delay, c = "number" === typeof c && 0 < c ? d + c : d) : c = d;
+      switch (a) {
+        case 1:
+          var e = -1;
+          break;
+        case 2:
+          e = 250;
+          break;
+        case 5:
+          e = 1073741823;
+          break;
+        case 4:
+          e = 1e4;
+          break;
+        default:
+          e = 5e3;
+      }
+      e = c + e;
+      a = { id: u2++, callback: b, priorityLevel: a, startTime: c, expirationTime: e, sortIndex: -1 };
+      c > d ? (a.sortIndex = c, f2(t2, a), null === h(r2) && a === h(t2) && (B2 ? (E2(L2), L2 = -1) : B2 = true, K2(H2, c - d))) : (a.sortIndex = e, f2(r2, a), A2 || z2 || (A2 = true, I2(J2)));
+      return a;
+    };
+    exports$1.unstable_shouldYield = M2;
+    exports$1.unstable_wrapCallback = function(a) {
+      var b = y2;
+      return function() {
+        var c = y2;
+        y2 = b;
+        try {
+          return a.apply(this, arguments);
+        } finally {
+          y2 = c;
+        }
+      };
+    };
+  })(scheduler_production_min);
+  {
+    scheduler.exports = scheduler_production_min;
+  }
+  var schedulerExports = scheduler.exports;
+  /**
+   * @license React
+   * react-dom.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var aa = reactExports, ca = schedulerExports;
+  function p(a) {
+    for (var b = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, c = 1; c < arguments.length; c++)
+      b += "&args[]=" + encodeURIComponent(arguments[c]);
+    return "Minified React error #" + a + "; visit " + b + " for the full message or use the non-minified dev environment for full errors and additional helpful warnings.";
+  }
+  var da = /* @__PURE__ */ new Set(), ea = {};
+  function fa(a, b) {
+    ha(a, b);
+    ha(a + "Capture", b);
+  }
+  function ha(a, b) {
+    ea[a] = b;
+    for (a = 0; a < b.length; a++)
+      da.add(b[a]);
+  }
+  var ia = !("undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement), ja = Object.prototype.hasOwnProperty, ka = /^[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\-.0-9\u00B7\u0300-\u036F\u203F-\u2040]*$/, la = {}, ma = {};
+  function oa(a) {
+    if (ja.call(ma, a))
+      return true;
+    if (ja.call(la, a))
+      return false;
+    if (ka.test(a))
+      return ma[a] = true;
+    la[a] = true;
+    return false;
+  }
+  function pa(a, b, c, d) {
+    if (null !== c && 0 === c.type)
+      return false;
+    switch (typeof b) {
+      case "function":
+      case "symbol":
+        return true;
+      case "boolean":
+        if (d)
+          return false;
+        if (null !== c)
+          return !c.acceptsBooleans;
+        a = a.toLowerCase().slice(0, 5);
+        return "data-" !== a && "aria-" !== a;
+      default:
+        return false;
+    }
+  }
+  function qa(a, b, c, d) {
+    if (null === b || "undefined" === typeof b || pa(a, b, c, d))
+      return true;
+    if (d)
+      return false;
+    if (null !== c)
+      switch (c.type) {
+        case 3:
+          return !b;
+        case 4:
+          return false === b;
+        case 5:
+          return isNaN(b);
+        case 6:
+          return isNaN(b) || 1 > b;
+      }
+    return false;
+  }
+  function v(a, b, c, d, e, f2, g) {
+    this.acceptsBooleans = 2 === b || 3 === b || 4 === b;
+    this.attributeName = d;
+    this.attributeNamespace = e;
+    this.mustUseProperty = c;
+    this.propertyName = a;
+    this.type = b;
+    this.sanitizeURL = f2;
+    this.removeEmptyString = g;
+  }
+  var z = {};
+  "children dangerouslySetInnerHTML defaultValue defaultChecked innerHTML suppressContentEditableWarning suppressHydrationWarning style".split(" ").forEach(function(a) {
+    z[a] = new v(a, 0, false, a, null, false, false);
+  });
+  [["acceptCharset", "accept-charset"], ["className", "class"], ["htmlFor", "for"], ["httpEquiv", "http-equiv"]].forEach(function(a) {
+    var b = a[0];
+    z[b] = new v(b, 1, false, a[1], null, false, false);
+  });
+  ["contentEditable", "draggable", "spellCheck", "value"].forEach(function(a) {
+    z[a] = new v(a, 2, false, a.toLowerCase(), null, false, false);
+  });
+  ["autoReverse", "externalResourcesRequired", "focusable", "preserveAlpha"].forEach(function(a) {
+    z[a] = new v(a, 2, false, a, null, false, false);
+  });
+  "allowFullScreen async autoFocus autoPlay controls default defer disabled disablePictureInPicture disableRemotePlayback formNoValidate hidden loop noModule noValidate open playsInline readOnly required reversed scoped seamless itemScope".split(" ").forEach(function(a) {
+    z[a] = new v(a, 3, false, a.toLowerCase(), null, false, false);
+  });
+  ["checked", "multiple", "muted", "selected"].forEach(function(a) {
+    z[a] = new v(a, 3, true, a, null, false, false);
+  });
+  ["capture", "download"].forEach(function(a) {
+    z[a] = new v(a, 4, false, a, null, false, false);
+  });
+  ["cols", "rows", "size", "span"].forEach(function(a) {
+    z[a] = new v(a, 6, false, a, null, false, false);
+  });
+  ["rowSpan", "start"].forEach(function(a) {
+    z[a] = new v(a, 5, false, a.toLowerCase(), null, false, false);
+  });
+  var ra = /[\-:]([a-z])/g;
+  function sa(a) {
+    return a[1].toUpperCase();
+  }
+  "accent-height alignment-baseline arabic-form baseline-shift cap-height clip-path clip-rule color-interpolation color-interpolation-filters color-profile color-rendering dominant-baseline enable-background fill-opacity fill-rule flood-color flood-opacity font-family font-size font-size-adjust font-stretch font-style font-variant font-weight glyph-name glyph-orientation-horizontal glyph-orientation-vertical horiz-adv-x horiz-origin-x image-rendering letter-spacing lighting-color marker-end marker-mid marker-start overline-position overline-thickness paint-order panose-1 pointer-events rendering-intent shape-rendering stop-color stop-opacity strikethrough-position strikethrough-thickness stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit stroke-opacity stroke-width text-anchor text-decoration text-rendering underline-position underline-thickness unicode-bidi unicode-range units-per-em v-alphabetic v-hanging v-ideographic v-mathematical vector-effect vert-adv-y vert-origin-x vert-origin-y word-spacing writing-mode xmlns:xlink x-height".split(" ").forEach(function(a) {
+    var b = a.replace(
+      ra,
+      sa
+    );
+    z[b] = new v(b, 1, false, a, null, false, false);
+  });
+  "xlink:actuate xlink:arcrole xlink:role xlink:show xlink:title xlink:type".split(" ").forEach(function(a) {
+    var b = a.replace(ra, sa);
+    z[b] = new v(b, 1, false, a, "http://www.w3.org/1999/xlink", false, false);
+  });
+  ["xml:base", "xml:lang", "xml:space"].forEach(function(a) {
+    var b = a.replace(ra, sa);
+    z[b] = new v(b, 1, false, a, "http://www.w3.org/XML/1998/namespace", false, false);
+  });
+  ["tabIndex", "crossOrigin"].forEach(function(a) {
+    z[a] = new v(a, 1, false, a.toLowerCase(), null, false, false);
+  });
+  z.xlinkHref = new v("xlinkHref", 1, false, "xlink:href", "http://www.w3.org/1999/xlink", true, false);
+  ["src", "href", "action", "formAction"].forEach(function(a) {
+    z[a] = new v(a, 1, false, a.toLowerCase(), null, true, true);
+  });
+  function ta(a, b, c, d) {
+    var e = z.hasOwnProperty(b) ? z[b] : null;
+    if (null !== e ? 0 !== e.type : d || !(2 < b.length) || "o" !== b[0] && "O" !== b[0] || "n" !== b[1] && "N" !== b[1])
+      qa(b, c, e, d) && (c = null), d || null === e ? oa(b) && (null === c ? a.removeAttribute(b) : a.setAttribute(b, "" + c)) : e.mustUseProperty ? a[e.propertyName] = null === c ? 3 === e.type ? false : "" : c : (b = e.attributeName, d = e.attributeNamespace, null === c ? a.removeAttribute(b) : (e = e.type, c = 3 === e || 4 === e && true === c ? "" : "" + c, d ? a.setAttributeNS(d, b, c) : a.setAttribute(b, c)));
+  }
+  var ua = aa.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, va = Symbol.for("react.element"), wa = Symbol.for("react.portal"), ya = Symbol.for("react.fragment"), za = Symbol.for("react.strict_mode"), Aa = Symbol.for("react.profiler"), Ba = Symbol.for("react.provider"), Ca = Symbol.for("react.context"), Da = Symbol.for("react.forward_ref"), Ea = Symbol.for("react.suspense"), Fa = Symbol.for("react.suspense_list"), Ga = Symbol.for("react.memo"), Ha = Symbol.for("react.lazy");
+  var Ia = Symbol.for("react.offscreen");
+  var Ja = Symbol.iterator;
+  function Ka(a) {
+    if (null === a || "object" !== typeof a)
+      return null;
+    a = Ja && a[Ja] || a["@@iterator"];
+    return "function" === typeof a ? a : null;
+  }
+  var A = Object.assign, La;
+  function Ma(a) {
+    if (void 0 === La)
+      try {
+        throw Error();
+      } catch (c) {
+        var b = c.stack.trim().match(/\n( *(at )?)/);
+        La = b && b[1] || "";
+      }
+    return "\n" + La + a;
+  }
+  var Na = false;
+  function Oa(a, b) {
+    if (!a || Na)
+      return "";
+    Na = true;
+    var c = Error.prepareStackTrace;
+    Error.prepareStackTrace = void 0;
+    try {
+      if (b)
+        if (b = function() {
+          throw Error();
+        }, Object.defineProperty(b.prototype, "props", { set: function() {
+          throw Error();
+        } }), "object" === typeof Reflect && Reflect.construct) {
+          try {
+            Reflect.construct(b, []);
+          } catch (l2) {
+            var d = l2;
+          }
+          Reflect.construct(a, [], b);
+        } else {
+          try {
+            b.call();
+          } catch (l2) {
+            d = l2;
+          }
+          a.call(b.prototype);
+        }
+      else {
+        try {
+          throw Error();
+        } catch (l2) {
+          d = l2;
+        }
+        a();
+      }
+    } catch (l2) {
+      if (l2 && d && "string" === typeof l2.stack) {
+        for (var e = l2.stack.split("\n"), f2 = d.stack.split("\n"), g = e.length - 1, h = f2.length - 1; 1 <= g && 0 <= h && e[g] !== f2[h]; )
+          h--;
+        for (; 1 <= g && 0 <= h; g--, h--)
+          if (e[g] !== f2[h]) {
+            if (1 !== g || 1 !== h) {
+              do
+                if (g--, h--, 0 > h || e[g] !== f2[h]) {
+                  var k2 = "\n" + e[g].replace(" at new ", " at ");
+                  a.displayName && k2.includes("<anonymous>") && (k2 = k2.replace("<anonymous>", a.displayName));
+                  return k2;
+                }
+              while (1 <= g && 0 <= h);
+            }
+            break;
+          }
+      }
+    } finally {
+      Na = false, Error.prepareStackTrace = c;
+    }
+    return (a = a ? a.displayName || a.name : "") ? Ma(a) : "";
+  }
+  function Pa(a) {
+    switch (a.tag) {
+      case 5:
+        return Ma(a.type);
+      case 16:
+        return Ma("Lazy");
+      case 13:
+        return Ma("Suspense");
+      case 19:
+        return Ma("SuspenseList");
+      case 0:
+      case 2:
+      case 15:
+        return a = Oa(a.type, false), a;
+      case 11:
+        return a = Oa(a.type.render, false), a;
+      case 1:
+        return a = Oa(a.type, true), a;
+      default:
+        return "";
+    }
+  }
+  function Qa(a) {
+    if (null == a)
+      return null;
+    if ("function" === typeof a)
+      return a.displayName || a.name || null;
+    if ("string" === typeof a)
+      return a;
+    switch (a) {
+      case ya:
+        return "Fragment";
+      case wa:
+        return "Portal";
+      case Aa:
+        return "Profiler";
+      case za:
+        return "StrictMode";
+      case Ea:
+        return "Suspense";
+      case Fa:
+        return "SuspenseList";
+    }
+    if ("object" === typeof a)
+      switch (a.$$typeof) {
+        case Ca:
+          return (a.displayName || "Context") + ".Consumer";
+        case Ba:
+          return (a._context.displayName || "Context") + ".Provider";
+        case Da:
+          var b = a.render;
+          a = a.displayName;
+          a || (a = b.displayName || b.name || "", a = "" !== a ? "ForwardRef(" + a + ")" : "ForwardRef");
+          return a;
+        case Ga:
+          return b = a.displayName || null, null !== b ? b : Qa(a.type) || "Memo";
+        case Ha:
+          b = a._payload;
+          a = a._init;
+          try {
+            return Qa(a(b));
+          } catch (c) {
+          }
+      }
+    return null;
+  }
+  function Ra(a) {
+    var b = a.type;
+    switch (a.tag) {
+      case 24:
+        return "Cache";
+      case 9:
+        return (b.displayName || "Context") + ".Consumer";
+      case 10:
+        return (b._context.displayName || "Context") + ".Provider";
+      case 18:
+        return "DehydratedFragment";
+      case 11:
+        return a = b.render, a = a.displayName || a.name || "", b.displayName || ("" !== a ? "ForwardRef(" + a + ")" : "ForwardRef");
+      case 7:
+        return "Fragment";
+      case 5:
+        return b;
+      case 4:
+        return "Portal";
+      case 3:
+        return "Root";
+      case 6:
+        return "Text";
+      case 16:
+        return Qa(b);
+      case 8:
+        return b === za ? "StrictMode" : "Mode";
+      case 22:
+        return "Offscreen";
+      case 12:
+        return "Profiler";
+      case 21:
+        return "Scope";
+      case 13:
+        return "Suspense";
+      case 19:
+        return "SuspenseList";
+      case 25:
+        return "TracingMarker";
+      case 1:
+      case 0:
+      case 17:
+      case 2:
+      case 14:
+      case 15:
+        if ("function" === typeof b)
+          return b.displayName || b.name || null;
+        if ("string" === typeof b)
+          return b;
+    }
+    return null;
+  }
+  function Sa(a) {
+    switch (typeof a) {
+      case "boolean":
+      case "number":
+      case "string":
+      case "undefined":
+        return a;
+      case "object":
+        return a;
+      default:
+        return "";
+    }
+  }
+  function Ta(a) {
+    var b = a.type;
+    return (a = a.nodeName) && "input" === a.toLowerCase() && ("checkbox" === b || "radio" === b);
+  }
+  function Ua(a) {
+    var b = Ta(a) ? "checked" : "value", c = Object.getOwnPropertyDescriptor(a.constructor.prototype, b), d = "" + a[b];
+    if (!a.hasOwnProperty(b) && "undefined" !== typeof c && "function" === typeof c.get && "function" === typeof c.set) {
+      var e = c.get, f2 = c.set;
+      Object.defineProperty(a, b, { configurable: true, get: function() {
+        return e.call(this);
+      }, set: function(a2) {
+        d = "" + a2;
+        f2.call(this, a2);
+      } });
+      Object.defineProperty(a, b, { enumerable: c.enumerable });
+      return { getValue: function() {
+        return d;
+      }, setValue: function(a2) {
+        d = "" + a2;
+      }, stopTracking: function() {
+        a._valueTracker = null;
+        delete a[b];
+      } };
+    }
+  }
+  function Va(a) {
+    a._valueTracker || (a._valueTracker = Ua(a));
+  }
+  function Wa(a) {
+    if (!a)
+      return false;
+    var b = a._valueTracker;
+    if (!b)
+      return true;
+    var c = b.getValue();
+    var d = "";
+    a && (d = Ta(a) ? a.checked ? "true" : "false" : a.value);
+    a = d;
+    return a !== c ? (b.setValue(a), true) : false;
+  }
+  function Xa(a) {
+    a = a || ("undefined" !== typeof document ? document : void 0);
+    if ("undefined" === typeof a)
+      return null;
+    try {
+      return a.activeElement || a.body;
+    } catch (b) {
+      return a.body;
+    }
+  }
+  function Ya(a, b) {
+    var c = b.checked;
+    return A({}, b, { defaultChecked: void 0, defaultValue: void 0, value: void 0, checked: null != c ? c : a._wrapperState.initialChecked });
+  }
+  function Za(a, b) {
+    var c = null == b.defaultValue ? "" : b.defaultValue, d = null != b.checked ? b.checked : b.defaultChecked;
+    c = Sa(null != b.value ? b.value : c);
+    a._wrapperState = { initialChecked: d, initialValue: c, controlled: "checkbox" === b.type || "radio" === b.type ? null != b.checked : null != b.value };
+  }
+  function ab(a, b) {
+    b = b.checked;
+    null != b && ta(a, "checked", b, false);
+  }
+  function bb(a, b) {
+    ab(a, b);
+    var c = Sa(b.value), d = b.type;
+    if (null != c)
+      if ("number" === d) {
+        if (0 === c && "" === a.value || a.value != c)
+          a.value = "" + c;
+      } else
+        a.value !== "" + c && (a.value = "" + c);
+    else if ("submit" === d || "reset" === d) {
+      a.removeAttribute("value");
+      return;
+    }
+    b.hasOwnProperty("value") ? cb(a, b.type, c) : b.hasOwnProperty("defaultValue") && cb(a, b.type, Sa(b.defaultValue));
+    null == b.checked && null != b.defaultChecked && (a.defaultChecked = !!b.defaultChecked);
+  }
+  function db(a, b, c) {
+    if (b.hasOwnProperty("value") || b.hasOwnProperty("defaultValue")) {
+      var d = b.type;
+      if (!("submit" !== d && "reset" !== d || void 0 !== b.value && null !== b.value))
+        return;
+      b = "" + a._wrapperState.initialValue;
+      c || b === a.value || (a.value = b);
+      a.defaultValue = b;
+    }
+    c = a.name;
+    "" !== c && (a.name = "");
+    a.defaultChecked = !!a._wrapperState.initialChecked;
+    "" !== c && (a.name = c);
+  }
+  function cb(a, b, c) {
+    if ("number" !== b || Xa(a.ownerDocument) !== a)
+      null == c ? a.defaultValue = "" + a._wrapperState.initialValue : a.defaultValue !== "" + c && (a.defaultValue = "" + c);
+  }
+  var eb = Array.isArray;
+  function fb(a, b, c, d) {
+    a = a.options;
+    if (b) {
+      b = {};
+      for (var e = 0; e < c.length; e++)
+        b["$" + c[e]] = true;
+      for (c = 0; c < a.length; c++)
+        e = b.hasOwnProperty("$" + a[c].value), a[c].selected !== e && (a[c].selected = e), e && d && (a[c].defaultSelected = true);
+    } else {
+      c = "" + Sa(c);
+      b = null;
+      for (e = 0; e < a.length; e++) {
+        if (a[e].value === c) {
+          a[e].selected = true;
+          d && (a[e].defaultSelected = true);
+          return;
+        }
+        null !== b || a[e].disabled || (b = a[e]);
+      }
+      null !== b && (b.selected = true);
+    }
+  }
+  function gb(a, b) {
+    if (null != b.dangerouslySetInnerHTML)
+      throw Error(p(91));
+    return A({}, b, { value: void 0, defaultValue: void 0, children: "" + a._wrapperState.initialValue });
+  }
+  function hb(a, b) {
+    var c = b.value;
+    if (null == c) {
+      c = b.children;
+      b = b.defaultValue;
+      if (null != c) {
+        if (null != b)
+          throw Error(p(92));
+        if (eb(c)) {
+          if (1 < c.length)
+            throw Error(p(93));
+          c = c[0];
+        }
+        b = c;
+      }
+      null == b && (b = "");
+      c = b;
+    }
+    a._wrapperState = { initialValue: Sa(c) };
+  }
+  function ib(a, b) {
+    var c = Sa(b.value), d = Sa(b.defaultValue);
+    null != c && (c = "" + c, c !== a.value && (a.value = c), null == b.defaultValue && a.defaultValue !== c && (a.defaultValue = c));
+    null != d && (a.defaultValue = "" + d);
+  }
+  function jb(a) {
+    var b = a.textContent;
+    b === a._wrapperState.initialValue && "" !== b && null !== b && (a.value = b);
+  }
+  function kb(a) {
+    switch (a) {
+      case "svg":
+        return "http://www.w3.org/2000/svg";
+      case "math":
+        return "http://www.w3.org/1998/Math/MathML";
+      default:
+        return "http://www.w3.org/1999/xhtml";
+    }
+  }
+  function lb(a, b) {
+    return null == a || "http://www.w3.org/1999/xhtml" === a ? kb(b) : "http://www.w3.org/2000/svg" === a && "foreignObject" === b ? "http://www.w3.org/1999/xhtml" : a;
+  }
+  var mb, nb = function(a) {
+    return "undefined" !== typeof MSApp && MSApp.execUnsafeLocalFunction ? function(b, c, d, e) {
+      MSApp.execUnsafeLocalFunction(function() {
+        return a(b, c, d, e);
+      });
+    } : a;
+  }(function(a, b) {
+    if ("http://www.w3.org/2000/svg" !== a.namespaceURI || "innerHTML" in a)
+      a.innerHTML = b;
+    else {
+      mb = mb || document.createElement("div");
+      mb.innerHTML = "<svg>" + b.valueOf().toString() + "</svg>";
+      for (b = mb.firstChild; a.firstChild; )
+        a.removeChild(a.firstChild);
+      for (; b.firstChild; )
+        a.appendChild(b.firstChild);
+    }
+  });
+  function ob(a, b) {
+    if (b) {
+      var c = a.firstChild;
+      if (c && c === a.lastChild && 3 === c.nodeType) {
+        c.nodeValue = b;
+        return;
+      }
+    }
+    a.textContent = b;
+  }
+  var pb = {
+    animationIterationCount: true,
+    aspectRatio: true,
+    borderImageOutset: true,
+    borderImageSlice: true,
+    borderImageWidth: true,
+    boxFlex: true,
+    boxFlexGroup: true,
+    boxOrdinalGroup: true,
+    columnCount: true,
+    columns: true,
+    flex: true,
+    flexGrow: true,
+    flexPositive: true,
+    flexShrink: true,
+    flexNegative: true,
+    flexOrder: true,
+    gridArea: true,
+    gridRow: true,
+    gridRowEnd: true,
+    gridRowSpan: true,
+    gridRowStart: true,
+    gridColumn: true,
+    gridColumnEnd: true,
+    gridColumnSpan: true,
+    gridColumnStart: true,
+    fontWeight: true,
+    lineClamp: true,
+    lineHeight: true,
+    opacity: true,
+    order: true,
+    orphans: true,
+    tabSize: true,
+    widows: true,
+    zIndex: true,
+    zoom: true,
+    fillOpacity: true,
+    floodOpacity: true,
+    stopOpacity: true,
+    strokeDasharray: true,
+    strokeDashoffset: true,
+    strokeMiterlimit: true,
+    strokeOpacity: true,
+    strokeWidth: true
+  }, qb = ["Webkit", "ms", "Moz", "O"];
+  Object.keys(pb).forEach(function(a) {
+    qb.forEach(function(b) {
+      b = b + a.charAt(0).toUpperCase() + a.substring(1);
+      pb[b] = pb[a];
+    });
+  });
+  function rb(a, b, c) {
+    return null == b || "boolean" === typeof b || "" === b ? "" : c || "number" !== typeof b || 0 === b || pb.hasOwnProperty(a) && pb[a] ? ("" + b).trim() : b + "px";
+  }
+  function sb(a, b) {
+    a = a.style;
+    for (var c in b)
+      if (b.hasOwnProperty(c)) {
+        var d = 0 === c.indexOf("--"), e = rb(c, b[c], d);
+        "float" === c && (c = "cssFloat");
+        d ? a.setProperty(c, e) : a[c] = e;
+      }
+  }
+  var tb = A({ menuitem: true }, { area: true, base: true, br: true, col: true, embed: true, hr: true, img: true, input: true, keygen: true, link: true, meta: true, param: true, source: true, track: true, wbr: true });
+  function ub(a, b) {
+    if (b) {
+      if (tb[a] && (null != b.children || null != b.dangerouslySetInnerHTML))
+        throw Error(p(137, a));
+      if (null != b.dangerouslySetInnerHTML) {
+        if (null != b.children)
+          throw Error(p(60));
+        if ("object" !== typeof b.dangerouslySetInnerHTML || !("__html" in b.dangerouslySetInnerHTML))
+          throw Error(p(61));
+      }
+      if (null != b.style && "object" !== typeof b.style)
+        throw Error(p(62));
+    }
+  }
+  function vb(a, b) {
+    if (-1 === a.indexOf("-"))
+      return "string" === typeof b.is;
+    switch (a) {
+      case "annotation-xml":
+      case "color-profile":
+      case "font-face":
+      case "font-face-src":
+      case "font-face-uri":
+      case "font-face-format":
+      case "font-face-name":
+      case "missing-glyph":
+        return false;
+      default:
+        return true;
+    }
+  }
+  var wb = null;
+  function xb(a) {
+    a = a.target || a.srcElement || window;
+    a.correspondingUseElement && (a = a.correspondingUseElement);
+    return 3 === a.nodeType ? a.parentNode : a;
+  }
+  var yb = null, zb = null, Ab = null;
+  function Bb(a) {
+    if (a = Cb(a)) {
+      if ("function" !== typeof yb)
+        throw Error(p(280));
+      var b = a.stateNode;
+      b && (b = Db(b), yb(a.stateNode, a.type, b));
+    }
+  }
+  function Eb(a) {
+    zb ? Ab ? Ab.push(a) : Ab = [a] : zb = a;
+  }
+  function Fb() {
+    if (zb) {
+      var a = zb, b = Ab;
+      Ab = zb = null;
+      Bb(a);
+      if (b)
+        for (a = 0; a < b.length; a++)
+          Bb(b[a]);
+    }
+  }
+  function Gb(a, b) {
+    return a(b);
+  }
+  function Hb() {
+  }
+  var Ib = false;
+  function Jb(a, b, c) {
+    if (Ib)
+      return a(b, c);
+    Ib = true;
+    try {
+      return Gb(a, b, c);
+    } finally {
+      if (Ib = false, null !== zb || null !== Ab)
+        Hb(), Fb();
+    }
+  }
+  function Kb(a, b) {
+    var c = a.stateNode;
+    if (null === c)
+      return null;
+    var d = Db(c);
+    if (null === d)
+      return null;
+    c = d[b];
+    a:
+      switch (b) {
+        case "onClick":
+        case "onClickCapture":
+        case "onDoubleClick":
+        case "onDoubleClickCapture":
+        case "onMouseDown":
+        case "onMouseDownCapture":
+        case "onMouseMove":
+        case "onMouseMoveCapture":
+        case "onMouseUp":
+        case "onMouseUpCapture":
+        case "onMouseEnter":
+          (d = !d.disabled) || (a = a.type, d = !("button" === a || "input" === a || "select" === a || "textarea" === a));
+          a = !d;
+          break a;
+        default:
+          a = false;
+      }
+    if (a)
+      return null;
+    if (c && "function" !== typeof c)
+      throw Error(p(231, b, typeof c));
+    return c;
+  }
+  var Lb = false;
+  if (ia)
+    try {
+      var Mb = {};
+      Object.defineProperty(Mb, "passive", { get: function() {
+        Lb = true;
+      } });
+      window.addEventListener("test", Mb, Mb);
+      window.removeEventListener("test", Mb, Mb);
+    } catch (a) {
+      Lb = false;
+    }
+  function Nb(a, b, c, d, e, f2, g, h, k2) {
+    var l2 = Array.prototype.slice.call(arguments, 3);
+    try {
+      b.apply(c, l2);
+    } catch (m2) {
+      this.onError(m2);
+    }
+  }
+  var Ob = false, Pb = null, Qb = false, Rb = null, Sb = { onError: function(a) {
+    Ob = true;
+    Pb = a;
+  } };
+  function Tb(a, b, c, d, e, f2, g, h, k2) {
+    Ob = false;
+    Pb = null;
+    Nb.apply(Sb, arguments);
+  }
+  function Ub(a, b, c, d, e, f2, g, h, k2) {
+    Tb.apply(this, arguments);
+    if (Ob) {
+      if (Ob) {
+        var l2 = Pb;
+        Ob = false;
+        Pb = null;
+      } else
+        throw Error(p(198));
+      Qb || (Qb = true, Rb = l2);
+    }
+  }
+  function Vb(a) {
+    var b = a, c = a;
+    if (a.alternate)
+      for (; b.return; )
+        b = b.return;
+    else {
+      a = b;
+      do
+        b = a, 0 !== (b.flags & 4098) && (c = b.return), a = b.return;
+      while (a);
+    }
+    return 3 === b.tag ? c : null;
+  }
+  function Wb(a) {
+    if (13 === a.tag) {
+      var b = a.memoizedState;
+      null === b && (a = a.alternate, null !== a && (b = a.memoizedState));
+      if (null !== b)
+        return b.dehydrated;
+    }
+    return null;
+  }
+  function Xb(a) {
+    if (Vb(a) !== a)
+      throw Error(p(188));
+  }
+  function Yb(a) {
+    var b = a.alternate;
+    if (!b) {
+      b = Vb(a);
+      if (null === b)
+        throw Error(p(188));
+      return b !== a ? null : a;
+    }
+    for (var c = a, d = b; ; ) {
+      var e = c.return;
+      if (null === e)
+        break;
+      var f2 = e.alternate;
+      if (null === f2) {
+        d = e.return;
+        if (null !== d) {
+          c = d;
+          continue;
+        }
+        break;
+      }
+      if (e.child === f2.child) {
+        for (f2 = e.child; f2; ) {
+          if (f2 === c)
+            return Xb(e), a;
+          if (f2 === d)
+            return Xb(e), b;
+          f2 = f2.sibling;
+        }
+        throw Error(p(188));
+      }
+      if (c.return !== d.return)
+        c = e, d = f2;
+      else {
+        for (var g = false, h = e.child; h; ) {
+          if (h === c) {
+            g = true;
+            c = e;
+            d = f2;
+            break;
+          }
+          if (h === d) {
+            g = true;
+            d = e;
+            c = f2;
+            break;
+          }
+          h = h.sibling;
+        }
+        if (!g) {
+          for (h = f2.child; h; ) {
+            if (h === c) {
+              g = true;
+              c = f2;
+              d = e;
+              break;
+            }
+            if (h === d) {
+              g = true;
+              d = f2;
+              c = e;
+              break;
+            }
+            h = h.sibling;
+          }
+          if (!g)
+            throw Error(p(189));
+        }
+      }
+      if (c.alternate !== d)
+        throw Error(p(190));
+    }
+    if (3 !== c.tag)
+      throw Error(p(188));
+    return c.stateNode.current === c ? a : b;
+  }
+  function Zb(a) {
+    a = Yb(a);
+    return null !== a ? $b(a) : null;
+  }
+  function $b(a) {
+    if (5 === a.tag || 6 === a.tag)
+      return a;
+    for (a = a.child; null !== a; ) {
+      var b = $b(a);
+      if (null !== b)
+        return b;
+      a = a.sibling;
+    }
+    return null;
+  }
+  var ac = ca.unstable_scheduleCallback, bc = ca.unstable_cancelCallback, cc = ca.unstable_shouldYield, dc = ca.unstable_requestPaint, B = ca.unstable_now, ec = ca.unstable_getCurrentPriorityLevel, fc = ca.unstable_ImmediatePriority, gc = ca.unstable_UserBlockingPriority, hc = ca.unstable_NormalPriority, ic = ca.unstable_LowPriority, jc = ca.unstable_IdlePriority, kc = null, lc = null;
+  function mc(a) {
+    if (lc && "function" === typeof lc.onCommitFiberRoot)
+      try {
+        lc.onCommitFiberRoot(kc, a, void 0, 128 === (a.current.flags & 128));
+      } catch (b) {
+      }
+  }
+  var oc = Math.clz32 ? Math.clz32 : nc, pc = Math.log, qc = Math.LN2;
+  function nc(a) {
+    a >>>= 0;
+    return 0 === a ? 32 : 31 - (pc(a) / qc | 0) | 0;
+  }
+  var rc = 64, sc = 4194304;
+  function tc(a) {
+    switch (a & -a) {
+      case 1:
+        return 1;
+      case 2:
+        return 2;
+      case 4:
+        return 4;
+      case 8:
+        return 8;
+      case 16:
+        return 16;
+      case 32:
+        return 32;
+      case 64:
+      case 128:
+      case 256:
+      case 512:
+      case 1024:
+      case 2048:
+      case 4096:
+      case 8192:
+      case 16384:
+      case 32768:
+      case 65536:
+      case 131072:
+      case 262144:
+      case 524288:
+      case 1048576:
+      case 2097152:
+        return a & 4194240;
+      case 4194304:
+      case 8388608:
+      case 16777216:
+      case 33554432:
+      case 67108864:
+        return a & 130023424;
+      case 134217728:
+        return 134217728;
+      case 268435456:
+        return 268435456;
+      case 536870912:
+        return 536870912;
+      case 1073741824:
+        return 1073741824;
+      default:
+        return a;
+    }
+  }
+  function uc(a, b) {
+    var c = a.pendingLanes;
+    if (0 === c)
+      return 0;
+    var d = 0, e = a.suspendedLanes, f2 = a.pingedLanes, g = c & 268435455;
+    if (0 !== g) {
+      var h = g & ~e;
+      0 !== h ? d = tc(h) : (f2 &= g, 0 !== f2 && (d = tc(f2)));
+    } else
+      g = c & ~e, 0 !== g ? d = tc(g) : 0 !== f2 && (d = tc(f2));
+    if (0 === d)
+      return 0;
+    if (0 !== b && b !== d && 0 === (b & e) && (e = d & -d, f2 = b & -b, e >= f2 || 16 === e && 0 !== (f2 & 4194240)))
+      return b;
+    0 !== (d & 4) && (d |= c & 16);
+    b = a.entangledLanes;
+    if (0 !== b)
+      for (a = a.entanglements, b &= d; 0 < b; )
+        c = 31 - oc(b), e = 1 << c, d |= a[c], b &= ~e;
+    return d;
+  }
+  function vc(a, b) {
+    switch (a) {
+      case 1:
+      case 2:
+      case 4:
+        return b + 250;
+      case 8:
+      case 16:
+      case 32:
+      case 64:
+      case 128:
+      case 256:
+      case 512:
+      case 1024:
+      case 2048:
+      case 4096:
+      case 8192:
+      case 16384:
+      case 32768:
+      case 65536:
+      case 131072:
+      case 262144:
+      case 524288:
+      case 1048576:
+      case 2097152:
+        return b + 5e3;
+      case 4194304:
+      case 8388608:
+      case 16777216:
+      case 33554432:
+      case 67108864:
+        return -1;
+      case 134217728:
+      case 268435456:
+      case 536870912:
+      case 1073741824:
+        return -1;
+      default:
+        return -1;
+    }
+  }
+  function wc(a, b) {
+    for (var c = a.suspendedLanes, d = a.pingedLanes, e = a.expirationTimes, f2 = a.pendingLanes; 0 < f2; ) {
+      var g = 31 - oc(f2), h = 1 << g, k2 = e[g];
+      if (-1 === k2) {
+        if (0 === (h & c) || 0 !== (h & d))
+          e[g] = vc(h, b);
+      } else
+        k2 <= b && (a.expiredLanes |= h);
+      f2 &= ~h;
+    }
+  }
+  function xc(a) {
+    a = a.pendingLanes & -1073741825;
+    return 0 !== a ? a : a & 1073741824 ? 1073741824 : 0;
+  }
+  function yc() {
+    var a = rc;
+    rc <<= 1;
+    0 === (rc & 4194240) && (rc = 64);
+    return a;
+  }
+  function zc(a) {
+    for (var b = [], c = 0; 31 > c; c++)
+      b.push(a);
+    return b;
+  }
+  function Ac(a, b, c) {
+    a.pendingLanes |= b;
+    536870912 !== b && (a.suspendedLanes = 0, a.pingedLanes = 0);
+    a = a.eventTimes;
+    b = 31 - oc(b);
+    a[b] = c;
+  }
+  function Bc(a, b) {
+    var c = a.pendingLanes & ~b;
+    a.pendingLanes = b;
+    a.suspendedLanes = 0;
+    a.pingedLanes = 0;
+    a.expiredLanes &= b;
+    a.mutableReadLanes &= b;
+    a.entangledLanes &= b;
+    b = a.entanglements;
+    var d = a.eventTimes;
+    for (a = a.expirationTimes; 0 < c; ) {
+      var e = 31 - oc(c), f2 = 1 << e;
+      b[e] = 0;
+      d[e] = -1;
+      a[e] = -1;
+      c &= ~f2;
+    }
+  }
+  function Cc(a, b) {
+    var c = a.entangledLanes |= b;
+    for (a = a.entanglements; c; ) {
+      var d = 31 - oc(c), e = 1 << d;
+      e & b | a[d] & b && (a[d] |= b);
+      c &= ~e;
+    }
+  }
+  var C = 0;
+  function Dc(a) {
+    a &= -a;
+    return 1 < a ? 4 < a ? 0 !== (a & 268435455) ? 16 : 536870912 : 4 : 1;
+  }
+  var Ec, Fc, Gc, Hc, Ic, Jc = false, Kc = [], Lc = null, Mc = null, Nc = null, Oc = /* @__PURE__ */ new Map(), Pc = /* @__PURE__ */ new Map(), Qc = [], Rc = "mousedown mouseup touchcancel touchend touchstart auxclick dblclick pointercancel pointerdown pointerup dragend dragstart drop compositionend compositionstart keydown keypress keyup input textInput copy cut paste click change contextmenu reset submit".split(" ");
+  function Sc(a, b) {
+    switch (a) {
+      case "focusin":
+      case "focusout":
+        Lc = null;
+        break;
+      case "dragenter":
+      case "dragleave":
+        Mc = null;
+        break;
+      case "mouseover":
+      case "mouseout":
+        Nc = null;
+        break;
+      case "pointerover":
+      case "pointerout":
+        Oc.delete(b.pointerId);
+        break;
+      case "gotpointercapture":
+      case "lostpointercapture":
+        Pc.delete(b.pointerId);
+    }
+  }
+  function Tc(a, b, c, d, e, f2) {
+    if (null === a || a.nativeEvent !== f2)
+      return a = { blockedOn: b, domEventName: c, eventSystemFlags: d, nativeEvent: f2, targetContainers: [e] }, null !== b && (b = Cb(b), null !== b && Fc(b)), a;
+    a.eventSystemFlags |= d;
+    b = a.targetContainers;
+    null !== e && -1 === b.indexOf(e) && b.push(e);
+    return a;
+  }
+  function Uc(a, b, c, d, e) {
+    switch (b) {
+      case "focusin":
+        return Lc = Tc(Lc, a, b, c, d, e), true;
+      case "dragenter":
+        return Mc = Tc(Mc, a, b, c, d, e), true;
+      case "mouseover":
+        return Nc = Tc(Nc, a, b, c, d, e), true;
+      case "pointerover":
+        var f2 = e.pointerId;
+        Oc.set(f2, Tc(Oc.get(f2) || null, a, b, c, d, e));
+        return true;
+      case "gotpointercapture":
+        return f2 = e.pointerId, Pc.set(f2, Tc(Pc.get(f2) || null, a, b, c, d, e)), true;
+    }
+    return false;
+  }
+  function Vc(a) {
+    var b = Wc(a.target);
+    if (null !== b) {
+      var c = Vb(b);
+      if (null !== c) {
+        if (b = c.tag, 13 === b) {
+          if (b = Wb(c), null !== b) {
+            a.blockedOn = b;
+            Ic(a.priority, function() {
+              Gc(c);
+            });
+            return;
+          }
+        } else if (3 === b && c.stateNode.current.memoizedState.isDehydrated) {
+          a.blockedOn = 3 === c.tag ? c.stateNode.containerInfo : null;
+          return;
+        }
+      }
+    }
+    a.blockedOn = null;
+  }
+  function Xc(a) {
+    if (null !== a.blockedOn)
+      return false;
+    for (var b = a.targetContainers; 0 < b.length; ) {
+      var c = Yc(a.domEventName, a.eventSystemFlags, b[0], a.nativeEvent);
+      if (null === c) {
+        c = a.nativeEvent;
+        var d = new c.constructor(c.type, c);
+        wb = d;
+        c.target.dispatchEvent(d);
+        wb = null;
+      } else
+        return b = Cb(c), null !== b && Fc(b), a.blockedOn = c, false;
+      b.shift();
+    }
+    return true;
+  }
+  function Zc(a, b, c) {
+    Xc(a) && c.delete(b);
+  }
+  function $c() {
+    Jc = false;
+    null !== Lc && Xc(Lc) && (Lc = null);
+    null !== Mc && Xc(Mc) && (Mc = null);
+    null !== Nc && Xc(Nc) && (Nc = null);
+    Oc.forEach(Zc);
+    Pc.forEach(Zc);
+  }
+  function ad(a, b) {
+    a.blockedOn === b && (a.blockedOn = null, Jc || (Jc = true, ca.unstable_scheduleCallback(ca.unstable_NormalPriority, $c)));
+  }
+  function bd(a) {
+    function b(b2) {
+      return ad(b2, a);
+    }
+    if (0 < Kc.length) {
+      ad(Kc[0], a);
+      for (var c = 1; c < Kc.length; c++) {
+        var d = Kc[c];
+        d.blockedOn === a && (d.blockedOn = null);
+      }
+    }
+    null !== Lc && ad(Lc, a);
+    null !== Mc && ad(Mc, a);
+    null !== Nc && ad(Nc, a);
+    Oc.forEach(b);
+    Pc.forEach(b);
+    for (c = 0; c < Qc.length; c++)
+      d = Qc[c], d.blockedOn === a && (d.blockedOn = null);
+    for (; 0 < Qc.length && (c = Qc[0], null === c.blockedOn); )
+      Vc(c), null === c.blockedOn && Qc.shift();
+  }
+  var cd = ua.ReactCurrentBatchConfig, dd = true;
+  function ed(a, b, c, d) {
+    var e = C, f2 = cd.transition;
+    cd.transition = null;
+    try {
+      C = 1, fd(a, b, c, d);
+    } finally {
+      C = e, cd.transition = f2;
+    }
+  }
+  function gd(a, b, c, d) {
+    var e = C, f2 = cd.transition;
+    cd.transition = null;
+    try {
+      C = 4, fd(a, b, c, d);
+    } finally {
+      C = e, cd.transition = f2;
+    }
+  }
+  function fd(a, b, c, d) {
+    if (dd) {
+      var e = Yc(a, b, c, d);
+      if (null === e)
+        hd(a, b, d, id, c), Sc(a, d);
+      else if (Uc(e, a, b, c, d))
+        d.stopPropagation();
+      else if (Sc(a, d), b & 4 && -1 < Rc.indexOf(a)) {
+        for (; null !== e; ) {
+          var f2 = Cb(e);
+          null !== f2 && Ec(f2);
+          f2 = Yc(a, b, c, d);
+          null === f2 && hd(a, b, d, id, c);
+          if (f2 === e)
+            break;
+          e = f2;
+        }
+        null !== e && d.stopPropagation();
+      } else
+        hd(a, b, d, null, c);
+    }
+  }
+  var id = null;
+  function Yc(a, b, c, d) {
+    id = null;
+    a = xb(d);
+    a = Wc(a);
+    if (null !== a)
+      if (b = Vb(a), null === b)
+        a = null;
+      else if (c = b.tag, 13 === c) {
+        a = Wb(b);
+        if (null !== a)
+          return a;
+        a = null;
+      } else if (3 === c) {
+        if (b.stateNode.current.memoizedState.isDehydrated)
+          return 3 === b.tag ? b.stateNode.containerInfo : null;
+        a = null;
+      } else
+        b !== a && (a = null);
+    id = a;
+    return null;
+  }
+  function jd(a) {
+    switch (a) {
+      case "cancel":
+      case "click":
+      case "close":
+      case "contextmenu":
+      case "copy":
+      case "cut":
+      case "auxclick":
+      case "dblclick":
+      case "dragend":
+      case "dragstart":
+      case "drop":
+      case "focusin":
+      case "focusout":
+      case "input":
+      case "invalid":
+      case "keydown":
+      case "keypress":
+      case "keyup":
+      case "mousedown":
+      case "mouseup":
+      case "paste":
+      case "pause":
+      case "play":
+      case "pointercancel":
+      case "pointerdown":
+      case "pointerup":
+      case "ratechange":
+      case "reset":
+      case "resize":
+      case "seeked":
+      case "submit":
+      case "touchcancel":
+      case "touchend":
+      case "touchstart":
+      case "volumechange":
+      case "change":
+      case "selectionchange":
+      case "textInput":
+      case "compositionstart":
+      case "compositionend":
+      case "compositionupdate":
+      case "beforeblur":
+      case "afterblur":
+      case "beforeinput":
+      case "blur":
+      case "fullscreenchange":
+      case "focus":
+      case "hashchange":
+      case "popstate":
+      case "select":
+      case "selectstart":
+        return 1;
+      case "drag":
+      case "dragenter":
+      case "dragexit":
+      case "dragleave":
+      case "dragover":
+      case "mousemove":
+      case "mouseout":
+      case "mouseover":
+      case "pointermove":
+      case "pointerout":
+      case "pointerover":
+      case "scroll":
+      case "toggle":
+      case "touchmove":
+      case "wheel":
+      case "mouseenter":
+      case "mouseleave":
+      case "pointerenter":
+      case "pointerleave":
+        return 4;
+      case "message":
+        switch (ec()) {
+          case fc:
+            return 1;
+          case gc:
+            return 4;
+          case hc:
+          case ic:
+            return 16;
+          case jc:
+            return 536870912;
+          default:
+            return 16;
+        }
+      default:
+        return 16;
+    }
+  }
+  var kd = null, ld = null, md = null;
+  function nd() {
+    if (md)
+      return md;
+    var a, b = ld, c = b.length, d, e = "value" in kd ? kd.value : kd.textContent, f2 = e.length;
+    for (a = 0; a < c && b[a] === e[a]; a++)
+      ;
+    var g = c - a;
+    for (d = 1; d <= g && b[c - d] === e[f2 - d]; d++)
+      ;
+    return md = e.slice(a, 1 < d ? 1 - d : void 0);
+  }
+  function od(a) {
+    var b = a.keyCode;
+    "charCode" in a ? (a = a.charCode, 0 === a && 13 === b && (a = 13)) : a = b;
+    10 === a && (a = 13);
+    return 32 <= a || 13 === a ? a : 0;
+  }
+  function pd() {
+    return true;
+  }
+  function qd() {
+    return false;
+  }
+  function rd(a) {
+    function b(b2, d, e, f2, g) {
+      this._reactName = b2;
+      this._targetInst = e;
+      this.type = d;
+      this.nativeEvent = f2;
+      this.target = g;
+      this.currentTarget = null;
+      for (var c in a)
+        a.hasOwnProperty(c) && (b2 = a[c], this[c] = b2 ? b2(f2) : f2[c]);
+      this.isDefaultPrevented = (null != f2.defaultPrevented ? f2.defaultPrevented : false === f2.returnValue) ? pd : qd;
+      this.isPropagationStopped = qd;
+      return this;
+    }
+    A(b.prototype, { preventDefault: function() {
+      this.defaultPrevented = true;
+      var a2 = this.nativeEvent;
+      a2 && (a2.preventDefault ? a2.preventDefault() : "unknown" !== typeof a2.returnValue && (a2.returnValue = false), this.isDefaultPrevented = pd);
+    }, stopPropagation: function() {
+      var a2 = this.nativeEvent;
+      a2 && (a2.stopPropagation ? a2.stopPropagation() : "unknown" !== typeof a2.cancelBubble && (a2.cancelBubble = true), this.isPropagationStopped = pd);
+    }, persist: function() {
+    }, isPersistent: pd });
+    return b;
+  }
+  var sd = { eventPhase: 0, bubbles: 0, cancelable: 0, timeStamp: function(a) {
+    return a.timeStamp || Date.now();
+  }, defaultPrevented: 0, isTrusted: 0 }, td = rd(sd), ud = A({}, sd, { view: 0, detail: 0 }), vd = rd(ud), wd, xd, yd, Ad = A({}, ud, { screenX: 0, screenY: 0, clientX: 0, clientY: 0, pageX: 0, pageY: 0, ctrlKey: 0, shiftKey: 0, altKey: 0, metaKey: 0, getModifierState: zd, button: 0, buttons: 0, relatedTarget: function(a) {
+    return void 0 === a.relatedTarget ? a.fromElement === a.srcElement ? a.toElement : a.fromElement : a.relatedTarget;
+  }, movementX: function(a) {
+    if ("movementX" in a)
+      return a.movementX;
+    a !== yd && (yd && "mousemove" === a.type ? (wd = a.screenX - yd.screenX, xd = a.screenY - yd.screenY) : xd = wd = 0, yd = a);
+    return wd;
+  }, movementY: function(a) {
+    return "movementY" in a ? a.movementY : xd;
+  } }), Bd = rd(Ad), Cd = A({}, Ad, { dataTransfer: 0 }), Dd = rd(Cd), Ed = A({}, ud, { relatedTarget: 0 }), Fd = rd(Ed), Gd = A({}, sd, { animationName: 0, elapsedTime: 0, pseudoElement: 0 }), Hd = rd(Gd), Id = A({}, sd, { clipboardData: function(a) {
+    return "clipboardData" in a ? a.clipboardData : window.clipboardData;
+  } }), Jd = rd(Id), Kd = A({}, sd, { data: 0 }), Ld = rd(Kd), Md = {
+    Esc: "Escape",
+    Spacebar: " ",
+    Left: "ArrowLeft",
+    Up: "ArrowUp",
+    Right: "ArrowRight",
+    Down: "ArrowDown",
+    Del: "Delete",
+    Win: "OS",
+    Menu: "ContextMenu",
+    Apps: "ContextMenu",
+    Scroll: "ScrollLock",
+    MozPrintableKey: "Unidentified"
+  }, Nd = {
+    8: "Backspace",
+    9: "Tab",
+    12: "Clear",
+    13: "Enter",
+    16: "Shift",
+    17: "Control",
+    18: "Alt",
+    19: "Pause",
+    20: "CapsLock",
+    27: "Escape",
+    32: " ",
+    33: "PageUp",
+    34: "PageDown",
+    35: "End",
+    36: "Home",
+    37: "ArrowLeft",
+    38: "ArrowUp",
+    39: "ArrowRight",
+    40: "ArrowDown",
+    45: "Insert",
+    46: "Delete",
+    112: "F1",
+    113: "F2",
+    114: "F3",
+    115: "F4",
+    116: "F5",
+    117: "F6",
+    118: "F7",
+    119: "F8",
+    120: "F9",
+    121: "F10",
+    122: "F11",
+    123: "F12",
+    144: "NumLock",
+    145: "ScrollLock",
+    224: "Meta"
+  }, Od = { Alt: "altKey", Control: "ctrlKey", Meta: "metaKey", Shift: "shiftKey" };
+  function Pd(a) {
+    var b = this.nativeEvent;
+    return b.getModifierState ? b.getModifierState(a) : (a = Od[a]) ? !!b[a] : false;
+  }
+  function zd() {
+    return Pd;
+  }
+  var Qd = A({}, ud, { key: function(a) {
+    if (a.key) {
+      var b = Md[a.key] || a.key;
+      if ("Unidentified" !== b)
+        return b;
+    }
+    return "keypress" === a.type ? (a = od(a), 13 === a ? "Enter" : String.fromCharCode(a)) : "keydown" === a.type || "keyup" === a.type ? Nd[a.keyCode] || "Unidentified" : "";
+  }, code: 0, location: 0, ctrlKey: 0, shiftKey: 0, altKey: 0, metaKey: 0, repeat: 0, locale: 0, getModifierState: zd, charCode: function(a) {
+    return "keypress" === a.type ? od(a) : 0;
+  }, keyCode: function(a) {
+    return "keydown" === a.type || "keyup" === a.type ? a.keyCode : 0;
+  }, which: function(a) {
+    return "keypress" === a.type ? od(a) : "keydown" === a.type || "keyup" === a.type ? a.keyCode : 0;
+  } }), Rd = rd(Qd), Sd = A({}, Ad, { pointerId: 0, width: 0, height: 0, pressure: 0, tangentialPressure: 0, tiltX: 0, tiltY: 0, twist: 0, pointerType: 0, isPrimary: 0 }), Td = rd(Sd), Ud = A({}, ud, { touches: 0, targetTouches: 0, changedTouches: 0, altKey: 0, metaKey: 0, ctrlKey: 0, shiftKey: 0, getModifierState: zd }), Vd = rd(Ud), Wd = A({}, sd, { propertyName: 0, elapsedTime: 0, pseudoElement: 0 }), Xd = rd(Wd), Yd = A({}, Ad, {
+    deltaX: function(a) {
+      return "deltaX" in a ? a.deltaX : "wheelDeltaX" in a ? -a.wheelDeltaX : 0;
+    },
+    deltaY: function(a) {
+      return "deltaY" in a ? a.deltaY : "wheelDeltaY" in a ? -a.wheelDeltaY : "wheelDelta" in a ? -a.wheelDelta : 0;
+    },
+    deltaZ: 0,
+    deltaMode: 0
+  }), Zd = rd(Yd), $d = [9, 13, 27, 32], ae = ia && "CompositionEvent" in window, be = null;
+  ia && "documentMode" in document && (be = document.documentMode);
+  var ce = ia && "TextEvent" in window && !be, de = ia && (!ae || be && 8 < be && 11 >= be), ee = String.fromCharCode(32), fe = false;
+  function ge(a, b) {
+    switch (a) {
+      case "keyup":
+        return -1 !== $d.indexOf(b.keyCode);
+      case "keydown":
+        return 229 !== b.keyCode;
+      case "keypress":
+      case "mousedown":
+      case "focusout":
+        return true;
+      default:
+        return false;
+    }
+  }
+  function he(a) {
+    a = a.detail;
+    return "object" === typeof a && "data" in a ? a.data : null;
+  }
+  var ie = false;
+  function je(a, b) {
+    switch (a) {
+      case "compositionend":
+        return he(b);
+      case "keypress":
+        if (32 !== b.which)
+          return null;
+        fe = true;
+        return ee;
+      case "textInput":
+        return a = b.data, a === ee && fe ? null : a;
+      default:
+        return null;
+    }
+  }
+  function ke(a, b) {
+    if (ie)
+      return "compositionend" === a || !ae && ge(a, b) ? (a = nd(), md = ld = kd = null, ie = false, a) : null;
+    switch (a) {
+      case "paste":
+        return null;
+      case "keypress":
+        if (!(b.ctrlKey || b.altKey || b.metaKey) || b.ctrlKey && b.altKey) {
+          if (b.char && 1 < b.char.length)
+            return b.char;
+          if (b.which)
+            return String.fromCharCode(b.which);
+        }
+        return null;
+      case "compositionend":
+        return de && "ko" !== b.locale ? null : b.data;
+      default:
+        return null;
+    }
+  }
+  var le = { color: true, date: true, datetime: true, "datetime-local": true, email: true, month: true, number: true, password: true, range: true, search: true, tel: true, text: true, time: true, url: true, week: true };
+  function me(a) {
+    var b = a && a.nodeName && a.nodeName.toLowerCase();
+    return "input" === b ? !!le[a.type] : "textarea" === b ? true : false;
+  }
+  function ne(a, b, c, d) {
+    Eb(d);
+    b = oe(b, "onChange");
+    0 < b.length && (c = new td("onChange", "change", null, c, d), a.push({ event: c, listeners: b }));
+  }
+  var pe = null, qe = null;
+  function re(a) {
+    se(a, 0);
+  }
+  function te(a) {
+    var b = ue(a);
+    if (Wa(b))
+      return a;
+  }
+  function ve(a, b) {
+    if ("change" === a)
+      return b;
+  }
+  var we = false;
+  if (ia) {
+    var xe;
+    if (ia) {
+      var ye = "oninput" in document;
+      if (!ye) {
+        var ze = document.createElement("div");
+        ze.setAttribute("oninput", "return;");
+        ye = "function" === typeof ze.oninput;
+      }
+      xe = ye;
+    } else
+      xe = false;
+    we = xe && (!document.documentMode || 9 < document.documentMode);
+  }
+  function Ae() {
+    pe && (pe.detachEvent("onpropertychange", Be), qe = pe = null);
+  }
+  function Be(a) {
+    if ("value" === a.propertyName && te(qe)) {
+      var b = [];
+      ne(b, qe, a, xb(a));
+      Jb(re, b);
+    }
+  }
+  function Ce(a, b, c) {
+    "focusin" === a ? (Ae(), pe = b, qe = c, pe.attachEvent("onpropertychange", Be)) : "focusout" === a && Ae();
+  }
+  function De(a) {
+    if ("selectionchange" === a || "keyup" === a || "keydown" === a)
+      return te(qe);
+  }
+  function Ee(a, b) {
+    if ("click" === a)
+      return te(b);
+  }
+  function Fe(a, b) {
+    if ("input" === a || "change" === a)
+      return te(b);
+  }
+  function Ge(a, b) {
+    return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
+  }
+  var He = "function" === typeof Object.is ? Object.is : Ge;
+  function Ie(a, b) {
+    if (He(a, b))
+      return true;
+    if ("object" !== typeof a || null === a || "object" !== typeof b || null === b)
+      return false;
+    var c = Object.keys(a), d = Object.keys(b);
+    if (c.length !== d.length)
+      return false;
+    for (d = 0; d < c.length; d++) {
+      var e = c[d];
+      if (!ja.call(b, e) || !He(a[e], b[e]))
+        return false;
+    }
+    return true;
+  }
+  function Je(a) {
+    for (; a && a.firstChild; )
+      a = a.firstChild;
+    return a;
+  }
+  function Ke(a, b) {
+    var c = Je(a);
+    a = 0;
+    for (var d; c; ) {
+      if (3 === c.nodeType) {
+        d = a + c.textContent.length;
+        if (a <= b && d >= b)
+          return { node: c, offset: b - a };
+        a = d;
+      }
+      a: {
+        for (; c; ) {
+          if (c.nextSibling) {
+            c = c.nextSibling;
+            break a;
+          }
+          c = c.parentNode;
+        }
+        c = void 0;
+      }
+      c = Je(c);
+    }
+  }
+  function Le(a, b) {
+    return a && b ? a === b ? true : a && 3 === a.nodeType ? false : b && 3 === b.nodeType ? Le(a, b.parentNode) : "contains" in a ? a.contains(b) : a.compareDocumentPosition ? !!(a.compareDocumentPosition(b) & 16) : false : false;
+  }
+  function Me() {
+    for (var a = window, b = Xa(); b instanceof a.HTMLIFrameElement; ) {
+      try {
+        var c = "string" === typeof b.contentWindow.location.href;
+      } catch (d) {
+        c = false;
+      }
+      if (c)
+        a = b.contentWindow;
+      else
+        break;
+      b = Xa(a.document);
+    }
+    return b;
+  }
+  function Ne(a) {
+    var b = a && a.nodeName && a.nodeName.toLowerCase();
+    return b && ("input" === b && ("text" === a.type || "search" === a.type || "tel" === a.type || "url" === a.type || "password" === a.type) || "textarea" === b || "true" === a.contentEditable);
+  }
+  function Oe(a) {
+    var b = Me(), c = a.focusedElem, d = a.selectionRange;
+    if (b !== c && c && c.ownerDocument && Le(c.ownerDocument.documentElement, c)) {
+      if (null !== d && Ne(c)) {
+        if (b = d.start, a = d.end, void 0 === a && (a = b), "selectionStart" in c)
+          c.selectionStart = b, c.selectionEnd = Math.min(a, c.value.length);
+        else if (a = (b = c.ownerDocument || document) && b.defaultView || window, a.getSelection) {
+          a = a.getSelection();
+          var e = c.textContent.length, f2 = Math.min(d.start, e);
+          d = void 0 === d.end ? f2 : Math.min(d.end, e);
+          !a.extend && f2 > d && (e = d, d = f2, f2 = e);
+          e = Ke(c, f2);
+          var g = Ke(
+            c,
+            d
+          );
+          e && g && (1 !== a.rangeCount || a.anchorNode !== e.node || a.anchorOffset !== e.offset || a.focusNode !== g.node || a.focusOffset !== g.offset) && (b = b.createRange(), b.setStart(e.node, e.offset), a.removeAllRanges(), f2 > d ? (a.addRange(b), a.extend(g.node, g.offset)) : (b.setEnd(g.node, g.offset), a.addRange(b)));
+        }
+      }
+      b = [];
+      for (a = c; a = a.parentNode; )
+        1 === a.nodeType && b.push({ element: a, left: a.scrollLeft, top: a.scrollTop });
+      "function" === typeof c.focus && c.focus();
+      for (c = 0; c < b.length; c++)
+        a = b[c], a.element.scrollLeft = a.left, a.element.scrollTop = a.top;
+    }
+  }
+  var Pe = ia && "documentMode" in document && 11 >= document.documentMode, Qe = null, Re = null, Se = null, Te = false;
+  function Ue(a, b, c) {
+    var d = c.window === c ? c.document : 9 === c.nodeType ? c : c.ownerDocument;
+    Te || null == Qe || Qe !== Xa(d) || (d = Qe, "selectionStart" in d && Ne(d) ? d = { start: d.selectionStart, end: d.selectionEnd } : (d = (d.ownerDocument && d.ownerDocument.defaultView || window).getSelection(), d = { anchorNode: d.anchorNode, anchorOffset: d.anchorOffset, focusNode: d.focusNode, focusOffset: d.focusOffset }), Se && Ie(Se, d) || (Se = d, d = oe(Re, "onSelect"), 0 < d.length && (b = new td("onSelect", "select", null, b, c), a.push({ event: b, listeners: d }), b.target = Qe)));
+  }
+  function Ve(a, b) {
+    var c = {};
+    c[a.toLowerCase()] = b.toLowerCase();
+    c["Webkit" + a] = "webkit" + b;
+    c["Moz" + a] = "moz" + b;
+    return c;
+  }
+  var We = { animationend: Ve("Animation", "AnimationEnd"), animationiteration: Ve("Animation", "AnimationIteration"), animationstart: Ve("Animation", "AnimationStart"), transitionend: Ve("Transition", "TransitionEnd") }, Xe = {}, Ye = {};
+  ia && (Ye = document.createElement("div").style, "AnimationEvent" in window || (delete We.animationend.animation, delete We.animationiteration.animation, delete We.animationstart.animation), "TransitionEvent" in window || delete We.transitionend.transition);
+  function Ze(a) {
+    if (Xe[a])
+      return Xe[a];
+    if (!We[a])
+      return a;
+    var b = We[a], c;
+    for (c in b)
+      if (b.hasOwnProperty(c) && c in Ye)
+        return Xe[a] = b[c];
+    return a;
+  }
+  var $e = Ze("animationend"), af = Ze("animationiteration"), bf = Ze("animationstart"), cf = Ze("transitionend"), df = /* @__PURE__ */ new Map(), ef = "abort auxClick cancel canPlay canPlayThrough click close contextMenu copy cut drag dragEnd dragEnter dragExit dragLeave dragOver dragStart drop durationChange emptied encrypted ended error gotPointerCapture input invalid keyDown keyPress keyUp load loadedData loadedMetadata loadStart lostPointerCapture mouseDown mouseMove mouseOut mouseOver mouseUp paste pause play playing pointerCancel pointerDown pointerMove pointerOut pointerOver pointerUp progress rateChange reset resize seeked seeking stalled submit suspend timeUpdate touchCancel touchEnd touchStart volumeChange scroll toggle touchMove waiting wheel".split(" ");
+  function ff(a, b) {
+    df.set(a, b);
+    fa(b, [a]);
+  }
+  for (var gf = 0; gf < ef.length; gf++) {
+    var hf = ef[gf], jf = hf.toLowerCase(), kf = hf[0].toUpperCase() + hf.slice(1);
+    ff(jf, "on" + kf);
+  }
+  ff($e, "onAnimationEnd");
+  ff(af, "onAnimationIteration");
+  ff(bf, "onAnimationStart");
+  ff("dblclick", "onDoubleClick");
+  ff("focusin", "onFocus");
+  ff("focusout", "onBlur");
+  ff(cf, "onTransitionEnd");
+  ha("onMouseEnter", ["mouseout", "mouseover"]);
+  ha("onMouseLeave", ["mouseout", "mouseover"]);
+  ha("onPointerEnter", ["pointerout", "pointerover"]);
+  ha("onPointerLeave", ["pointerout", "pointerover"]);
+  fa("onChange", "change click focusin focusout input keydown keyup selectionchange".split(" "));
+  fa("onSelect", "focusout contextmenu dragend focusin keydown keyup mousedown mouseup selectionchange".split(" "));
+  fa("onBeforeInput", ["compositionend", "keypress", "textInput", "paste"]);
+  fa("onCompositionEnd", "compositionend focusout keydown keypress keyup mousedown".split(" "));
+  fa("onCompositionStart", "compositionstart focusout keydown keypress keyup mousedown".split(" "));
+  fa("onCompositionUpdate", "compositionupdate focusout keydown keypress keyup mousedown".split(" "));
+  var lf = "abort canplay canplaythrough durationchange emptied encrypted ended error loadeddata loadedmetadata loadstart pause play playing progress ratechange resize seeked seeking stalled suspend timeupdate volumechange waiting".split(" "), mf = new Set("cancel close invalid load scroll toggle".split(" ").concat(lf));
+  function nf(a, b, c) {
+    var d = a.type || "unknown-event";
+    a.currentTarget = c;
+    Ub(d, b, void 0, a);
+    a.currentTarget = null;
+  }
+  function se(a, b) {
+    b = 0 !== (b & 4);
+    for (var c = 0; c < a.length; c++) {
+      var d = a[c], e = d.event;
+      d = d.listeners;
+      a: {
+        var f2 = void 0;
+        if (b)
+          for (var g = d.length - 1; 0 <= g; g--) {
+            var h = d[g], k2 = h.instance, l2 = h.currentTarget;
+            h = h.listener;
+            if (k2 !== f2 && e.isPropagationStopped())
+              break a;
+            nf(e, h, l2);
+            f2 = k2;
+          }
+        else
+          for (g = 0; g < d.length; g++) {
+            h = d[g];
+            k2 = h.instance;
+            l2 = h.currentTarget;
+            h = h.listener;
+            if (k2 !== f2 && e.isPropagationStopped())
+              break a;
+            nf(e, h, l2);
+            f2 = k2;
+          }
+      }
+    }
+    if (Qb)
+      throw a = Rb, Qb = false, Rb = null, a;
+  }
+  function D(a, b) {
+    var c = b[of];
+    void 0 === c && (c = b[of] = /* @__PURE__ */ new Set());
+    var d = a + "__bubble";
+    c.has(d) || (pf(b, a, 2, false), c.add(d));
+  }
+  function qf(a, b, c) {
+    var d = 0;
+    b && (d |= 4);
+    pf(c, a, d, b);
+  }
+  var rf = "_reactListening" + Math.random().toString(36).slice(2);
+  function sf(a) {
+    if (!a[rf]) {
+      a[rf] = true;
+      da.forEach(function(b2) {
+        "selectionchange" !== b2 && (mf.has(b2) || qf(b2, false, a), qf(b2, true, a));
+      });
+      var b = 9 === a.nodeType ? a : a.ownerDocument;
+      null === b || b[rf] || (b[rf] = true, qf("selectionchange", false, b));
+    }
+  }
+  function pf(a, b, c, d) {
+    switch (jd(b)) {
+      case 1:
+        var e = ed;
+        break;
+      case 4:
+        e = gd;
+        break;
+      default:
+        e = fd;
+    }
+    c = e.bind(null, b, c, a);
+    e = void 0;
+    !Lb || "touchstart" !== b && "touchmove" !== b && "wheel" !== b || (e = true);
+    d ? void 0 !== e ? a.addEventListener(b, c, { capture: true, passive: e }) : a.addEventListener(b, c, true) : void 0 !== e ? a.addEventListener(b, c, { passive: e }) : a.addEventListener(b, c, false);
+  }
+  function hd(a, b, c, d, e) {
+    var f2 = d;
+    if (0 === (b & 1) && 0 === (b & 2) && null !== d)
+      a:
+        for (; ; ) {
+          if (null === d)
+            return;
+          var g = d.tag;
+          if (3 === g || 4 === g) {
+            var h = d.stateNode.containerInfo;
+            if (h === e || 8 === h.nodeType && h.parentNode === e)
+              break;
+            if (4 === g)
+              for (g = d.return; null !== g; ) {
+                var k2 = g.tag;
+                if (3 === k2 || 4 === k2) {
+                  if (k2 = g.stateNode.containerInfo, k2 === e || 8 === k2.nodeType && k2.parentNode === e)
+                    return;
+                }
+                g = g.return;
+              }
+            for (; null !== h; ) {
+              g = Wc(h);
+              if (null === g)
+                return;
+              k2 = g.tag;
+              if (5 === k2 || 6 === k2) {
+                d = f2 = g;
+                continue a;
+              }
+              h = h.parentNode;
+            }
+          }
+          d = d.return;
+        }
+    Jb(function() {
+      var d2 = f2, e2 = xb(c), g2 = [];
+      a: {
+        var h2 = df.get(a);
+        if (void 0 !== h2) {
+          var k3 = td, n2 = a;
+          switch (a) {
+            case "keypress":
+              if (0 === od(c))
+                break a;
+            case "keydown":
+            case "keyup":
+              k3 = Rd;
+              break;
+            case "focusin":
+              n2 = "focus";
+              k3 = Fd;
+              break;
+            case "focusout":
+              n2 = "blur";
+              k3 = Fd;
+              break;
+            case "beforeblur":
+            case "afterblur":
+              k3 = Fd;
+              break;
+            case "click":
+              if (2 === c.button)
+                break a;
+            case "auxclick":
+            case "dblclick":
+            case "mousedown":
+            case "mousemove":
+            case "mouseup":
+            case "mouseout":
+            case "mouseover":
+            case "contextmenu":
+              k3 = Bd;
+              break;
+            case "drag":
+            case "dragend":
+            case "dragenter":
+            case "dragexit":
+            case "dragleave":
+            case "dragover":
+            case "dragstart":
+            case "drop":
+              k3 = Dd;
+              break;
+            case "touchcancel":
+            case "touchend":
+            case "touchmove":
+            case "touchstart":
+              k3 = Vd;
+              break;
+            case $e:
+            case af:
+            case bf:
+              k3 = Hd;
+              break;
+            case cf:
+              k3 = Xd;
+              break;
+            case "scroll":
+              k3 = vd;
+              break;
+            case "wheel":
+              k3 = Zd;
+              break;
+            case "copy":
+            case "cut":
+            case "paste":
+              k3 = Jd;
+              break;
+            case "gotpointercapture":
+            case "lostpointercapture":
+            case "pointercancel":
+            case "pointerdown":
+            case "pointermove":
+            case "pointerout":
+            case "pointerover":
+            case "pointerup":
+              k3 = Td;
+          }
+          var t2 = 0 !== (b & 4), J2 = !t2 && "scroll" === a, x2 = t2 ? null !== h2 ? h2 + "Capture" : null : h2;
+          t2 = [];
+          for (var w2 = d2, u2; null !== w2; ) {
+            u2 = w2;
+            var F2 = u2.stateNode;
+            5 === u2.tag && null !== F2 && (u2 = F2, null !== x2 && (F2 = Kb(w2, x2), null != F2 && t2.push(tf(w2, F2, u2))));
+            if (J2)
+              break;
+            w2 = w2.return;
+          }
+          0 < t2.length && (h2 = new k3(h2, n2, null, c, e2), g2.push({ event: h2, listeners: t2 }));
+        }
+      }
+      if (0 === (b & 7)) {
+        a: {
+          h2 = "mouseover" === a || "pointerover" === a;
+          k3 = "mouseout" === a || "pointerout" === a;
+          if (h2 && c !== wb && (n2 = c.relatedTarget || c.fromElement) && (Wc(n2) || n2[uf]))
+            break a;
+          if (k3 || h2) {
+            h2 = e2.window === e2 ? e2 : (h2 = e2.ownerDocument) ? h2.defaultView || h2.parentWindow : window;
+            if (k3) {
+              if (n2 = c.relatedTarget || c.toElement, k3 = d2, n2 = n2 ? Wc(n2) : null, null !== n2 && (J2 = Vb(n2), n2 !== J2 || 5 !== n2.tag && 6 !== n2.tag))
+                n2 = null;
+            } else
+              k3 = null, n2 = d2;
+            if (k3 !== n2) {
+              t2 = Bd;
+              F2 = "onMouseLeave";
+              x2 = "onMouseEnter";
+              w2 = "mouse";
+              if ("pointerout" === a || "pointerover" === a)
+                t2 = Td, F2 = "onPointerLeave", x2 = "onPointerEnter", w2 = "pointer";
+              J2 = null == k3 ? h2 : ue(k3);
+              u2 = null == n2 ? h2 : ue(n2);
+              h2 = new t2(F2, w2 + "leave", k3, c, e2);
+              h2.target = J2;
+              h2.relatedTarget = u2;
+              F2 = null;
+              Wc(e2) === d2 && (t2 = new t2(x2, w2 + "enter", n2, c, e2), t2.target = u2, t2.relatedTarget = J2, F2 = t2);
+              J2 = F2;
+              if (k3 && n2)
+                b: {
+                  t2 = k3;
+                  x2 = n2;
+                  w2 = 0;
+                  for (u2 = t2; u2; u2 = vf(u2))
+                    w2++;
+                  u2 = 0;
+                  for (F2 = x2; F2; F2 = vf(F2))
+                    u2++;
+                  for (; 0 < w2 - u2; )
+                    t2 = vf(t2), w2--;
+                  for (; 0 < u2 - w2; )
+                    x2 = vf(x2), u2--;
+                  for (; w2--; ) {
+                    if (t2 === x2 || null !== x2 && t2 === x2.alternate)
+                      break b;
+                    t2 = vf(t2);
+                    x2 = vf(x2);
+                  }
+                  t2 = null;
+                }
+              else
+                t2 = null;
+              null !== k3 && wf(g2, h2, k3, t2, false);
+              null !== n2 && null !== J2 && wf(g2, J2, n2, t2, true);
+            }
+          }
+        }
+        a: {
+          h2 = d2 ? ue(d2) : window;
+          k3 = h2.nodeName && h2.nodeName.toLowerCase();
+          if ("select" === k3 || "input" === k3 && "file" === h2.type)
+            var na = ve;
+          else if (me(h2))
+            if (we)
+              na = Fe;
+            else {
+              na = De;
+              var xa = Ce;
+            }
+          else
+            (k3 = h2.nodeName) && "input" === k3.toLowerCase() && ("checkbox" === h2.type || "radio" === h2.type) && (na = Ee);
+          if (na && (na = na(a, d2))) {
+            ne(g2, na, c, e2);
+            break a;
+          }
+          xa && xa(a, h2, d2);
+          "focusout" === a && (xa = h2._wrapperState) && xa.controlled && "number" === h2.type && cb(h2, "number", h2.value);
+        }
+        xa = d2 ? ue(d2) : window;
+        switch (a) {
+          case "focusin":
+            if (me(xa) || "true" === xa.contentEditable)
+              Qe = xa, Re = d2, Se = null;
+            break;
+          case "focusout":
+            Se = Re = Qe = null;
+            break;
+          case "mousedown":
+            Te = true;
+            break;
+          case "contextmenu":
+          case "mouseup":
+          case "dragend":
+            Te = false;
+            Ue(g2, c, e2);
+            break;
+          case "selectionchange":
+            if (Pe)
+              break;
+          case "keydown":
+          case "keyup":
+            Ue(g2, c, e2);
+        }
+        var $a;
+        if (ae)
+          b: {
+            switch (a) {
+              case "compositionstart":
+                var ba = "onCompositionStart";
+                break b;
+              case "compositionend":
+                ba = "onCompositionEnd";
+                break b;
+              case "compositionupdate":
+                ba = "onCompositionUpdate";
+                break b;
+            }
+            ba = void 0;
+          }
+        else
+          ie ? ge(a, c) && (ba = "onCompositionEnd") : "keydown" === a && 229 === c.keyCode && (ba = "onCompositionStart");
+        ba && (de && "ko" !== c.locale && (ie || "onCompositionStart" !== ba ? "onCompositionEnd" === ba && ie && ($a = nd()) : (kd = e2, ld = "value" in kd ? kd.value : kd.textContent, ie = true)), xa = oe(d2, ba), 0 < xa.length && (ba = new Ld(ba, a, null, c, e2), g2.push({ event: ba, listeners: xa }), $a ? ba.data = $a : ($a = he(c), null !== $a && (ba.data = $a))));
+        if ($a = ce ? je(a, c) : ke(a, c))
+          d2 = oe(d2, "onBeforeInput"), 0 < d2.length && (e2 = new Ld("onBeforeInput", "beforeinput", null, c, e2), g2.push({ event: e2, listeners: d2 }), e2.data = $a);
+      }
+      se(g2, b);
+    });
+  }
+  function tf(a, b, c) {
+    return { instance: a, listener: b, currentTarget: c };
+  }
+  function oe(a, b) {
+    for (var c = b + "Capture", d = []; null !== a; ) {
+      var e = a, f2 = e.stateNode;
+      5 === e.tag && null !== f2 && (e = f2, f2 = Kb(a, c), null != f2 && d.unshift(tf(a, f2, e)), f2 = Kb(a, b), null != f2 && d.push(tf(a, f2, e)));
+      a = a.return;
+    }
+    return d;
+  }
+  function vf(a) {
+    if (null === a)
+      return null;
+    do
+      a = a.return;
+    while (a && 5 !== a.tag);
+    return a ? a : null;
+  }
+  function wf(a, b, c, d, e) {
+    for (var f2 = b._reactName, g = []; null !== c && c !== d; ) {
+      var h = c, k2 = h.alternate, l2 = h.stateNode;
+      if (null !== k2 && k2 === d)
+        break;
+      5 === h.tag && null !== l2 && (h = l2, e ? (k2 = Kb(c, f2), null != k2 && g.unshift(tf(c, k2, h))) : e || (k2 = Kb(c, f2), null != k2 && g.push(tf(c, k2, h))));
+      c = c.return;
+    }
+    0 !== g.length && a.push({ event: b, listeners: g });
+  }
+  var xf = /\r\n?/g, yf = /\u0000|\uFFFD/g;
+  function zf(a) {
+    return ("string" === typeof a ? a : "" + a).replace(xf, "\n").replace(yf, "");
+  }
+  function Af(a, b, c) {
+    b = zf(b);
+    if (zf(a) !== b && c)
+      throw Error(p(425));
+  }
+  function Bf() {
+  }
+  var Cf = null, Df = null;
+  function Ef(a, b) {
+    return "textarea" === a || "noscript" === a || "string" === typeof b.children || "number" === typeof b.children || "object" === typeof b.dangerouslySetInnerHTML && null !== b.dangerouslySetInnerHTML && null != b.dangerouslySetInnerHTML.__html;
+  }
+  var Ff = "function" === typeof setTimeout ? setTimeout : void 0, Gf = "function" === typeof clearTimeout ? clearTimeout : void 0, Hf = "function" === typeof Promise ? Promise : void 0, Jf = "function" === typeof queueMicrotask ? queueMicrotask : "undefined" !== typeof Hf ? function(a) {
+    return Hf.resolve(null).then(a).catch(If);
+  } : Ff;
+  function If(a) {
+    setTimeout(function() {
+      throw a;
+    });
+  }
+  function Kf(a, b) {
+    var c = b, d = 0;
+    do {
+      var e = c.nextSibling;
+      a.removeChild(c);
+      if (e && 8 === e.nodeType)
+        if (c = e.data, "/$" === c) {
+          if (0 === d) {
+            a.removeChild(e);
+            bd(b);
+            return;
+          }
+          d--;
+        } else
+          "$" !== c && "$?" !== c && "$!" !== c || d++;
+      c = e;
+    } while (c);
+    bd(b);
+  }
+  function Lf(a) {
+    for (; null != a; a = a.nextSibling) {
+      var b = a.nodeType;
+      if (1 === b || 3 === b)
+        break;
+      if (8 === b) {
+        b = a.data;
+        if ("$" === b || "$!" === b || "$?" === b)
+          break;
+        if ("/$" === b)
+          return null;
+      }
+    }
+    return a;
+  }
+  function Mf(a) {
+    a = a.previousSibling;
+    for (var b = 0; a; ) {
+      if (8 === a.nodeType) {
+        var c = a.data;
+        if ("$" === c || "$!" === c || "$?" === c) {
+          if (0 === b)
+            return a;
+          b--;
+        } else
+          "/$" === c && b++;
+      }
+      a = a.previousSibling;
+    }
+    return null;
+  }
+  var Nf = Math.random().toString(36).slice(2), Of = "__reactFiber$" + Nf, Pf = "__reactProps$" + Nf, uf = "__reactContainer$" + Nf, of = "__reactEvents$" + Nf, Qf = "__reactListeners$" + Nf, Rf = "__reactHandles$" + Nf;
+  function Wc(a) {
+    var b = a[Of];
+    if (b)
+      return b;
+    for (var c = a.parentNode; c; ) {
+      if (b = c[uf] || c[Of]) {
+        c = b.alternate;
+        if (null !== b.child || null !== c && null !== c.child)
+          for (a = Mf(a); null !== a; ) {
+            if (c = a[Of])
+              return c;
+            a = Mf(a);
+          }
+        return b;
+      }
+      a = c;
+      c = a.parentNode;
+    }
+    return null;
+  }
+  function Cb(a) {
+    a = a[Of] || a[uf];
+    return !a || 5 !== a.tag && 6 !== a.tag && 13 !== a.tag && 3 !== a.tag ? null : a;
+  }
+  function ue(a) {
+    if (5 === a.tag || 6 === a.tag)
+      return a.stateNode;
+    throw Error(p(33));
+  }
+  function Db(a) {
+    return a[Pf] || null;
+  }
+  var Sf = [], Tf = -1;
+  function Uf(a) {
+    return { current: a };
+  }
+  function E(a) {
+    0 > Tf || (a.current = Sf[Tf], Sf[Tf] = null, Tf--);
+  }
+  function G(a, b) {
+    Tf++;
+    Sf[Tf] = a.current;
+    a.current = b;
+  }
+  var Vf = {}, H = Uf(Vf), Wf = Uf(false), Xf = Vf;
+  function Yf(a, b) {
+    var c = a.type.contextTypes;
+    if (!c)
+      return Vf;
+    var d = a.stateNode;
+    if (d && d.__reactInternalMemoizedUnmaskedChildContext === b)
+      return d.__reactInternalMemoizedMaskedChildContext;
+    var e = {}, f2;
+    for (f2 in c)
+      e[f2] = b[f2];
+    d && (a = a.stateNode, a.__reactInternalMemoizedUnmaskedChildContext = b, a.__reactInternalMemoizedMaskedChildContext = e);
+    return e;
+  }
+  function Zf(a) {
+    a = a.childContextTypes;
+    return null !== a && void 0 !== a;
+  }
+  function $f() {
+    E(Wf);
+    E(H);
+  }
+  function ag(a, b, c) {
+    if (H.current !== Vf)
+      throw Error(p(168));
+    G(H, b);
+    G(Wf, c);
+  }
+  function bg(a, b, c) {
+    var d = a.stateNode;
+    b = b.childContextTypes;
+    if ("function" !== typeof d.getChildContext)
+      return c;
+    d = d.getChildContext();
+    for (var e in d)
+      if (!(e in b))
+        throw Error(p(108, Ra(a) || "Unknown", e));
+    return A({}, c, d);
+  }
+  function cg(a) {
+    a = (a = a.stateNode) && a.__reactInternalMemoizedMergedChildContext || Vf;
+    Xf = H.current;
+    G(H, a);
+    G(Wf, Wf.current);
+    return true;
+  }
+  function dg(a, b, c) {
+    var d = a.stateNode;
+    if (!d)
+      throw Error(p(169));
+    c ? (a = bg(a, b, Xf), d.__reactInternalMemoizedMergedChildContext = a, E(Wf), E(H), G(H, a)) : E(Wf);
+    G(Wf, c);
+  }
+  var eg = null, fg = false, gg = false;
+  function hg(a) {
+    null === eg ? eg = [a] : eg.push(a);
+  }
+  function ig(a) {
+    fg = true;
+    hg(a);
+  }
+  function jg() {
+    if (!gg && null !== eg) {
+      gg = true;
+      var a = 0, b = C;
+      try {
+        var c = eg;
+        for (C = 1; a < c.length; a++) {
+          var d = c[a];
+          do
+            d = d(true);
+          while (null !== d);
+        }
+        eg = null;
+        fg = false;
+      } catch (e) {
+        throw null !== eg && (eg = eg.slice(a + 1)), ac(fc, jg), e;
+      } finally {
+        C = b, gg = false;
+      }
+    }
+    return null;
+  }
+  var kg = [], lg = 0, mg = null, ng = 0, og = [], pg = 0, qg = null, rg = 1, sg = "";
+  function tg(a, b) {
+    kg[lg++] = ng;
+    kg[lg++] = mg;
+    mg = a;
+    ng = b;
+  }
+  function ug(a, b, c) {
+    og[pg++] = rg;
+    og[pg++] = sg;
+    og[pg++] = qg;
+    qg = a;
+    var d = rg;
+    a = sg;
+    var e = 32 - oc(d) - 1;
+    d &= ~(1 << e);
+    c += 1;
+    var f2 = 32 - oc(b) + e;
+    if (30 < f2) {
+      var g = e - e % 5;
+      f2 = (d & (1 << g) - 1).toString(32);
+      d >>= g;
+      e -= g;
+      rg = 1 << 32 - oc(b) + e | c << e | d;
+      sg = f2 + a;
+    } else
+      rg = 1 << f2 | c << e | d, sg = a;
+  }
+  function vg(a) {
+    null !== a.return && (tg(a, 1), ug(a, 1, 0));
+  }
+  function wg(a) {
+    for (; a === mg; )
+      mg = kg[--lg], kg[lg] = null, ng = kg[--lg], kg[lg] = null;
+    for (; a === qg; )
+      qg = og[--pg], og[pg] = null, sg = og[--pg], og[pg] = null, rg = og[--pg], og[pg] = null;
+  }
+  var xg = null, yg = null, I = false, zg = null;
+  function Ag(a, b) {
+    var c = Bg(5, null, null, 0);
+    c.elementType = "DELETED";
+    c.stateNode = b;
+    c.return = a;
+    b = a.deletions;
+    null === b ? (a.deletions = [c], a.flags |= 16) : b.push(c);
+  }
+  function Cg(a, b) {
+    switch (a.tag) {
+      case 5:
+        var c = a.type;
+        b = 1 !== b.nodeType || c.toLowerCase() !== b.nodeName.toLowerCase() ? null : b;
+        return null !== b ? (a.stateNode = b, xg = a, yg = Lf(b.firstChild), true) : false;
+      case 6:
+        return b = "" === a.pendingProps || 3 !== b.nodeType ? null : b, null !== b ? (a.stateNode = b, xg = a, yg = null, true) : false;
+      case 13:
+        return b = 8 !== b.nodeType ? null : b, null !== b ? (c = null !== qg ? { id: rg, overflow: sg } : null, a.memoizedState = { dehydrated: b, treeContext: c, retryLane: 1073741824 }, c = Bg(18, null, null, 0), c.stateNode = b, c.return = a, a.child = c, xg = a, yg = null, true) : false;
+      default:
+        return false;
+    }
+  }
+  function Dg(a) {
+    return 0 !== (a.mode & 1) && 0 === (a.flags & 128);
+  }
+  function Eg(a) {
+    if (I) {
+      var b = yg;
+      if (b) {
+        var c = b;
+        if (!Cg(a, b)) {
+          if (Dg(a))
+            throw Error(p(418));
+          b = Lf(c.nextSibling);
+          var d = xg;
+          b && Cg(a, b) ? Ag(d, c) : (a.flags = a.flags & -4097 | 2, I = false, xg = a);
+        }
+      } else {
+        if (Dg(a))
+          throw Error(p(418));
+        a.flags = a.flags & -4097 | 2;
+        I = false;
+        xg = a;
+      }
+    }
+  }
+  function Fg(a) {
+    for (a = a.return; null !== a && 5 !== a.tag && 3 !== a.tag && 13 !== a.tag; )
+      a = a.return;
+    xg = a;
+  }
+  function Gg(a) {
+    if (a !== xg)
+      return false;
+    if (!I)
+      return Fg(a), I = true, false;
+    var b;
+    (b = 3 !== a.tag) && !(b = 5 !== a.tag) && (b = a.type, b = "head" !== b && "body" !== b && !Ef(a.type, a.memoizedProps));
+    if (b && (b = yg)) {
+      if (Dg(a))
+        throw Hg(), Error(p(418));
+      for (; b; )
+        Ag(a, b), b = Lf(b.nextSibling);
+    }
+    Fg(a);
+    if (13 === a.tag) {
+      a = a.memoizedState;
+      a = null !== a ? a.dehydrated : null;
+      if (!a)
+        throw Error(p(317));
+      a: {
+        a = a.nextSibling;
+        for (b = 0; a; ) {
+          if (8 === a.nodeType) {
+            var c = a.data;
+            if ("/$" === c) {
+              if (0 === b) {
+                yg = Lf(a.nextSibling);
+                break a;
+              }
+              b--;
+            } else
+              "$" !== c && "$!" !== c && "$?" !== c || b++;
+          }
+          a = a.nextSibling;
+        }
+        yg = null;
+      }
+    } else
+      yg = xg ? Lf(a.stateNode.nextSibling) : null;
+    return true;
+  }
+  function Hg() {
+    for (var a = yg; a; )
+      a = Lf(a.nextSibling);
+  }
+  function Ig() {
+    yg = xg = null;
+    I = false;
+  }
+  function Jg(a) {
+    null === zg ? zg = [a] : zg.push(a);
+  }
+  var Kg = ua.ReactCurrentBatchConfig;
+  function Lg(a, b, c) {
+    a = c.ref;
+    if (null !== a && "function" !== typeof a && "object" !== typeof a) {
+      if (c._owner) {
+        c = c._owner;
+        if (c) {
+          if (1 !== c.tag)
+            throw Error(p(309));
+          var d = c.stateNode;
+        }
+        if (!d)
+          throw Error(p(147, a));
+        var e = d, f2 = "" + a;
+        if (null !== b && null !== b.ref && "function" === typeof b.ref && b.ref._stringRef === f2)
+          return b.ref;
+        b = function(a2) {
+          var b2 = e.refs;
+          null === a2 ? delete b2[f2] : b2[f2] = a2;
+        };
+        b._stringRef = f2;
+        return b;
+      }
+      if ("string" !== typeof a)
+        throw Error(p(284));
+      if (!c._owner)
+        throw Error(p(290, a));
+    }
+    return a;
+  }
+  function Mg(a, b) {
+    a = Object.prototype.toString.call(b);
+    throw Error(p(31, "[object Object]" === a ? "object with keys {" + Object.keys(b).join(", ") + "}" : a));
+  }
+  function Ng(a) {
+    var b = a._init;
+    return b(a._payload);
+  }
+  function Og(a) {
+    function b(b2, c2) {
+      if (a) {
+        var d2 = b2.deletions;
+        null === d2 ? (b2.deletions = [c2], b2.flags |= 16) : d2.push(c2);
+      }
+    }
+    function c(c2, d2) {
+      if (!a)
+        return null;
+      for (; null !== d2; )
+        b(c2, d2), d2 = d2.sibling;
+      return null;
+    }
+    function d(a2, b2) {
+      for (a2 = /* @__PURE__ */ new Map(); null !== b2; )
+        null !== b2.key ? a2.set(b2.key, b2) : a2.set(b2.index, b2), b2 = b2.sibling;
+      return a2;
+    }
+    function e(a2, b2) {
+      a2 = Pg(a2, b2);
+      a2.index = 0;
+      a2.sibling = null;
+      return a2;
+    }
+    function f2(b2, c2, d2) {
+      b2.index = d2;
+      if (!a)
+        return b2.flags |= 1048576, c2;
+      d2 = b2.alternate;
+      if (null !== d2)
+        return d2 = d2.index, d2 < c2 ? (b2.flags |= 2, c2) : d2;
+      b2.flags |= 2;
+      return c2;
+    }
+    function g(b2) {
+      a && null === b2.alternate && (b2.flags |= 2);
+      return b2;
+    }
+    function h(a2, b2, c2, d2) {
+      if (null === b2 || 6 !== b2.tag)
+        return b2 = Qg(c2, a2.mode, d2), b2.return = a2, b2;
+      b2 = e(b2, c2);
+      b2.return = a2;
+      return b2;
+    }
+    function k2(a2, b2, c2, d2) {
+      var f3 = c2.type;
+      if (f3 === ya)
+        return m2(a2, b2, c2.props.children, d2, c2.key);
+      if (null !== b2 && (b2.elementType === f3 || "object" === typeof f3 && null !== f3 && f3.$$typeof === Ha && Ng(f3) === b2.type))
+        return d2 = e(b2, c2.props), d2.ref = Lg(a2, b2, c2), d2.return = a2, d2;
+      d2 = Rg(c2.type, c2.key, c2.props, null, a2.mode, d2);
+      d2.ref = Lg(a2, b2, c2);
+      d2.return = a2;
+      return d2;
+    }
+    function l2(a2, b2, c2, d2) {
+      if (null === b2 || 4 !== b2.tag || b2.stateNode.containerInfo !== c2.containerInfo || b2.stateNode.implementation !== c2.implementation)
+        return b2 = Sg(c2, a2.mode, d2), b2.return = a2, b2;
+      b2 = e(b2, c2.children || []);
+      b2.return = a2;
+      return b2;
+    }
+    function m2(a2, b2, c2, d2, f3) {
+      if (null === b2 || 7 !== b2.tag)
+        return b2 = Tg(c2, a2.mode, d2, f3), b2.return = a2, b2;
+      b2 = e(b2, c2);
+      b2.return = a2;
+      return b2;
+    }
+    function q2(a2, b2, c2) {
+      if ("string" === typeof b2 && "" !== b2 || "number" === typeof b2)
+        return b2 = Qg("" + b2, a2.mode, c2), b2.return = a2, b2;
+      if ("object" === typeof b2 && null !== b2) {
+        switch (b2.$$typeof) {
+          case va:
+            return c2 = Rg(b2.type, b2.key, b2.props, null, a2.mode, c2), c2.ref = Lg(a2, null, b2), c2.return = a2, c2;
+          case wa:
+            return b2 = Sg(b2, a2.mode, c2), b2.return = a2, b2;
+          case Ha:
+            var d2 = b2._init;
+            return q2(a2, d2(b2._payload), c2);
+        }
+        if (eb(b2) || Ka(b2))
+          return b2 = Tg(b2, a2.mode, c2, null), b2.return = a2, b2;
+        Mg(a2, b2);
+      }
+      return null;
+    }
+    function r2(a2, b2, c2, d2) {
+      var e2 = null !== b2 ? b2.key : null;
+      if ("string" === typeof c2 && "" !== c2 || "number" === typeof c2)
+        return null !== e2 ? null : h(a2, b2, "" + c2, d2);
+      if ("object" === typeof c2 && null !== c2) {
+        switch (c2.$$typeof) {
+          case va:
+            return c2.key === e2 ? k2(a2, b2, c2, d2) : null;
+          case wa:
+            return c2.key === e2 ? l2(a2, b2, c2, d2) : null;
+          case Ha:
+            return e2 = c2._init, r2(
+              a2,
+              b2,
+              e2(c2._payload),
+              d2
+            );
+        }
+        if (eb(c2) || Ka(c2))
+          return null !== e2 ? null : m2(a2, b2, c2, d2, null);
+        Mg(a2, c2);
+      }
+      return null;
+    }
+    function y2(a2, b2, c2, d2, e2) {
+      if ("string" === typeof d2 && "" !== d2 || "number" === typeof d2)
+        return a2 = a2.get(c2) || null, h(b2, a2, "" + d2, e2);
+      if ("object" === typeof d2 && null !== d2) {
+        switch (d2.$$typeof) {
+          case va:
+            return a2 = a2.get(null === d2.key ? c2 : d2.key) || null, k2(b2, a2, d2, e2);
+          case wa:
+            return a2 = a2.get(null === d2.key ? c2 : d2.key) || null, l2(b2, a2, d2, e2);
+          case Ha:
+            var f3 = d2._init;
+            return y2(a2, b2, c2, f3(d2._payload), e2);
+        }
+        if (eb(d2) || Ka(d2))
+          return a2 = a2.get(c2) || null, m2(b2, a2, d2, e2, null);
+        Mg(b2, d2);
+      }
+      return null;
+    }
+    function n2(e2, g2, h2, k3) {
+      for (var l3 = null, m3 = null, u2 = g2, w2 = g2 = 0, x2 = null; null !== u2 && w2 < h2.length; w2++) {
+        u2.index > w2 ? (x2 = u2, u2 = null) : x2 = u2.sibling;
+        var n3 = r2(e2, u2, h2[w2], k3);
+        if (null === n3) {
+          null === u2 && (u2 = x2);
+          break;
+        }
+        a && u2 && null === n3.alternate && b(e2, u2);
+        g2 = f2(n3, g2, w2);
+        null === m3 ? l3 = n3 : m3.sibling = n3;
+        m3 = n3;
+        u2 = x2;
+      }
+      if (w2 === h2.length)
+        return c(e2, u2), I && tg(e2, w2), l3;
+      if (null === u2) {
+        for (; w2 < h2.length; w2++)
+          u2 = q2(e2, h2[w2], k3), null !== u2 && (g2 = f2(u2, g2, w2), null === m3 ? l3 = u2 : m3.sibling = u2, m3 = u2);
+        I && tg(e2, w2);
+        return l3;
+      }
+      for (u2 = d(e2, u2); w2 < h2.length; w2++)
+        x2 = y2(u2, e2, w2, h2[w2], k3), null !== x2 && (a && null !== x2.alternate && u2.delete(null === x2.key ? w2 : x2.key), g2 = f2(x2, g2, w2), null === m3 ? l3 = x2 : m3.sibling = x2, m3 = x2);
+      a && u2.forEach(function(a2) {
+        return b(e2, a2);
+      });
+      I && tg(e2, w2);
+      return l3;
+    }
+    function t2(e2, g2, h2, k3) {
+      var l3 = Ka(h2);
+      if ("function" !== typeof l3)
+        throw Error(p(150));
+      h2 = l3.call(h2);
+      if (null == h2)
+        throw Error(p(151));
+      for (var u2 = l3 = null, m3 = g2, w2 = g2 = 0, x2 = null, n3 = h2.next(); null !== m3 && !n3.done; w2++, n3 = h2.next()) {
+        m3.index > w2 ? (x2 = m3, m3 = null) : x2 = m3.sibling;
+        var t3 = r2(e2, m3, n3.value, k3);
+        if (null === t3) {
+          null === m3 && (m3 = x2);
+          break;
+        }
+        a && m3 && null === t3.alternate && b(e2, m3);
+        g2 = f2(t3, g2, w2);
+        null === u2 ? l3 = t3 : u2.sibling = t3;
+        u2 = t3;
+        m3 = x2;
+      }
+      if (n3.done)
+        return c(
+          e2,
+          m3
+        ), I && tg(e2, w2), l3;
+      if (null === m3) {
+        for (; !n3.done; w2++, n3 = h2.next())
+          n3 = q2(e2, n3.value, k3), null !== n3 && (g2 = f2(n3, g2, w2), null === u2 ? l3 = n3 : u2.sibling = n3, u2 = n3);
+        I && tg(e2, w2);
+        return l3;
+      }
+      for (m3 = d(e2, m3); !n3.done; w2++, n3 = h2.next())
+        n3 = y2(m3, e2, w2, n3.value, k3), null !== n3 && (a && null !== n3.alternate && m3.delete(null === n3.key ? w2 : n3.key), g2 = f2(n3, g2, w2), null === u2 ? l3 = n3 : u2.sibling = n3, u2 = n3);
+      a && m3.forEach(function(a2) {
+        return b(e2, a2);
+      });
+      I && tg(e2, w2);
+      return l3;
+    }
+    function J2(a2, d2, f3, h2) {
+      "object" === typeof f3 && null !== f3 && f3.type === ya && null === f3.key && (f3 = f3.props.children);
+      if ("object" === typeof f3 && null !== f3) {
+        switch (f3.$$typeof) {
+          case va:
+            a: {
+              for (var k3 = f3.key, l3 = d2; null !== l3; ) {
+                if (l3.key === k3) {
+                  k3 = f3.type;
+                  if (k3 === ya) {
+                    if (7 === l3.tag) {
+                      c(a2, l3.sibling);
+                      d2 = e(l3, f3.props.children);
+                      d2.return = a2;
+                      a2 = d2;
+                      break a;
+                    }
+                  } else if (l3.elementType === k3 || "object" === typeof k3 && null !== k3 && k3.$$typeof === Ha && Ng(k3) === l3.type) {
+                    c(a2, l3.sibling);
+                    d2 = e(l3, f3.props);
+                    d2.ref = Lg(a2, l3, f3);
+                    d2.return = a2;
+                    a2 = d2;
+                    break a;
+                  }
+                  c(a2, l3);
+                  break;
+                } else
+                  b(a2, l3);
+                l3 = l3.sibling;
+              }
+              f3.type === ya ? (d2 = Tg(f3.props.children, a2.mode, h2, f3.key), d2.return = a2, a2 = d2) : (h2 = Rg(f3.type, f3.key, f3.props, null, a2.mode, h2), h2.ref = Lg(a2, d2, f3), h2.return = a2, a2 = h2);
+            }
+            return g(a2);
+          case wa:
+            a: {
+              for (l3 = f3.key; null !== d2; ) {
+                if (d2.key === l3)
+                  if (4 === d2.tag && d2.stateNode.containerInfo === f3.containerInfo && d2.stateNode.implementation === f3.implementation) {
+                    c(a2, d2.sibling);
+                    d2 = e(d2, f3.children || []);
+                    d2.return = a2;
+                    a2 = d2;
+                    break a;
+                  } else {
+                    c(a2, d2);
+                    break;
+                  }
+                else
+                  b(a2, d2);
+                d2 = d2.sibling;
+              }
+              d2 = Sg(f3, a2.mode, h2);
+              d2.return = a2;
+              a2 = d2;
+            }
+            return g(a2);
+          case Ha:
+            return l3 = f3._init, J2(a2, d2, l3(f3._payload), h2);
+        }
+        if (eb(f3))
+          return n2(a2, d2, f3, h2);
+        if (Ka(f3))
+          return t2(a2, d2, f3, h2);
+        Mg(a2, f3);
+      }
+      return "string" === typeof f3 && "" !== f3 || "number" === typeof f3 ? (f3 = "" + f3, null !== d2 && 6 === d2.tag ? (c(a2, d2.sibling), d2 = e(d2, f3), d2.return = a2, a2 = d2) : (c(a2, d2), d2 = Qg(f3, a2.mode, h2), d2.return = a2, a2 = d2), g(a2)) : c(a2, d2);
+    }
+    return J2;
+  }
+  var Ug = Og(true), Vg = Og(false), Wg = Uf(null), Xg = null, Yg = null, Zg = null;
+  function $g() {
+    Zg = Yg = Xg = null;
+  }
+  function ah(a) {
+    var b = Wg.current;
+    E(Wg);
+    a._currentValue = b;
+  }
+  function bh(a, b, c) {
+    for (; null !== a; ) {
+      var d = a.alternate;
+      (a.childLanes & b) !== b ? (a.childLanes |= b, null !== d && (d.childLanes |= b)) : null !== d && (d.childLanes & b) !== b && (d.childLanes |= b);
+      if (a === c)
+        break;
+      a = a.return;
+    }
+  }
+  function ch(a, b) {
+    Xg = a;
+    Zg = Yg = null;
+    a = a.dependencies;
+    null !== a && null !== a.firstContext && (0 !== (a.lanes & b) && (dh = true), a.firstContext = null);
+  }
+  function eh(a) {
+    var b = a._currentValue;
+    if (Zg !== a)
+      if (a = { context: a, memoizedValue: b, next: null }, null === Yg) {
+        if (null === Xg)
+          throw Error(p(308));
+        Yg = a;
+        Xg.dependencies = { lanes: 0, firstContext: a };
+      } else
+        Yg = Yg.next = a;
+    return b;
+  }
+  var fh = null;
+  function gh(a) {
+    null === fh ? fh = [a] : fh.push(a);
+  }
+  function hh(a, b, c, d) {
+    var e = b.interleaved;
+    null === e ? (c.next = c, gh(b)) : (c.next = e.next, e.next = c);
+    b.interleaved = c;
+    return ih(a, d);
+  }
+  function ih(a, b) {
+    a.lanes |= b;
+    var c = a.alternate;
+    null !== c && (c.lanes |= b);
+    c = a;
+    for (a = a.return; null !== a; )
+      a.childLanes |= b, c = a.alternate, null !== c && (c.childLanes |= b), c = a, a = a.return;
+    return 3 === c.tag ? c.stateNode : null;
+  }
+  var jh = false;
+  function kh(a) {
+    a.updateQueue = { baseState: a.memoizedState, firstBaseUpdate: null, lastBaseUpdate: null, shared: { pending: null, interleaved: null, lanes: 0 }, effects: null };
+  }
+  function lh(a, b) {
+    a = a.updateQueue;
+    b.updateQueue === a && (b.updateQueue = { baseState: a.baseState, firstBaseUpdate: a.firstBaseUpdate, lastBaseUpdate: a.lastBaseUpdate, shared: a.shared, effects: a.effects });
+  }
+  function mh(a, b) {
+    return { eventTime: a, lane: b, tag: 0, payload: null, callback: null, next: null };
+  }
+  function nh(a, b, c) {
+    var d = a.updateQueue;
+    if (null === d)
+      return null;
+    d = d.shared;
+    if (0 !== (K & 2)) {
+      var e = d.pending;
+      null === e ? b.next = b : (b.next = e.next, e.next = b);
+      d.pending = b;
+      return ih(a, c);
+    }
+    e = d.interleaved;
+    null === e ? (b.next = b, gh(d)) : (b.next = e.next, e.next = b);
+    d.interleaved = b;
+    return ih(a, c);
+  }
+  function oh(a, b, c) {
+    b = b.updateQueue;
+    if (null !== b && (b = b.shared, 0 !== (c & 4194240))) {
+      var d = b.lanes;
+      d &= a.pendingLanes;
+      c |= d;
+      b.lanes = c;
+      Cc(a, c);
+    }
+  }
+  function ph(a, b) {
+    var c = a.updateQueue, d = a.alternate;
+    if (null !== d && (d = d.updateQueue, c === d)) {
+      var e = null, f2 = null;
+      c = c.firstBaseUpdate;
+      if (null !== c) {
+        do {
+          var g = { eventTime: c.eventTime, lane: c.lane, tag: c.tag, payload: c.payload, callback: c.callback, next: null };
+          null === f2 ? e = f2 = g : f2 = f2.next = g;
+          c = c.next;
+        } while (null !== c);
+        null === f2 ? e = f2 = b : f2 = f2.next = b;
+      } else
+        e = f2 = b;
+      c = { baseState: d.baseState, firstBaseUpdate: e, lastBaseUpdate: f2, shared: d.shared, effects: d.effects };
+      a.updateQueue = c;
+      return;
+    }
+    a = c.lastBaseUpdate;
+    null === a ? c.firstBaseUpdate = b : a.next = b;
+    c.lastBaseUpdate = b;
+  }
+  function qh(a, b, c, d) {
+    var e = a.updateQueue;
+    jh = false;
+    var f2 = e.firstBaseUpdate, g = e.lastBaseUpdate, h = e.shared.pending;
+    if (null !== h) {
+      e.shared.pending = null;
+      var k2 = h, l2 = k2.next;
+      k2.next = null;
+      null === g ? f2 = l2 : g.next = l2;
+      g = k2;
+      var m2 = a.alternate;
+      null !== m2 && (m2 = m2.updateQueue, h = m2.lastBaseUpdate, h !== g && (null === h ? m2.firstBaseUpdate = l2 : h.next = l2, m2.lastBaseUpdate = k2));
+    }
+    if (null !== f2) {
+      var q2 = e.baseState;
+      g = 0;
+      m2 = l2 = k2 = null;
+      h = f2;
+      do {
+        var r2 = h.lane, y2 = h.eventTime;
+        if ((d & r2) === r2) {
+          null !== m2 && (m2 = m2.next = {
+            eventTime: y2,
+            lane: 0,
+            tag: h.tag,
+            payload: h.payload,
+            callback: h.callback,
+            next: null
+          });
+          a: {
+            var n2 = a, t2 = h;
+            r2 = b;
+            y2 = c;
+            switch (t2.tag) {
+              case 1:
+                n2 = t2.payload;
+                if ("function" === typeof n2) {
+                  q2 = n2.call(y2, q2, r2);
+                  break a;
+                }
+                q2 = n2;
+                break a;
+              case 3:
+                n2.flags = n2.flags & -65537 | 128;
+              case 0:
+                n2 = t2.payload;
+                r2 = "function" === typeof n2 ? n2.call(y2, q2, r2) : n2;
+                if (null === r2 || void 0 === r2)
+                  break a;
+                q2 = A({}, q2, r2);
+                break a;
+              case 2:
+                jh = true;
+            }
+          }
+          null !== h.callback && 0 !== h.lane && (a.flags |= 64, r2 = e.effects, null === r2 ? e.effects = [h] : r2.push(h));
+        } else
+          y2 = { eventTime: y2, lane: r2, tag: h.tag, payload: h.payload, callback: h.callback, next: null }, null === m2 ? (l2 = m2 = y2, k2 = q2) : m2 = m2.next = y2, g |= r2;
+        h = h.next;
+        if (null === h)
+          if (h = e.shared.pending, null === h)
+            break;
+          else
+            r2 = h, h = r2.next, r2.next = null, e.lastBaseUpdate = r2, e.shared.pending = null;
+      } while (1);
+      null === m2 && (k2 = q2);
+      e.baseState = k2;
+      e.firstBaseUpdate = l2;
+      e.lastBaseUpdate = m2;
+      b = e.shared.interleaved;
+      if (null !== b) {
+        e = b;
+        do
+          g |= e.lane, e = e.next;
+        while (e !== b);
+      } else
+        null === f2 && (e.shared.lanes = 0);
+      rh |= g;
+      a.lanes = g;
+      a.memoizedState = q2;
+    }
+  }
+  function sh(a, b, c) {
+    a = b.effects;
+    b.effects = null;
+    if (null !== a)
+      for (b = 0; b < a.length; b++) {
+        var d = a[b], e = d.callback;
+        if (null !== e) {
+          d.callback = null;
+          d = c;
+          if ("function" !== typeof e)
+            throw Error(p(191, e));
+          e.call(d);
+        }
+      }
+  }
+  var th = {}, uh = Uf(th), vh = Uf(th), wh = Uf(th);
+  function xh(a) {
+    if (a === th)
+      throw Error(p(174));
+    return a;
+  }
+  function yh(a, b) {
+    G(wh, b);
+    G(vh, a);
+    G(uh, th);
+    a = b.nodeType;
+    switch (a) {
+      case 9:
+      case 11:
+        b = (b = b.documentElement) ? b.namespaceURI : lb(null, "");
+        break;
+      default:
+        a = 8 === a ? b.parentNode : b, b = a.namespaceURI || null, a = a.tagName, b = lb(b, a);
+    }
+    E(uh);
+    G(uh, b);
+  }
+  function zh() {
+    E(uh);
+    E(vh);
+    E(wh);
+  }
+  function Ah(a) {
+    xh(wh.current);
+    var b = xh(uh.current);
+    var c = lb(b, a.type);
+    b !== c && (G(vh, a), G(uh, c));
+  }
+  function Bh(a) {
+    vh.current === a && (E(uh), E(vh));
+  }
+  var L = Uf(0);
+  function Ch(a) {
+    for (var b = a; null !== b; ) {
+      if (13 === b.tag) {
+        var c = b.memoizedState;
+        if (null !== c && (c = c.dehydrated, null === c || "$?" === c.data || "$!" === c.data))
+          return b;
+      } else if (19 === b.tag && void 0 !== b.memoizedProps.revealOrder) {
+        if (0 !== (b.flags & 128))
+          return b;
+      } else if (null !== b.child) {
+        b.child.return = b;
+        b = b.child;
+        continue;
+      }
+      if (b === a)
+        break;
+      for (; null === b.sibling; ) {
+        if (null === b.return || b.return === a)
+          return null;
+        b = b.return;
+      }
+      b.sibling.return = b.return;
+      b = b.sibling;
+    }
+    return null;
+  }
+  var Dh = [];
+  function Eh() {
+    for (var a = 0; a < Dh.length; a++)
+      Dh[a]._workInProgressVersionPrimary = null;
+    Dh.length = 0;
+  }
+  var Fh = ua.ReactCurrentDispatcher, Gh = ua.ReactCurrentBatchConfig, Hh = 0, M = null, N = null, O = null, Ih = false, Jh = false, Kh = 0, Lh = 0;
+  function P() {
+    throw Error(p(321));
+  }
+  function Mh(a, b) {
+    if (null === b)
+      return false;
+    for (var c = 0; c < b.length && c < a.length; c++)
+      if (!He(a[c], b[c]))
+        return false;
+    return true;
+  }
+  function Nh(a, b, c, d, e, f2) {
+    Hh = f2;
+    M = b;
+    b.memoizedState = null;
+    b.updateQueue = null;
+    b.lanes = 0;
+    Fh.current = null === a || null === a.memoizedState ? Oh : Ph;
+    a = c(d, e);
+    if (Jh) {
+      f2 = 0;
+      do {
+        Jh = false;
+        Kh = 0;
+        if (25 <= f2)
+          throw Error(p(301));
+        f2 += 1;
+        O = N = null;
+        b.updateQueue = null;
+        Fh.current = Qh;
+        a = c(d, e);
+      } while (Jh);
+    }
+    Fh.current = Rh;
+    b = null !== N && null !== N.next;
+    Hh = 0;
+    O = N = M = null;
+    Ih = false;
+    if (b)
+      throw Error(p(300));
+    return a;
+  }
+  function Sh() {
+    var a = 0 !== Kh;
+    Kh = 0;
+    return a;
+  }
+  function Th() {
+    var a = { memoizedState: null, baseState: null, baseQueue: null, queue: null, next: null };
+    null === O ? M.memoizedState = O = a : O = O.next = a;
+    return O;
+  }
+  function Uh() {
+    if (null === N) {
+      var a = M.alternate;
+      a = null !== a ? a.memoizedState : null;
+    } else
+      a = N.next;
+    var b = null === O ? M.memoizedState : O.next;
+    if (null !== b)
+      O = b, N = a;
+    else {
+      if (null === a)
+        throw Error(p(310));
+      N = a;
+      a = { memoizedState: N.memoizedState, baseState: N.baseState, baseQueue: N.baseQueue, queue: N.queue, next: null };
+      null === O ? M.memoizedState = O = a : O = O.next = a;
+    }
+    return O;
+  }
+  function Vh(a, b) {
+    return "function" === typeof b ? b(a) : b;
+  }
+  function Wh(a) {
+    var b = Uh(), c = b.queue;
+    if (null === c)
+      throw Error(p(311));
+    c.lastRenderedReducer = a;
+    var d = N, e = d.baseQueue, f2 = c.pending;
+    if (null !== f2) {
+      if (null !== e) {
+        var g = e.next;
+        e.next = f2.next;
+        f2.next = g;
+      }
+      d.baseQueue = e = f2;
+      c.pending = null;
+    }
+    if (null !== e) {
+      f2 = e.next;
+      d = d.baseState;
+      var h = g = null, k2 = null, l2 = f2;
+      do {
+        var m2 = l2.lane;
+        if ((Hh & m2) === m2)
+          null !== k2 && (k2 = k2.next = { lane: 0, action: l2.action, hasEagerState: l2.hasEagerState, eagerState: l2.eagerState, next: null }), d = l2.hasEagerState ? l2.eagerState : a(d, l2.action);
+        else {
+          var q2 = {
+            lane: m2,
+            action: l2.action,
+            hasEagerState: l2.hasEagerState,
+            eagerState: l2.eagerState,
+            next: null
+          };
+          null === k2 ? (h = k2 = q2, g = d) : k2 = k2.next = q2;
+          M.lanes |= m2;
+          rh |= m2;
+        }
+        l2 = l2.next;
+      } while (null !== l2 && l2 !== f2);
+      null === k2 ? g = d : k2.next = h;
+      He(d, b.memoizedState) || (dh = true);
+      b.memoizedState = d;
+      b.baseState = g;
+      b.baseQueue = k2;
+      c.lastRenderedState = d;
+    }
+    a = c.interleaved;
+    if (null !== a) {
+      e = a;
+      do
+        f2 = e.lane, M.lanes |= f2, rh |= f2, e = e.next;
+      while (e !== a);
+    } else
+      null === e && (c.lanes = 0);
+    return [b.memoizedState, c.dispatch];
+  }
+  function Xh(a) {
+    var b = Uh(), c = b.queue;
+    if (null === c)
+      throw Error(p(311));
+    c.lastRenderedReducer = a;
+    var d = c.dispatch, e = c.pending, f2 = b.memoizedState;
+    if (null !== e) {
+      c.pending = null;
+      var g = e = e.next;
+      do
+        f2 = a(f2, g.action), g = g.next;
+      while (g !== e);
+      He(f2, b.memoizedState) || (dh = true);
+      b.memoizedState = f2;
+      null === b.baseQueue && (b.baseState = f2);
+      c.lastRenderedState = f2;
+    }
+    return [f2, d];
+  }
+  function Yh() {
+  }
+  function Zh(a, b) {
+    var c = M, d = Uh(), e = b(), f2 = !He(d.memoizedState, e);
+    f2 && (d.memoizedState = e, dh = true);
+    d = d.queue;
+    $h(ai.bind(null, c, d, a), [a]);
+    if (d.getSnapshot !== b || f2 || null !== O && O.memoizedState.tag & 1) {
+      c.flags |= 2048;
+      bi(9, ci.bind(null, c, d, e, b), void 0, null);
+      if (null === Q)
+        throw Error(p(349));
+      0 !== (Hh & 30) || di(c, b, e);
+    }
+    return e;
+  }
+  function di(a, b, c) {
+    a.flags |= 16384;
+    a = { getSnapshot: b, value: c };
+    b = M.updateQueue;
+    null === b ? (b = { lastEffect: null, stores: null }, M.updateQueue = b, b.stores = [a]) : (c = b.stores, null === c ? b.stores = [a] : c.push(a));
+  }
+  function ci(a, b, c, d) {
+    b.value = c;
+    b.getSnapshot = d;
+    ei(b) && fi(a);
+  }
+  function ai(a, b, c) {
+    return c(function() {
+      ei(b) && fi(a);
+    });
+  }
+  function ei(a) {
+    var b = a.getSnapshot;
+    a = a.value;
+    try {
+      var c = b();
+      return !He(a, c);
+    } catch (d) {
+      return true;
+    }
+  }
+  function fi(a) {
+    var b = ih(a, 1);
+    null !== b && gi(b, a, 1, -1);
+  }
+  function hi(a) {
+    var b = Th();
+    "function" === typeof a && (a = a());
+    b.memoizedState = b.baseState = a;
+    a = { pending: null, interleaved: null, lanes: 0, dispatch: null, lastRenderedReducer: Vh, lastRenderedState: a };
+    b.queue = a;
+    a = a.dispatch = ii.bind(null, M, a);
+    return [b.memoizedState, a];
+  }
+  function bi(a, b, c, d) {
+    a = { tag: a, create: b, destroy: c, deps: d, next: null };
+    b = M.updateQueue;
+    null === b ? (b = { lastEffect: null, stores: null }, M.updateQueue = b, b.lastEffect = a.next = a) : (c = b.lastEffect, null === c ? b.lastEffect = a.next = a : (d = c.next, c.next = a, a.next = d, b.lastEffect = a));
+    return a;
+  }
+  function ji() {
+    return Uh().memoizedState;
+  }
+  function ki(a, b, c, d) {
+    var e = Th();
+    M.flags |= a;
+    e.memoizedState = bi(1 | b, c, void 0, void 0 === d ? null : d);
+  }
+  function li(a, b, c, d) {
+    var e = Uh();
+    d = void 0 === d ? null : d;
+    var f2 = void 0;
+    if (null !== N) {
+      var g = N.memoizedState;
+      f2 = g.destroy;
+      if (null !== d && Mh(d, g.deps)) {
+        e.memoizedState = bi(b, c, f2, d);
+        return;
+      }
+    }
+    M.flags |= a;
+    e.memoizedState = bi(1 | b, c, f2, d);
+  }
+  function mi(a, b) {
+    return ki(8390656, 8, a, b);
+  }
+  function $h(a, b) {
+    return li(2048, 8, a, b);
+  }
+  function ni(a, b) {
+    return li(4, 2, a, b);
+  }
+  function oi(a, b) {
+    return li(4, 4, a, b);
+  }
+  function pi(a, b) {
+    if ("function" === typeof b)
+      return a = a(), b(a), function() {
+        b(null);
+      };
+    if (null !== b && void 0 !== b)
+      return a = a(), b.current = a, function() {
+        b.current = null;
+      };
+  }
+  function qi(a, b, c) {
+    c = null !== c && void 0 !== c ? c.concat([a]) : null;
+    return li(4, 4, pi.bind(null, b, a), c);
+  }
+  function ri() {
+  }
+  function si(a, b) {
+    var c = Uh();
+    b = void 0 === b ? null : b;
+    var d = c.memoizedState;
+    if (null !== d && null !== b && Mh(b, d[1]))
+      return d[0];
+    c.memoizedState = [a, b];
+    return a;
+  }
+  function ti(a, b) {
+    var c = Uh();
+    b = void 0 === b ? null : b;
+    var d = c.memoizedState;
+    if (null !== d && null !== b && Mh(b, d[1]))
+      return d[0];
+    a = a();
+    c.memoizedState = [a, b];
+    return a;
+  }
+  function ui(a, b, c) {
+    if (0 === (Hh & 21))
+      return a.baseState && (a.baseState = false, dh = true), a.memoizedState = c;
+    He(c, b) || (c = yc(), M.lanes |= c, rh |= c, a.baseState = true);
+    return b;
+  }
+  function vi(a, b) {
+    var c = C;
+    C = 0 !== c && 4 > c ? c : 4;
+    a(true);
+    var d = Gh.transition;
+    Gh.transition = {};
+    try {
+      a(false), b();
+    } finally {
+      C = c, Gh.transition = d;
+    }
+  }
+  function wi() {
+    return Uh().memoizedState;
+  }
+  function xi(a, b, c) {
+    var d = yi(a);
+    c = { lane: d, action: c, hasEagerState: false, eagerState: null, next: null };
+    if (zi(a))
+      Ai(b, c);
+    else if (c = hh(a, b, c, d), null !== c) {
+      var e = R();
+      gi(c, a, d, e);
+      Bi(c, b, d);
+    }
+  }
+  function ii(a, b, c) {
+    var d = yi(a), e = { lane: d, action: c, hasEagerState: false, eagerState: null, next: null };
+    if (zi(a))
+      Ai(b, e);
+    else {
+      var f2 = a.alternate;
+      if (0 === a.lanes && (null === f2 || 0 === f2.lanes) && (f2 = b.lastRenderedReducer, null !== f2))
+        try {
+          var g = b.lastRenderedState, h = f2(g, c);
+          e.hasEagerState = true;
+          e.eagerState = h;
+          if (He(h, g)) {
+            var k2 = b.interleaved;
+            null === k2 ? (e.next = e, gh(b)) : (e.next = k2.next, k2.next = e);
+            b.interleaved = e;
+            return;
+          }
+        } catch (l2) {
+        } finally {
+        }
+      c = hh(a, b, e, d);
+      null !== c && (e = R(), gi(c, a, d, e), Bi(c, b, d));
+    }
+  }
+  function zi(a) {
+    var b = a.alternate;
+    return a === M || null !== b && b === M;
+  }
+  function Ai(a, b) {
+    Jh = Ih = true;
+    var c = a.pending;
+    null === c ? b.next = b : (b.next = c.next, c.next = b);
+    a.pending = b;
+  }
+  function Bi(a, b, c) {
+    if (0 !== (c & 4194240)) {
+      var d = b.lanes;
+      d &= a.pendingLanes;
+      c |= d;
+      b.lanes = c;
+      Cc(a, c);
+    }
+  }
+  var Rh = { readContext: eh, useCallback: P, useContext: P, useEffect: P, useImperativeHandle: P, useInsertionEffect: P, useLayoutEffect: P, useMemo: P, useReducer: P, useRef: P, useState: P, useDebugValue: P, useDeferredValue: P, useTransition: P, useMutableSource: P, useSyncExternalStore: P, useId: P, unstable_isNewReconciler: false }, Oh = { readContext: eh, useCallback: function(a, b) {
+    Th().memoizedState = [a, void 0 === b ? null : b];
+    return a;
+  }, useContext: eh, useEffect: mi, useImperativeHandle: function(a, b, c) {
+    c = null !== c && void 0 !== c ? c.concat([a]) : null;
+    return ki(
+      4194308,
+      4,
+      pi.bind(null, b, a),
+      c
+    );
+  }, useLayoutEffect: function(a, b) {
+    return ki(4194308, 4, a, b);
+  }, useInsertionEffect: function(a, b) {
+    return ki(4, 2, a, b);
+  }, useMemo: function(a, b) {
+    var c = Th();
+    b = void 0 === b ? null : b;
+    a = a();
+    c.memoizedState = [a, b];
+    return a;
+  }, useReducer: function(a, b, c) {
+    var d = Th();
+    b = void 0 !== c ? c(b) : b;
+    d.memoizedState = d.baseState = b;
+    a = { pending: null, interleaved: null, lanes: 0, dispatch: null, lastRenderedReducer: a, lastRenderedState: b };
+    d.queue = a;
+    a = a.dispatch = xi.bind(null, M, a);
+    return [d.memoizedState, a];
+  }, useRef: function(a) {
+    var b = Th();
+    a = { current: a };
+    return b.memoizedState = a;
+  }, useState: hi, useDebugValue: ri, useDeferredValue: function(a) {
+    return Th().memoizedState = a;
+  }, useTransition: function() {
+    var a = hi(false), b = a[0];
+    a = vi.bind(null, a[1]);
+    Th().memoizedState = a;
+    return [b, a];
+  }, useMutableSource: function() {
+  }, useSyncExternalStore: function(a, b, c) {
+    var d = M, e = Th();
+    if (I) {
+      if (void 0 === c)
+        throw Error(p(407));
+      c = c();
+    } else {
+      c = b();
+      if (null === Q)
+        throw Error(p(349));
+      0 !== (Hh & 30) || di(d, b, c);
+    }
+    e.memoizedState = c;
+    var f2 = { value: c, getSnapshot: b };
+    e.queue = f2;
+    mi(ai.bind(
+      null,
+      d,
+      f2,
+      a
+    ), [a]);
+    d.flags |= 2048;
+    bi(9, ci.bind(null, d, f2, c, b), void 0, null);
+    return c;
+  }, useId: function() {
+    var a = Th(), b = Q.identifierPrefix;
+    if (I) {
+      var c = sg;
+      var d = rg;
+      c = (d & ~(1 << 32 - oc(d) - 1)).toString(32) + c;
+      b = ":" + b + "R" + c;
+      c = Kh++;
+      0 < c && (b += "H" + c.toString(32));
+      b += ":";
+    } else
+      c = Lh++, b = ":" + b + "r" + c.toString(32) + ":";
+    return a.memoizedState = b;
+  }, unstable_isNewReconciler: false }, Ph = {
+    readContext: eh,
+    useCallback: si,
+    useContext: eh,
+    useEffect: $h,
+    useImperativeHandle: qi,
+    useInsertionEffect: ni,
+    useLayoutEffect: oi,
+    useMemo: ti,
+    useReducer: Wh,
+    useRef: ji,
+    useState: function() {
+      return Wh(Vh);
+    },
+    useDebugValue: ri,
+    useDeferredValue: function(a) {
+      var b = Uh();
+      return ui(b, N.memoizedState, a);
+    },
+    useTransition: function() {
+      var a = Wh(Vh)[0], b = Uh().memoizedState;
+      return [a, b];
+    },
+    useMutableSource: Yh,
+    useSyncExternalStore: Zh,
+    useId: wi,
+    unstable_isNewReconciler: false
+  }, Qh = { readContext: eh, useCallback: si, useContext: eh, useEffect: $h, useImperativeHandle: qi, useInsertionEffect: ni, useLayoutEffect: oi, useMemo: ti, useReducer: Xh, useRef: ji, useState: function() {
+    return Xh(Vh);
+  }, useDebugValue: ri, useDeferredValue: function(a) {
+    var b = Uh();
+    return null === N ? b.memoizedState = a : ui(b, N.memoizedState, a);
+  }, useTransition: function() {
+    var a = Xh(Vh)[0], b = Uh().memoizedState;
+    return [a, b];
+  }, useMutableSource: Yh, useSyncExternalStore: Zh, useId: wi, unstable_isNewReconciler: false };
+  function Ci(a, b) {
+    if (a && a.defaultProps) {
+      b = A({}, b);
+      a = a.defaultProps;
+      for (var c in a)
+        void 0 === b[c] && (b[c] = a[c]);
+      return b;
+    }
+    return b;
+  }
+  function Di(a, b, c, d) {
+    b = a.memoizedState;
+    c = c(d, b);
+    c = null === c || void 0 === c ? b : A({}, b, c);
+    a.memoizedState = c;
+    0 === a.lanes && (a.updateQueue.baseState = c);
+  }
+  var Ei = { isMounted: function(a) {
+    return (a = a._reactInternals) ? Vb(a) === a : false;
+  }, enqueueSetState: function(a, b, c) {
+    a = a._reactInternals;
+    var d = R(), e = yi(a), f2 = mh(d, e);
+    f2.payload = b;
+    void 0 !== c && null !== c && (f2.callback = c);
+    b = nh(a, f2, e);
+    null !== b && (gi(b, a, e, d), oh(b, a, e));
+  }, enqueueReplaceState: function(a, b, c) {
+    a = a._reactInternals;
+    var d = R(), e = yi(a), f2 = mh(d, e);
+    f2.tag = 1;
+    f2.payload = b;
+    void 0 !== c && null !== c && (f2.callback = c);
+    b = nh(a, f2, e);
+    null !== b && (gi(b, a, e, d), oh(b, a, e));
+  }, enqueueForceUpdate: function(a, b) {
+    a = a._reactInternals;
+    var c = R(), d = yi(a), e = mh(c, d);
+    e.tag = 2;
+    void 0 !== b && null !== b && (e.callback = b);
+    b = nh(a, e, d);
+    null !== b && (gi(b, a, d, c), oh(b, a, d));
+  } };
+  function Fi(a, b, c, d, e, f2, g) {
+    a = a.stateNode;
+    return "function" === typeof a.shouldComponentUpdate ? a.shouldComponentUpdate(d, f2, g) : b.prototype && b.prototype.isPureReactComponent ? !Ie(c, d) || !Ie(e, f2) : true;
+  }
+  function Gi(a, b, c) {
+    var d = false, e = Vf;
+    var f2 = b.contextType;
+    "object" === typeof f2 && null !== f2 ? f2 = eh(f2) : (e = Zf(b) ? Xf : H.current, d = b.contextTypes, f2 = (d = null !== d && void 0 !== d) ? Yf(a, e) : Vf);
+    b = new b(c, f2);
+    a.memoizedState = null !== b.state && void 0 !== b.state ? b.state : null;
+    b.updater = Ei;
+    a.stateNode = b;
+    b._reactInternals = a;
+    d && (a = a.stateNode, a.__reactInternalMemoizedUnmaskedChildContext = e, a.__reactInternalMemoizedMaskedChildContext = f2);
+    return b;
+  }
+  function Hi(a, b, c, d) {
+    a = b.state;
+    "function" === typeof b.componentWillReceiveProps && b.componentWillReceiveProps(c, d);
+    "function" === typeof b.UNSAFE_componentWillReceiveProps && b.UNSAFE_componentWillReceiveProps(c, d);
+    b.state !== a && Ei.enqueueReplaceState(b, b.state, null);
+  }
+  function Ii(a, b, c, d) {
+    var e = a.stateNode;
+    e.props = c;
+    e.state = a.memoizedState;
+    e.refs = {};
+    kh(a);
+    var f2 = b.contextType;
+    "object" === typeof f2 && null !== f2 ? e.context = eh(f2) : (f2 = Zf(b) ? Xf : H.current, e.context = Yf(a, f2));
+    e.state = a.memoizedState;
+    f2 = b.getDerivedStateFromProps;
+    "function" === typeof f2 && (Di(a, b, f2, c), e.state = a.memoizedState);
+    "function" === typeof b.getDerivedStateFromProps || "function" === typeof e.getSnapshotBeforeUpdate || "function" !== typeof e.UNSAFE_componentWillMount && "function" !== typeof e.componentWillMount || (b = e.state, "function" === typeof e.componentWillMount && e.componentWillMount(), "function" === typeof e.UNSAFE_componentWillMount && e.UNSAFE_componentWillMount(), b !== e.state && Ei.enqueueReplaceState(e, e.state, null), qh(a, c, e, d), e.state = a.memoizedState);
+    "function" === typeof e.componentDidMount && (a.flags |= 4194308);
+  }
+  function Ji(a, b) {
+    try {
+      var c = "", d = b;
+      do
+        c += Pa(d), d = d.return;
+      while (d);
+      var e = c;
+    } catch (f2) {
+      e = "\nError generating stack: " + f2.message + "\n" + f2.stack;
+    }
+    return { value: a, source: b, stack: e, digest: null };
+  }
+  function Ki(a, b, c) {
+    return { value: a, source: null, stack: null != c ? c : null, digest: null != b ? b : null };
+  }
+  function Li(a, b) {
+    try {
+      console.error(b.value);
+    } catch (c) {
+      setTimeout(function() {
+        throw c;
+      });
+    }
+  }
+  var Mi = "function" === typeof WeakMap ? WeakMap : Map;
+  function Ni(a, b, c) {
+    c = mh(-1, c);
+    c.tag = 3;
+    c.payload = { element: null };
+    var d = b.value;
+    c.callback = function() {
+      Oi || (Oi = true, Pi = d);
+      Li(a, b);
+    };
+    return c;
+  }
+  function Qi(a, b, c) {
+    c = mh(-1, c);
+    c.tag = 3;
+    var d = a.type.getDerivedStateFromError;
+    if ("function" === typeof d) {
+      var e = b.value;
+      c.payload = function() {
+        return d(e);
+      };
+      c.callback = function() {
+        Li(a, b);
+      };
+    }
+    var f2 = a.stateNode;
+    null !== f2 && "function" === typeof f2.componentDidCatch && (c.callback = function() {
+      Li(a, b);
+      "function" !== typeof d && (null === Ri ? Ri = /* @__PURE__ */ new Set([this]) : Ri.add(this));
+      var c2 = b.stack;
+      this.componentDidCatch(b.value, { componentStack: null !== c2 ? c2 : "" });
+    });
+    return c;
+  }
+  function Si(a, b, c) {
+    var d = a.pingCache;
+    if (null === d) {
+      d = a.pingCache = new Mi();
+      var e = /* @__PURE__ */ new Set();
+      d.set(b, e);
+    } else
+      e = d.get(b), void 0 === e && (e = /* @__PURE__ */ new Set(), d.set(b, e));
+    e.has(c) || (e.add(c), a = Ti.bind(null, a, b, c), b.then(a, a));
+  }
+  function Ui(a) {
+    do {
+      var b;
+      if (b = 13 === a.tag)
+        b = a.memoizedState, b = null !== b ? null !== b.dehydrated ? true : false : true;
+      if (b)
+        return a;
+      a = a.return;
+    } while (null !== a);
+    return null;
+  }
+  function Vi(a, b, c, d, e) {
+    if (0 === (a.mode & 1))
+      return a === b ? a.flags |= 65536 : (a.flags |= 128, c.flags |= 131072, c.flags &= -52805, 1 === c.tag && (null === c.alternate ? c.tag = 17 : (b = mh(-1, 1), b.tag = 2, nh(c, b, 1))), c.lanes |= 1), a;
+    a.flags |= 65536;
+    a.lanes = e;
+    return a;
+  }
+  var Wi = ua.ReactCurrentOwner, dh = false;
+  function Xi(a, b, c, d) {
+    b.child = null === a ? Vg(b, null, c, d) : Ug(b, a.child, c, d);
+  }
+  function Yi(a, b, c, d, e) {
+    c = c.render;
+    var f2 = b.ref;
+    ch(b, e);
+    d = Nh(a, b, c, d, f2, e);
+    c = Sh();
+    if (null !== a && !dh)
+      return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Zi(a, b, e);
+    I && c && vg(b);
+    b.flags |= 1;
+    Xi(a, b, d, e);
+    return b.child;
+  }
+  function $i(a, b, c, d, e) {
+    if (null === a) {
+      var f2 = c.type;
+      if ("function" === typeof f2 && !aj(f2) && void 0 === f2.defaultProps && null === c.compare && void 0 === c.defaultProps)
+        return b.tag = 15, b.type = f2, bj(a, b, f2, d, e);
+      a = Rg(c.type, null, d, b, b.mode, e);
+      a.ref = b.ref;
+      a.return = b;
+      return b.child = a;
+    }
+    f2 = a.child;
+    if (0 === (a.lanes & e)) {
+      var g = f2.memoizedProps;
+      c = c.compare;
+      c = null !== c ? c : Ie;
+      if (c(g, d) && a.ref === b.ref)
+        return Zi(a, b, e);
+    }
+    b.flags |= 1;
+    a = Pg(f2, d);
+    a.ref = b.ref;
+    a.return = b;
+    return b.child = a;
+  }
+  function bj(a, b, c, d, e) {
+    if (null !== a) {
+      var f2 = a.memoizedProps;
+      if (Ie(f2, d) && a.ref === b.ref)
+        if (dh = false, b.pendingProps = d = f2, 0 !== (a.lanes & e))
+          0 !== (a.flags & 131072) && (dh = true);
+        else
+          return b.lanes = a.lanes, Zi(a, b, e);
+    }
+    return cj(a, b, c, d, e);
+  }
+  function dj(a, b, c) {
+    var d = b.pendingProps, e = d.children, f2 = null !== a ? a.memoizedState : null;
+    if ("hidden" === d.mode)
+      if (0 === (b.mode & 1))
+        b.memoizedState = { baseLanes: 0, cachePool: null, transitions: null }, G(ej, fj), fj |= c;
+      else {
+        if (0 === (c & 1073741824))
+          return a = null !== f2 ? f2.baseLanes | c : c, b.lanes = b.childLanes = 1073741824, b.memoizedState = { baseLanes: a, cachePool: null, transitions: null }, b.updateQueue = null, G(ej, fj), fj |= a, null;
+        b.memoizedState = { baseLanes: 0, cachePool: null, transitions: null };
+        d = null !== f2 ? f2.baseLanes : c;
+        G(ej, fj);
+        fj |= d;
+      }
+    else
+      null !== f2 ? (d = f2.baseLanes | c, b.memoizedState = null) : d = c, G(ej, fj), fj |= d;
+    Xi(a, b, e, c);
+    return b.child;
+  }
+  function gj(a, b) {
+    var c = b.ref;
+    if (null === a && null !== c || null !== a && a.ref !== c)
+      b.flags |= 512, b.flags |= 2097152;
+  }
+  function cj(a, b, c, d, e) {
+    var f2 = Zf(c) ? Xf : H.current;
+    f2 = Yf(b, f2);
+    ch(b, e);
+    c = Nh(a, b, c, d, f2, e);
+    d = Sh();
+    if (null !== a && !dh)
+      return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Zi(a, b, e);
+    I && d && vg(b);
+    b.flags |= 1;
+    Xi(a, b, c, e);
+    return b.child;
+  }
+  function hj(a, b, c, d, e) {
+    if (Zf(c)) {
+      var f2 = true;
+      cg(b);
+    } else
+      f2 = false;
+    ch(b, e);
+    if (null === b.stateNode)
+      ij(a, b), Gi(b, c, d), Ii(b, c, d, e), d = true;
+    else if (null === a) {
+      var g = b.stateNode, h = b.memoizedProps;
+      g.props = h;
+      var k2 = g.context, l2 = c.contextType;
+      "object" === typeof l2 && null !== l2 ? l2 = eh(l2) : (l2 = Zf(c) ? Xf : H.current, l2 = Yf(b, l2));
+      var m2 = c.getDerivedStateFromProps, q2 = "function" === typeof m2 || "function" === typeof g.getSnapshotBeforeUpdate;
+      q2 || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== d || k2 !== l2) && Hi(b, g, d, l2);
+      jh = false;
+      var r2 = b.memoizedState;
+      g.state = r2;
+      qh(b, d, g, e);
+      k2 = b.memoizedState;
+      h !== d || r2 !== k2 || Wf.current || jh ? ("function" === typeof m2 && (Di(b, c, m2, d), k2 = b.memoizedState), (h = jh || Fi(b, c, h, d, r2, k2, l2)) ? (q2 || "function" !== typeof g.UNSAFE_componentWillMount && "function" !== typeof g.componentWillMount || ("function" === typeof g.componentWillMount && g.componentWillMount(), "function" === typeof g.UNSAFE_componentWillMount && g.UNSAFE_componentWillMount()), "function" === typeof g.componentDidMount && (b.flags |= 4194308)) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), b.memoizedProps = d, b.memoizedState = k2), g.props = d, g.state = k2, g.context = l2, d = h) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), d = false);
+    } else {
+      g = b.stateNode;
+      lh(a, b);
+      h = b.memoizedProps;
+      l2 = b.type === b.elementType ? h : Ci(b.type, h);
+      g.props = l2;
+      q2 = b.pendingProps;
+      r2 = g.context;
+      k2 = c.contextType;
+      "object" === typeof k2 && null !== k2 ? k2 = eh(k2) : (k2 = Zf(c) ? Xf : H.current, k2 = Yf(b, k2));
+      var y2 = c.getDerivedStateFromProps;
+      (m2 = "function" === typeof y2 || "function" === typeof g.getSnapshotBeforeUpdate) || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== q2 || r2 !== k2) && Hi(b, g, d, k2);
+      jh = false;
+      r2 = b.memoizedState;
+      g.state = r2;
+      qh(b, d, g, e);
+      var n2 = b.memoizedState;
+      h !== q2 || r2 !== n2 || Wf.current || jh ? ("function" === typeof y2 && (Di(b, c, y2, d), n2 = b.memoizedState), (l2 = jh || Fi(b, c, l2, d, r2, n2, k2) || false) ? (m2 || "function" !== typeof g.UNSAFE_componentWillUpdate && "function" !== typeof g.componentWillUpdate || ("function" === typeof g.componentWillUpdate && g.componentWillUpdate(d, n2, k2), "function" === typeof g.UNSAFE_componentWillUpdate && g.UNSAFE_componentWillUpdate(d, n2, k2)), "function" === typeof g.componentDidUpdate && (b.flags |= 4), "function" === typeof g.getSnapshotBeforeUpdate && (b.flags |= 1024)) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && r2 === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && r2 === a.memoizedState || (b.flags |= 1024), b.memoizedProps = d, b.memoizedState = n2), g.props = d, g.state = n2, g.context = k2, d = l2) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && r2 === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && r2 === a.memoizedState || (b.flags |= 1024), d = false);
+    }
+    return jj(a, b, c, d, f2, e);
+  }
+  function jj(a, b, c, d, e, f2) {
+    gj(a, b);
+    var g = 0 !== (b.flags & 128);
+    if (!d && !g)
+      return e && dg(b, c, false), Zi(a, b, f2);
+    d = b.stateNode;
+    Wi.current = b;
+    var h = g && "function" !== typeof c.getDerivedStateFromError ? null : d.render();
+    b.flags |= 1;
+    null !== a && g ? (b.child = Ug(b, a.child, null, f2), b.child = Ug(b, null, h, f2)) : Xi(a, b, h, f2);
+    b.memoizedState = d.state;
+    e && dg(b, c, true);
+    return b.child;
+  }
+  function kj(a) {
+    var b = a.stateNode;
+    b.pendingContext ? ag(a, b.pendingContext, b.pendingContext !== b.context) : b.context && ag(a, b.context, false);
+    yh(a, b.containerInfo);
+  }
+  function lj(a, b, c, d, e) {
+    Ig();
+    Jg(e);
+    b.flags |= 256;
+    Xi(a, b, c, d);
+    return b.child;
+  }
+  var mj = { dehydrated: null, treeContext: null, retryLane: 0 };
+  function nj(a) {
+    return { baseLanes: a, cachePool: null, transitions: null };
+  }
+  function oj(a, b, c) {
+    var d = b.pendingProps, e = L.current, f2 = false, g = 0 !== (b.flags & 128), h;
+    (h = g) || (h = null !== a && null === a.memoizedState ? false : 0 !== (e & 2));
+    if (h)
+      f2 = true, b.flags &= -129;
+    else if (null === a || null !== a.memoizedState)
+      e |= 1;
+    G(L, e & 1);
+    if (null === a) {
+      Eg(b);
+      a = b.memoizedState;
+      if (null !== a && (a = a.dehydrated, null !== a))
+        return 0 === (b.mode & 1) ? b.lanes = 1 : "$!" === a.data ? b.lanes = 8 : b.lanes = 1073741824, null;
+      g = d.children;
+      a = d.fallback;
+      return f2 ? (d = b.mode, f2 = b.child, g = { mode: "hidden", children: g }, 0 === (d & 1) && null !== f2 ? (f2.childLanes = 0, f2.pendingProps = g) : f2 = pj(g, d, 0, null), a = Tg(a, d, c, null), f2.return = b, a.return = b, f2.sibling = a, b.child = f2, b.child.memoizedState = nj(c), b.memoizedState = mj, a) : qj(b, g);
+    }
+    e = a.memoizedState;
+    if (null !== e && (h = e.dehydrated, null !== h))
+      return rj(a, b, g, d, h, e, c);
+    if (f2) {
+      f2 = d.fallback;
+      g = b.mode;
+      e = a.child;
+      h = e.sibling;
+      var k2 = { mode: "hidden", children: d.children };
+      0 === (g & 1) && b.child !== e ? (d = b.child, d.childLanes = 0, d.pendingProps = k2, b.deletions = null) : (d = Pg(e, k2), d.subtreeFlags = e.subtreeFlags & 14680064);
+      null !== h ? f2 = Pg(h, f2) : (f2 = Tg(f2, g, c, null), f2.flags |= 2);
+      f2.return = b;
+      d.return = b;
+      d.sibling = f2;
+      b.child = d;
+      d = f2;
+      f2 = b.child;
+      g = a.child.memoizedState;
+      g = null === g ? nj(c) : { baseLanes: g.baseLanes | c, cachePool: null, transitions: g.transitions };
+      f2.memoizedState = g;
+      f2.childLanes = a.childLanes & ~c;
+      b.memoizedState = mj;
+      return d;
+    }
+    f2 = a.child;
+    a = f2.sibling;
+    d = Pg(f2, { mode: "visible", children: d.children });
+    0 === (b.mode & 1) && (d.lanes = c);
+    d.return = b;
+    d.sibling = null;
+    null !== a && (c = b.deletions, null === c ? (b.deletions = [a], b.flags |= 16) : c.push(a));
+    b.child = d;
+    b.memoizedState = null;
+    return d;
+  }
+  function qj(a, b) {
+    b = pj({ mode: "visible", children: b }, a.mode, 0, null);
+    b.return = a;
+    return a.child = b;
+  }
+  function sj(a, b, c, d) {
+    null !== d && Jg(d);
+    Ug(b, a.child, null, c);
+    a = qj(b, b.pendingProps.children);
+    a.flags |= 2;
+    b.memoizedState = null;
+    return a;
+  }
+  function rj(a, b, c, d, e, f2, g) {
+    if (c) {
+      if (b.flags & 256)
+        return b.flags &= -257, d = Ki(Error(p(422))), sj(a, b, g, d);
+      if (null !== b.memoizedState)
+        return b.child = a.child, b.flags |= 128, null;
+      f2 = d.fallback;
+      e = b.mode;
+      d = pj({ mode: "visible", children: d.children }, e, 0, null);
+      f2 = Tg(f2, e, g, null);
+      f2.flags |= 2;
+      d.return = b;
+      f2.return = b;
+      d.sibling = f2;
+      b.child = d;
+      0 !== (b.mode & 1) && Ug(b, a.child, null, g);
+      b.child.memoizedState = nj(g);
+      b.memoizedState = mj;
+      return f2;
+    }
+    if (0 === (b.mode & 1))
+      return sj(a, b, g, null);
+    if ("$!" === e.data) {
+      d = e.nextSibling && e.nextSibling.dataset;
+      if (d)
+        var h = d.dgst;
+      d = h;
+      f2 = Error(p(419));
+      d = Ki(f2, d, void 0);
+      return sj(a, b, g, d);
+    }
+    h = 0 !== (g & a.childLanes);
+    if (dh || h) {
+      d = Q;
+      if (null !== d) {
+        switch (g & -g) {
+          case 4:
+            e = 2;
+            break;
+          case 16:
+            e = 8;
+            break;
+          case 64:
+          case 128:
+          case 256:
+          case 512:
+          case 1024:
+          case 2048:
+          case 4096:
+          case 8192:
+          case 16384:
+          case 32768:
+          case 65536:
+          case 131072:
+          case 262144:
+          case 524288:
+          case 1048576:
+          case 2097152:
+          case 4194304:
+          case 8388608:
+          case 16777216:
+          case 33554432:
+          case 67108864:
+            e = 32;
+            break;
+          case 536870912:
+            e = 268435456;
+            break;
+          default:
+            e = 0;
+        }
+        e = 0 !== (e & (d.suspendedLanes | g)) ? 0 : e;
+        0 !== e && e !== f2.retryLane && (f2.retryLane = e, ih(a, e), gi(d, a, e, -1));
+      }
+      tj();
+      d = Ki(Error(p(421)));
+      return sj(a, b, g, d);
+    }
+    if ("$?" === e.data)
+      return b.flags |= 128, b.child = a.child, b = uj.bind(null, a), e._reactRetry = b, null;
+    a = f2.treeContext;
+    yg = Lf(e.nextSibling);
+    xg = b;
+    I = true;
+    zg = null;
+    null !== a && (og[pg++] = rg, og[pg++] = sg, og[pg++] = qg, rg = a.id, sg = a.overflow, qg = b);
+    b = qj(b, d.children);
+    b.flags |= 4096;
+    return b;
+  }
+  function vj(a, b, c) {
+    a.lanes |= b;
+    var d = a.alternate;
+    null !== d && (d.lanes |= b);
+    bh(a.return, b, c);
+  }
+  function wj(a, b, c, d, e) {
+    var f2 = a.memoizedState;
+    null === f2 ? a.memoizedState = { isBackwards: b, rendering: null, renderingStartTime: 0, last: d, tail: c, tailMode: e } : (f2.isBackwards = b, f2.rendering = null, f2.renderingStartTime = 0, f2.last = d, f2.tail = c, f2.tailMode = e);
+  }
+  function xj(a, b, c) {
+    var d = b.pendingProps, e = d.revealOrder, f2 = d.tail;
+    Xi(a, b, d.children, c);
+    d = L.current;
+    if (0 !== (d & 2))
+      d = d & 1 | 2, b.flags |= 128;
+    else {
+      if (null !== a && 0 !== (a.flags & 128))
+        a:
+          for (a = b.child; null !== a; ) {
+            if (13 === a.tag)
+              null !== a.memoizedState && vj(a, c, b);
+            else if (19 === a.tag)
+              vj(a, c, b);
+            else if (null !== a.child) {
+              a.child.return = a;
+              a = a.child;
+              continue;
+            }
+            if (a === b)
+              break a;
+            for (; null === a.sibling; ) {
+              if (null === a.return || a.return === b)
+                break a;
+              a = a.return;
+            }
+            a.sibling.return = a.return;
+            a = a.sibling;
+          }
+      d &= 1;
+    }
+    G(L, d);
+    if (0 === (b.mode & 1))
+      b.memoizedState = null;
+    else
+      switch (e) {
+        case "forwards":
+          c = b.child;
+          for (e = null; null !== c; )
+            a = c.alternate, null !== a && null === Ch(a) && (e = c), c = c.sibling;
+          c = e;
+          null === c ? (e = b.child, b.child = null) : (e = c.sibling, c.sibling = null);
+          wj(b, false, e, c, f2);
+          break;
+        case "backwards":
+          c = null;
+          e = b.child;
+          for (b.child = null; null !== e; ) {
+            a = e.alternate;
+            if (null !== a && null === Ch(a)) {
+              b.child = e;
+              break;
+            }
+            a = e.sibling;
+            e.sibling = c;
+            c = e;
+            e = a;
+          }
+          wj(b, true, c, null, f2);
+          break;
+        case "together":
+          wj(b, false, null, null, void 0);
+          break;
+        default:
+          b.memoizedState = null;
+      }
+    return b.child;
+  }
+  function ij(a, b) {
+    0 === (b.mode & 1) && null !== a && (a.alternate = null, b.alternate = null, b.flags |= 2);
+  }
+  function Zi(a, b, c) {
+    null !== a && (b.dependencies = a.dependencies);
+    rh |= b.lanes;
+    if (0 === (c & b.childLanes))
+      return null;
+    if (null !== a && b.child !== a.child)
+      throw Error(p(153));
+    if (null !== b.child) {
+      a = b.child;
+      c = Pg(a, a.pendingProps);
+      b.child = c;
+      for (c.return = b; null !== a.sibling; )
+        a = a.sibling, c = c.sibling = Pg(a, a.pendingProps), c.return = b;
+      c.sibling = null;
+    }
+    return b.child;
+  }
+  function yj(a, b, c) {
+    switch (b.tag) {
+      case 3:
+        kj(b);
+        Ig();
+        break;
+      case 5:
+        Ah(b);
+        break;
+      case 1:
+        Zf(b.type) && cg(b);
+        break;
+      case 4:
+        yh(b, b.stateNode.containerInfo);
+        break;
+      case 10:
+        var d = b.type._context, e = b.memoizedProps.value;
+        G(Wg, d._currentValue);
+        d._currentValue = e;
+        break;
+      case 13:
+        d = b.memoizedState;
+        if (null !== d) {
+          if (null !== d.dehydrated)
+            return G(L, L.current & 1), b.flags |= 128, null;
+          if (0 !== (c & b.child.childLanes))
+            return oj(a, b, c);
+          G(L, L.current & 1);
+          a = Zi(a, b, c);
+          return null !== a ? a.sibling : null;
+        }
+        G(L, L.current & 1);
+        break;
+      case 19:
+        d = 0 !== (c & b.childLanes);
+        if (0 !== (a.flags & 128)) {
+          if (d)
+            return xj(a, b, c);
+          b.flags |= 128;
+        }
+        e = b.memoizedState;
+        null !== e && (e.rendering = null, e.tail = null, e.lastEffect = null);
+        G(L, L.current);
+        if (d)
+          break;
+        else
+          return null;
+      case 22:
+      case 23:
+        return b.lanes = 0, dj(a, b, c);
+    }
+    return Zi(a, b, c);
+  }
+  var zj, Aj, Bj, Cj;
+  zj = function(a, b) {
+    for (var c = b.child; null !== c; ) {
+      if (5 === c.tag || 6 === c.tag)
+        a.appendChild(c.stateNode);
+      else if (4 !== c.tag && null !== c.child) {
+        c.child.return = c;
+        c = c.child;
+        continue;
+      }
+      if (c === b)
+        break;
+      for (; null === c.sibling; ) {
+        if (null === c.return || c.return === b)
+          return;
+        c = c.return;
+      }
+      c.sibling.return = c.return;
+      c = c.sibling;
+    }
+  };
+  Aj = function() {
+  };
+  Bj = function(a, b, c, d) {
+    var e = a.memoizedProps;
+    if (e !== d) {
+      a = b.stateNode;
+      xh(uh.current);
+      var f2 = null;
+      switch (c) {
+        case "input":
+          e = Ya(a, e);
+          d = Ya(a, d);
+          f2 = [];
+          break;
+        case "select":
+          e = A({}, e, { value: void 0 });
+          d = A({}, d, { value: void 0 });
+          f2 = [];
+          break;
+        case "textarea":
+          e = gb(a, e);
+          d = gb(a, d);
+          f2 = [];
+          break;
+        default:
+          "function" !== typeof e.onClick && "function" === typeof d.onClick && (a.onclick = Bf);
+      }
+      ub(c, d);
+      var g;
+      c = null;
+      for (l2 in e)
+        if (!d.hasOwnProperty(l2) && e.hasOwnProperty(l2) && null != e[l2])
+          if ("style" === l2) {
+            var h = e[l2];
+            for (g in h)
+              h.hasOwnProperty(g) && (c || (c = {}), c[g] = "");
+          } else
+            "dangerouslySetInnerHTML" !== l2 && "children" !== l2 && "suppressContentEditableWarning" !== l2 && "suppressHydrationWarning" !== l2 && "autoFocus" !== l2 && (ea.hasOwnProperty(l2) ? f2 || (f2 = []) : (f2 = f2 || []).push(l2, null));
+      for (l2 in d) {
+        var k2 = d[l2];
+        h = null != e ? e[l2] : void 0;
+        if (d.hasOwnProperty(l2) && k2 !== h && (null != k2 || null != h))
+          if ("style" === l2)
+            if (h) {
+              for (g in h)
+                !h.hasOwnProperty(g) || k2 && k2.hasOwnProperty(g) || (c || (c = {}), c[g] = "");
+              for (g in k2)
+                k2.hasOwnProperty(g) && h[g] !== k2[g] && (c || (c = {}), c[g] = k2[g]);
+            } else
+              c || (f2 || (f2 = []), f2.push(
+                l2,
+                c
+              )), c = k2;
+          else
+            "dangerouslySetInnerHTML" === l2 ? (k2 = k2 ? k2.__html : void 0, h = h ? h.__html : void 0, null != k2 && h !== k2 && (f2 = f2 || []).push(l2, k2)) : "children" === l2 ? "string" !== typeof k2 && "number" !== typeof k2 || (f2 = f2 || []).push(l2, "" + k2) : "suppressContentEditableWarning" !== l2 && "suppressHydrationWarning" !== l2 && (ea.hasOwnProperty(l2) ? (null != k2 && "onScroll" === l2 && D("scroll", a), f2 || h === k2 || (f2 = [])) : (f2 = f2 || []).push(l2, k2));
+      }
+      c && (f2 = f2 || []).push("style", c);
+      var l2 = f2;
+      if (b.updateQueue = l2)
+        b.flags |= 4;
+    }
+  };
+  Cj = function(a, b, c, d) {
+    c !== d && (b.flags |= 4);
+  };
+  function Dj(a, b) {
+    if (!I)
+      switch (a.tailMode) {
+        case "hidden":
+          b = a.tail;
+          for (var c = null; null !== b; )
+            null !== b.alternate && (c = b), b = b.sibling;
+          null === c ? a.tail = null : c.sibling = null;
+          break;
+        case "collapsed":
+          c = a.tail;
+          for (var d = null; null !== c; )
+            null !== c.alternate && (d = c), c = c.sibling;
+          null === d ? b || null === a.tail ? a.tail = null : a.tail.sibling = null : d.sibling = null;
+      }
+  }
+  function S(a) {
+    var b = null !== a.alternate && a.alternate.child === a.child, c = 0, d = 0;
+    if (b)
+      for (var e = a.child; null !== e; )
+        c |= e.lanes | e.childLanes, d |= e.subtreeFlags & 14680064, d |= e.flags & 14680064, e.return = a, e = e.sibling;
+    else
+      for (e = a.child; null !== e; )
+        c |= e.lanes | e.childLanes, d |= e.subtreeFlags, d |= e.flags, e.return = a, e = e.sibling;
+    a.subtreeFlags |= d;
+    a.childLanes = c;
+    return b;
+  }
+  function Ej(a, b, c) {
+    var d = b.pendingProps;
+    wg(b);
+    switch (b.tag) {
+      case 2:
+      case 16:
+      case 15:
+      case 0:
+      case 11:
+      case 7:
+      case 8:
+      case 12:
+      case 9:
+      case 14:
+        return S(b), null;
+      case 1:
+        return Zf(b.type) && $f(), S(b), null;
+      case 3:
+        d = b.stateNode;
+        zh();
+        E(Wf);
+        E(H);
+        Eh();
+        d.pendingContext && (d.context = d.pendingContext, d.pendingContext = null);
+        if (null === a || null === a.child)
+          Gg(b) ? b.flags |= 4 : null === a || a.memoizedState.isDehydrated && 0 === (b.flags & 256) || (b.flags |= 1024, null !== zg && (Fj(zg), zg = null));
+        Aj(a, b);
+        S(b);
+        return null;
+      case 5:
+        Bh(b);
+        var e = xh(wh.current);
+        c = b.type;
+        if (null !== a && null != b.stateNode)
+          Bj(a, b, c, d, e), a.ref !== b.ref && (b.flags |= 512, b.flags |= 2097152);
+        else {
+          if (!d) {
+            if (null === b.stateNode)
+              throw Error(p(166));
+            S(b);
+            return null;
+          }
+          a = xh(uh.current);
+          if (Gg(b)) {
+            d = b.stateNode;
+            c = b.type;
+            var f2 = b.memoizedProps;
+            d[Of] = b;
+            d[Pf] = f2;
+            a = 0 !== (b.mode & 1);
+            switch (c) {
+              case "dialog":
+                D("cancel", d);
+                D("close", d);
+                break;
+              case "iframe":
+              case "object":
+              case "embed":
+                D("load", d);
+                break;
+              case "video":
+              case "audio":
+                for (e = 0; e < lf.length; e++)
+                  D(lf[e], d);
+                break;
+              case "source":
+                D("error", d);
+                break;
+              case "img":
+              case "image":
+              case "link":
+                D(
+                  "error",
+                  d
+                );
+                D("load", d);
+                break;
+              case "details":
+                D("toggle", d);
+                break;
+              case "input":
+                Za(d, f2);
+                D("invalid", d);
+                break;
+              case "select":
+                d._wrapperState = { wasMultiple: !!f2.multiple };
+                D("invalid", d);
+                break;
+              case "textarea":
+                hb(d, f2), D("invalid", d);
+            }
+            ub(c, f2);
+            e = null;
+            for (var g in f2)
+              if (f2.hasOwnProperty(g)) {
+                var h = f2[g];
+                "children" === g ? "string" === typeof h ? d.textContent !== h && (true !== f2.suppressHydrationWarning && Af(d.textContent, h, a), e = ["children", h]) : "number" === typeof h && d.textContent !== "" + h && (true !== f2.suppressHydrationWarning && Af(
+                  d.textContent,
+                  h,
+                  a
+                ), e = ["children", "" + h]) : ea.hasOwnProperty(g) && null != h && "onScroll" === g && D("scroll", d);
+              }
+            switch (c) {
+              case "input":
+                Va(d);
+                db(d, f2, true);
+                break;
+              case "textarea":
+                Va(d);
+                jb(d);
+                break;
+              case "select":
+              case "option":
+                break;
+              default:
+                "function" === typeof f2.onClick && (d.onclick = Bf);
+            }
+            d = e;
+            b.updateQueue = d;
+            null !== d && (b.flags |= 4);
+          } else {
+            g = 9 === e.nodeType ? e : e.ownerDocument;
+            "http://www.w3.org/1999/xhtml" === a && (a = kb(c));
+            "http://www.w3.org/1999/xhtml" === a ? "script" === c ? (a = g.createElement("div"), a.innerHTML = "<script><\/script>", a = a.removeChild(a.firstChild)) : "string" === typeof d.is ? a = g.createElement(c, { is: d.is }) : (a = g.createElement(c), "select" === c && (g = a, d.multiple ? g.multiple = true : d.size && (g.size = d.size))) : a = g.createElementNS(a, c);
+            a[Of] = b;
+            a[Pf] = d;
+            zj(a, b, false, false);
+            b.stateNode = a;
+            a: {
+              g = vb(c, d);
+              switch (c) {
+                case "dialog":
+                  D("cancel", a);
+                  D("close", a);
+                  e = d;
+                  break;
+                case "iframe":
+                case "object":
+                case "embed":
+                  D("load", a);
+                  e = d;
+                  break;
+                case "video":
+                case "audio":
+                  for (e = 0; e < lf.length; e++)
+                    D(lf[e], a);
+                  e = d;
+                  break;
+                case "source":
+                  D("error", a);
+                  e = d;
+                  break;
+                case "img":
+                case "image":
+                case "link":
+                  D(
+                    "error",
+                    a
+                  );
+                  D("load", a);
+                  e = d;
+                  break;
+                case "details":
+                  D("toggle", a);
+                  e = d;
+                  break;
+                case "input":
+                  Za(a, d);
+                  e = Ya(a, d);
+                  D("invalid", a);
+                  break;
+                case "option":
+                  e = d;
+                  break;
+                case "select":
+                  a._wrapperState = { wasMultiple: !!d.multiple };
+                  e = A({}, d, { value: void 0 });
+                  D("invalid", a);
+                  break;
+                case "textarea":
+                  hb(a, d);
+                  e = gb(a, d);
+                  D("invalid", a);
+                  break;
+                default:
+                  e = d;
+              }
+              ub(c, e);
+              h = e;
+              for (f2 in h)
+                if (h.hasOwnProperty(f2)) {
+                  var k2 = h[f2];
+                  "style" === f2 ? sb(a, k2) : "dangerouslySetInnerHTML" === f2 ? (k2 = k2 ? k2.__html : void 0, null != k2 && nb(a, k2)) : "children" === f2 ? "string" === typeof k2 ? ("textarea" !== c || "" !== k2) && ob(a, k2) : "number" === typeof k2 && ob(a, "" + k2) : "suppressContentEditableWarning" !== f2 && "suppressHydrationWarning" !== f2 && "autoFocus" !== f2 && (ea.hasOwnProperty(f2) ? null != k2 && "onScroll" === f2 && D("scroll", a) : null != k2 && ta(a, f2, k2, g));
+                }
+              switch (c) {
+                case "input":
+                  Va(a);
+                  db(a, d, false);
+                  break;
+                case "textarea":
+                  Va(a);
+                  jb(a);
+                  break;
+                case "option":
+                  null != d.value && a.setAttribute("value", "" + Sa(d.value));
+                  break;
+                case "select":
+                  a.multiple = !!d.multiple;
+                  f2 = d.value;
+                  null != f2 ? fb(a, !!d.multiple, f2, false) : null != d.defaultValue && fb(
+                    a,
+                    !!d.multiple,
+                    d.defaultValue,
+                    true
+                  );
+                  break;
+                default:
+                  "function" === typeof e.onClick && (a.onclick = Bf);
+              }
+              switch (c) {
+                case "button":
+                case "input":
+                case "select":
+                case "textarea":
+                  d = !!d.autoFocus;
+                  break a;
+                case "img":
+                  d = true;
+                  break a;
+                default:
+                  d = false;
+              }
+            }
+            d && (b.flags |= 4);
+          }
+          null !== b.ref && (b.flags |= 512, b.flags |= 2097152);
+        }
+        S(b);
+        return null;
+      case 6:
+        if (a && null != b.stateNode)
+          Cj(a, b, a.memoizedProps, d);
+        else {
+          if ("string" !== typeof d && null === b.stateNode)
+            throw Error(p(166));
+          c = xh(wh.current);
+          xh(uh.current);
+          if (Gg(b)) {
+            d = b.stateNode;
+            c = b.memoizedProps;
+            d[Of] = b;
+            if (f2 = d.nodeValue !== c) {
+              if (a = xg, null !== a)
+                switch (a.tag) {
+                  case 3:
+                    Af(d.nodeValue, c, 0 !== (a.mode & 1));
+                    break;
+                  case 5:
+                    true !== a.memoizedProps.suppressHydrationWarning && Af(d.nodeValue, c, 0 !== (a.mode & 1));
+                }
+            }
+            f2 && (b.flags |= 4);
+          } else
+            d = (9 === c.nodeType ? c : c.ownerDocument).createTextNode(d), d[Of] = b, b.stateNode = d;
+        }
+        S(b);
+        return null;
+      case 13:
+        E(L);
+        d = b.memoizedState;
+        if (null === a || null !== a.memoizedState && null !== a.memoizedState.dehydrated) {
+          if (I && null !== yg && 0 !== (b.mode & 1) && 0 === (b.flags & 128))
+            Hg(), Ig(), b.flags |= 98560, f2 = false;
+          else if (f2 = Gg(b), null !== d && null !== d.dehydrated) {
+            if (null === a) {
+              if (!f2)
+                throw Error(p(318));
+              f2 = b.memoizedState;
+              f2 = null !== f2 ? f2.dehydrated : null;
+              if (!f2)
+                throw Error(p(317));
+              f2[Of] = b;
+            } else
+              Ig(), 0 === (b.flags & 128) && (b.memoizedState = null), b.flags |= 4;
+            S(b);
+            f2 = false;
+          } else
+            null !== zg && (Fj(zg), zg = null), f2 = true;
+          if (!f2)
+            return b.flags & 65536 ? b : null;
+        }
+        if (0 !== (b.flags & 128))
+          return b.lanes = c, b;
+        d = null !== d;
+        d !== (null !== a && null !== a.memoizedState) && d && (b.child.flags |= 8192, 0 !== (b.mode & 1) && (null === a || 0 !== (L.current & 1) ? 0 === T && (T = 3) : tj()));
+        null !== b.updateQueue && (b.flags |= 4);
+        S(b);
+        return null;
+      case 4:
+        return zh(), Aj(a, b), null === a && sf(b.stateNode.containerInfo), S(b), null;
+      case 10:
+        return ah(b.type._context), S(b), null;
+      case 17:
+        return Zf(b.type) && $f(), S(b), null;
+      case 19:
+        E(L);
+        f2 = b.memoizedState;
+        if (null === f2)
+          return S(b), null;
+        d = 0 !== (b.flags & 128);
+        g = f2.rendering;
+        if (null === g)
+          if (d)
+            Dj(f2, false);
+          else {
+            if (0 !== T || null !== a && 0 !== (a.flags & 128))
+              for (a = b.child; null !== a; ) {
+                g = Ch(a);
+                if (null !== g) {
+                  b.flags |= 128;
+                  Dj(f2, false);
+                  d = g.updateQueue;
+                  null !== d && (b.updateQueue = d, b.flags |= 4);
+                  b.subtreeFlags = 0;
+                  d = c;
+                  for (c = b.child; null !== c; )
+                    f2 = c, a = d, f2.flags &= 14680066, g = f2.alternate, null === g ? (f2.childLanes = 0, f2.lanes = a, f2.child = null, f2.subtreeFlags = 0, f2.memoizedProps = null, f2.memoizedState = null, f2.updateQueue = null, f2.dependencies = null, f2.stateNode = null) : (f2.childLanes = g.childLanes, f2.lanes = g.lanes, f2.child = g.child, f2.subtreeFlags = 0, f2.deletions = null, f2.memoizedProps = g.memoizedProps, f2.memoizedState = g.memoizedState, f2.updateQueue = g.updateQueue, f2.type = g.type, a = g.dependencies, f2.dependencies = null === a ? null : { lanes: a.lanes, firstContext: a.firstContext }), c = c.sibling;
+                  G(L, L.current & 1 | 2);
+                  return b.child;
+                }
+                a = a.sibling;
+              }
+            null !== f2.tail && B() > Gj && (b.flags |= 128, d = true, Dj(f2, false), b.lanes = 4194304);
+          }
+        else {
+          if (!d)
+            if (a = Ch(g), null !== a) {
+              if (b.flags |= 128, d = true, c = a.updateQueue, null !== c && (b.updateQueue = c, b.flags |= 4), Dj(f2, true), null === f2.tail && "hidden" === f2.tailMode && !g.alternate && !I)
+                return S(b), null;
+            } else
+              2 * B() - f2.renderingStartTime > Gj && 1073741824 !== c && (b.flags |= 128, d = true, Dj(f2, false), b.lanes = 4194304);
+          f2.isBackwards ? (g.sibling = b.child, b.child = g) : (c = f2.last, null !== c ? c.sibling = g : b.child = g, f2.last = g);
+        }
+        if (null !== f2.tail)
+          return b = f2.tail, f2.rendering = b, f2.tail = b.sibling, f2.renderingStartTime = B(), b.sibling = null, c = L.current, G(L, d ? c & 1 | 2 : c & 1), b;
+        S(b);
+        return null;
+      case 22:
+      case 23:
+        return Hj(), d = null !== b.memoizedState, null !== a && null !== a.memoizedState !== d && (b.flags |= 8192), d && 0 !== (b.mode & 1) ? 0 !== (fj & 1073741824) && (S(b), b.subtreeFlags & 6 && (b.flags |= 8192)) : S(b), null;
+      case 24:
+        return null;
+      case 25:
+        return null;
+    }
+    throw Error(p(156, b.tag));
+  }
+  function Ij(a, b) {
+    wg(b);
+    switch (b.tag) {
+      case 1:
+        return Zf(b.type) && $f(), a = b.flags, a & 65536 ? (b.flags = a & -65537 | 128, b) : null;
+      case 3:
+        return zh(), E(Wf), E(H), Eh(), a = b.flags, 0 !== (a & 65536) && 0 === (a & 128) ? (b.flags = a & -65537 | 128, b) : null;
+      case 5:
+        return Bh(b), null;
+      case 13:
+        E(L);
+        a = b.memoizedState;
+        if (null !== a && null !== a.dehydrated) {
+          if (null === b.alternate)
+            throw Error(p(340));
+          Ig();
+        }
+        a = b.flags;
+        return a & 65536 ? (b.flags = a & -65537 | 128, b) : null;
+      case 19:
+        return E(L), null;
+      case 4:
+        return zh(), null;
+      case 10:
+        return ah(b.type._context), null;
+      case 22:
+      case 23:
+        return Hj(), null;
+      case 24:
+        return null;
+      default:
+        return null;
+    }
+  }
+  var Jj = false, U = false, Kj = "function" === typeof WeakSet ? WeakSet : Set, V = null;
+  function Lj(a, b) {
+    var c = a.ref;
+    if (null !== c)
+      if ("function" === typeof c)
+        try {
+          c(null);
+        } catch (d) {
+          W(a, b, d);
+        }
+      else
+        c.current = null;
+  }
+  function Mj(a, b, c) {
+    try {
+      c();
+    } catch (d) {
+      W(a, b, d);
+    }
+  }
+  var Nj = false;
+  function Oj(a, b) {
+    Cf = dd;
+    a = Me();
+    if (Ne(a)) {
+      if ("selectionStart" in a)
+        var c = { start: a.selectionStart, end: a.selectionEnd };
+      else
+        a: {
+          c = (c = a.ownerDocument) && c.defaultView || window;
+          var d = c.getSelection && c.getSelection();
+          if (d && 0 !== d.rangeCount) {
+            c = d.anchorNode;
+            var e = d.anchorOffset, f2 = d.focusNode;
+            d = d.focusOffset;
+            try {
+              c.nodeType, f2.nodeType;
+            } catch (F2) {
+              c = null;
+              break a;
+            }
+            var g = 0, h = -1, k2 = -1, l2 = 0, m2 = 0, q2 = a, r2 = null;
+            b:
+              for (; ; ) {
+                for (var y2; ; ) {
+                  q2 !== c || 0 !== e && 3 !== q2.nodeType || (h = g + e);
+                  q2 !== f2 || 0 !== d && 3 !== q2.nodeType || (k2 = g + d);
+                  3 === q2.nodeType && (g += q2.nodeValue.length);
+                  if (null === (y2 = q2.firstChild))
+                    break;
+                  r2 = q2;
+                  q2 = y2;
+                }
+                for (; ; ) {
+                  if (q2 === a)
+                    break b;
+                  r2 === c && ++l2 === e && (h = g);
+                  r2 === f2 && ++m2 === d && (k2 = g);
+                  if (null !== (y2 = q2.nextSibling))
+                    break;
+                  q2 = r2;
+                  r2 = q2.parentNode;
+                }
+                q2 = y2;
+              }
+            c = -1 === h || -1 === k2 ? null : { start: h, end: k2 };
+          } else
+            c = null;
+        }
+      c = c || { start: 0, end: 0 };
+    } else
+      c = null;
+    Df = { focusedElem: a, selectionRange: c };
+    dd = false;
+    for (V = b; null !== V; )
+      if (b = V, a = b.child, 0 !== (b.subtreeFlags & 1028) && null !== a)
+        a.return = b, V = a;
+      else
+        for (; null !== V; ) {
+          b = V;
+          try {
+            var n2 = b.alternate;
+            if (0 !== (b.flags & 1024))
+              switch (b.tag) {
+                case 0:
+                case 11:
+                case 15:
+                  break;
+                case 1:
+                  if (null !== n2) {
+                    var t2 = n2.memoizedProps, J2 = n2.memoizedState, x2 = b.stateNode, w2 = x2.getSnapshotBeforeUpdate(b.elementType === b.type ? t2 : Ci(b.type, t2), J2);
+                    x2.__reactInternalSnapshotBeforeUpdate = w2;
+                  }
+                  break;
+                case 3:
+                  var u2 = b.stateNode.containerInfo;
+                  1 === u2.nodeType ? u2.textContent = "" : 9 === u2.nodeType && u2.documentElement && u2.removeChild(u2.documentElement);
+                  break;
+                case 5:
+                case 6:
+                case 4:
+                case 17:
+                  break;
+                default:
+                  throw Error(p(163));
+              }
+          } catch (F2) {
+            W(b, b.return, F2);
+          }
+          a = b.sibling;
+          if (null !== a) {
+            a.return = b.return;
+            V = a;
+            break;
+          }
+          V = b.return;
+        }
+    n2 = Nj;
+    Nj = false;
+    return n2;
+  }
+  function Pj(a, b, c) {
+    var d = b.updateQueue;
+    d = null !== d ? d.lastEffect : null;
+    if (null !== d) {
+      var e = d = d.next;
+      do {
+        if ((e.tag & a) === a) {
+          var f2 = e.destroy;
+          e.destroy = void 0;
+          void 0 !== f2 && Mj(b, c, f2);
+        }
+        e = e.next;
+      } while (e !== d);
+    }
+  }
+  function Qj(a, b) {
+    b = b.updateQueue;
+    b = null !== b ? b.lastEffect : null;
+    if (null !== b) {
+      var c = b = b.next;
+      do {
+        if ((c.tag & a) === a) {
+          var d = c.create;
+          c.destroy = d();
+        }
+        c = c.next;
+      } while (c !== b);
+    }
+  }
+  function Rj(a) {
+    var b = a.ref;
+    if (null !== b) {
+      var c = a.stateNode;
+      switch (a.tag) {
+        case 5:
+          a = c;
+          break;
+        default:
+          a = c;
+      }
+      "function" === typeof b ? b(a) : b.current = a;
+    }
+  }
+  function Sj(a) {
+    var b = a.alternate;
+    null !== b && (a.alternate = null, Sj(b));
+    a.child = null;
+    a.deletions = null;
+    a.sibling = null;
+    5 === a.tag && (b = a.stateNode, null !== b && (delete b[Of], delete b[Pf], delete b[of], delete b[Qf], delete b[Rf]));
+    a.stateNode = null;
+    a.return = null;
+    a.dependencies = null;
+    a.memoizedProps = null;
+    a.memoizedState = null;
+    a.pendingProps = null;
+    a.stateNode = null;
+    a.updateQueue = null;
+  }
+  function Tj(a) {
+    return 5 === a.tag || 3 === a.tag || 4 === a.tag;
+  }
+  function Uj(a) {
+    a:
+      for (; ; ) {
+        for (; null === a.sibling; ) {
+          if (null === a.return || Tj(a.return))
+            return null;
+          a = a.return;
+        }
+        a.sibling.return = a.return;
+        for (a = a.sibling; 5 !== a.tag && 6 !== a.tag && 18 !== a.tag; ) {
+          if (a.flags & 2)
+            continue a;
+          if (null === a.child || 4 === a.tag)
+            continue a;
+          else
+            a.child.return = a, a = a.child;
+        }
+        if (!(a.flags & 2))
+          return a.stateNode;
+      }
+  }
+  function Vj(a, b, c) {
+    var d = a.tag;
+    if (5 === d || 6 === d)
+      a = a.stateNode, b ? 8 === c.nodeType ? c.parentNode.insertBefore(a, b) : c.insertBefore(a, b) : (8 === c.nodeType ? (b = c.parentNode, b.insertBefore(a, c)) : (b = c, b.appendChild(a)), c = c._reactRootContainer, null !== c && void 0 !== c || null !== b.onclick || (b.onclick = Bf));
+    else if (4 !== d && (a = a.child, null !== a))
+      for (Vj(a, b, c), a = a.sibling; null !== a; )
+        Vj(a, b, c), a = a.sibling;
+  }
+  function Wj(a, b, c) {
+    var d = a.tag;
+    if (5 === d || 6 === d)
+      a = a.stateNode, b ? c.insertBefore(a, b) : c.appendChild(a);
+    else if (4 !== d && (a = a.child, null !== a))
+      for (Wj(a, b, c), a = a.sibling; null !== a; )
+        Wj(a, b, c), a = a.sibling;
+  }
+  var X = null, Xj = false;
+  function Yj(a, b, c) {
+    for (c = c.child; null !== c; )
+      Zj(a, b, c), c = c.sibling;
+  }
+  function Zj(a, b, c) {
+    if (lc && "function" === typeof lc.onCommitFiberUnmount)
+      try {
+        lc.onCommitFiberUnmount(kc, c);
+      } catch (h) {
+      }
+    switch (c.tag) {
+      case 5:
+        U || Lj(c, b);
+      case 6:
+        var d = X, e = Xj;
+        X = null;
+        Yj(a, b, c);
+        X = d;
+        Xj = e;
+        null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c) : a.removeChild(c)) : X.removeChild(c.stateNode));
+        break;
+      case 18:
+        null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c) : 1 === a.nodeType && Kf(a, c), bd(a)) : Kf(X, c.stateNode));
+        break;
+      case 4:
+        d = X;
+        e = Xj;
+        X = c.stateNode.containerInfo;
+        Xj = true;
+        Yj(a, b, c);
+        X = d;
+        Xj = e;
+        break;
+      case 0:
+      case 11:
+      case 14:
+      case 15:
+        if (!U && (d = c.updateQueue, null !== d && (d = d.lastEffect, null !== d))) {
+          e = d = d.next;
+          do {
+            var f2 = e, g = f2.destroy;
+            f2 = f2.tag;
+            void 0 !== g && (0 !== (f2 & 2) ? Mj(c, b, g) : 0 !== (f2 & 4) && Mj(c, b, g));
+            e = e.next;
+          } while (e !== d);
+        }
+        Yj(a, b, c);
+        break;
+      case 1:
+        if (!U && (Lj(c, b), d = c.stateNode, "function" === typeof d.componentWillUnmount))
+          try {
+            d.props = c.memoizedProps, d.state = c.memoizedState, d.componentWillUnmount();
+          } catch (h) {
+            W(c, b, h);
+          }
+        Yj(a, b, c);
+        break;
+      case 21:
+        Yj(a, b, c);
+        break;
+      case 22:
+        c.mode & 1 ? (U = (d = U) || null !== c.memoizedState, Yj(a, b, c), U = d) : Yj(a, b, c);
+        break;
+      default:
+        Yj(a, b, c);
+    }
+  }
+  function ak(a) {
+    var b = a.updateQueue;
+    if (null !== b) {
+      a.updateQueue = null;
+      var c = a.stateNode;
+      null === c && (c = a.stateNode = new Kj());
+      b.forEach(function(b2) {
+        var d = bk.bind(null, a, b2);
+        c.has(b2) || (c.add(b2), b2.then(d, d));
+      });
+    }
+  }
+  function ck(a, b) {
+    var c = b.deletions;
+    if (null !== c)
+      for (var d = 0; d < c.length; d++) {
+        var e = c[d];
+        try {
+          var f2 = a, g = b, h = g;
+          a:
+            for (; null !== h; ) {
+              switch (h.tag) {
+                case 5:
+                  X = h.stateNode;
+                  Xj = false;
+                  break a;
+                case 3:
+                  X = h.stateNode.containerInfo;
+                  Xj = true;
+                  break a;
+                case 4:
+                  X = h.stateNode.containerInfo;
+                  Xj = true;
+                  break a;
+              }
+              h = h.return;
+            }
+          if (null === X)
+            throw Error(p(160));
+          Zj(f2, g, e);
+          X = null;
+          Xj = false;
+          var k2 = e.alternate;
+          null !== k2 && (k2.return = null);
+          e.return = null;
+        } catch (l2) {
+          W(e, b, l2);
+        }
+      }
+    if (b.subtreeFlags & 12854)
+      for (b = b.child; null !== b; )
+        dk(b, a), b = b.sibling;
+  }
+  function dk(a, b) {
+    var c = a.alternate, d = a.flags;
+    switch (a.tag) {
+      case 0:
+      case 11:
+      case 14:
+      case 15:
+        ck(b, a);
+        ek(a);
+        if (d & 4) {
+          try {
+            Pj(3, a, a.return), Qj(3, a);
+          } catch (t2) {
+            W(a, a.return, t2);
+          }
+          try {
+            Pj(5, a, a.return);
+          } catch (t2) {
+            W(a, a.return, t2);
+          }
+        }
+        break;
+      case 1:
+        ck(b, a);
+        ek(a);
+        d & 512 && null !== c && Lj(c, c.return);
+        break;
+      case 5:
+        ck(b, a);
+        ek(a);
+        d & 512 && null !== c && Lj(c, c.return);
+        if (a.flags & 32) {
+          var e = a.stateNode;
+          try {
+            ob(e, "");
+          } catch (t2) {
+            W(a, a.return, t2);
+          }
+        }
+        if (d & 4 && (e = a.stateNode, null != e)) {
+          var f2 = a.memoizedProps, g = null !== c ? c.memoizedProps : f2, h = a.type, k2 = a.updateQueue;
+          a.updateQueue = null;
+          if (null !== k2)
+            try {
+              "input" === h && "radio" === f2.type && null != f2.name && ab(e, f2);
+              vb(h, g);
+              var l2 = vb(h, f2);
+              for (g = 0; g < k2.length; g += 2) {
+                var m2 = k2[g], q2 = k2[g + 1];
+                "style" === m2 ? sb(e, q2) : "dangerouslySetInnerHTML" === m2 ? nb(e, q2) : "children" === m2 ? ob(e, q2) : ta(e, m2, q2, l2);
+              }
+              switch (h) {
+                case "input":
+                  bb(e, f2);
+                  break;
+                case "textarea":
+                  ib(e, f2);
+                  break;
+                case "select":
+                  var r2 = e._wrapperState.wasMultiple;
+                  e._wrapperState.wasMultiple = !!f2.multiple;
+                  var y2 = f2.value;
+                  null != y2 ? fb(e, !!f2.multiple, y2, false) : r2 !== !!f2.multiple && (null != f2.defaultValue ? fb(
+                    e,
+                    !!f2.multiple,
+                    f2.defaultValue,
+                    true
+                  ) : fb(e, !!f2.multiple, f2.multiple ? [] : "", false));
+              }
+              e[Pf] = f2;
+            } catch (t2) {
+              W(a, a.return, t2);
+            }
+        }
+        break;
+      case 6:
+        ck(b, a);
+        ek(a);
+        if (d & 4) {
+          if (null === a.stateNode)
+            throw Error(p(162));
+          e = a.stateNode;
+          f2 = a.memoizedProps;
+          try {
+            e.nodeValue = f2;
+          } catch (t2) {
+            W(a, a.return, t2);
+          }
+        }
+        break;
+      case 3:
+        ck(b, a);
+        ek(a);
+        if (d & 4 && null !== c && c.memoizedState.isDehydrated)
+          try {
+            bd(b.containerInfo);
+          } catch (t2) {
+            W(a, a.return, t2);
+          }
+        break;
+      case 4:
+        ck(b, a);
+        ek(a);
+        break;
+      case 13:
+        ck(b, a);
+        ek(a);
+        e = a.child;
+        e.flags & 8192 && (f2 = null !== e.memoizedState, e.stateNode.isHidden = f2, !f2 || null !== e.alternate && null !== e.alternate.memoizedState || (fk = B()));
+        d & 4 && ak(a);
+        break;
+      case 22:
+        m2 = null !== c && null !== c.memoizedState;
+        a.mode & 1 ? (U = (l2 = U) || m2, ck(b, a), U = l2) : ck(b, a);
+        ek(a);
+        if (d & 8192) {
+          l2 = null !== a.memoizedState;
+          if ((a.stateNode.isHidden = l2) && !m2 && 0 !== (a.mode & 1))
+            for (V = a, m2 = a.child; null !== m2; ) {
+              for (q2 = V = m2; null !== V; ) {
+                r2 = V;
+                y2 = r2.child;
+                switch (r2.tag) {
+                  case 0:
+                  case 11:
+                  case 14:
+                  case 15:
+                    Pj(4, r2, r2.return);
+                    break;
+                  case 1:
+                    Lj(r2, r2.return);
+                    var n2 = r2.stateNode;
+                    if ("function" === typeof n2.componentWillUnmount) {
+                      d = r2;
+                      c = r2.return;
+                      try {
+                        b = d, n2.props = b.memoizedProps, n2.state = b.memoizedState, n2.componentWillUnmount();
+                      } catch (t2) {
+                        W(d, c, t2);
+                      }
+                    }
+                    break;
+                  case 5:
+                    Lj(r2, r2.return);
+                    break;
+                  case 22:
+                    if (null !== r2.memoizedState) {
+                      gk(q2);
+                      continue;
+                    }
+                }
+                null !== y2 ? (y2.return = r2, V = y2) : gk(q2);
+              }
+              m2 = m2.sibling;
+            }
+          a:
+            for (m2 = null, q2 = a; ; ) {
+              if (5 === q2.tag) {
+                if (null === m2) {
+                  m2 = q2;
+                  try {
+                    e = q2.stateNode, l2 ? (f2 = e.style, "function" === typeof f2.setProperty ? f2.setProperty("display", "none", "important") : f2.display = "none") : (h = q2.stateNode, k2 = q2.memoizedProps.style, g = void 0 !== k2 && null !== k2 && k2.hasOwnProperty("display") ? k2.display : null, h.style.display = rb("display", g));
+                  } catch (t2) {
+                    W(a, a.return, t2);
+                  }
+                }
+              } else if (6 === q2.tag) {
+                if (null === m2)
+                  try {
+                    q2.stateNode.nodeValue = l2 ? "" : q2.memoizedProps;
+                  } catch (t2) {
+                    W(a, a.return, t2);
+                  }
+              } else if ((22 !== q2.tag && 23 !== q2.tag || null === q2.memoizedState || q2 === a) && null !== q2.child) {
+                q2.child.return = q2;
+                q2 = q2.child;
+                continue;
+              }
+              if (q2 === a)
+                break a;
+              for (; null === q2.sibling; ) {
+                if (null === q2.return || q2.return === a)
+                  break a;
+                m2 === q2 && (m2 = null);
+                q2 = q2.return;
+              }
+              m2 === q2 && (m2 = null);
+              q2.sibling.return = q2.return;
+              q2 = q2.sibling;
+            }
+        }
+        break;
+      case 19:
+        ck(b, a);
+        ek(a);
+        d & 4 && ak(a);
+        break;
+      case 21:
+        break;
+      default:
+        ck(
+          b,
+          a
+        ), ek(a);
+    }
+  }
+  function ek(a) {
+    var b = a.flags;
+    if (b & 2) {
+      try {
+        a: {
+          for (var c = a.return; null !== c; ) {
+            if (Tj(c)) {
+              var d = c;
+              break a;
+            }
+            c = c.return;
+          }
+          throw Error(p(160));
+        }
+        switch (d.tag) {
+          case 5:
+            var e = d.stateNode;
+            d.flags & 32 && (ob(e, ""), d.flags &= -33);
+            var f2 = Uj(a);
+            Wj(a, f2, e);
+            break;
+          case 3:
+          case 4:
+            var g = d.stateNode.containerInfo, h = Uj(a);
+            Vj(a, h, g);
+            break;
+          default:
+            throw Error(p(161));
+        }
+      } catch (k2) {
+        W(a, a.return, k2);
+      }
+      a.flags &= -3;
+    }
+    b & 4096 && (a.flags &= -4097);
+  }
+  function hk(a, b, c) {
+    V = a;
+    ik(a);
+  }
+  function ik(a, b, c) {
+    for (var d = 0 !== (a.mode & 1); null !== V; ) {
+      var e = V, f2 = e.child;
+      if (22 === e.tag && d) {
+        var g = null !== e.memoizedState || Jj;
+        if (!g) {
+          var h = e.alternate, k2 = null !== h && null !== h.memoizedState || U;
+          h = Jj;
+          var l2 = U;
+          Jj = g;
+          if ((U = k2) && !l2)
+            for (V = e; null !== V; )
+              g = V, k2 = g.child, 22 === g.tag && null !== g.memoizedState ? jk(e) : null !== k2 ? (k2.return = g, V = k2) : jk(e);
+          for (; null !== f2; )
+            V = f2, ik(f2), f2 = f2.sibling;
+          V = e;
+          Jj = h;
+          U = l2;
+        }
+        kk(a);
+      } else
+        0 !== (e.subtreeFlags & 8772) && null !== f2 ? (f2.return = e, V = f2) : kk(a);
+    }
+  }
+  function kk(a) {
+    for (; null !== V; ) {
+      var b = V;
+      if (0 !== (b.flags & 8772)) {
+        var c = b.alternate;
+        try {
+          if (0 !== (b.flags & 8772))
+            switch (b.tag) {
+              case 0:
+              case 11:
+              case 15:
+                U || Qj(5, b);
+                break;
+              case 1:
+                var d = b.stateNode;
+                if (b.flags & 4 && !U)
+                  if (null === c)
+                    d.componentDidMount();
+                  else {
+                    var e = b.elementType === b.type ? c.memoizedProps : Ci(b.type, c.memoizedProps);
+                    d.componentDidUpdate(e, c.memoizedState, d.__reactInternalSnapshotBeforeUpdate);
+                  }
+                var f2 = b.updateQueue;
+                null !== f2 && sh(b, f2, d);
+                break;
+              case 3:
+                var g = b.updateQueue;
+                if (null !== g) {
+                  c = null;
+                  if (null !== b.child)
+                    switch (b.child.tag) {
+                      case 5:
+                        c = b.child.stateNode;
+                        break;
+                      case 1:
+                        c = b.child.stateNode;
+                    }
+                  sh(b, g, c);
+                }
+                break;
+              case 5:
+                var h = b.stateNode;
+                if (null === c && b.flags & 4) {
+                  c = h;
+                  var k2 = b.memoizedProps;
+                  switch (b.type) {
+                    case "button":
+                    case "input":
+                    case "select":
+                    case "textarea":
+                      k2.autoFocus && c.focus();
+                      break;
+                    case "img":
+                      k2.src && (c.src = k2.src);
+                  }
+                }
+                break;
+              case 6:
+                break;
+              case 4:
+                break;
+              case 12:
+                break;
+              case 13:
+                if (null === b.memoizedState) {
+                  var l2 = b.alternate;
+                  if (null !== l2) {
+                    var m2 = l2.memoizedState;
+                    if (null !== m2) {
+                      var q2 = m2.dehydrated;
+                      null !== q2 && bd(q2);
+                    }
+                  }
+                }
+                break;
+              case 19:
+              case 17:
+              case 21:
+              case 22:
+              case 23:
+              case 25:
+                break;
+              default:
+                throw Error(p(163));
+            }
+          U || b.flags & 512 && Rj(b);
+        } catch (r2) {
+          W(b, b.return, r2);
+        }
+      }
+      if (b === a) {
+        V = null;
+        break;
+      }
+      c = b.sibling;
+      if (null !== c) {
+        c.return = b.return;
+        V = c;
+        break;
+      }
+      V = b.return;
+    }
+  }
+  function gk(a) {
+    for (; null !== V; ) {
+      var b = V;
+      if (b === a) {
+        V = null;
+        break;
+      }
+      var c = b.sibling;
+      if (null !== c) {
+        c.return = b.return;
+        V = c;
+        break;
+      }
+      V = b.return;
+    }
+  }
+  function jk(a) {
+    for (; null !== V; ) {
+      var b = V;
+      try {
+        switch (b.tag) {
+          case 0:
+          case 11:
+          case 15:
+            var c = b.return;
+            try {
+              Qj(4, b);
+            } catch (k2) {
+              W(b, c, k2);
+            }
+            break;
+          case 1:
+            var d = b.stateNode;
+            if ("function" === typeof d.componentDidMount) {
+              var e = b.return;
+              try {
+                d.componentDidMount();
+              } catch (k2) {
+                W(b, e, k2);
+              }
+            }
+            var f2 = b.return;
+            try {
+              Rj(b);
+            } catch (k2) {
+              W(b, f2, k2);
+            }
+            break;
+          case 5:
+            var g = b.return;
+            try {
+              Rj(b);
+            } catch (k2) {
+              W(b, g, k2);
+            }
+        }
+      } catch (k2) {
+        W(b, b.return, k2);
+      }
+      if (b === a) {
+        V = null;
+        break;
+      }
+      var h = b.sibling;
+      if (null !== h) {
+        h.return = b.return;
+        V = h;
+        break;
+      }
+      V = b.return;
+    }
+  }
+  var lk = Math.ceil, mk = ua.ReactCurrentDispatcher, nk = ua.ReactCurrentOwner, ok = ua.ReactCurrentBatchConfig, K = 0, Q = null, Y = null, Z = 0, fj = 0, ej = Uf(0), T = 0, pk = null, rh = 0, qk = 0, rk = 0, sk = null, tk = null, fk = 0, Gj = Infinity, uk = null, Oi = false, Pi = null, Ri = null, vk = false, wk = null, xk = 0, yk = 0, zk = null, Ak = -1, Bk = 0;
+  function R() {
+    return 0 !== (K & 6) ? B() : -1 !== Ak ? Ak : Ak = B();
+  }
+  function yi(a) {
+    if (0 === (a.mode & 1))
+      return 1;
+    if (0 !== (K & 2) && 0 !== Z)
+      return Z & -Z;
+    if (null !== Kg.transition)
+      return 0 === Bk && (Bk = yc()), Bk;
+    a = C;
+    if (0 !== a)
+      return a;
+    a = window.event;
+    a = void 0 === a ? 16 : jd(a.type);
+    return a;
+  }
+  function gi(a, b, c, d) {
+    if (50 < yk)
+      throw yk = 0, zk = null, Error(p(185));
+    Ac(a, c, d);
+    if (0 === (K & 2) || a !== Q)
+      a === Q && (0 === (K & 2) && (qk |= c), 4 === T && Ck(a, Z)), Dk(a, d), 1 === c && 0 === K && 0 === (b.mode & 1) && (Gj = B() + 500, fg && jg());
+  }
+  function Dk(a, b) {
+    var c = a.callbackNode;
+    wc(a, b);
+    var d = uc(a, a === Q ? Z : 0);
+    if (0 === d)
+      null !== c && bc(c), a.callbackNode = null, a.callbackPriority = 0;
+    else if (b = d & -d, a.callbackPriority !== b) {
+      null != c && bc(c);
+      if (1 === b)
+        0 === a.tag ? ig(Ek.bind(null, a)) : hg(Ek.bind(null, a)), Jf(function() {
+          0 === (K & 6) && jg();
+        }), c = null;
+      else {
+        switch (Dc(d)) {
+          case 1:
+            c = fc;
+            break;
+          case 4:
+            c = gc;
+            break;
+          case 16:
+            c = hc;
+            break;
+          case 536870912:
+            c = jc;
+            break;
+          default:
+            c = hc;
+        }
+        c = Fk(c, Gk.bind(null, a));
+      }
+      a.callbackPriority = b;
+      a.callbackNode = c;
+    }
+  }
+  function Gk(a, b) {
+    Ak = -1;
+    Bk = 0;
+    if (0 !== (K & 6))
+      throw Error(p(327));
+    var c = a.callbackNode;
+    if (Hk() && a.callbackNode !== c)
+      return null;
+    var d = uc(a, a === Q ? Z : 0);
+    if (0 === d)
+      return null;
+    if (0 !== (d & 30) || 0 !== (d & a.expiredLanes) || b)
+      b = Ik(a, d);
+    else {
+      b = d;
+      var e = K;
+      K |= 2;
+      var f2 = Jk();
+      if (Q !== a || Z !== b)
+        uk = null, Gj = B() + 500, Kk(a, b);
+      do
+        try {
+          Lk();
+          break;
+        } catch (h) {
+          Mk(a, h);
+        }
+      while (1);
+      $g();
+      mk.current = f2;
+      K = e;
+      null !== Y ? b = 0 : (Q = null, Z = 0, b = T);
+    }
+    if (0 !== b) {
+      2 === b && (e = xc(a), 0 !== e && (d = e, b = Nk(a, e)));
+      if (1 === b)
+        throw c = pk, Kk(a, 0), Ck(a, d), Dk(a, B()), c;
+      if (6 === b)
+        Ck(a, d);
+      else {
+        e = a.current.alternate;
+        if (0 === (d & 30) && !Ok(e) && (b = Ik(a, d), 2 === b && (f2 = xc(a), 0 !== f2 && (d = f2, b = Nk(a, f2))), 1 === b))
+          throw c = pk, Kk(a, 0), Ck(a, d), Dk(a, B()), c;
+        a.finishedWork = e;
+        a.finishedLanes = d;
+        switch (b) {
+          case 0:
+          case 1:
+            throw Error(p(345));
+          case 2:
+            Pk(a, tk, uk);
+            break;
+          case 3:
+            Ck(a, d);
+            if ((d & 130023424) === d && (b = fk + 500 - B(), 10 < b)) {
+              if (0 !== uc(a, 0))
+                break;
+              e = a.suspendedLanes;
+              if ((e & d) !== d) {
+                R();
+                a.pingedLanes |= a.suspendedLanes & e;
+                break;
+              }
+              a.timeoutHandle = Ff(Pk.bind(null, a, tk, uk), b);
+              break;
+            }
+            Pk(a, tk, uk);
+            break;
+          case 4:
+            Ck(a, d);
+            if ((d & 4194240) === d)
+              break;
+            b = a.eventTimes;
+            for (e = -1; 0 < d; ) {
+              var g = 31 - oc(d);
+              f2 = 1 << g;
+              g = b[g];
+              g > e && (e = g);
+              d &= ~f2;
+            }
+            d = e;
+            d = B() - d;
+            d = (120 > d ? 120 : 480 > d ? 480 : 1080 > d ? 1080 : 1920 > d ? 1920 : 3e3 > d ? 3e3 : 4320 > d ? 4320 : 1960 * lk(d / 1960)) - d;
+            if (10 < d) {
+              a.timeoutHandle = Ff(Pk.bind(null, a, tk, uk), d);
+              break;
+            }
+            Pk(a, tk, uk);
+            break;
+          case 5:
+            Pk(a, tk, uk);
+            break;
+          default:
+            throw Error(p(329));
+        }
+      }
+    }
+    Dk(a, B());
+    return a.callbackNode === c ? Gk.bind(null, a) : null;
+  }
+  function Nk(a, b) {
+    var c = sk;
+    a.current.memoizedState.isDehydrated && (Kk(a, b).flags |= 256);
+    a = Ik(a, b);
+    2 !== a && (b = tk, tk = c, null !== b && Fj(b));
+    return a;
+  }
+  function Fj(a) {
+    null === tk ? tk = a : tk.push.apply(tk, a);
+  }
+  function Ok(a) {
+    for (var b = a; ; ) {
+      if (b.flags & 16384) {
+        var c = b.updateQueue;
+        if (null !== c && (c = c.stores, null !== c))
+          for (var d = 0; d < c.length; d++) {
+            var e = c[d], f2 = e.getSnapshot;
+            e = e.value;
+            try {
+              if (!He(f2(), e))
+                return false;
+            } catch (g) {
+              return false;
+            }
+          }
+      }
+      c = b.child;
+      if (b.subtreeFlags & 16384 && null !== c)
+        c.return = b, b = c;
+      else {
+        if (b === a)
+          break;
+        for (; null === b.sibling; ) {
+          if (null === b.return || b.return === a)
+            return true;
+          b = b.return;
+        }
+        b.sibling.return = b.return;
+        b = b.sibling;
+      }
+    }
+    return true;
+  }
+  function Ck(a, b) {
+    b &= ~rk;
+    b &= ~qk;
+    a.suspendedLanes |= b;
+    a.pingedLanes &= ~b;
+    for (a = a.expirationTimes; 0 < b; ) {
+      var c = 31 - oc(b), d = 1 << c;
+      a[c] = -1;
+      b &= ~d;
+    }
+  }
+  function Ek(a) {
+    if (0 !== (K & 6))
+      throw Error(p(327));
+    Hk();
+    var b = uc(a, 0);
+    if (0 === (b & 1))
+      return Dk(a, B()), null;
+    var c = Ik(a, b);
+    if (0 !== a.tag && 2 === c) {
+      var d = xc(a);
+      0 !== d && (b = d, c = Nk(a, d));
+    }
+    if (1 === c)
+      throw c = pk, Kk(a, 0), Ck(a, b), Dk(a, B()), c;
+    if (6 === c)
+      throw Error(p(345));
+    a.finishedWork = a.current.alternate;
+    a.finishedLanes = b;
+    Pk(a, tk, uk);
+    Dk(a, B());
+    return null;
+  }
+  function Qk(a, b) {
+    var c = K;
+    K |= 1;
+    try {
+      return a(b);
+    } finally {
+      K = c, 0 === K && (Gj = B() + 500, fg && jg());
+    }
+  }
+  function Rk(a) {
+    null !== wk && 0 === wk.tag && 0 === (K & 6) && Hk();
+    var b = K;
+    K |= 1;
+    var c = ok.transition, d = C;
+    try {
+      if (ok.transition = null, C = 1, a)
+        return a();
+    } finally {
+      C = d, ok.transition = c, K = b, 0 === (K & 6) && jg();
+    }
+  }
+  function Hj() {
+    fj = ej.current;
+    E(ej);
+  }
+  function Kk(a, b) {
+    a.finishedWork = null;
+    a.finishedLanes = 0;
+    var c = a.timeoutHandle;
+    -1 !== c && (a.timeoutHandle = -1, Gf(c));
+    if (null !== Y)
+      for (c = Y.return; null !== c; ) {
+        var d = c;
+        wg(d);
+        switch (d.tag) {
+          case 1:
+            d = d.type.childContextTypes;
+            null !== d && void 0 !== d && $f();
+            break;
+          case 3:
+            zh();
+            E(Wf);
+            E(H);
+            Eh();
+            break;
+          case 5:
+            Bh(d);
+            break;
+          case 4:
+            zh();
+            break;
+          case 13:
+            E(L);
+            break;
+          case 19:
+            E(L);
+            break;
+          case 10:
+            ah(d.type._context);
+            break;
+          case 22:
+          case 23:
+            Hj();
+        }
+        c = c.return;
+      }
+    Q = a;
+    Y = a = Pg(a.current, null);
+    Z = fj = b;
+    T = 0;
+    pk = null;
+    rk = qk = rh = 0;
+    tk = sk = null;
+    if (null !== fh) {
+      for (b = 0; b < fh.length; b++)
+        if (c = fh[b], d = c.interleaved, null !== d) {
+          c.interleaved = null;
+          var e = d.next, f2 = c.pending;
+          if (null !== f2) {
+            var g = f2.next;
+            f2.next = e;
+            d.next = g;
+          }
+          c.pending = d;
+        }
+      fh = null;
+    }
+    return a;
+  }
+  function Mk(a, b) {
+    do {
+      var c = Y;
+      try {
+        $g();
+        Fh.current = Rh;
+        if (Ih) {
+          for (var d = M.memoizedState; null !== d; ) {
+            var e = d.queue;
+            null !== e && (e.pending = null);
+            d = d.next;
+          }
+          Ih = false;
+        }
+        Hh = 0;
+        O = N = M = null;
+        Jh = false;
+        Kh = 0;
+        nk.current = null;
+        if (null === c || null === c.return) {
+          T = 1;
+          pk = b;
+          Y = null;
+          break;
+        }
+        a: {
+          var f2 = a, g = c.return, h = c, k2 = b;
+          b = Z;
+          h.flags |= 32768;
+          if (null !== k2 && "object" === typeof k2 && "function" === typeof k2.then) {
+            var l2 = k2, m2 = h, q2 = m2.tag;
+            if (0 === (m2.mode & 1) && (0 === q2 || 11 === q2 || 15 === q2)) {
+              var r2 = m2.alternate;
+              r2 ? (m2.updateQueue = r2.updateQueue, m2.memoizedState = r2.memoizedState, m2.lanes = r2.lanes) : (m2.updateQueue = null, m2.memoizedState = null);
+            }
+            var y2 = Ui(g);
+            if (null !== y2) {
+              y2.flags &= -257;
+              Vi(y2, g, h, f2, b);
+              y2.mode & 1 && Si(f2, l2, b);
+              b = y2;
+              k2 = l2;
+              var n2 = b.updateQueue;
+              if (null === n2) {
+                var t2 = /* @__PURE__ */ new Set();
+                t2.add(k2);
+                b.updateQueue = t2;
+              } else
+                n2.add(k2);
+              break a;
+            } else {
+              if (0 === (b & 1)) {
+                Si(f2, l2, b);
+                tj();
+                break a;
+              }
+              k2 = Error(p(426));
+            }
+          } else if (I && h.mode & 1) {
+            var J2 = Ui(g);
+            if (null !== J2) {
+              0 === (J2.flags & 65536) && (J2.flags |= 256);
+              Vi(J2, g, h, f2, b);
+              Jg(Ji(k2, h));
+              break a;
+            }
+          }
+          f2 = k2 = Ji(k2, h);
+          4 !== T && (T = 2);
+          null === sk ? sk = [f2] : sk.push(f2);
+          f2 = g;
+          do {
+            switch (f2.tag) {
+              case 3:
+                f2.flags |= 65536;
+                b &= -b;
+                f2.lanes |= b;
+                var x2 = Ni(f2, k2, b);
+                ph(f2, x2);
+                break a;
+              case 1:
+                h = k2;
+                var w2 = f2.type, u2 = f2.stateNode;
+                if (0 === (f2.flags & 128) && ("function" === typeof w2.getDerivedStateFromError || null !== u2 && "function" === typeof u2.componentDidCatch && (null === Ri || !Ri.has(u2)))) {
+                  f2.flags |= 65536;
+                  b &= -b;
+                  f2.lanes |= b;
+                  var F2 = Qi(f2, h, b);
+                  ph(f2, F2);
+                  break a;
+                }
+            }
+            f2 = f2.return;
+          } while (null !== f2);
+        }
+        Sk(c);
+      } catch (na) {
+        b = na;
+        Y === c && null !== c && (Y = c = c.return);
+        continue;
+      }
+      break;
+    } while (1);
+  }
+  function Jk() {
+    var a = mk.current;
+    mk.current = Rh;
+    return null === a ? Rh : a;
+  }
+  function tj() {
+    if (0 === T || 3 === T || 2 === T)
+      T = 4;
+    null === Q || 0 === (rh & 268435455) && 0 === (qk & 268435455) || Ck(Q, Z);
+  }
+  function Ik(a, b) {
+    var c = K;
+    K |= 2;
+    var d = Jk();
+    if (Q !== a || Z !== b)
+      uk = null, Kk(a, b);
+    do
+      try {
+        Tk();
+        break;
+      } catch (e) {
+        Mk(a, e);
+      }
+    while (1);
+    $g();
+    K = c;
+    mk.current = d;
+    if (null !== Y)
+      throw Error(p(261));
+    Q = null;
+    Z = 0;
+    return T;
+  }
+  function Tk() {
+    for (; null !== Y; )
+      Uk(Y);
+  }
+  function Lk() {
+    for (; null !== Y && !cc(); )
+      Uk(Y);
+  }
+  function Uk(a) {
+    var b = Vk(a.alternate, a, fj);
+    a.memoizedProps = a.pendingProps;
+    null === b ? Sk(a) : Y = b;
+    nk.current = null;
+  }
+  function Sk(a) {
+    var b = a;
+    do {
+      var c = b.alternate;
+      a = b.return;
+      if (0 === (b.flags & 32768)) {
+        if (c = Ej(c, b, fj), null !== c) {
+          Y = c;
+          return;
+        }
+      } else {
+        c = Ij(c, b);
+        if (null !== c) {
+          c.flags &= 32767;
+          Y = c;
+          return;
+        }
+        if (null !== a)
+          a.flags |= 32768, a.subtreeFlags = 0, a.deletions = null;
+        else {
+          T = 6;
+          Y = null;
+          return;
+        }
+      }
+      b = b.sibling;
+      if (null !== b) {
+        Y = b;
+        return;
+      }
+      Y = b = a;
+    } while (null !== b);
+    0 === T && (T = 5);
+  }
+  function Pk(a, b, c) {
+    var d = C, e = ok.transition;
+    try {
+      ok.transition = null, C = 1, Wk(a, b, c, d);
+    } finally {
+      ok.transition = e, C = d;
+    }
+    return null;
+  }
+  function Wk(a, b, c, d) {
+    do
+      Hk();
+    while (null !== wk);
+    if (0 !== (K & 6))
+      throw Error(p(327));
+    c = a.finishedWork;
+    var e = a.finishedLanes;
+    if (null === c)
+      return null;
+    a.finishedWork = null;
+    a.finishedLanes = 0;
+    if (c === a.current)
+      throw Error(p(177));
+    a.callbackNode = null;
+    a.callbackPriority = 0;
+    var f2 = c.lanes | c.childLanes;
+    Bc(a, f2);
+    a === Q && (Y = Q = null, Z = 0);
+    0 === (c.subtreeFlags & 2064) && 0 === (c.flags & 2064) || vk || (vk = true, Fk(hc, function() {
+      Hk();
+      return null;
+    }));
+    f2 = 0 !== (c.flags & 15990);
+    if (0 !== (c.subtreeFlags & 15990) || f2) {
+      f2 = ok.transition;
+      ok.transition = null;
+      var g = C;
+      C = 1;
+      var h = K;
+      K |= 4;
+      nk.current = null;
+      Oj(a, c);
+      dk(c, a);
+      Oe(Df);
+      dd = !!Cf;
+      Df = Cf = null;
+      a.current = c;
+      hk(c);
+      dc();
+      K = h;
+      C = g;
+      ok.transition = f2;
+    } else
+      a.current = c;
+    vk && (vk = false, wk = a, xk = e);
+    f2 = a.pendingLanes;
+    0 === f2 && (Ri = null);
+    mc(c.stateNode);
+    Dk(a, B());
+    if (null !== b)
+      for (d = a.onRecoverableError, c = 0; c < b.length; c++)
+        e = b[c], d(e.value, { componentStack: e.stack, digest: e.digest });
+    if (Oi)
+      throw Oi = false, a = Pi, Pi = null, a;
+    0 !== (xk & 1) && 0 !== a.tag && Hk();
+    f2 = a.pendingLanes;
+    0 !== (f2 & 1) ? a === zk ? yk++ : (yk = 0, zk = a) : yk = 0;
+    jg();
+    return null;
+  }
+  function Hk() {
+    if (null !== wk) {
+      var a = Dc(xk), b = ok.transition, c = C;
+      try {
+        ok.transition = null;
+        C = 16 > a ? 16 : a;
+        if (null === wk)
+          var d = false;
+        else {
+          a = wk;
+          wk = null;
+          xk = 0;
+          if (0 !== (K & 6))
+            throw Error(p(331));
+          var e = K;
+          K |= 4;
+          for (V = a.current; null !== V; ) {
+            var f2 = V, g = f2.child;
+            if (0 !== (V.flags & 16)) {
+              var h = f2.deletions;
+              if (null !== h) {
+                for (var k2 = 0; k2 < h.length; k2++) {
+                  var l2 = h[k2];
+                  for (V = l2; null !== V; ) {
+                    var m2 = V;
+                    switch (m2.tag) {
+                      case 0:
+                      case 11:
+                      case 15:
+                        Pj(8, m2, f2);
+                    }
+                    var q2 = m2.child;
+                    if (null !== q2)
+                      q2.return = m2, V = q2;
+                    else
+                      for (; null !== V; ) {
+                        m2 = V;
+                        var r2 = m2.sibling, y2 = m2.return;
+                        Sj(m2);
+                        if (m2 === l2) {
+                          V = null;
+                          break;
+                        }
+                        if (null !== r2) {
+                          r2.return = y2;
+                          V = r2;
+                          break;
+                        }
+                        V = y2;
+                      }
+                  }
+                }
+                var n2 = f2.alternate;
+                if (null !== n2) {
+                  var t2 = n2.child;
+                  if (null !== t2) {
+                    n2.child = null;
+                    do {
+                      var J2 = t2.sibling;
+                      t2.sibling = null;
+                      t2 = J2;
+                    } while (null !== t2);
+                  }
+                }
+                V = f2;
+              }
+            }
+            if (0 !== (f2.subtreeFlags & 2064) && null !== g)
+              g.return = f2, V = g;
+            else
+              b:
+                for (; null !== V; ) {
+                  f2 = V;
+                  if (0 !== (f2.flags & 2048))
+                    switch (f2.tag) {
+                      case 0:
+                      case 11:
+                      case 15:
+                        Pj(9, f2, f2.return);
+                    }
+                  var x2 = f2.sibling;
+                  if (null !== x2) {
+                    x2.return = f2.return;
+                    V = x2;
+                    break b;
+                  }
+                  V = f2.return;
+                }
+          }
+          var w2 = a.current;
+          for (V = w2; null !== V; ) {
+            g = V;
+            var u2 = g.child;
+            if (0 !== (g.subtreeFlags & 2064) && null !== u2)
+              u2.return = g, V = u2;
+            else
+              b:
+                for (g = w2; null !== V; ) {
+                  h = V;
+                  if (0 !== (h.flags & 2048))
+                    try {
+                      switch (h.tag) {
+                        case 0:
+                        case 11:
+                        case 15:
+                          Qj(9, h);
+                      }
+                    } catch (na) {
+                      W(h, h.return, na);
+                    }
+                  if (h === g) {
+                    V = null;
+                    break b;
+                  }
+                  var F2 = h.sibling;
+                  if (null !== F2) {
+                    F2.return = h.return;
+                    V = F2;
+                    break b;
+                  }
+                  V = h.return;
+                }
+          }
+          K = e;
+          jg();
+          if (lc && "function" === typeof lc.onPostCommitFiberRoot)
+            try {
+              lc.onPostCommitFiberRoot(kc, a);
+            } catch (na) {
+            }
+          d = true;
+        }
+        return d;
+      } finally {
+        C = c, ok.transition = b;
+      }
+    }
+    return false;
+  }
+  function Xk(a, b, c) {
+    b = Ji(c, b);
+    b = Ni(a, b, 1);
+    a = nh(a, b, 1);
+    b = R();
+    null !== a && (Ac(a, 1, b), Dk(a, b));
+  }
+  function W(a, b, c) {
+    if (3 === a.tag)
+      Xk(a, a, c);
+    else
+      for (; null !== b; ) {
+        if (3 === b.tag) {
+          Xk(b, a, c);
+          break;
+        } else if (1 === b.tag) {
+          var d = b.stateNode;
+          if ("function" === typeof b.type.getDerivedStateFromError || "function" === typeof d.componentDidCatch && (null === Ri || !Ri.has(d))) {
+            a = Ji(c, a);
+            a = Qi(b, a, 1);
+            b = nh(b, a, 1);
+            a = R();
+            null !== b && (Ac(b, 1, a), Dk(b, a));
+            break;
+          }
+        }
+        b = b.return;
+      }
+  }
+  function Ti(a, b, c) {
+    var d = a.pingCache;
+    null !== d && d.delete(b);
+    b = R();
+    a.pingedLanes |= a.suspendedLanes & c;
+    Q === a && (Z & c) === c && (4 === T || 3 === T && (Z & 130023424) === Z && 500 > B() - fk ? Kk(a, 0) : rk |= c);
+    Dk(a, b);
+  }
+  function Yk(a, b) {
+    0 === b && (0 === (a.mode & 1) ? b = 1 : (b = sc, sc <<= 1, 0 === (sc & 130023424) && (sc = 4194304)));
+    var c = R();
+    a = ih(a, b);
+    null !== a && (Ac(a, b, c), Dk(a, c));
+  }
+  function uj(a) {
+    var b = a.memoizedState, c = 0;
+    null !== b && (c = b.retryLane);
+    Yk(a, c);
+  }
+  function bk(a, b) {
+    var c = 0;
+    switch (a.tag) {
+      case 13:
+        var d = a.stateNode;
+        var e = a.memoizedState;
+        null !== e && (c = e.retryLane);
+        break;
+      case 19:
+        d = a.stateNode;
+        break;
+      default:
+        throw Error(p(314));
+    }
+    null !== d && d.delete(b);
+    Yk(a, c);
+  }
+  var Vk;
+  Vk = function(a, b, c) {
+    if (null !== a)
+      if (a.memoizedProps !== b.pendingProps || Wf.current)
+        dh = true;
+      else {
+        if (0 === (a.lanes & c) && 0 === (b.flags & 128))
+          return dh = false, yj(a, b, c);
+        dh = 0 !== (a.flags & 131072) ? true : false;
+      }
+    else
+      dh = false, I && 0 !== (b.flags & 1048576) && ug(b, ng, b.index);
+    b.lanes = 0;
+    switch (b.tag) {
+      case 2:
+        var d = b.type;
+        ij(a, b);
+        a = b.pendingProps;
+        var e = Yf(b, H.current);
+        ch(b, c);
+        e = Nh(null, b, d, a, e, c);
+        var f2 = Sh();
+        b.flags |= 1;
+        "object" === typeof e && null !== e && "function" === typeof e.render && void 0 === e.$$typeof ? (b.tag = 1, b.memoizedState = null, b.updateQueue = null, Zf(d) ? (f2 = true, cg(b)) : f2 = false, b.memoizedState = null !== e.state && void 0 !== e.state ? e.state : null, kh(b), e.updater = Ei, b.stateNode = e, e._reactInternals = b, Ii(b, d, a, c), b = jj(null, b, d, true, f2, c)) : (b.tag = 0, I && f2 && vg(b), Xi(null, b, e, c), b = b.child);
+        return b;
+      case 16:
+        d = b.elementType;
+        a: {
+          ij(a, b);
+          a = b.pendingProps;
+          e = d._init;
+          d = e(d._payload);
+          b.type = d;
+          e = b.tag = Zk(d);
+          a = Ci(d, a);
+          switch (e) {
+            case 0:
+              b = cj(null, b, d, a, c);
+              break a;
+            case 1:
+              b = hj(null, b, d, a, c);
+              break a;
+            case 11:
+              b = Yi(null, b, d, a, c);
+              break a;
+            case 14:
+              b = $i(null, b, d, Ci(d.type, a), c);
+              break a;
+          }
+          throw Error(p(
+            306,
+            d,
+            ""
+          ));
+        }
+        return b;
+      case 0:
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), cj(a, b, d, e, c);
+      case 1:
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), hj(a, b, d, e, c);
+      case 3:
+        a: {
+          kj(b);
+          if (null === a)
+            throw Error(p(387));
+          d = b.pendingProps;
+          f2 = b.memoizedState;
+          e = f2.element;
+          lh(a, b);
+          qh(b, d, null, c);
+          var g = b.memoizedState;
+          d = g.element;
+          if (f2.isDehydrated)
+            if (f2 = { element: d, isDehydrated: false, cache: g.cache, pendingSuspenseBoundaries: g.pendingSuspenseBoundaries, transitions: g.transitions }, b.updateQueue.baseState = f2, b.memoizedState = f2, b.flags & 256) {
+              e = Ji(Error(p(423)), b);
+              b = lj(a, b, d, c, e);
+              break a;
+            } else if (d !== e) {
+              e = Ji(Error(p(424)), b);
+              b = lj(a, b, d, c, e);
+              break a;
+            } else
+              for (yg = Lf(b.stateNode.containerInfo.firstChild), xg = b, I = true, zg = null, c = Vg(b, null, d, c), b.child = c; c; )
+                c.flags = c.flags & -3 | 4096, c = c.sibling;
+          else {
+            Ig();
+            if (d === e) {
+              b = Zi(a, b, c);
+              break a;
+            }
+            Xi(a, b, d, c);
+          }
+          b = b.child;
+        }
+        return b;
+      case 5:
+        return Ah(b), null === a && Eg(b), d = b.type, e = b.pendingProps, f2 = null !== a ? a.memoizedProps : null, g = e.children, Ef(d, e) ? g = null : null !== f2 && Ef(d, f2) && (b.flags |= 32), gj(a, b), Xi(a, b, g, c), b.child;
+      case 6:
+        return null === a && Eg(b), null;
+      case 13:
+        return oj(a, b, c);
+      case 4:
+        return yh(b, b.stateNode.containerInfo), d = b.pendingProps, null === a ? b.child = Ug(b, null, d, c) : Xi(a, b, d, c), b.child;
+      case 11:
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), Yi(a, b, d, e, c);
+      case 7:
+        return Xi(a, b, b.pendingProps, c), b.child;
+      case 8:
+        return Xi(a, b, b.pendingProps.children, c), b.child;
+      case 12:
+        return Xi(a, b, b.pendingProps.children, c), b.child;
+      case 10:
+        a: {
+          d = b.type._context;
+          e = b.pendingProps;
+          f2 = b.memoizedProps;
+          g = e.value;
+          G(Wg, d._currentValue);
+          d._currentValue = g;
+          if (null !== f2)
+            if (He(f2.value, g)) {
+              if (f2.children === e.children && !Wf.current) {
+                b = Zi(a, b, c);
+                break a;
+              }
+            } else
+              for (f2 = b.child, null !== f2 && (f2.return = b); null !== f2; ) {
+                var h = f2.dependencies;
+                if (null !== h) {
+                  g = f2.child;
+                  for (var k2 = h.firstContext; null !== k2; ) {
+                    if (k2.context === d) {
+                      if (1 === f2.tag) {
+                        k2 = mh(-1, c & -c);
+                        k2.tag = 2;
+                        var l2 = f2.updateQueue;
+                        if (null !== l2) {
+                          l2 = l2.shared;
+                          var m2 = l2.pending;
+                          null === m2 ? k2.next = k2 : (k2.next = m2.next, m2.next = k2);
+                          l2.pending = k2;
+                        }
+                      }
+                      f2.lanes |= c;
+                      k2 = f2.alternate;
+                      null !== k2 && (k2.lanes |= c);
+                      bh(
+                        f2.return,
+                        c,
+                        b
+                      );
+                      h.lanes |= c;
+                      break;
+                    }
+                    k2 = k2.next;
+                  }
+                } else if (10 === f2.tag)
+                  g = f2.type === b.type ? null : f2.child;
+                else if (18 === f2.tag) {
+                  g = f2.return;
+                  if (null === g)
+                    throw Error(p(341));
+                  g.lanes |= c;
+                  h = g.alternate;
+                  null !== h && (h.lanes |= c);
+                  bh(g, c, b);
+                  g = f2.sibling;
+                } else
+                  g = f2.child;
+                if (null !== g)
+                  g.return = f2;
+                else
+                  for (g = f2; null !== g; ) {
+                    if (g === b) {
+                      g = null;
+                      break;
+                    }
+                    f2 = g.sibling;
+                    if (null !== f2) {
+                      f2.return = g.return;
+                      g = f2;
+                      break;
+                    }
+                    g = g.return;
+                  }
+                f2 = g;
+              }
+          Xi(a, b, e.children, c);
+          b = b.child;
+        }
+        return b;
+      case 9:
+        return e = b.type, d = b.pendingProps.children, ch(b, c), e = eh(e), d = d(e), b.flags |= 1, Xi(a, b, d, c), b.child;
+      case 14:
+        return d = b.type, e = Ci(d, b.pendingProps), e = Ci(d.type, e), $i(a, b, d, e, c);
+      case 15:
+        return bj(a, b, b.type, b.pendingProps, c);
+      case 17:
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Ci(d, e), ij(a, b), b.tag = 1, Zf(d) ? (a = true, cg(b)) : a = false, ch(b, c), Gi(b, d, e), Ii(b, d, e, c), jj(null, b, d, true, a, c);
+      case 19:
+        return xj(a, b, c);
+      case 22:
+        return dj(a, b, c);
+    }
+    throw Error(p(156, b.tag));
+  };
+  function Fk(a, b) {
+    return ac(a, b);
+  }
+  function $k(a, b, c, d) {
+    this.tag = a;
+    this.key = c;
+    this.sibling = this.child = this.return = this.stateNode = this.type = this.elementType = null;
+    this.index = 0;
+    this.ref = null;
+    this.pendingProps = b;
+    this.dependencies = this.memoizedState = this.updateQueue = this.memoizedProps = null;
+    this.mode = d;
+    this.subtreeFlags = this.flags = 0;
+    this.deletions = null;
+    this.childLanes = this.lanes = 0;
+    this.alternate = null;
+  }
+  function Bg(a, b, c, d) {
+    return new $k(a, b, c, d);
+  }
+  function aj(a) {
+    a = a.prototype;
+    return !(!a || !a.isReactComponent);
+  }
+  function Zk(a) {
+    if ("function" === typeof a)
+      return aj(a) ? 1 : 0;
+    if (void 0 !== a && null !== a) {
+      a = a.$$typeof;
+      if (a === Da)
+        return 11;
+      if (a === Ga)
+        return 14;
+    }
+    return 2;
+  }
+  function Pg(a, b) {
+    var c = a.alternate;
+    null === c ? (c = Bg(a.tag, b, a.key, a.mode), c.elementType = a.elementType, c.type = a.type, c.stateNode = a.stateNode, c.alternate = a, a.alternate = c) : (c.pendingProps = b, c.type = a.type, c.flags = 0, c.subtreeFlags = 0, c.deletions = null);
+    c.flags = a.flags & 14680064;
+    c.childLanes = a.childLanes;
+    c.lanes = a.lanes;
+    c.child = a.child;
+    c.memoizedProps = a.memoizedProps;
+    c.memoizedState = a.memoizedState;
+    c.updateQueue = a.updateQueue;
+    b = a.dependencies;
+    c.dependencies = null === b ? null : { lanes: b.lanes, firstContext: b.firstContext };
+    c.sibling = a.sibling;
+    c.index = a.index;
+    c.ref = a.ref;
+    return c;
+  }
+  function Rg(a, b, c, d, e, f2) {
+    var g = 2;
+    d = a;
+    if ("function" === typeof a)
+      aj(a) && (g = 1);
+    else if ("string" === typeof a)
+      g = 5;
+    else
+      a:
+        switch (a) {
+          case ya:
+            return Tg(c.children, e, f2, b);
+          case za:
+            g = 8;
+            e |= 8;
+            break;
+          case Aa:
+            return a = Bg(12, c, b, e | 2), a.elementType = Aa, a.lanes = f2, a;
+          case Ea:
+            return a = Bg(13, c, b, e), a.elementType = Ea, a.lanes = f2, a;
+          case Fa:
+            return a = Bg(19, c, b, e), a.elementType = Fa, a.lanes = f2, a;
+          case Ia:
+            return pj(c, e, f2, b);
+          default:
+            if ("object" === typeof a && null !== a)
+              switch (a.$$typeof) {
+                case Ba:
+                  g = 10;
+                  break a;
+                case Ca:
+                  g = 9;
+                  break a;
+                case Da:
+                  g = 11;
+                  break a;
+                case Ga:
+                  g = 14;
+                  break a;
+                case Ha:
+                  g = 16;
+                  d = null;
+                  break a;
+              }
+            throw Error(p(130, null == a ? a : typeof a, ""));
+        }
+    b = Bg(g, c, b, e);
+    b.elementType = a;
+    b.type = d;
+    b.lanes = f2;
+    return b;
+  }
+  function Tg(a, b, c, d) {
+    a = Bg(7, a, d, b);
+    a.lanes = c;
+    return a;
+  }
+  function pj(a, b, c, d) {
+    a = Bg(22, a, d, b);
+    a.elementType = Ia;
+    a.lanes = c;
+    a.stateNode = { isHidden: false };
+    return a;
+  }
+  function Qg(a, b, c) {
+    a = Bg(6, a, null, b);
+    a.lanes = c;
+    return a;
+  }
+  function Sg(a, b, c) {
+    b = Bg(4, null !== a.children ? a.children : [], a.key, b);
+    b.lanes = c;
+    b.stateNode = { containerInfo: a.containerInfo, pendingChildren: null, implementation: a.implementation };
+    return b;
+  }
+  function al(a, b, c, d, e) {
+    this.tag = b;
+    this.containerInfo = a;
+    this.finishedWork = this.pingCache = this.current = this.pendingChildren = null;
+    this.timeoutHandle = -1;
+    this.callbackNode = this.pendingContext = this.context = null;
+    this.callbackPriority = 0;
+    this.eventTimes = zc(0);
+    this.expirationTimes = zc(-1);
+    this.entangledLanes = this.finishedLanes = this.mutableReadLanes = this.expiredLanes = this.pingedLanes = this.suspendedLanes = this.pendingLanes = 0;
+    this.entanglements = zc(0);
+    this.identifierPrefix = d;
+    this.onRecoverableError = e;
+    this.mutableSourceEagerHydrationData = null;
+  }
+  function bl(a, b, c, d, e, f2, g, h, k2) {
+    a = new al(a, b, c, h, k2);
+    1 === b ? (b = 1, true === f2 && (b |= 8)) : b = 0;
+    f2 = Bg(3, null, null, b);
+    a.current = f2;
+    f2.stateNode = a;
+    f2.memoizedState = { element: d, isDehydrated: c, cache: null, transitions: null, pendingSuspenseBoundaries: null };
+    kh(f2);
+    return a;
+  }
+  function cl(a, b, c) {
+    var d = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
+    return { $$typeof: wa, key: null == d ? null : "" + d, children: a, containerInfo: b, implementation: c };
+  }
+  function dl(a) {
+    if (!a)
+      return Vf;
+    a = a._reactInternals;
+    a: {
+      if (Vb(a) !== a || 1 !== a.tag)
+        throw Error(p(170));
+      var b = a;
+      do {
+        switch (b.tag) {
+          case 3:
+            b = b.stateNode.context;
+            break a;
+          case 1:
+            if (Zf(b.type)) {
+              b = b.stateNode.__reactInternalMemoizedMergedChildContext;
+              break a;
+            }
+        }
+        b = b.return;
+      } while (null !== b);
+      throw Error(p(171));
+    }
+    if (1 === a.tag) {
+      var c = a.type;
+      if (Zf(c))
+        return bg(a, c, b);
+    }
+    return b;
+  }
+  function el(a, b, c, d, e, f2, g, h, k2) {
+    a = bl(c, d, true, a, e, f2, g, h, k2);
+    a.context = dl(null);
+    c = a.current;
+    d = R();
+    e = yi(c);
+    f2 = mh(d, e);
+    f2.callback = void 0 !== b && null !== b ? b : null;
+    nh(c, f2, e);
+    a.current.lanes = e;
+    Ac(a, e, d);
+    Dk(a, d);
+    return a;
+  }
+  function fl(a, b, c, d) {
+    var e = b.current, f2 = R(), g = yi(e);
+    c = dl(c);
+    null === b.context ? b.context = c : b.pendingContext = c;
+    b = mh(f2, g);
+    b.payload = { element: a };
+    d = void 0 === d ? null : d;
+    null !== d && (b.callback = d);
+    a = nh(e, b, g);
+    null !== a && (gi(a, e, g, f2), oh(a, e, g));
+    return g;
+  }
+  function gl(a) {
+    a = a.current;
+    if (!a.child)
+      return null;
+    switch (a.child.tag) {
+      case 5:
+        return a.child.stateNode;
+      default:
+        return a.child.stateNode;
+    }
+  }
+  function hl(a, b) {
+    a = a.memoizedState;
+    if (null !== a && null !== a.dehydrated) {
+      var c = a.retryLane;
+      a.retryLane = 0 !== c && c < b ? c : b;
+    }
+  }
+  function il(a, b) {
+    hl(a, b);
+    (a = a.alternate) && hl(a, b);
+  }
+  function jl() {
+    return null;
+  }
+  var kl = "function" === typeof reportError ? reportError : function(a) {
+    console.error(a);
+  };
+  function ll(a) {
+    this._internalRoot = a;
+  }
+  ml.prototype.render = ll.prototype.render = function(a) {
+    var b = this._internalRoot;
+    if (null === b)
+      throw Error(p(409));
+    fl(a, b, null, null);
+  };
+  ml.prototype.unmount = ll.prototype.unmount = function() {
+    var a = this._internalRoot;
+    if (null !== a) {
+      this._internalRoot = null;
+      var b = a.containerInfo;
+      Rk(function() {
+        fl(null, a, null, null);
+      });
+      b[uf] = null;
+    }
+  };
+  function ml(a) {
+    this._internalRoot = a;
+  }
+  ml.prototype.unstable_scheduleHydration = function(a) {
+    if (a) {
+      var b = Hc();
+      a = { blockedOn: null, target: a, priority: b };
+      for (var c = 0; c < Qc.length && 0 !== b && b < Qc[c].priority; c++)
+        ;
+      Qc.splice(c, 0, a);
+      0 === c && Vc(a);
+    }
+  };
+  function nl(a) {
+    return !(!a || 1 !== a.nodeType && 9 !== a.nodeType && 11 !== a.nodeType);
+  }
+  function ol(a) {
+    return !(!a || 1 !== a.nodeType && 9 !== a.nodeType && 11 !== a.nodeType && (8 !== a.nodeType || " react-mount-point-unstable " !== a.nodeValue));
+  }
+  function pl() {
+  }
+  function ql(a, b, c, d, e) {
+    if (e) {
+      if ("function" === typeof d) {
+        var f2 = d;
+        d = function() {
+          var a2 = gl(g);
+          f2.call(a2);
+        };
+      }
+      var g = el(b, d, a, 0, null, false, false, "", pl);
+      a._reactRootContainer = g;
+      a[uf] = g.current;
+      sf(8 === a.nodeType ? a.parentNode : a);
+      Rk();
+      return g;
+    }
+    for (; e = a.lastChild; )
+      a.removeChild(e);
+    if ("function" === typeof d) {
+      var h = d;
+      d = function() {
+        var a2 = gl(k2);
+        h.call(a2);
+      };
+    }
+    var k2 = bl(a, 0, false, null, null, false, false, "", pl);
+    a._reactRootContainer = k2;
+    a[uf] = k2.current;
+    sf(8 === a.nodeType ? a.parentNode : a);
+    Rk(function() {
+      fl(b, k2, c, d);
+    });
+    return k2;
+  }
+  function rl(a, b, c, d, e) {
+    var f2 = c._reactRootContainer;
+    if (f2) {
+      var g = f2;
+      if ("function" === typeof e) {
+        var h = e;
+        e = function() {
+          var a2 = gl(g);
+          h.call(a2);
+        };
+      }
+      fl(b, g, a, e);
+    } else
+      g = ql(c, b, a, e, d);
+    return gl(g);
+  }
+  Ec = function(a) {
+    switch (a.tag) {
+      case 3:
+        var b = a.stateNode;
+        if (b.current.memoizedState.isDehydrated) {
+          var c = tc(b.pendingLanes);
+          0 !== c && (Cc(b, c | 1), Dk(b, B()), 0 === (K & 6) && (Gj = B() + 500, jg()));
+        }
+        break;
+      case 13:
+        Rk(function() {
+          var b2 = ih(a, 1);
+          if (null !== b2) {
+            var c2 = R();
+            gi(b2, a, 1, c2);
+          }
+        }), il(a, 1);
+    }
+  };
+  Fc = function(a) {
+    if (13 === a.tag) {
+      var b = ih(a, 134217728);
+      if (null !== b) {
+        var c = R();
+        gi(b, a, 134217728, c);
+      }
+      il(a, 134217728);
+    }
+  };
+  Gc = function(a) {
+    if (13 === a.tag) {
+      var b = yi(a), c = ih(a, b);
+      if (null !== c) {
+        var d = R();
+        gi(c, a, b, d);
+      }
+      il(a, b);
+    }
+  };
+  Hc = function() {
+    return C;
+  };
+  Ic = function(a, b) {
+    var c = C;
+    try {
+      return C = a, b();
+    } finally {
+      C = c;
+    }
+  };
+  yb = function(a, b, c) {
+    switch (b) {
+      case "input":
+        bb(a, c);
+        b = c.name;
+        if ("radio" === c.type && null != b) {
+          for (c = a; c.parentNode; )
+            c = c.parentNode;
+          c = c.querySelectorAll("input[name=" + JSON.stringify("" + b) + '][type="radio"]');
+          for (b = 0; b < c.length; b++) {
+            var d = c[b];
+            if (d !== a && d.form === a.form) {
+              var e = Db(d);
+              if (!e)
+                throw Error(p(90));
+              Wa(d);
+              bb(d, e);
+            }
+          }
+        }
+        break;
+      case "textarea":
+        ib(a, c);
+        break;
+      case "select":
+        b = c.value, null != b && fb(a, !!c.multiple, b, false);
+    }
+  };
+  Gb = Qk;
+  Hb = Rk;
+  var sl = { usingClientEntryPoint: false, Events: [Cb, ue, Db, Eb, Fb, Qk] }, tl = { findFiberByHostInstance: Wc, bundleType: 0, version: "18.3.1", rendererPackageName: "react-dom" };
+  var ul = { bundleType: tl.bundleType, version: tl.version, rendererPackageName: tl.rendererPackageName, rendererConfig: tl.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: ua.ReactCurrentDispatcher, findHostInstanceByFiber: function(a) {
+    a = Zb(a);
+    return null === a ? null : a.stateNode;
+  }, findFiberByHostInstance: tl.findFiberByHostInstance || jl, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.1-next-f1338f8080-20240426" };
+  if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
+    var vl = __REACT_DEVTOOLS_GLOBAL_HOOK__;
+    if (!vl.isDisabled && vl.supportsFiber)
+      try {
+        kc = vl.inject(ul), lc = vl;
+      } catch (a) {
+      }
+  }
+  reactDom_production_min.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = sl;
+  reactDom_production_min.createPortal = function(a, b) {
+    var c = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
+    if (!nl(b))
+      throw Error(p(200));
+    return cl(a, b, null, c);
+  };
+  reactDom_production_min.createRoot = function(a, b) {
+    if (!nl(a))
+      throw Error(p(299));
+    var c = false, d = "", e = kl;
+    null !== b && void 0 !== b && (true === b.unstable_strictMode && (c = true), void 0 !== b.identifierPrefix && (d = b.identifierPrefix), void 0 !== b.onRecoverableError && (e = b.onRecoverableError));
+    b = bl(a, 1, false, null, null, c, false, d, e);
+    a[uf] = b.current;
+    sf(8 === a.nodeType ? a.parentNode : a);
+    return new ll(b);
+  };
+  reactDom_production_min.findDOMNode = function(a) {
+    if (null == a)
+      return null;
+    if (1 === a.nodeType)
+      return a;
+    var b = a._reactInternals;
+    if (void 0 === b) {
+      if ("function" === typeof a.render)
+        throw Error(p(188));
+      a = Object.keys(a).join(",");
+      throw Error(p(268, a));
+    }
+    a = Zb(b);
+    a = null === a ? null : a.stateNode;
+    return a;
+  };
+  reactDom_production_min.flushSync = function(a) {
+    return Rk(a);
+  };
+  reactDom_production_min.hydrate = function(a, b, c) {
+    if (!ol(b))
+      throw Error(p(200));
+    return rl(null, a, b, true, c);
+  };
+  reactDom_production_min.hydrateRoot = function(a, b, c) {
+    if (!nl(a))
+      throw Error(p(405));
+    var d = null != c && c.hydratedSources || null, e = false, f2 = "", g = kl;
+    null !== c && void 0 !== c && (true === c.unstable_strictMode && (e = true), void 0 !== c.identifierPrefix && (f2 = c.identifierPrefix), void 0 !== c.onRecoverableError && (g = c.onRecoverableError));
+    b = el(b, null, a, 1, null != c ? c : null, e, false, f2, g);
+    a[uf] = b.current;
+    sf(a);
+    if (d)
+      for (a = 0; a < d.length; a++)
+        c = d[a], e = c._getVersion, e = e(c._source), null == b.mutableSourceEagerHydrationData ? b.mutableSourceEagerHydrationData = [c, e] : b.mutableSourceEagerHydrationData.push(
+          c,
+          e
+        );
+    return new ml(b);
+  };
+  reactDom_production_min.render = function(a, b, c) {
+    if (!ol(b))
+      throw Error(p(200));
+    return rl(null, a, b, false, c);
+  };
+  reactDom_production_min.unmountComponentAtNode = function(a) {
+    if (!ol(a))
+      throw Error(p(40));
+    return a._reactRootContainer ? (Rk(function() {
+      rl(null, null, a, false, function() {
+        a._reactRootContainer = null;
+        a[uf] = null;
+      });
+    }), true) : false;
+  };
+  reactDom_production_min.unstable_batchedUpdates = Qk;
+  reactDom_production_min.unstable_renderSubtreeIntoContainer = function(a, b, c, d) {
+    if (!ol(c))
+      throw Error(p(200));
+    if (null == a || void 0 === a._reactInternals)
+      throw Error(p(38));
+    return rl(a, b, c, false, d);
+  };
+  reactDom_production_min.version = "18.3.1-next-f1338f8080-20240426";
+  function checkDCE() {
+    if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
+      return;
+    }
+    try {
+      __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  {
+    checkDCE();
+    reactDom.exports = reactDom_production_min;
+  }
+  var reactDomExports = reactDom.exports;
+  var m = reactDomExports;
+  {
+    client.createRoot = m.createRoot;
+    client.hydrateRoot = m.hydrateRoot;
+  }
+  const createStoreImpl = (createState) => {
+    let state;
+    const listeners = /* @__PURE__ */ new Set();
+    const setState = (partial, replace) => {
+      const nextState = typeof partial === "function" ? partial(state) : partial;
+      if (!Object.is(nextState, state)) {
+        const previousState = state;
+        state = (replace != null ? replace : typeof nextState !== "object" || nextState === null) ? nextState : Object.assign({}, state, nextState);
+        listeners.forEach((listener) => listener(state, previousState));
+      }
+    };
+    const getState = () => state;
+    const getInitialState = () => initialState;
+    const subscribe = (listener) => {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    };
+    const api = { setState, getState, getInitialState, subscribe };
+    const initialState = state = createState(setState, getState, api);
+    return api;
+  };
+  const createStore = (createState) => createState ? createStoreImpl(createState) : createStoreImpl;
+  const identity = (arg) => arg;
+  function useStore(api, selector = identity) {
+    const slice = React.useSyncExternalStore(
+      api.subscribe,
+      () => selector(api.getState()),
+      () => selector(api.getInitialState())
+    );
+    React.useDebugValue(slice);
+    return slice;
+  }
+  const createImpl = (createState) => {
+    const api = createStore(createState);
+    const useBoundStore = (selector) => useStore(api, selector);
+    Object.assign(useBoundStore, api);
+    return useBoundStore;
+  };
+  const create = (createState) => createState ? createImpl(createState) : createImpl;
+  class RPCClient {
+    // Request deduplication
+    constructor() {
+      __publicField(this, "vscode");
+      __publicField(this, "requestId", 0);
+      __publicField(this, "pending", /* @__PURE__ */ new Map());
+      __publicField(this, "requestCache", /* @__PURE__ */ new Map());
+      __publicField(this, "CACHE_TTL", 1e3);
+      // 1 second cache
+      __publicField(this, "MAX_CACHE_SIZE", 100);
+      // Max cache entries
+      __publicField(this, "REQUEST_TIMEOUT", 3e4);
+      // 30 seconds
+      __publicField(this, "inflightRequests", /* @__PURE__ */ new Map());
+      console.log("[RPC Client] Initializing...");
+      console.log("[RPC Client] acquireVsCodeApi available:", typeof acquireVsCodeApi !== "undefined");
+      if (typeof acquireVsCodeApi !== "undefined") {
+        this.vscode = acquireVsCodeApi();
+        window.addEventListener("message", this.handleMessage.bind(this));
+        console.log("[RPC Client] Initialized successfully");
+        console.log("[RPC Client] VS Code API:", this.vscode);
+      } else {
+        console.error("[RPC Client] acquireVsCodeApi is not available");
+      }
+    }
+    async call(method, ...params) {
+      if (!this.vscode) {
+        console.error("[RPC Client] VS Code API not available, method:", method);
+        throw new Error("VS Code API not available");
+      }
+      console.log("[RPC Client] Calling method:", method, "params:", params);
+      if (this.isReadOnlyMethod(method)) {
+        const cacheKey = this.getCacheKey(method, params);
+        const cached = this.requestCache.get(cacheKey);
+        if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
+          cached.accessCount++;
+          return cached.result;
+        }
+        const inflightKey = cacheKey;
+        if (this.inflightRequests.has(inflightKey)) {
+          return this.inflightRequests.get(inflightKey);
+        }
+        const promise = this.executeRequest(method, params, cacheKey);
+        this.inflightRequests.set(inflightKey, promise);
+        try {
+          const result = await promise;
+          return result;
+        } finally {
+          this.inflightRequests.delete(inflightKey);
+        }
+      }
+      return this.executeRequest(method, params);
+    }
+    async executeRequest(method, params, cacheKey) {
+      const id2 = ++this.requestId;
+      const request = { id: id2, method, params };
+      console.log("[RPC Client] Executing request:", request);
+      return new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => {
+          console.error("[RPC Client] Request timeout:", method, "id:", id2);
+          this.pending.delete(id2);
+          reject(new Error(`RPC timeout: ${method}`));
+        }, this.REQUEST_TIMEOUT);
+        this.pending.set(id2, {
+          resolve: (value) => {
+            clearTimeout(timeoutId);
+            this.pending.delete(id2);
+            if (cacheKey && this.isReadOnlyMethod(method)) {
+              this.evictCacheIfNeeded();
+              this.requestCache.set(cacheKey, {
+                result: value,
+                timestamp: Date.now(),
+                accessCount: 1
+              });
+            }
+            resolve(value);
+          },
+          reject: (error) => {
+            clearTimeout(timeoutId);
+            this.pending.delete(id2);
+            reject(error);
+          }
+        });
+        console.log("[RPC Client] Posting message to extension:", request);
+        this.vscode.postMessage(request);
+      });
+    }
+    /**
+     * Clear cache for specific method or all cache
+     */
+    clearCache(method) {
+      if (method) {
+        for (const key of this.requestCache.keys()) {
+          if (key.startsWith(method)) {
+            this.requestCache.delete(key);
+          }
+        }
+      } else {
+        this.requestCache.clear();
+      }
+    }
+    /**
+     * Evict cache entries using LFU (Least Frequently Used) strategy
+     */
+    evictCacheIfNeeded() {
+      if (this.requestCache.size >= this.MAX_CACHE_SIZE) {
+        let minAccessCount = Infinity;
+        let leastUsedKey = null;
+        for (const [key, entry] of this.requestCache.entries()) {
+          if (entry.accessCount < minAccessCount) {
+            minAccessCount = entry.accessCount;
+            leastUsedKey = key;
+          }
+        }
+        if (leastUsedKey) {
+          this.requestCache.delete(leastUsedKey);
+        }
+      }
+    }
+    isReadOnlyMethod(method) {
+      return method.startsWith("git.get") || method.startsWith("git.list") || method === "git.getStatus" || method === "git.getLog" || method === "git.getBranches";
+    }
+    getCacheKey(method, params) {
+      return `${method}:${this.stableStringify(params)}`;
+    }
+    /**
+     * Stable JSON stringify to avoid redundant serialization
+     * Caches stringified params to reduce repeated stringify calls
+     */
+    stableStringify(obj) {
+      if (obj === null || obj === void 0) {
+        return String(obj);
+      }
+      if (typeof obj !== "object") {
+        return String(obj);
+      }
+      if (Array.isArray(obj)) {
+        return `[${obj.map((item) => this.stableStringify(item)).join(",")}]`;
+      }
+      const keys = Object.keys(obj).sort();
+      const pairs = keys.map((k2) => `"${k2}":${this.stableStringify(obj[k2])}`);
+      return `{${pairs.join(",")}}`;
+    }
+    handleMessage(event) {
+      const response = event.data;
+      console.log("[RPC Client] Received message:", response);
+      console.log("[RPC Client] Response details:", {
+        id: response.id,
+        hasError: !!response.error,
+        hasResult: response.result !== void 0,
+        resultType: typeof response.result
+      });
+      if (!response.id) {
+        console.log("[RPC Client] Notification message received");
+        return;
+      }
+      const pending = this.pending.get(response.id);
+      if (!pending) {
+        console.warn("[RPC Client] No pending request for id:", response.id);
+        return;
+      }
+      if (response.error) {
+        console.error("[RPC Client] Request failed:", response.error);
+        pending.reject(new Error(response.error));
+      } else {
+        console.log("[RPC Client] Request succeeded, id:", response.id, "result:", response.result);
+        pending.resolve(response.result);
+      }
+      this.pending.delete(response.id);
+    }
+  }
+  const rpcClient = new RPCClient();
+  const useGitStore = create((set, get) => ({
+    status: null,
+    commits: [],
+    branches: [],
+    selectedCommits: [],
+    loading: false,
+    error: null,
+    hasMore: true,
+    searchQuery: null,
+    currentBranch: null,
+    remotes: [],
+    fetchStatus: async () => {
+      try {
+        console.log("[GitStore] fetchStatus: starting...");
+        set({ loading: true, error: null });
+        const status = await rpcClient.call("git.getStatus");
+        console.log("[GitStore] fetchStatus: received status:", status);
+        set({ status, loading: false });
+        console.log("[GitStore] fetchStatus: state updated");
+      } catch (error) {
+        console.error("[GitStore] fetchStatus: error:", error);
+        set({ error: error.message, loading: false });
+      }
+    },
+    fetchHistory: async (options = {}) => {
+      try {
+        console.log("[GitStore] fetchHistory: starting with options:", options);
+        set({ loading: true, error: null });
+        const commits = await rpcClient.call("git.getCommitLog", options);
+        console.log("[GitStore] fetchHistory: received commits:", commits == null ? void 0 : commits.length, "commits");
+        set({ commits, loading: false });
+        console.log("[GitStore] fetchHistory: state updated");
+      } catch (error) {
+        console.error("[GitStore] fetchHistory: error:", error);
+        set({ error: error.message, loading: false });
+      }
+    },
+    fetchBranches: async () => {
+      var _a;
+      try {
+        const branches = await rpcClient.call("git.getBranches");
+        const currentBranch = ((_a = branches.find((b) => b.current)) == null ? void 0 : _a.name) || null;
+        set({ branches, currentBranch });
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    stageFiles: async (files) => {
+      try {
+        await rpcClient.call("git.stageFiles", files);
+        await get().fetchStatus();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    unstageFiles: async (files) => {
+      try {
+        await rpcClient.call("git.unstageFiles", files);
+        await get().fetchStatus();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    stageAll: async () => {
+      try {
+        await rpcClient.call("git.stageAll");
+        await get().fetchStatus();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    unstageAll: async () => {
+      try {
+        await rpcClient.call("git.unstageAll");
+        await get().fetchStatus();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    commit: async (message) => {
+      try {
+        await rpcClient.call("git.commit", message);
+        await get().fetchStatus();
+        await get().fetchHistory();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    discardFiles: async (files) => {
+      try {
+        await rpcClient.call("git.discard", files);
+        await get().fetchStatus();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    selectCommit: (hash, multi) => {
+      const { selectedCommits } = get();
+      if (multi) {
+        if (selectedCommits.includes(hash)) {
+          set({ selectedCommits: selectedCommits.filter((h) => h !== hash) });
+        } else {
+          set({ selectedCommits: [...selectedCommits, hash] });
+        }
+      } else {
+        set({ selectedCommits: [hash] });
+      }
+    },
+    clearSelection: () => {
+      set({ selectedCommits: [] });
+    },
+    amendCommit: async (message) => {
+      try {
+        await rpcClient.call("git.amendCommit", message);
+        await get().fetchStatus();
+        await get().fetchHistory();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    revertCommits: async (commits) => {
+      try {
+        await rpcClient.call("git.revert", commits);
+        await get().fetchHistory();
+      } catch (error) {
+        set({ error: error.message });
+      }
+    },
+    getFileDiff: async (file, staged = false) => {
+      try {
+        return await rpcClient.call("git.getFileDiff", file, staged);
+      } catch (error) {
+        set({ error: error.message });
+        return "";
+      }
+    },
+    searchCommits: async (query, type) => {
+      try {
+        set({ loading: true, error: null, searchQuery: query });
+        let commits;
+        if (type === "author") {
+          commits = await rpcClient.call("git.getCommitsByAuthor", query, { maxCount: 100 });
+        } else if (type === "hash") {
+          const allCommits = get().commits;
+          commits = allCommits.filter(
+            (c) => c.hash.toLowerCase().includes(query.toLowerCase()) || c.shortHash.toLowerCase().includes(query.toLowerCase())
+          );
+        } else {
+          commits = await rpcClient.call("git.searchCommits", query, { maxCount: 100 });
+        }
+        set({ commits, loading: false, hasMore: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+      }
+    },
+    clearSearch: async () => {
+      set({ searchQuery: null });
+      await get().fetchHistory({ maxCount: 100 });
+    },
+    loadMore: async () => {
+      const { commits, loading, hasMore, searchQuery } = get();
+      if (loading || !hasMore || searchQuery) {
+        return;
+      }
+      try {
+        set({ loading: true });
+        const newCommits = await rpcClient.call("git.getCommitLog", {
+          maxCount: 50,
+          skip: commits.length
+        });
+        if (newCommits.length === 0) {
+          set({ hasMore: false, loading: false });
+        } else {
+          set({
+            commits: [...commits, ...newCommits],
+            loading: false,
+            hasMore: newCommits.length === 50
+          });
+        }
+      } catch (error) {
+        set({ error: error.message, loading: false });
+      }
+    },
+    startRebase: async (onto, interactive, commits) => {
+      try {
+        set({ loading: true, error: null });
+        if (interactive && commits) {
+          await rpcClient.call("git.interactiveRebase", onto, commits);
+        } else {
+          await rpcClient.call("git.rebase", onto, interactive);
+        }
+        await get().fetchHistory();
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    continueRebase: async () => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.rebaseContinue");
+        await get().fetchHistory();
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    abortRebase: async () => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.rebaseAbort");
+        await get().fetchHistory();
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    skipRebase: async () => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.rebaseSkip");
+        await get().fetchHistory();
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    getRebaseState: async () => {
+      try {
+        return await rpcClient.call("git.getRebaseState");
+      } catch (error) {
+        set({ error: error.message });
+        return { type: "idle" };
+      }
+    },
+    isRebasing: async () => {
+      try {
+        return await rpcClient.call("git.isRebasing");
+      } catch (error) {
+        set({ error: error.message });
+        return false;
+      }
+    },
+    cherryPick: async (commits) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.cherryPick", commits);
+        await get().fetchHistory();
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    getStashes: async () => {
+      try {
+        return await rpcClient.call("git.stashList");
+      } catch (error) {
+        set({ error: error.message });
+        return [];
+      }
+    },
+    createStash: async (message, includeUntracked = false) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.stashPush", message, includeUntracked);
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    applyStash: async (index) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.stashApply", index);
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    popStash: async (index) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.stashPop", index);
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    dropStash: async (index) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.stashDrop", index);
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    createBranch: async (name, startPoint) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.createBranch", name, startPoint);
+        await get().fetchBranches();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    deleteBranch: async (name, force = false) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.deleteBranch", name, force);
+        await get().fetchBranches();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    renameBranch: async (oldName, newName, force = false) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.renameBranch", oldName, newName, force);
+        await get().fetchBranches();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    checkoutBranch: async (name, create2 = false) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.checkoutBranch", name, create2);
+        await get().fetchBranches();
+        await get().fetchStatus();
+        await get().fetchHistory();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    mergeBranch: async (branch, noFastForward = false) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.mergeBranch", branch, noFastForward);
+        await get().fetchHistory();
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    // Remote operations
+    fetchRemotes: async () => {
+      try {
+        set({ loading: true, error: null });
+        const remotes = await rpcClient.call("git.listRemotes");
+        set({ remotes, loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+      }
+    },
+    addRemote: async (name, url) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.addRemote", name, url);
+        await get().fetchRemotes();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    removeRemote: async (name) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.removeRemote", name);
+        await get().fetchRemotes();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    fetch: async (remote, prune) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.fetch", remote, prune);
+        await get().fetchHistory();
+        await get().fetchBranches();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    pull: async (remote, branch, rebase) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.pull", remote, branch, rebase);
+        await get().fetchHistory();
+        await get().fetchStatus();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    },
+    push: async (remote, branch, force, setUpstream) => {
+      try {
+        set({ loading: true, error: null });
+        await rpcClient.call("git.push", remote, branch, force, setUpstream);
+        await get().fetchBranches();
+        set({ loading: false });
+      } catch (error) {
+        set({ error: error.message, loading: false });
+        throw error;
+      }
+    }
+  }));
+  function DiffViewer({ file, staged = false, onClose }) {
+    const [diff, setDiff] = reactExports.useState("");
+    const [loading, setLoading] = reactExports.useState(true);
+    const { getFileDiff } = useGitStore();
+    reactExports.useEffect(() => {
+      loadDiff();
+    }, [file, staged]);
+    const loadDiff = async () => {
+      setLoading(true);
+      const result = await getFileDiff(file, staged);
+      setDiff(result);
+      setLoading(false);
+    };
+    const parseDiff = (diffText) => {
+      const lines = diffText.split("\n");
+      return lines.map((line, index) => {
+        let className = "diff-line";
+        if (line.startsWith("+") && !line.startsWith("+++")) {
+          className += " diff-addition";
+        } else if (line.startsWith("-") && !line.startsWith("---")) {
+          className += " diff-deletion";
+        } else if (line.startsWith("@@")) {
+          className += " diff-hunk";
+        }
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className, children: line || " " }, index);
+      });
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "diff-viewer-overlay", onClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "diff-viewer", onClick: (e) => e.stopPropagation(), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "diff-viewer-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: file }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "diff-viewer-badge", children: staged ? "Staged" : "Unstaged" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "diff-viewer-close", onClick: onClose, children: "×" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "diff-viewer-content", children: loading ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "diff-viewer-loading", children: "Loading diff..." }) : diff ? /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: "diff-viewer-pre", children: parseDiff(diff) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "diff-viewer-empty", children: "No changes" }) })
+    ] }) });
+  }
+  function FileList({
+    files,
+    onAction,
+    actionLabel,
+    onDiscard,
+    staged = false
+  }) {
+    const [selectedFiles, setSelectedFiles] = reactExports.useState(/* @__PURE__ */ new Set());
+    const [diffFile, setDiffFile] = reactExports.useState(null);
+    const handleFileClick = (file, event) => {
+      if (event.ctrlKey || event.metaKey) {
+        const newSelection = new Set(selectedFiles);
+        if (newSelection.has(file)) {
+          newSelection.delete(file);
+        } else {
+          newSelection.add(file);
+        }
+        setSelectedFiles(newSelection);
+      } else {
+        setSelectedFiles(/* @__PURE__ */ new Set([file]));
+      }
+    };
+    const handleFileDblClick = (file) => {
+      setDiffFile(file);
+    };
+    const handleAction = (file) => {
+      onAction([file]);
+      setSelectedFiles(/* @__PURE__ */ new Set());
+    };
+    const handleActionSelected = () => {
+      if (selectedFiles.size > 0) {
+        onAction(Array.from(selectedFiles));
+        setSelectedFiles(/* @__PURE__ */ new Set());
+      }
+    };
+    const handleDiscard = (file) => {
+      if (onDiscard) {
+        onDiscard([file]);
+        setSelectedFiles(/* @__PURE__ */ new Set());
+      }
+    };
+    const handleDiscardSelected = () => {
+      if (onDiscard && selectedFiles.size > 0) {
+        onDiscard(Array.from(selectedFiles));
+        setSelectedFiles(/* @__PURE__ */ new Set());
+      }
+    };
+    if (files.length === 0) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "file-list-empty", children: "No changes" });
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "file-list", children: [
+        selectedFiles.size > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "file-list-actions", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: handleActionSelected, children: [
+            actionLabel,
+            " ",
+            selectedFiles.size,
+            " file(s)"
+          ] }),
+          onDiscard && !staged && /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "file-list-discard", onClick: handleDiscardSelected, children: [
+            "Discard ",
+            selectedFiles.size,
+            " file(s)"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "file-list-items", children: files.map((file) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: `file-item ${selectedFiles.has(file) ? "selected" : ""}`,
+            onClick: (e) => handleFileClick(file, e),
+            onDoubleClick: () => handleFileDblClick(file),
+            title: "Double-click to view diff",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "file-name", children: file }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "file-actions", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    className: "file-action",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      handleAction(file);
+                    },
+                    children: actionLabel
+                  }
+                ),
+                onDiscard && !staged && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    className: "file-action file-action-discard",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      handleDiscard(file);
+                    },
+                    children: "Discard"
+                  }
+                )
+              ] })
+            ]
+          },
+          file
+        )) })
+      ] }),
+      diffFile && /* @__PURE__ */ jsxRuntimeExports.jsx(DiffViewer, { file: diffFile, staged, onClose: () => setDiffFile(null) })
+    ] });
+  }
+  function CommitBox() {
+    const [message, setMessage] = reactExports.useState("");
+    const [isAmend, setIsAmend] = reactExports.useState(false);
+    const { status, commit, amendCommit, commits } = useGitStore();
+    reactExports.useEffect(() => {
+      if (isAmend && commits.length > 0) {
+        setMessage(commits[0].message);
+      } else if (!isAmend) {
+        setMessage("");
+      }
+    }, [isAmend, commits]);
+    const handleCommit = async () => {
+      if (message.trim()) {
+        if (isAmend) {
+          await amendCommit(message);
+        } else {
+          if (status && status.staged.length > 0) {
+            await commit(message);
+          }
+        }
+        setMessage("");
+        setIsAmend(false);
+      }
+    };
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        handleCommit();
+      }
+    };
+    const canCommit = message.trim().length > 0 && (isAmend || status && status.staged.length > 0);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-box", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Commit Message" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-options", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "commit-amend-label", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                type: "checkbox",
+                checked: isAmend,
+                onChange: (e) => setIsAmend(e.target.checked),
+                disabled: commits.length === 0
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Amend last commit" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-hint", children: "Ctrl+Enter to commit" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "textarea",
+        {
+          className: "commit-message",
+          placeholder: isAmend ? "Edit commit message..." : "Enter commit message...",
+          value: message,
+          onChange: (e) => setMessage(e.target.value),
+          onKeyDown: handleKeyDown,
+          rows: 4
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-footer", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-info", children: isAmend ? "Amending last commit" : `${(status == null ? void 0 : status.staged.length) || 0} file(s) staged` }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "commit-button", onClick: handleCommit, disabled: !canCommit, children: isAmend ? "Amend Commit" : "Commit" })
+      ] })
+    ] });
+  }
+  function StagePanel() {
+    const { status, stageFiles, unstageFiles, stageAll, unstageAll, discardFiles } = useGitStore();
+    if (!status) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stage-panel", children: "Loading..." });
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stage-panel", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stage-section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section-header", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Unstaged Changes" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: stageAll, disabled: status.unstaged.length === 0, children: "Stage All" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          FileList,
+          {
+            files: [...status.unstaged, ...status.untracked],
+            onAction: stageFiles,
+            onDiscard: discardFiles,
+            actionLabel: "Stage",
+            staged: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stage-section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section-header", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Staged Changes" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: unstageAll, disabled: status.staged.length === 0, children: "Unstage All" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          FileList,
+          {
+            files: status.staged,
+            onAction: unstageFiles,
+            actionLabel: "Unstage",
+            staged: true
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CommitBox, {})
+    ] });
+  }
+  function RevertDialog({ commits, onClose }) {
+    const [loading, setLoading] = reactExports.useState(false);
+    const { revertCommits } = useGitStore();
+    const handleRevert = async () => {
+      setLoading(true);
+      try {
+        await revertCommits(commits.map((c) => c.hash));
+        onClose();
+      } catch (error) {
+        console.error("Revert failed:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "revert-dialog-overlay", onClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "revert-dialog", onClick: (e) => e.stopPropagation(), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "revert-dialog-header", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { children: [
+        "Revert Commit",
+        commits.length > 1 ? "s" : ""
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "revert-dialog-content", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+          "Are you sure you want to revert the following commit",
+          commits.length > 1 ? "s" : "",
+          "?"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "revert-dialog-commits", children: commits.map((commit) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "revert-dialog-commit", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "revert-dialog-commit-hash", children: commit.shortHash }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "revert-dialog-commit-message", children: commit.message })
+        ] }, commit.hash)) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "revert-dialog-note", children: [
+          "This will create new commit",
+          commits.length > 1 ? "s" : "",
+          " that undo",
+          commits.length === 1 ? "es" : "",
+          " these changes."
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "revert-dialog-footer", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onClose, disabled: loading, children: "Cancel" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "revert-dialog-confirm",
+            onClick: handleRevert,
+            disabled: loading,
+            children: loading ? "Reverting..." : "Revert"
+          }
+        )
+      ] })
+    ] }) });
+  }
+  const RebaseDialog = ({
+    currentBranch,
+    branches,
+    onClose,
+    onSuccess
+  }) => {
+    const [selectedBranch, setSelectedBranch] = reactExports.useState("");
+    const [commits, setCommits] = reactExports.useState([]);
+    const [loading, setLoading] = reactExports.useState(false);
+    const [error, setError] = reactExports.useState(null);
+    const [interactive, setInteractive] = reactExports.useState(false);
+    reactExports.useEffect(() => {
+      if (!selectedBranch) {
+        setCommits([]);
+        return;
+      }
+      const loadCommits = async () => {
+        try {
+          const rebaseCommits = await rpcClient.call("git.getRebaseCommits", selectedBranch);
+          setCommits(rebaseCommits);
+        } catch (err) {
+          console.error("Failed to load rebase commits:", err);
+          setCommits([]);
+        }
+      };
+      loadCommits();
+    }, [selectedBranch]);
+    const handleRebase = async () => {
+      if (!selectedBranch) {
+        setError("Please select a branch");
+        return;
+      }
+      setLoading(true);
+      setError(null);
+      try {
+        if (interactive && commits.length > 0) {
+          await rpcClient.call("git.interactiveRebase", selectedBranch, commits);
+        } else {
+          await rpcClient.call("git.rebase", selectedBranch, false);
+        }
+        onSuccess();
+        onClose();
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const handleActionChange = (index, action) => {
+      const newCommits = [...commits];
+      newCommits[index].action = action;
+      setCommits(newCommits);
+    };
+    const moveCommitUp = (index) => {
+      if (index === 0) {
+        return;
+      }
+      const newCommits = [...commits];
+      [newCommits[index - 1], newCommits[index]] = [newCommits[index], newCommits[index - 1]];
+      setCommits(newCommits);
+    };
+    const moveCommitDown = (index) => {
+      if (index === commits.length - 1) {
+        return;
+      }
+      const newCommits = [...commits];
+      [newCommits[index], newCommits[index + 1]] = [newCommits[index + 1], newCommits[index]];
+      setCommits(newCommits);
+    };
+    const availableBranches = branches.filter((b) => !b.current);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rebase-dialog-overlay", onClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rebase-dialog", onClick: (e) => e.stopPropagation(), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rebase-dialog-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Rebase Branch" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "close-button", onClick: onClose, children: "×" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rebase-dialog-content", children: [
+        error && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "error-message", children: error }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Current Branch:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "current-branch", children: currentBranch })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Rebase onto:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "select",
+            {
+              value: selectedBranch,
+              onChange: (e) => setSelectedBranch(e.target.value),
+              disabled: loading,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Select a branch..." }),
+                availableBranches.map((branch) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: branch.name, children: branch.name }, branch.name))
+              ]
+            }
+          )
+        ] }),
+        commits.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-group", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                type: "checkbox",
+                checked: interactive,
+                onChange: (e) => setInteractive(e.target.checked),
+                disabled: loading
+              }
+            ),
+            "Interactive Rebase"
+          ] }) }),
+          interactive && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commits-list", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commits-header", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+              "Commits to rebase (",
+              commits.length,
+              ")"
+            ] }) }),
+            commits.map((commit, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-item", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-controls", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    className: "move-button",
+                    onClick: () => moveCommitUp(index),
+                    disabled: index === 0 || loading,
+                    title: "Move up",
+                    children: "↑"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    className: "move-button",
+                    onClick: () => moveCommitDown(index),
+                    disabled: index === commits.length - 1 || loading,
+                    title: "Move down",
+                    children: "↓"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "select",
+                {
+                  className: "action-select",
+                  value: commit.action,
+                  onChange: (e) => handleActionChange(
+                    index,
+                    e.target.value
+                  ),
+                  disabled: loading,
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "pick", children: "pick" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "reword", children: "reword" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "edit", children: "edit" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "squash", children: "squash" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "fixup", children: "fixup" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "drop", children: "drop" })
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-hash", children: commit.shortHash }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-message", children: commit.message })
+            ] }, commit.hash))
+          ] }),
+          !interactive && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "info-message", children: [
+            commits.length,
+            " commit",
+            commits.length !== 1 ? "s" : "",
+            " will be rebased"
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rebase-dialog-footer", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "button button-secondary",
+            onClick: onClose,
+            disabled: loading,
+            children: "Cancel"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "button button-primary",
+            onClick: handleRebase,
+            disabled: !selectedBranch || loading,
+            children: loading ? "Rebasing..." : "Start Rebase"
+          }
+        )
+      ] })
+    ] }) });
+  };
+  const CherryPickDialog = ({
+    commits,
+    onClose,
+    onSuccess
+  }) => {
+    const [loading, setLoading] = reactExports.useState(false);
+    const [error, setError] = reactExports.useState(null);
+    const handleCherryPick = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const hashes = commits.map((c) => c.hash);
+        await rpcClient.call("git.cherryPick", hashes);
+        onSuccess();
+        onClose();
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cherry-pick-dialog-overlay", onClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cherry-pick-dialog", onClick: (e) => e.stopPropagation(), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cherry-pick-dialog-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Cherry-pick Commits" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "close-button", onClick: onClose, children: "×" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cherry-pick-dialog-content", children: [
+        error && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "error-message", children: error }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "info-message", children: [
+          "Cherry-pick will apply the following ",
+          commits.length,
+          " commit",
+          commits.length !== 1 ? "s" : "",
+          " to the current branch:"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commits-list", children: commits.map((commit) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-item", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-hash", children: commit.shortHash }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-message", children: commit.message }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-author", children: commit.author })
+        ] }, commit.hash)) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "warning-message", children: "Note: If conflicts occur, you will need to resolve them manually." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cherry-pick-dialog-footer", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "button button-secondary",
+            onClick: onClose,
+            disabled: loading,
+            children: "Cancel"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "button button-primary",
+            onClick: handleCherryPick,
+            disabled: loading,
+            children: loading ? "Cherry-picking..." : "Cherry-pick"
+          }
+        )
+      ] })
+    ] }) });
+  };
+  function CommitList({ commits, branches, currentBranch }) {
+    const { selectedCommits, selectCommit } = useGitStore();
+    const [showRevertDialog, setShowRevertDialog] = reactExports.useState(false);
+    const [showRebaseDialog, setShowRebaseDialog] = reactExports.useState(false);
+    const [showCherryPickDialog, setShowCherryPickDialog] = reactExports.useState(false);
+    const [contextMenu, setContextMenu] = reactExports.useState(null);
+    const handleCommitClick = (hash, event) => {
+      const multi = event.ctrlKey || event.metaKey;
+      selectCommit(hash, multi);
+    };
+    const handleContextMenu = (event, commit) => {
+      event.preventDefault();
+      setContextMenu({ x: event.clientX, y: event.clientY, commit });
+    };
+    const handleRevert = () => {
+      setShowRevertDialog(true);
+      setContextMenu(null);
+    };
+    const handleRebase = () => {
+      setShowRebaseDialog(true);
+      setContextMenu(null);
+    };
+    const handleCherryPick = () => {
+      setShowCherryPickDialog(true);
+      setContextMenu(null);
+    };
+    const formatDate = (date) => {
+      const d = new Date(date);
+      const now = /* @__PURE__ */ new Date();
+      const diff = now.getTime() - d.getTime();
+      const days = Math.floor(diff / (1e3 * 60 * 60 * 24));
+      if (days === 0) {
+        const hours = Math.floor(diff / (1e3 * 60 * 60));
+        if (hours === 0) {
+          const minutes = Math.floor(diff / (1e3 * 60));
+          return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+        }
+        return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+      } else if (days === 1) {
+        return "yesterday";
+      } else if (days < 7) {
+        return `${days} days ago`;
+      } else {
+        return d.toLocaleDateString();
+      }
+    };
+    const getSelectedCommitObjects = () => {
+      return commits.filter((c) => selectedCommits.includes(c.hash));
+    };
+    if (commits.length === 0) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-list-empty", children: "No commits yet" });
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-list", onClick: () => setContextMenu(null), children: commits.map((commit) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: `commit-item ${selectedCommits.includes(commit.hash) ? "selected" : ""} ${commit.isHead ? "head" : ""}`,
+          onClick: (e) => handleCommitClick(commit.hash, e),
+          onContextMenu: (e) => handleContextMenu(e, commit),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-graph", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-dot" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-line" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-message", children: commit.message }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-meta", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-author", children: commit.author }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-separator", children: "•" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-hash", children: commit.shortHash }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-separator", children: "•" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-date", children: formatDate(commit.date) })
+              ] }),
+              commit.refs.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-refs", children: commit.refs.map((ref) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-ref", children: ref }, ref)) })
+            ] })
+          ]
+        },
+        commit.hash
+      )) }),
+      contextMenu && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: "commit-context-menu",
+          style: { top: contextMenu.y, left: contextMenu.x },
+          onClick: (e) => e.stopPropagation(),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-context-menu-item", onClick: handleCherryPick, children: [
+              "Cherry-pick Commit",
+              selectedCommits.length > 1 ? "s" : ""
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-context-menu-item", onClick: handleRevert, children: [
+              "Revert Commit",
+              selectedCommits.length > 1 ? "s" : ""
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-context-menu-item", onClick: handleRebase, children: "Rebase onto this Commit" })
+          ]
+        }
+      ),
+      showRevertDialog && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RevertDialog,
+        {
+          commits: getSelectedCommitObjects(),
+          onClose: () => setShowRevertDialog(false)
+        }
+      ),
+      showRebaseDialog && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RebaseDialog,
+        {
+          currentBranch,
+          branches,
+          onClose: () => setShowRebaseDialog(false),
+          onSuccess: () => {
+            setShowRebaseDialog(false);
+          }
+        }
+      ),
+      showCherryPickDialog && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        CherryPickDialog,
+        {
+          commits: getSelectedCommitObjects(),
+          onClose: () => setShowCherryPickDialog(false),
+          onSuccess: () => {
+            setShowCherryPickDialog(false);
+          }
+        }
+      )
+    ] });
+  }
+  class GraphLayoutEngine {
+    constructor() {
+      __publicField(this, "ROW_HEIGHT", 50);
+      // 每行高度
+      __publicField(this, "COLUMN_WIDTH", 30);
+      // 每列宽度
+      __publicField(this, "NODE_RADIUS", 5);
+      // 节点半径
+      __publicField(this, "MAX_CACHE_SIZE", 50);
+      // 最大缓存条目数
+      __publicField(this, "CACHE_TTL", 6e4);
+      // 缓存过期时间 (60秒)
+      __publicField(this, "layoutCache", /* @__PURE__ */ new Map());
+      __publicField(this, "colors", [
+        "#4285F4",
+        // Blue
+        "#EA4335",
+        // Red
+        "#FBBC04",
+        // Yellow
+        "#34A853",
+        // Green
+        "#FF6D00",
+        // Orange
+        "#9C27B0",
+        // Purple
+        "#00BCD4",
+        // Cyan
+        "#E91E63"
+        // Pink
+      ]);
+    }
+    /**
+     * 计算完整的图形布局（带缓存）
+     */
+    calculateLayout(commits) {
+      if (commits.length === 0) {
+        return { nodes: /* @__PURE__ */ new Map(), edges: [], lanes: 0, height: 0 };
+      }
+      const cacheKey = this.getCacheKey(commits);
+      const cached = this.layoutCache.get(cacheKey);
+      if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
+        cached.accessCount++;
+        return cached.result;
+      }
+      const result = this.calculateLayoutInternal(commits);
+      this.cacheResult(cacheKey, result);
+      return result;
+    }
+    /**
+     * 内部布局计算（无缓存）
+     */
+    calculateLayoutInternal(commits) {
+      const childrenMap = this.buildChildrenMap(commits);
+      const laneAssignments = this.assignLanes(commits, childrenMap);
+      const nodes = this.calculateNodePositions(commits, laneAssignments);
+      const edges = this.calculateEdges(commits, nodes);
+      const lanes = Math.max(...Array.from(laneAssignments.values())) + 1;
+      const height = commits.length * this.ROW_HEIGHT;
+      return { nodes, edges, lanes, height };
+    }
+    /**
+     * 生成缓存键
+     */
+    getCacheKey(commits) {
+      const start = commits.slice(0, Math.min(10, commits.length));
+      const end = commits.slice(Math.max(0, commits.length - 10));
+      const hashes = [...start, ...end].map((c) => c.hash);
+      return `${commits.length}:${hashes.join(",")}`;
+    }
+    /**
+     * 缓存结果（带LRU淘汰）
+     */
+    cacheResult(key, result) {
+      if (this.layoutCache.size >= this.MAX_CACHE_SIZE) {
+        this.evictLRU();
+      }
+      this.layoutCache.set(key, {
+        result,
+        timestamp: Date.now(),
+        accessCount: 1
+      });
+    }
+    /**
+     * LRU淘汰策略
+     */
+    evictLRU() {
+      let oldestKey = null;
+      let oldestScore = Infinity;
+      for (const [key, entry] of this.layoutCache.entries()) {
+        const score = entry.timestamp / Math.max(1, entry.accessCount);
+        if (score < oldestScore) {
+          oldestScore = score;
+          oldestKey = key;
+        }
+      }
+      if (oldestKey) {
+        this.layoutCache.delete(oldestKey);
+      }
+    }
+    /**
+     * 清除缓存
+     */
+    clearCache() {
+      this.layoutCache.clear();
+    }
+    /**
+     * 获取缓存统计
+     */
+    getCacheStats() {
+      let totalAccess = 0;
+      let totalHits = 0;
+      for (const entry of this.layoutCache.values()) {
+        totalAccess += entry.accessCount;
+        if (entry.accessCount > 1) {
+          totalHits += entry.accessCount - 1;
+        }
+      }
+      return {
+        size: this.layoutCache.size,
+        maxSize: this.MAX_CACHE_SIZE,
+        hitRate: totalAccess > 0 ? totalHits / totalAccess : 0
+      };
+    }
+    /**
+     * 构建父子关系映射 (O(n) 优化版本)
+     */
+    buildChildrenMap(commits) {
+      const childrenMap = /* @__PURE__ */ new Map();
+      for (const commit of commits) {
+        for (const parent of commit.parents) {
+          let children = childrenMap.get(parent);
+          if (!children) {
+            children = [];
+            childrenMap.set(parent, children);
+          }
+          children.push(commit);
+        }
+      }
+      return childrenMap;
+    }
+    /**
+     * 为每个 commit 分配泳道 (优化版本)
+     * 使用贪心算法，尽量复用泳道，避免 O(n²) 复杂度
+     */
+    assignLanes(commits, childrenMap) {
+      const laneAssignments = /* @__PURE__ */ new Map();
+      const activeLanes = /* @__PURE__ */ new Map();
+      const commitIndex = /* @__PURE__ */ new Map();
+      commits.forEach((commit, index) => {
+        commitIndex.set(commit.hash, index);
+      });
+      for (let i = 0; i < commits.length; i++) {
+        const commit = commits[i];
+        let assignedLane = null;
+        if (commit.parents.length > 0) {
+          const firstParent = commit.parents[0];
+          const parentLane = laneAssignments.get(firstParent);
+          if (parentLane !== void 0 && !activeLanes.has(parentLane)) {
+            assignedLane = parentLane;
+          }
+        }
+        if (assignedLane === null) {
+          assignedLane = 0;
+          while (activeLanes.has(assignedLane)) {
+            assignedLane++;
+          }
+        }
+        laneAssignments.set(commit.hash, assignedLane);
+        activeLanes.set(assignedLane, commit.hash);
+        const children = childrenMap.get(commit.hash);
+        if (children) {
+          const allChildrenProcessed = children.every((child) => {
+            const childIdx = commitIndex.get(child.hash);
+            return childIdx !== void 0 && childIdx <= i;
+          });
+          if (allChildrenProcessed) {
+            const laneCommit = activeLanes.get(assignedLane);
+            if (laneCommit === commit.hash) {
+              activeLanes.delete(assignedLane);
+            }
+          }
+        } else {
+          const laneCommit = activeLanes.get(assignedLane);
+          if (laneCommit === commit.hash) {
+            activeLanes.delete(assignedLane);
+          }
+        }
+      }
+      return laneAssignments;
+    }
+    /**
+     * 计算节点位置
+     */
+    calculateNodePositions(commits, laneAssignments) {
+      const nodes = /* @__PURE__ */ new Map();
+      commits.forEach((commit, index) => {
+        const lane = laneAssignments.get(commit.hash) || 0;
+        const color = this.colors[lane % this.colors.length];
+        nodes.set(commit.hash, {
+          commit,
+          x: lane * this.COLUMN_WIDTH + this.COLUMN_WIDTH / 2,
+          y: index * this.ROW_HEIGHT + this.ROW_HEIGHT / 2,
+          color,
+          lane
+        });
+      });
+      return nodes;
+    }
+    /**
+     * 计算连接线路径
+     */
+    calculateEdges(commits, nodes) {
+      const edges = [];
+      for (const commit of commits) {
+        const fromNode = nodes.get(commit.hash);
+        if (!fromNode) {
+          continue;
+        }
+        for (const parentHash of commit.parents) {
+          const toNode = nodes.get(parentHash);
+          if (!toNode) {
+            continue;
+          }
+          const path = this.calculateEdgePath(fromNode, toNode);
+          edges.push({
+            from: commit.hash,
+            to: parentHash,
+            path,
+            color: fromNode.color
+          });
+        }
+      }
+      return edges;
+    }
+    /**
+     * 计算两个节点之间的连接线路径
+     */
+    calculateEdgePath(from, to) {
+      const path = [];
+      path.push({ x: from.x, y: from.y });
+      if (from.x === to.x) {
+        path.push({ x: to.x, y: to.y });
+        return path;
+      }
+      const midY = (from.y + to.y) / 2;
+      path.push({ x: from.x, y: midY });
+      path.push({ x: to.x, y: midY });
+      path.push({ x: to.x, y: to.y });
+      return path;
+    }
+    /**
+     * 获取节点颜色
+     */
+    getColor(lane) {
+      return this.colors[lane % this.colors.length];
+    }
+    /**
+     * 获取布局配置
+     */
+    getConfig() {
+      return {
+        rowHeight: this.ROW_HEIGHT,
+        columnWidth: this.COLUMN_WIDTH,
+        nodeRadius: this.NODE_RADIUS,
+        colors: this.colors
+      };
+    }
+  }
+  const graphLayoutEngine = new GraphLayoutEngine();
+  class CanvasRenderer {
+    constructor(canvas) {
+      __publicField(this, "ctx");
+      __publicField(this, "scale", 1);
+      __publicField(this, "offsetX", 0);
+      __publicField(this, "offsetY", 0);
+      this.canvas = canvas;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        throw new Error("Failed to get 2D context");
+      }
+      this.ctx = ctx;
+      this.setupCanvas();
+    }
+    /**
+     * 设置 Canvas
+     */
+    setupCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = this.canvas.getBoundingClientRect();
+      this.canvas.width = rect.width * dpr;
+      this.canvas.height = rect.height * dpr;
+      this.ctx.scale(dpr, dpr);
+      this.canvas.style.width = `${rect.width}px`;
+      this.canvas.style.height = `${rect.height}px`;
+    }
+    /**
+     * 清空画布
+     */
+    clear() {
+      const rect = this.canvas.getBoundingClientRect();
+      this.ctx.clearRect(0, 0, rect.width, rect.height);
+    }
+    /**
+     * 渲染完整的图形
+     */
+    render(nodes, edges, selectedHashes = /* @__PURE__ */ new Set(), hoveredHash = null) {
+      this.clear();
+      this.ctx.save();
+      this.ctx.translate(this.offsetX, this.offsetY);
+      this.ctx.scale(this.scale, this.scale);
+      for (const edge of edges) {
+        this.drawEdge(edge);
+      }
+      for (const node of nodes.values()) {
+        const isSelected = selectedHashes.has(node.commit.hash);
+        const isHovered = node.commit.hash === hoveredHash;
+        this.drawNode(node, isSelected, isHovered);
+      }
+      this.ctx.restore();
+    }
+    /**
+     * 绘制连接线
+     */
+    drawEdge(edge) {
+      if (edge.path.length < 2) {
+        return;
+      }
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = edge.color;
+      this.ctx.lineWidth = 2;
+      this.ctx.lineCap = "round";
+      this.ctx.lineJoin = "round";
+      this.ctx.moveTo(edge.path[0].x, edge.path[0].y);
+      if (edge.path.length === 2) {
+        this.ctx.lineTo(edge.path[1].x, edge.path[1].y);
+      } else {
+        for (let i = 1; i < edge.path.length - 2; i += 2) {
+          const cp1 = edge.path[i];
+          const cp2 = edge.path[i + 1];
+          const end = edge.path[i + 2] || edge.path[edge.path.length - 1];
+          this.ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
+        }
+      }
+      this.ctx.stroke();
+    }
+    /**
+     * 绘制节点
+     */
+    drawNode(node, isSelected, isHovered) {
+      const radius = 5;
+      this.ctx.beginPath();
+      this.ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = node.color;
+      this.ctx.fill();
+      if (node.commit.isHead) {
+        this.ctx.beginPath();
+        this.ctx.arc(node.x, node.y, radius + 3, 0, Math.PI * 2);
+        this.ctx.strokeStyle = node.color;
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+      }
+      if (isSelected) {
+        this.ctx.beginPath();
+        this.ctx.arc(node.x, node.y, radius + 5, 0, Math.PI * 2);
+        this.ctx.strokeStyle = "#FFD700";
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+      }
+      if (isHovered) {
+        this.ctx.beginPath();
+        this.ctx.arc(node.x, node.y, radius + 7, 0, Math.PI * 2);
+        this.ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+      }
+      if (node.commit.refs.length > 0) {
+        this.drawRefs(node);
+      }
+    }
+    /**
+     * 绘制 refs 标签
+     */
+    drawRefs(node) {
+      const refs = node.commit.refs;
+      let offsetX = node.x + 15;
+      const y2 = node.y;
+      for (const ref of refs) {
+        let bgColor = "#666";
+        let textColor = "#fff";
+        if (ref.includes("HEAD")) {
+          bgColor = "#4285F4";
+        } else if (ref.startsWith("tag:")) {
+          bgColor = "#FBBC04";
+          textColor = "#000";
+        } else if (ref.includes("origin/")) {
+          bgColor = "#EA4335";
+        }
+        const text = ref.replace("tag: ", "");
+        this.ctx.font = "11px sans-serif";
+        const metrics = this.ctx.measureText(text);
+        const padding = 4;
+        const width = metrics.width + padding * 2;
+        const height = 16;
+        this.ctx.fillStyle = bgColor;
+        this.ctx.fillRect(offsetX, y2 - height / 2, width, height);
+        this.ctx.fillStyle = textColor;
+        this.ctx.textAlign = "left";
+        this.ctx.textBaseline = "middle";
+        this.ctx.fillText(text, offsetX + padding, y2);
+        offsetX += width + 5;
+      }
+    }
+    /**
+     * 设置缩放
+     */
+    setScale(scale) {
+      this.scale = Math.max(0.5, Math.min(2, scale));
+    }
+    /**
+     * 设置偏移
+     */
+    setOffset(x2, y2) {
+      this.offsetX = x2;
+      this.offsetY = y2;
+    }
+    /**
+     * 获取鼠标位置对应的节点
+     */
+    getNodeAtPosition(x2, y2, nodes) {
+      const transformedX = (x2 - this.offsetX) / this.scale;
+      const transformedY = (y2 - this.offsetY) / this.scale;
+      const radius = 5;
+      for (const node of nodes.values()) {
+        const dx = transformedX - node.x;
+        const dy = transformedY - node.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance <= radius + 5) {
+          return node;
+        }
+      }
+      return null;
+    }
+    /**
+     * 调整 Canvas 大小
+     */
+    resize() {
+      this.setupCanvas();
+    }
+    /**
+     * 销毁渲染器
+     */
+    destroy() {
+      this.clear();
+    }
+  }
+  const CommitGraph = ({
+    commits,
+    selectedHashes,
+    onCommitClick,
+    onCommitDoubleClick
+  }) => {
+    const canvasRef = reactExports.useRef(null);
+    const rendererRef = reactExports.useRef(null);
+    const [hoveredHash, setHoveredHash] = reactExports.useState(null);
+    const [layout, setLayout] = reactExports.useState(null);
+    reactExports.useEffect(() => {
+      if (commits.length === 0) {
+        setLayout(null);
+        return;
+      }
+      const newLayout = graphLayoutEngine.calculateLayout(commits);
+      setLayout(newLayout);
+    }, [commits]);
+    reactExports.useEffect(() => {
+      if (!canvasRef.current) {
+        return;
+      }
+      rendererRef.current = new CanvasRenderer(canvasRef.current);
+      const handleResize = () => {
+        var _a;
+        (_a = rendererRef.current) == null ? void 0 : _a.resize();
+        renderGraph();
+      };
+      window.addEventListener("resize", handleResize);
+      return () => {
+        var _a;
+        window.removeEventListener("resize", handleResize);
+        (_a = rendererRef.current) == null ? void 0 : _a.destroy();
+      };
+    }, []);
+    const renderGraph = () => {
+      if (!layout || !rendererRef.current) {
+        return;
+      }
+      const selectedSet = new Set(selectedHashes);
+      rendererRef.current.render(layout.nodes, layout.edges, selectedSet, hoveredHash);
+    };
+    reactExports.useEffect(() => {
+      renderGraph();
+    }, [layout, selectedHashes, hoveredHash]);
+    const handleMouseMove = (e) => {
+      if (!layout || !rendererRef.current) {
+        return;
+      }
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x2 = e.clientX - rect.left;
+      const y2 = e.clientY - rect.top;
+      const node = rendererRef.current.getNodeAtPosition(x2, y2, layout.nodes);
+      setHoveredHash(node ? node.commit.hash : null);
+      canvasRef.current.style.cursor = node ? "pointer" : "default";
+    };
+    const handleMouseLeave = () => {
+      setHoveredHash(null);
+      if (canvasRef.current) {
+        canvasRef.current.style.cursor = "default";
+      }
+    };
+    const handleClick = (e) => {
+      if (!layout || !rendererRef.current) {
+        return;
+      }
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x2 = e.clientX - rect.left;
+      const y2 = e.clientY - rect.top;
+      const node = rendererRef.current.getNodeAtPosition(x2, y2, layout.nodes);
+      if (node) {
+        onCommitClick(node.commit.hash, e.ctrlKey || e.metaKey);
+      }
+    };
+    const handleDoubleClick = (e) => {
+      if (!layout || !rendererRef.current) {
+        return;
+      }
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x2 = e.clientX - rect.left;
+      const y2 = e.clientY - rect.top;
+      const node = rendererRef.current.getNodeAtPosition(x2, y2, layout.nodes);
+      if (node) {
+        onCommitDoubleClick(node.commit.hash);
+      }
+    };
+    const config = graphLayoutEngine.getConfig();
+    const width = layout ? (layout.lanes + 1) * config.columnWidth : 100;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-graph", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "canvas",
+      {
+        ref: canvasRef,
+        className: "commit-graph-canvas",
+        style: { width: `${width}px` },
+        onMouseMove: handleMouseMove,
+        onMouseLeave: handleMouseLeave,
+        onClick: handleClick,
+        onDoubleClick: handleDoubleClick
+      }
+    ) });
+  };
+  const CommitDetails = ({ commit, onClose }) => {
+    const [files, setFiles] = reactExports.useState([]);
+    const [stats, setStats] = reactExports.useState(null);
+    const [loading, setLoading] = reactExports.useState(false);
+    reactExports.useEffect(() => {
+      if (!commit) {
+        setFiles([]);
+        setStats(null);
+        return;
+      }
+      const loadDetails = async () => {
+        setLoading(true);
+        try {
+          const [commitFiles, commitStats] = await Promise.all([
+            rpcClient.call("git.getCommitFiles", commit.hash),
+            rpcClient.call("git.getCommitStats", commit.hash)
+          ]);
+          setFiles(commitFiles);
+          setStats(commitStats);
+        } catch (error) {
+          console.error("Failed to load commit details:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      loadDetails();
+    }, [commit]);
+    if (!commit) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-details empty", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Select a commit to view details" }) });
+    }
+    const formatDate = (date) => {
+      return new Date(date).toLocaleString();
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-details", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-details-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Commit Details" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "close-button", onClick: onClose, title: "Close", children: "×" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-details-content", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-section", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-label", children: "Hash:" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-value monospace", children: commit.hash })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-label", children: "Author:" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-value", children: commit.author })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-label", children: "Email:" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-value", children: commit.email })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-label", children: "Date:" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-value", children: formatDate(commit.date) })
+          ] }),
+          commit.refs.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "detail-label", children: "Refs:" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "refs-list", children: commit.refs.map((ref, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ref-tag", children: ref }, index)) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-section", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Message" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-message", children: commit.message })
+        ] }),
+        stats && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-section", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Changes" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-stats", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "stat-item", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "Files:" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value", children: stats.files })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "stat-item stat-additions", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "+" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value", children: stats.insertions })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "stat-item stat-deletions", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "-" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value", children: stats.deletions })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-section", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("h4", { children: [
+            "Files Changed (",
+            files.length,
+            ")"
+          ] }),
+          loading ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "loading", children: "Loading files..." }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "files-list", children: files.map((file, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "file-item", children: file }, index)) })
+        ] }),
+        commit.parents.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "detail-section", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Parents" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "parents-list", children: commit.parents.map((parent, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "parent-item monospace", children: parent.substring(0, 7) }, index)) })
+        ] })
+      ] })
+    ] });
+  };
+  const SearchBar = ({ onSearch, onClear }) => {
+    const [query, setQuery] = reactExports.useState("");
+    const [searchType, setSearchType] = reactExports.useState("message");
+    const handleSearch = reactExports.useCallback(() => {
+      if (query.trim()) {
+        onSearch(query.trim(), searchType);
+      }
+    }, [query, searchType, onSearch]);
+    const handleClear = reactExports.useCallback(() => {
+      setQuery("");
+      onClear();
+    }, [onClear]);
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      } else if (e.key === "Escape") {
+        handleClear();
+      }
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-bar", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-input-group", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "text",
+            className: "search-input",
+            placeholder: `Search by ${searchType}...`,
+            value: query,
+            onChange: (e) => setQuery(e.target.value),
+            onKeyDown: handleKeyDown
+          }
+        ),
+        query && /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "clear-button", onClick: handleClear, title: "Clear search", children: "×" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "select",
+        {
+          className: "search-type-select",
+          value: searchType,
+          onChange: (e) => setSearchType(e.target.value),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "message", children: "Message" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "author", children: "Author" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "hash", children: "Hash" })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "search-button", onClick: handleSearch, disabled: !query.trim(), children: "Search" })
+    ] });
+  };
+  const VirtualScroll = ({
+    itemCount,
+    itemHeight,
+    height,
+    overscan = 5,
+    children,
+    onLoadMore,
+    hasMore = false
+  }) => {
+    const containerRef = reactExports.useRef(null);
+    const [scrollTop, setScrollTop] = reactExports.useState(0);
+    const visibleStart = Math.floor(scrollTop / itemHeight);
+    const visibleEnd = Math.ceil((scrollTop + height) / itemHeight);
+    const startIndex = Math.max(0, visibleStart - overscan);
+    const endIndex = Math.min(itemCount, visibleEnd + overscan);
+    const totalHeight = itemCount * itemHeight;
+    const offsetY = startIndex * itemHeight;
+    const handleScroll = reactExports.useCallback(
+      (e) => {
+        const target = e.currentTarget;
+        setScrollTop(target.scrollTop);
+        if (onLoadMore && hasMore) {
+          const scrollBottom = target.scrollTop + target.clientHeight;
+          const threshold = totalHeight - itemHeight * 10;
+          if (scrollBottom >= threshold) {
+            onLoadMore();
+          }
+        }
+      },
+      [onLoadMore, hasMore, totalHeight, itemHeight]
+    );
+    const scrollToIndex = reactExports.useCallback(
+      (index, behavior = "smooth") => {
+        if (containerRef.current) {
+          const scrollTop2 = index * itemHeight;
+          containerRef.current.scrollTo({
+            top: scrollTop2,
+            behavior
+          });
+        }
+      },
+      [itemHeight]
+    );
+    reactExports.useEffect(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollToIndex = scrollToIndex;
+      }
+    }, [scrollToIndex]);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        ref: containerRef,
+        className: "virtual-scroll-container",
+        style: { height: `${height}px`, overflow: "auto" },
+        onScroll: handleScroll,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "virtual-scroll-spacer", style: { height: `${totalHeight}px` }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "virtual-scroll-content",
+            style: { transform: `translateY(${offsetY}px)` },
+            children: children(startIndex, endIndex)
+          }
+        ) })
+      }
+    );
+  };
+  function HistoryPanel() {
+    const {
+      commits,
+      branches,
+      status,
+      loading,
+      selectedCommits,
+      hasMore,
+      searchQuery,
+      fetchHistory,
+      fetchBranches,
+      selectCommit,
+      searchCommits,
+      clearSearch,
+      loadMore
+    } = useGitStore();
+    const [selectedCommit, setSelectedCommit] = reactExports.useState(null);
+    const [showDetails, setShowDetails] = reactExports.useState(false);
+    reactExports.useEffect(() => {
+      fetchHistory({ maxCount: 100 });
+      fetchBranches();
+    }, [fetchHistory, fetchBranches]);
+    const handleCommitClick = (hash, multi) => {
+      selectCommit(hash, multi);
+      if (!multi) {
+        const commit = commits.find((c) => c.hash === hash);
+        if (commit) {
+          setSelectedCommit(commit);
+          setShowDetails(true);
+        }
+      }
+    };
+    const handleCommitDoubleClick = (hash) => {
+      const commit = commits.find((c) => c.hash === hash);
+      if (commit) {
+        setSelectedCommit(commit);
+        setShowDetails(true);
+      }
+    };
+    const handleSearch = (query, type) => {
+      searchCommits(query, type);
+    };
+    const handleClearSearch = () => {
+      clearSearch();
+    };
+    const handleCloseDetails = () => {
+      setShowDetails(false);
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "history-panel", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "history-header", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Commit History" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "commit-count", children: [
+          commits.length,
+          " commits",
+          searchQuery && " (filtered)"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SearchBar, { onSearch: handleSearch, onClear: handleClearSearch }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "history-content", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "history-main", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            CommitGraph,
+            {
+              commits,
+              selectedHashes: selectedCommits,
+              onCommitClick: handleCommitClick,
+              onCommitDoubleClick: handleCommitDoubleClick
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-list-container", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              VirtualScroll,
+              {
+                itemCount: commits.length,
+                itemHeight: 50,
+                height: 600,
+                overscan: 10,
+                onLoadMore: loadMore,
+                hasMore: hasMore && !searchQuery,
+                children: (startIndex, endIndex) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  CommitList,
+                  {
+                    commits: commits.slice(startIndex, endIndex),
+                    branches,
+                    currentBranch: (status == null ? void 0 : status.current) || "main",
+                    startIndex
+                  }
+                )
+              }
+            ),
+            loading && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "loading-indicator", children: "Loading more commits..." })
+          ] })
+        ] }),
+        showDetails && /* @__PURE__ */ jsxRuntimeExports.jsx(CommitDetails, { commit: selectedCommit, onClose: handleCloseDetails })
+      ] })
+    ] });
+  }
+  function App() {
+    const { fetchStatus, fetchHistory } = useGitStore();
+    const [loading, setLoading] = reactExports.useState(true);
+    const [error, setError] = reactExports.useState(null);
+    console.log("[Git GUI App] Component mounted");
+    reactExports.useEffect(() => {
+      console.log("[Git GUI App] useEffect triggered for data loading");
+      const loadData = async () => {
+        try {
+          setLoading(true);
+          setError(null);
+          console.log("[Git GUI App] Starting to load data...");
+          const results = await Promise.all([
+            fetchStatus().catch((err) => {
+              console.error("[Git GUI App] Failed to fetch status:", err);
+              throw new Error(`Failed to load git status: ${err.message || err}`);
+            }),
+            fetchHistory().catch((err) => {
+              console.error("[Git GUI App] Failed to fetch history:", err);
+              throw new Error(`Failed to load git history: ${err.message || err}`);
+            })
+          ]);
+          console.log("[Git GUI App] Data loaded successfully, results:", results);
+          console.log("[Git GUI App] Setting loading to false");
+          setLoading(false);
+        } catch (err) {
+          console.error("[Git GUI App] Failed to load data:", err);
+          setError(err instanceof Error ? err.message : String(err));
+          setLoading(false);
+        }
+      };
+      loadData();
+    }, [fetchStatus, fetchHistory]);
+    reactExports.useEffect(() => {
+      if (!loading) {
+        const loadingEl = document.getElementById("loading");
+        if (loadingEl) {
+          loadingEl.style.display = "none";
+        }
+      }
+    }, [loading]);
+    if (error) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app-error", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "error-icon", children: "⚠️" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Failed to Load Git GUI" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "error-message", children: error }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "error-actions", children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => window.location.reload(), children: "Reload" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "error-help", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Possible causes:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Not in a Git repository" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Git is not installed or not in PATH" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "No permission to access the repository" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Check the Output panel (View → Output → Git GUI) for more details." })
+        ] })
+      ] });
+    }
+    if (loading) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app-loading", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "loading-spinner" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Loading Git repository..." })
+      ] });
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "app-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "Git GUI" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app-content", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "panel-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(StagePanel, {}) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "panel-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(HistoryPanel, {}) })
+      ] })
+    ] });
+  }
+  console.log("[Git GUI Webview] Starting initialization...");
+  console.log("[Git GUI Webview] React version:", React.version);
+  console.log("[Git GUI Webview] Root element:", document.getElementById("root"));
+  try {
+    const rootElement = document.getElementById("root");
+    if (!rootElement) {
+      throw new Error("Root element not found");
+    }
+    console.log("[Git GUI Webview] Creating React root...");
+    const root = client.createRoot(rootElement);
+    console.log("[Git GUI Webview] Rendering App component...");
+    root.render(
+      /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
+    );
+    console.log("[Git GUI Webview] App rendered successfully");
+    setTimeout(() => {
+      const loading = document.getElementById("loading");
+      if (loading) {
+        loading.style.display = "none";
+        console.log("[Git GUI Webview] Loading screen hidden");
+      }
+    }, 100);
+  } catch (error) {
+    console.error("[Git GUI Webview] Initialization error:", error);
+    const errorContainer = document.getElementById("error");
+    const errorMessage = document.getElementById("error-message");
+    const loading = document.getElementById("loading");
+    if (loading)
+      loading.style.display = "none";
+    if (errorContainer)
+      errorContainer.style.display = "flex";
+    if (errorMessage)
+      errorMessage.textContent = error instanceof Error ? error.message : String(error);
+  }
+})();
+//# sourceMappingURL=index.js.map

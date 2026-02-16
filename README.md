@@ -20,8 +20,14 @@ A visual Git management tool deeply integrated into VS Code, providing a graphic
     - View unstaged/staged changes
     - Double-click files to preview
     - Color-coded additions/deletions
+- 🖥️ **Remote Development** - Full support for VS Code Remote-SSH
+    - Works seamlessly in remote environments
+    - All Git operations execute on remote server
+    - Same experience as local development
 
 ## Quick Start
+
+### Local Development
 
 ```bash
 # Install dependencies
@@ -37,7 +43,16 @@ npm run dev:webview    # Terminal 2
 # Press F5 in VS Code to launch extension
 ```
 
-See [Quick Start Guide](./docs/QUICK_START.md) for detailed instructions.
+### Remote-SSH Development
+
+The extension fully supports VS Code Remote-SSH:
+
+1. Install the extension locally
+2. Connect to remote server via Remote-SSH
+3. Open a Git repository on the remote server
+4. Extension automatically installs and runs on remote
+
+See [Remote SSH Support Guide](./docs/07-REMOTE_SSH_SUPPORT.md) for details.
 
 ## Development
 

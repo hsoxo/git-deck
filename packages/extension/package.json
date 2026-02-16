@@ -14,10 +14,13 @@
     "categories": [
         "SCM Providers"
     ],
-    "activationEvents": [
-        "onCommand:gitGui.open"
+    "extensionKind": [
+        "workspace"
     ],
-    "main": "./test-extension.js",
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./dist/extension.js",
     "contributes": {
         "commands": [
             {
@@ -31,6 +34,11 @@
                 "icon": "$(refresh)"
             },
             {
+                "command": "gitGui.showOutput",
+                "title": "Git GUI: Show Output",
+                "icon": "$(output)"
+            },
+            {
                 "command": "gitGui.rebase",
                 "title": "Git GUI: Rebase"
             },
@@ -39,6 +47,55 @@
                 "title": "Git GUI: Cherry-pick"
             }
         ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "git-gui",
+                    "title": "Git GUI",
+                    "icon": "$(git-branch)"
+                }
+            ]
+        },
+        "views": {
+            "git-gui": [
+                {
+                    "id": "gitGui.welcome",
+                    "name": "Git GUI",
+                    "type": "webview"
+                }
+            ]
+        },
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "gitGui.open",
+                    "when": "workspaceFolderCount != 0"
+                },
+                {
+                    "command": "gitGui.refresh",
+                    "when": "workspaceFolderCount != 0"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "gitGui.open",
+                    "when": "view == gitGui.welcome",
+                    "group": "navigation"
+                },
+                {
+                    "command": "gitGui.refresh",
+                    "when": "view == gitGui.welcome",
+                    "group": "navigation"
+                }
+            ],
+            "scm/title": [
+                {
+                    "command": "gitGui.open",
+                    "group": "navigation",
+                    "when": "scmProvider == git"
+                }
+            ]
+        },
         "configuration": {
             "title": "Git GUI",
             "properties": {
@@ -50,8 +107,8 @@
                         "warn",
                         "error"
                     ],
-                    "default": "info",
-                    "description": "Log level for Git GUI extension"
+                    "default": "debug",
+                    "description": "Log level for Git GUI extension (set to 'debug' to see detailed logs in Output panel)"
                 },
                 "gitGui.maxLogCount": {
                     "type": "number",

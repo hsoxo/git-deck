@@ -48,7 +48,7 @@ interface GitState {
     renameBranch: (oldName: string, newName: string, force?: boolean) => Promise<void>;
     checkoutBranch: (name: string, create?: boolean) => Promise<void>;
     mergeBranch: (branch: string, noFastForward?: boolean) => Promise<void>;
-    
+
     // Remote operations
     remotes: RemoteInfo[];
     fetchRemotes: () => Promise<void>;
@@ -73,20 +73,28 @@ export const useGitStore = create<GitState>((set, get) => ({
 
     fetchStatus: async () => {
         try {
+            console.log('[GitStore] fetchStatus: starting...');
             set({ loading: true, error: null });
             const status = await rpcClient.call('git.getStatus');
+            console.log('[GitStore] fetchStatus: received status:', status);
             set({ status, loading: false });
+            console.log('[GitStore] fetchStatus: state updated');
         } catch (error) {
+            console.error('[GitStore] fetchStatus: error:', error);
             set({ error: (error as Error).message, loading: false });
         }
     },
 
     fetchHistory: async (options = {}) => {
         try {
+            console.log('[GitStore] fetchHistory: starting with options:', options);
             set({ loading: true, error: null });
             const commits = await rpcClient.call('git.getCommitLog', options);
+            console.log('[GitStore] fetchHistory: received commits:', commits?.length, 'commits');
             set({ commits, loading: false });
+            console.log('[GitStore] fetchHistory: state updated');
         } catch (error) {
+            console.error('[GitStore] fetchHistory: error:', error);
             set({ error: (error as Error).message, loading: false });
         }
     },

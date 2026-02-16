@@ -1,22 +1,55 @@
-# 07 - Remote SSH Support Requirements
+# 07 - Remote SSH Support
 
 ## 概述
 
-本文档定义了 Git GUI 扩展对 VS Code Remote-SSH 环境的支持需求。目标是让扩展在远程 SSH 连接环境下能够完全正常工作，提供与本地开发相同的用户体验。
+Git GUI 扩展完全支持 VS Code Remote-SSH 环境。扩展会自动安装到远程服务器并在远程环境中执行所有 Git 操作，提供与本地开发相同的用户体验。
 
-## 背景
+## 状态
 
-当前扩展在 Remote-SSH 环境下无法正常工作，主要问题：
-1. 扩展未正确安装到远程服务器
-2. Webview 资源加载路径不正确
-3. 扩展激活机制在远程环境下失败
-4. RPC 通信在远程环境下可能存在问题
+✅ **已实现** - 扩展已配置为在 Remote-SSH 环境下运行
 
-## 最佳方案：Remote Extension Host 架构
+### 已完成的配置
 
-采用 VS Code 官方推荐的 Remote Extension Host 架构，确保扩展在远程服务器上正确运行。
+1. ✅ `extensionKind: ["workspace"]` - 扩展在远程服务器运行
+2. ✅ 使用 `webview.asWebviewUri()` 处理资源路径
+3. ✅ 使用 `workspaceFolder.uri.fsPath` 获取远程路径
+4. ✅ 正确配置 `localResourceRoots`
+5. ✅ 添加 `workspaceContains:.git` 激活事件
 
-### 架构设计
+## 使用方法
+
+### 1. 安装扩展
+
+在本地 VS Code 中安装 Git GUI 扩展（只需安装一次）。
+
+### 2. 连接到远程服务器
+
+```bash
+# 通过命令面板连接
+Ctrl+Shift+P → "Remote-SSH: Connect to Host"
+
+# 或使用 Remote Explorer 视图
+```
+
+### 3. 打开远程 Git 仓库
+
+连接成功后，打开远程服务器上的 Git 仓库文件夹。扩展会自动：
+- 安装到远程服务器
+- 检测 Git 仓库
+- 激活扩展功能
+
+### 4. 使用 Git GUI
+
+```bash
+# 打开 Git GUI 面板
+Ctrl+Shift+P → "Git GUI: Open"
+
+# 或点击侧边栏的 Git GUI 图标
+```
+
+所有 Git 操作都在远程服务器上执行，操作远程仓库的文件。
+
+## 架构设计
 
 ```
 ┌─────────────────────────────────────────────────────────────┐

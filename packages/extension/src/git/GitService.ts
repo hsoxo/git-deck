@@ -16,9 +16,12 @@ export class GitService {
 
     async getStatus(): Promise<GitStatus> {
         try {
-            logger.debug('Getting git status');
+            logger.debug('Getting git status...');
+            logger.time('git.status');
             const status: StatusResult = await this.git.status();
-            return {
+            logger.timeEnd('git.status');
+
+            const result = {
                 staged: status.staged,
                 unstaged: [...status.modified, ...status.deleted].filter(
                     (f) => !status.staged.includes(f)
@@ -27,6 +30,15 @@ export class GitService {
                 current: status.current,
                 tracking: status.tracking,
             };
+
+            logger.debug('Git status retrieved successfully', {
+                staged: result.staged.length,
+                unstaged: result.unstaged.length,
+                untracked: result.untracked.length,
+                current: result.current,
+            });
+
+            return result;
         } catch (error) {
             logger.error('Failed to get status', error);
             throw new Error(ErrorHandler.createUserMessage(error, 'Get status'));
@@ -36,11 +48,15 @@ export class GitService {
     async getLog(options: LogOptions = {}): Promise<CommitNode[]> {
         try {
             logger.debug('Getting git log', options);
+            logger.time('git.log');
             const log: LogResult = await this.git.log({
                 maxCount: options.maxCount || 100,
                 from: options.from,
                 to: options.to,
             });
+            logger.timeEnd('git.log');
+
+            logger.debug(`Retrieved ${log.all.length} commits`);
 
             const currentBranch = await this.getCurrentBranch();
             const headHash = await this.getHeadHash();

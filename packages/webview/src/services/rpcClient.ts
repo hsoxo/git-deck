@@ -19,22 +19,26 @@ class RPCClient {
     private inflightRequests = new Map<string, Promise<any>>(); // Request deduplication
 
     constructor() {
+        console.log('[RPC Client] Initializing...');
+        console.log('[RPC Client] acquireVsCodeApi available:', typeof acquireVsCodeApi !== 'undefined');
+
         if (typeof acquireVsCodeApi !== 'undefined') {
             this.vscode = acquireVsCodeApi();
             window.addEventListener('message', this.handleMessage.bind(this));
-            console.log('RPC Client initialized successfully');
+            console.log('[RPC Client] Initialized successfully');
+            console.log('[RPC Client] VS Code API:', this.vscode);
         } else {
-            console.error('acquireVsCodeApi is not available');
+            console.error('[RPC Client] acquireVsCodeApi is not available');
         }
     }
 
     async call(method: string, ...params: any[]): Promise<any> {
         if (!this.vscode) {
-            console.error('VS Code API not available, method:', method);
+            console.error('[RPC Client] VS Code API not available, method:', method);
             throw new Error('VS Code API not available');
         }
 
-        console.log('RPC call:', method, params);
+        console.log('[RPC Client] Calling method:', method, 'params:', params);
 
         // Check cache for read-only operations
         if (this.isReadOnlyMethod(method)) {
@@ -70,9 +74,12 @@ class RPCClient {
         const id = ++this.requestId;
         const request: RPCRequest = { id, method, params };
 
+        console.log('[RPC Client] Executing request:', request);
+
         return new Promise((resolve, reject) => {
             // Timeout handling
             const timeoutId = setTimeout(() => {
+                console.error('[RPC Client] Request timeout:', method, 'id:', id);
                 this.pending.delete(id);
                 reject(new Error(`RPC timeout: ${method}`));
             }, this.REQUEST_TIMEOUT);
@@ -101,6 +108,7 @@ class RPCClient {
                 },
             });
 
+            console.log('[RPC Client] Posting message to extension:', request);
             this.vscode.postMessage(request);
         });
     }
@@ -180,19 +188,31 @@ class RPCClient {
     private handleMessage(event: MessageEvent) {
         const response: RPCResponse = event.data;
 
+        console.log('[RPC Client] Received message:', response);
+        console.log('[RPC Client] Response details:', {
+            id: response.id,
+            hasError: !!response.error,
+            hasResult: response.result !== undefined,
+            resultType: typeof response.result
+        });
+
         if (!response.id) {
             // This is a notification message
+            console.log('[RPC Client] Notification message received');
             return;
         }
 
         const pending = this.pending.get(response.id);
         if (!pending) {
+            console.warn('[RPC Client] No pending request for id:', response.id);
             return;
         }
 
         if (response.error) {
+            console.error('[RPC Client] Request failed:', response.error);
             pending.reject(new Error(response.error));
         } else {
+            console.log('[RPC Client] Request succeeded, id:', response.id, 'result:', response.result);
             pending.resolve(response.result);
         }
 
