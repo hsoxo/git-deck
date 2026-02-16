@@ -5,6 +5,7 @@ import { Config } from './config/Config';
 import { GitGuiPanel } from './webview/GitGuiPanel';
 import { GitGuiWelcomeView } from './webview/GitGuiWelcomeView';
 import { ChangesTreeProvider } from './views/ChangesTreeProvider';
+import { CommitView } from './views/CommitView';
 
 export function activate(context: vscode.ExtensionContext) {
     // 创建 Output Channel - 使用更明确的名称
@@ -36,23 +37,39 @@ export function activate(context: vscode.ExtensionContext) {
     // 初始化 Git 服务和 Changes Tree Provider
     let gitService: GitService | undefined;
     let changesTreeProvider: ChangesTreeProvider | undefined;
+    let commitView: CommitView | undefined;
 
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
     if (workspaceFolder) {
         try {
             gitService = new GitService(workspaceFolder.uri.fsPath);
-            changesTreeProvider = new ChangesTreeProvider(gitService);
 
+            // Refresh function for all views
+            const refreshAllViews = () => {
+                changesTreeProvider?.refresh();
+                commitView?.refresh();
+                GitGuiPanel.refresh();
+            };
+
+            changesTreeProvider = new ChangesTreeProvider(gitService);
             context.subscriptions.push(
                 vscode.window.registerTreeDataProvider('gitGui.changes', changesTreeProvider)
+            );
+
+            // Register commit view
+            commitView = new CommitView(context.extensionUri, gitService, refreshAllViews);
+            context.subscriptions.push(
+                vscode.window.registerWebviewViewProvider(
+                    CommitView.viewType,
+                    commitView
+                )
             );
 
             // 监听文件变化
             const fileWatcher = vscode.workspace.createFileSystemWatcher('**/*');
 
             const refreshChanges = () => {
-                changesTreeProvider?.refresh();
-                GitGuiPanel.refresh();
+                refreshAllViews();
             };
 
             fileWatcher.onDidChange(refreshChanges);
@@ -61,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             context.subscriptions.push(fileWatcher);
 
-            logger.info('Changes tree view registered with file watcher');
+            logger.info('Changes tree view and commit view registered with file watcher');
         } catch (error) {
             logger.error('Failed to initialize Git service', error);
         }
@@ -183,46 +200,40 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             try {
-                // 构建完整的文件路径
-                const fullPath = vscode.Uri.joinPath(workspaceFolder.uri, filePath).fsPath;
-                const fileUri = vscode.Uri.file(fullPath);
+                const fileUri = vscode.Uri.joinPath(workspaceFolder.uri, filePath);
 
                 if (staged) {
-                    // Staged: 比较 HEAD 和 Index (staged version)
-                    // 使用 vscode.git.toGitUri 来创建正确的 git URI
+                    // 对于 staged 文件，显示 Index vs HEAD 的 diff
+                    // 使用 git.openChange 会显示 working tree vs index
+                    // 我们需要使用 vscode.diff 来显示 HEAD vs Index
                     const headUri = fileUri.with({
                         scheme: 'git',
-                        path: fullPath,
-                        query: JSON.stringify({ path: fullPath, ref: 'HEAD' })
+                        path: fileUri.fsPath,
+                        query: JSON.stringify({
+                            path: fileUri.fsPath,
+                            ref: 'HEAD'
+                        })
                     });
+
                     const indexUri = fileUri.with({
                         scheme: 'git',
-                        path: fullPath,
-                        query: JSON.stringify({ path: fullPath, ref: '' })
+                        path: fileUri.fsPath,
+                        query: JSON.stringify({
+                            path: fileUri.fsPath,
+                            ref: '~'  // ~ 表示 index/staged
+                        })
                     });
 
                     await vscode.commands.executeCommand(
                         'vscode.diff',
                         headUri,
                         indexUri,
-                        `${filePath} (Index ↔ HEAD)`,
+                        `${filePath} (Staged Changes)`,
                         { preview: true }
                     );
                 } else {
-                    // Unstaged: 比较 Index 和 Working Tree
-                    const indexUri = fileUri.with({
-                        scheme: 'git',
-                        path: fullPath,
-                        query: JSON.stringify({ path: fullPath, ref: '' })
-                    });
-
-                    await vscode.commands.executeCommand(
-                        'vscode.diff',
-                        indexUri,
-                        fileUri,
-                        `${filePath} (Working Tree ↔ Index)`,
-                        { preview: true }
-                    );
+                    // 对于 unstaged 文件，使用 git.openChange 显示 working tree vs index
+                    await vscode.commands.executeCommand('git.openChange', fileUri);
                 }
             } catch (error) {
                 logger.error('Failed to open diff', error);
@@ -250,6 +261,82 @@ export function activate(context: vscode.ExtensionContext) {
                         vscode.window.showErrorMessage(`Failed to discard changes: ${error}`);
                     }
                 }
+            }
+        })
+    );
+
+    // Commit 命令
+    context.subscriptions.push(
+        vscode.commands.registerCommand('gitGui.commit', async () => {
+            if (!gitService) {
+                return;
+            }
+
+            try {
+                const status = await gitService.getStatus();
+                if (status.staged.length === 0) {
+                    vscode.window.showWarningMessage('No staged changes to commit');
+                    return;
+                }
+
+                const message = await vscode.window.showInputBox({
+                    prompt: 'Commit message',
+                    placeHolder: 'Enter commit message...',
+                    validateInput: (value) => {
+                        if (!value || value.trim().length === 0) {
+                            return 'Commit message cannot be empty';
+                        }
+                        return null;
+                    }
+                });
+
+                if (message) {
+                    await gitService.commit(message);
+                    changesTreeProvider?.refresh();
+                    GitGuiPanel.refresh();
+                    vscode.window.showInformationMessage(`Committed: ${message}`);
+                }
+            } catch (error) {
+                logger.error('Failed to commit', error);
+                vscode.window.showErrorMessage(`Failed to commit: ${error}`);
+            }
+        })
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('gitGui.commitAmend', async () => {
+            if (!gitService) {
+                return;
+            }
+
+            try {
+                const commits = await gitService.getLog({ maxCount: 1 });
+                if (commits.length === 0) {
+                    vscode.window.showWarningMessage('No commits to amend');
+                    return;
+                }
+
+                const lastCommitMessage = commits[0].message;
+                const message = await vscode.window.showInputBox({
+                    prompt: 'Amend commit message',
+                    value: lastCommitMessage,
+                    validateInput: (value) => {
+                        if (!value || value.trim().length === 0) {
+                            return 'Commit message cannot be empty';
+                        }
+                        return null;
+                    }
+                });
+
+                if (message) {
+                    await gitService.amendCommit(message);
+                    changesTreeProvider?.refresh();
+                    GitGuiPanel.refresh();
+                    vscode.window.showInformationMessage(`Amended commit: ${message}`);
+                }
+            } catch (error) {
+                logger.error('Failed to amend commit', error);
+                vscode.window.showErrorMessage(`Failed to amend commit: ${error}`);
             }
         })
     );

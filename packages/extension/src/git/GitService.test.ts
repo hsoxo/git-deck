@@ -33,6 +33,11 @@ describe('GitService', () => {
                 not_added: ['file3.ts'],
                 current: 'main',
                 tracking: 'origin/main',
+                files: [
+                    { path: 'file1.ts', index: 'M', working_dir: ' ' },
+                    { path: 'file2.ts', index: ' ', working_dir: 'M' },
+                    { path: 'file3.ts', index: '?', working_dir: '?' },
+                ],
             });
 
             const status = await gitService.getStatus();

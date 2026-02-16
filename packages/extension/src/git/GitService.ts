@@ -21,12 +21,37 @@ export class GitService {
             const status: StatusResult = await this.git.status();
             logger.timeEnd('git.status');
 
+            // simple-git 的 status.files 包含每个文件的详细状态
+            // 每个文件有 index 和 working_dir 两个状态字段
+            // index: 暂存区的状态 (M=modified, A=added, D=deleted, ' '=unchanged)
+            // working_dir: 工作区的状态 (M=modified, D=deleted, ' '=unchanged)
+
+            const staged: string[] = [];
+            const unstaged: string[] = [];
+            const untracked: string[] = [];
+
+            status.files.forEach(file => {
+                const hasIndexChanges = file.index && file.index !== ' ' && file.index !== '?';
+                const hasWorkingChanges = file.working_dir && file.working_dir !== ' ' && file.working_dir !== '?';
+
+                if (file.working_dir === '?') {
+                    // Untracked file
+                    untracked.push(file.path);
+                } else {
+                    // Tracked file
+                    if (hasIndexChanges) {
+                        staged.push(file.path);
+                    }
+                    if (hasWorkingChanges) {
+                        unstaged.push(file.path);
+                    }
+                }
+            });
+
             const result = {
-                staged: status.staged,
-                unstaged: [...status.modified, ...status.deleted].filter(
-                    (f) => !status.staged.includes(f)
-                ),
-                untracked: status.not_added,
+                staged,
+                unstaged,
+                untracked,
                 current: status.current,
                 tracking: status.tracking,
             };
@@ -307,6 +332,16 @@ export class GitService {
             return [];
         }
         return refs.split(',').map((r) => r.trim());
+    }
+
+    async push(force: boolean = false): Promise<void> {
+        logger.debug(`Pushing to remote${force ? ' (force)' : ''}...`);
+        const args = ['push'];
+        if (force) {
+            args.push('--force');
+        }
+        await this.git.raw(args);
+        logger.info(`Pushed successfully${force ? ' (force)' : ''}`);
     }
 
     getRepoPath(): string {

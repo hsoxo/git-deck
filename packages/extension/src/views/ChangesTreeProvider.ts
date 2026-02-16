@@ -101,7 +101,9 @@ export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
             if (!(a instanceof FolderItem) && b instanceof FolderItem) return 1;
 
             // Then alphabetically
-            return a.label.toString().localeCompare(b.label.toString());
+            const labelA = typeof a.label === 'string' ? a.label : '';
+            const labelB = typeof b.label === 'string' ? b.label : '';
+            return labelA.localeCompare(labelB);
         });
 
         // Recursively sort children of folders
@@ -124,9 +126,7 @@ class SectionItem extends TreeItem {
         super(label, vscode.TreeItemCollapsibleState.Expanded);
         this.description = count > 0 ? `${count}` : '';
         this.contextValue = section;
-        this.iconPath = new vscode.ThemeIcon(
-            section === 'unstaged' ? 'circle-outline' : 'check'
-        );
+        // 不设置图标
     }
 }
 
@@ -139,7 +139,8 @@ class FolderItem extends TreeItem {
     ) {
         super(label, vscode.TreeItemCollapsibleState.Expanded);
         this.contextValue = 'folder';
-        this.iconPath = vscode.ThemeIcon.Folder;
+        // 使用文件夹图标
+        this.iconPath = new vscode.ThemeIcon('folder');
     }
 }
 
@@ -158,7 +159,7 @@ class FileItem extends TreeItem {
             arguments: [filePath, section === 'staged']
         };
 
-        // Use file icon
-        this.iconPath = vscode.ThemeIcon.File;
+        // 让 VS Code 根据文件扩展名自动选择图标
+        // 通过设置 resourceUri，VS Code 会显示正确的文件类型图标
     }
 }
