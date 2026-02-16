@@ -51,6 +51,14 @@
    - 故障排除
    - 发布流程
 
+7. **[07-REMOTE_SSH_SUPPORT.md](./07-REMOTE_SSH_SUPPORT.md)** - Remote SSH 支持需求
+   - 背景和问题分析
+   - 最佳方案设计
+   - 功能需求（FR-1 到 FR-7）
+   - 技术实现要点
+   - 测试需求
+   - 里程碑和时间表
+
 ### 📊 状态报告
 
 - **[PROJECT_PROGRESS.md](./PROJECT_PROGRESS.md)** - 项目进度跟踪
@@ -83,6 +91,9 @@
 
 **如何部署和安装?**
 → 阅读 [06-DEPLOYMENT_AND_INSTALL.md](./06-DEPLOYMENT_AND_INSTALL.md)
+
+**如何支持 Remote SSH?**
+→ 阅读 [07-REMOTE_SSH_SUPPORT.md](./07-REMOTE_SSH_SUPPORT.md)
 
 **当前项目进度如何?**
 → 阅读 [PROJECT_PROGRESS.md](./PROJECT_PROGRESS.md)
@@ -149,6 +160,7 @@
 
 ### 后续计划
 
+🔄 Sprint 2.5: Remote SSH 支持 (P0 - 新增，6周)  
 🔄 Sprint 2: 性能与代码质量 (P1)  
 🔄 Sprint 3: 架构与测试 (P2)  
 🔄 Sprint 4: 用户体验与文档 (P3)

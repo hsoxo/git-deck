@@ -280,6 +280,50 @@ packages/
   - 内存分析
   - 渲染性能测试
 
+### Sprint 2.5: Remote SSH 支持 (P0 - 新增)
+
+**优先级**: P0（必须）  
+**预计时间**: 6 周  
+**状态**: 需求已定义，待实施
+
+**背景**: 当前扩展在 Remote-SSH 环境下无法正常工作，这是一个关键的使用场景。
+
+**目标**: 使扩展完全支持 VS Code Remote-SSH 环境，提供与本地开发相同的用户体验。
+
+**详细需求**: 参见 [07-REMOTE_SSH_SUPPORT.md](./07-REMOTE_SSH_SUPPORT.md)
+
+#### Milestone 1: 基础支持（2 周）
+- [ ] 配置 extensionKind 为 workspace
+- [ ] 修复 Webview 资源路径问题
+- [ ] 实现远程 Git 操作
+- [ ] 基础功能测试通过
+
+#### Milestone 2: 功能完善（2 周）
+- [ ] 实现所有 Git 操作的远程支持
+- [ ] 优化 RPC 通信机制
+- [ ] 添加错误处理和重试逻辑
+- [ ] 完整测试覆盖（本地 + 远程）
+
+#### Milestone 3: 性能优化（1 周）
+- [ ] 实现本地缓存机制
+- [ ] 优化数据传输（压缩、批处理）
+- [ ] 性能测试达标（加载 < 3s，操作 < 1s）
+- [ ] 用户体验优化
+
+#### Milestone 4: 文档和发布（1 周）
+- [ ] 完善用户文档（安装、使用、故障排查）
+- [ ] 完善开发文档（架构、调试、优化）
+- [ ] 发布 Beta 版本
+- [ ] 收集用户反馈
+
+**成功标准**:
+- ✅ 扩展在 Remote-SSH 环境下能够正常安装和激活
+- ✅ 所有核心功能在远程环境下正常工作
+- ✅ 性能指标达到要求（加载 < 3s，操作 < 1s）
+- ✅ 通过所有测试用例（本地 + 远程）
+- ✅ 用户文档完整清晰
+- ✅ 至少 90% 的用户反馈为正面
+
 ### Sprint 3: 架构与测试 (P2)
 
 **预计时间**: 2 周
@@ -367,6 +411,7 @@ packages/
 - [04-IMPLEMENTED_FEATURES.md](./04-IMPLEMENTED_FEATURES.md) - 已实现功能
 - [05-OPTIMIZATION_PLAN.md](./05-OPTIMIZATION_PLAN.md) - 优化计划
 - [06-DEPLOYMENT_AND_INSTALL.md](./06-DEPLOYMENT_AND_INSTALL.md) - 部署与安装
+- [07-REMOTE_SSH_SUPPORT.md](./07-REMOTE_SSH_SUPPORT.md) - Remote SSH 支持需求
 
 ### 进度文档
 
