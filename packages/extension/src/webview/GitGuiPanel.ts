@@ -9,26 +9,60 @@ import { RevertOperations } from '../git/operations/RevertOperations';
 import { DiffOperations } from '../git/operations/DiffOperations';
 import { LogOperations } from '../git/operations/LogOperations';
 import { BranchOperations } from '../git/operations/BranchOperations';
-import { RemoteOperations } from '../git/operations/RemoteOperations';
 import simpleGit from 'simple-git';
 
-export class GitGuiViewProvider implements vscode.WebviewViewProvider {
-    private view?: vscode.WebviewView;
-    private rpcServer: RPCServer;
-    private stageOps: StageOperations;
-    private rebaseOps: RebaseOperations;
-    private cherryPickOps: CherryPickOperations;
-    private stashOps: StashOperations;
-    private revertOps: RevertOperations;
-    private diffOps: DiffOperations;
-    private logOps: LogOperations;
-    private branchOps: BranchOperations;
-    private remoteOps: RemoteOperations;
+export class GitGuiPanel {
+    public static currentPanel: GitGuiPanel | undefined;
+    private readonly panel: vscode.WebviewPanel;
+    private readonly extensionUri: vscode.Uri;
+    private readonly gitService: GitService;
+    private readonly rpcServer: RPCServer;
+    private readonly stageOps: StageOperations;
+    private readonly rebaseOps: RebaseOperations;
+    private readonly cherryPickOps: CherryPickOperations;
+    private readonly stashOps: StashOperations;
+    private readonly revertOps: RevertOperations;
+    private readonly diffOps: DiffOperations;
+    private readonly logOps: LogOperations;
+    private readonly branchOps: BranchOperations;
+    private disposables: vscode.Disposable[] = [];
 
-    constructor(
-        private readonly extensionUri: vscode.Uri,
-        private readonly gitService: GitService
-    ) {
+    public static createOrShow(extensionUri: vscode.Uri, gitService: GitService) {
+        const column = vscode.window.activeTextEditor
+            ? vscode.window.activeTextEditor.viewColumn
+            : undefined;
+
+        // If we already have a panel, show it
+        if (GitGuiPanel.currentPanel) {
+            GitGuiPanel.currentPanel.panel.reveal(column);
+            return;
+        }
+
+        // Otherwise, create a new panel
+        const panel = vscode.window.createWebviewPanel(
+            'gitGui',
+            'Git GUI',
+            column || vscode.ViewColumn.One,
+            {
+                enableScripts: true,
+                localResourceRoots: [extensionUri],
+                retainContextWhenHidden: true,
+            }
+        );
+
+        GitGuiPanel.currentPanel = new GitGuiPanel(panel, extensionUri, gitService);
+    }
+
+    public static refresh() {
+        if (GitGuiPanel.currentPanel) {
+            GitGuiPanel.currentPanel.panel.webview.postMessage({ method: 'refresh' });
+        }
+    }
+
+    private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, gitService: GitService) {
+        this.panel = panel;
+        this.extensionUri = extensionUri;
+        this.gitService = gitService;
         this.rpcServer = new RPCServer();
 
         const git = simpleGit(gitService.getRepoPath());
@@ -40,36 +74,24 @@ export class GitGuiViewProvider implements vscode.WebviewViewProvider {
         this.diffOps = new DiffOperations(git);
         this.logOps = new LogOperations(git);
         this.branchOps = new BranchOperations(git);
-        this.remoteOps = new RemoteOperations(git);
 
         this.registerRPCHandlers();
-    }
 
-    resolveWebviewView(
-        webviewView: vscode.WebviewView,
-        context: vscode.WebviewViewResolveContext,
-        token: vscode.CancellationToken
-    ): void | Thenable<void> {
-        this.view = webviewView;
+        // Set the webview's initial html content
+        this.panel.webview.html = this.getHtmlForWebview(this.panel.webview);
 
-        webviewView.webview.options = {
-            enableScripts: true,
-            localResourceRoots: [this.extensionUri],
-        };
+        // Listen for when the panel is disposed
+        this.panel.onDidDispose(() => this.dispose(), null, this.disposables);
 
-        webviewView.webview.html = this.getHtmlForWebview(webviewView.webview);
-
-        // 处理来自 webview 的消息
-        webviewView.webview.onDidReceiveMessage(async (message) => {
-            const response = await this.rpcServer.handle(message);
-            webviewView.webview.postMessage(response);
-        });
-    }
-
-    refresh(): void {
-        if (this.view) {
-            this.view.webview.postMessage({ method: 'refresh' });
-        }
+        // Handle messages from the webview
+        this.panel.webview.onDidReceiveMessage(
+            async (message) => {
+                const response = await this.rpcServer.handle(message);
+                this.panel.webview.postMessage(response);
+            },
+            null,
+            this.disposables
+        );
     }
 
     private registerRPCHandlers(): void {
@@ -183,30 +205,11 @@ export class GitGuiViewProvider implements vscode.WebviewViewProvider {
             this.branchOps.mergeBranch(branch, noFastForward)
         );
         this.rpcServer.register('git.getCurrentBranch', () => this.branchOps.getCurrentBranch());
-
-        // Remote 操作
-        this.rpcServer.register('git.listRemotes', () => this.remoteOps.listRemotes());
-        this.rpcServer.register('git.addRemote', (name, url) =>
-            this.remoteOps.addRemote(name, url)
-        );
-        this.rpcServer.register('git.removeRemote', (name) => this.remoteOps.removeRemote(name));
-        this.rpcServer.register('git.fetch', (remote, prune) =>
-            this.remoteOps.fetch(remote, prune)
-        );
-        this.rpcServer.register('git.pull', (remote, branch, rebase) =>
-            this.remoteOps.pull(remote, branch, rebase)
-        );
-        this.rpcServer.register('git.push', (remote, branch, force, setUpstream) =>
-            this.remoteOps.push(remote, branch, force, setUpstream)
-        );
     }
 
     private getHtmlForWebview(webview: vscode.Webview): string {
         // 获取 webview 资源的 URI
-        const webviewPath = vscode.Uri.joinPath(
-            this.extensionUri,
-            'webview-dist'
-        );
+        const webviewPath = vscode.Uri.joinPath(this.extensionUri, 'webview-dist');
 
         const scriptUri = webview.asWebviewUri(
             vscode.Uri.joinPath(webviewPath, 'assets', 'index.js')
@@ -232,6 +235,19 @@ export class GitGuiViewProvider implements vscode.WebviewViewProvider {
   <script type="module" nonce="${nonce}" src="${scriptUri}"></script>
 </body>
 </html>`;
+    }
+
+    public dispose() {
+        GitGuiPanel.currentPanel = undefined;
+
+        this.panel.dispose();
+
+        while (this.disposables.length) {
+            const disposable = this.disposables.pop();
+            if (disposable) {
+                disposable.dispose();
+            }
+        }
     }
 }
 

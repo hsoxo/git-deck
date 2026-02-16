@@ -22,13 +22,19 @@ class RPCClient {
         if (typeof acquireVsCodeApi !== 'undefined') {
             this.vscode = acquireVsCodeApi();
             window.addEventListener('message', this.handleMessage.bind(this));
+            console.log('RPC Client initialized successfully');
+        } else {
+            console.error('acquireVsCodeApi is not available');
         }
     }
 
     async call(method: string, ...params: any[]): Promise<any> {
         if (!this.vscode) {
+            console.error('VS Code API not available, method:', method);
             throw new Error('VS Code API not available');
         }
+
+        console.log('RPC call:', method, params);
 
         // Check cache for read-only operations
         if (this.isReadOnlyMethod(method)) {

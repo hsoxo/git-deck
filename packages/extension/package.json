@@ -9,7 +9,7 @@
         "url": "https://github.com/your-org/git-gui-vscode.git"
     },
     "engines": {
-        "vscode": "1.80.0"
+        "vscode": "^1.80.0"
     },
     "categories": [
         "SCM Providers"
@@ -19,16 +19,12 @@
     ],
     "main": "./dist/extension.js",
     "contributes": {
-        "views": {
-            "scm": [
-                {
-                    "type": "webview",
-                    "id": "gitGui.view",
-                    "name": "Git GUI"
-                }
-            ]
-        },
         "commands": [
+            {
+                "command": "gitGui.open",
+                "title": "Git GUI: Open",
+                "icon": "$(git-branch)"
+            },
             {
                 "command": "gitGui.refresh",
                 "title": "Git GUI: Refresh",
@@ -101,6 +97,8 @@
     "scripts": {
         "build": "tsup",
         "dev": "tsup --watch",
+        "prebuild": "npm run build --workspace=@git-gui/webview",
+        "prepackage": "npm run build && cp -r ../webview/dist ./webview-dist",
         "package": "vsce package --allow-missing-repository --no-dependencies",
         "test": "vitest --run",
         "test:watch": "vitest",

@@ -1,6 +1,7 @@
 # Only include dist and essential files
 **/*
 !dist/**
+!webview-dist/**
 !LICENSE
 !README.md
 !package.json

@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { GitGuiViewProvider } from './webview/GitGuiViewProvider';
 import { GitService } from './git/GitService';
 import { logger } from './utils/Logger';
 import { Config } from './config/Config';
+import { GitGuiPanel } from './webview/GitGuiPanel';
 
 export function activate(context: vscode.ExtensionContext) {
     logger.info('Git GUI extension is now active');
@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (!workspaceFolder) {
         const message = 'No workspace folder found';
         logger.warn(message);
-        vscode.window.showErrorMessage(`Git GUI: ${message}`);
+        // Don't show error on activation, just log it
         return;
     }
 
@@ -24,17 +24,18 @@ export function activate(context: vscode.ExtensionContext) {
         // 初始化 Git 服务
         const gitService = new GitService(workspaceFolder.uri.fsPath);
 
-        // 注册 Webview Provider
-        const provider = new GitGuiViewProvider(context.extensionUri, gitService);
+        // 注册命令
         context.subscriptions.push(
-            vscode.window.registerWebviewViewProvider('gitGui.view', provider)
+            vscode.commands.registerCommand('gitGui.open', () => {
+                logger.debug('Open command triggered');
+                GitGuiPanel.createOrShow(context.extensionUri, gitService);
+            })
         );
 
-        // 注册命令
         context.subscriptions.push(
             vscode.commands.registerCommand('gitGui.refresh', () => {
                 logger.debug('Refresh command triggered');
-                provider.refresh();
+                GitGuiPanel.refresh();
             })
         );
 
