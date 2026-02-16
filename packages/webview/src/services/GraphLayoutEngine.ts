@@ -166,17 +166,20 @@ export class GraphLayoutEngine {
     }
 
     /**
-     * 构建父子关系映射
+     * 构建父子关系映射 (O(n) 优化版本)
      */
     private buildChildrenMap(commits: CommitNode[]): Map<string, CommitNode[]> {
         const childrenMap = new Map<string, CommitNode[]>();
 
+        // 单次遍历，O(n * p) 其中 p 是平均父节点数（通常为1-2）
         for (const commit of commits) {
             for (const parent of commit.parents) {
-                if (!childrenMap.has(parent)) {
-                    childrenMap.set(parent, []);
+                let children = childrenMap.get(parent);
+                if (!children) {
+                    children = [];
+                    childrenMap.set(parent, children);
                 }
-                childrenMap.get(parent)!.push(commit);
+                children.push(commit);
             }
         }
 
@@ -184,8 +187,8 @@ export class GraphLayoutEngine {
     }
 
     /**
-     * 为每个 commit 分配泳道
-     * 使用贪心算法，尽量复用泳道
+     * 为每个 commit 分配泳道 (优化版本)
+     * 使用贪心算法，尽量复用泳道，避免 O(n²) 复杂度
      */
     private assignLanes(
         commits: CommitNode[],
@@ -193,7 +196,12 @@ export class GraphLayoutEngine {
     ): Map<string, number> {
         const laneAssignments = new Map<string, number>();
         const activeLanes = new Map<number, string>(); // lane -> commit hash
-        let nextLane = 0;
+        const commitIndex = new Map<string, number>(); // commit hash -> index
+        
+        // 预先构建索引，O(n)
+        commits.forEach((commit, index) => {
+            commitIndex.set(commit.hash, index);
+        });
 
         for (let i = 0; i < commits.length; i++) {
             const commit = commits[i];
@@ -212,24 +220,33 @@ export class GraphLayoutEngine {
 
             // 如果无法复用，分配新泳道
             if (assignedLane === null) {
-                // 查找第一个空闲的泳道
+                // 查找第一个空闲的泳道，O(lanes) 通常很小
                 assignedLane = 0;
                 while (activeLanes.has(assignedLane)) {
                     assignedLane++;
                 }
-                nextLane = Math.max(nextLane, assignedLane + 1);
             }
 
             laneAssignments.set(commit.hash, assignedLane);
             activeLanes.set(assignedLane, commit.hash);
 
-            // 清理不再活跃的泳道
-            // 如果一个 commit 没有子节点，或者所有子节点都已处理，则释放其泳道
-            const children = childrenMap.get(commit.hash) || [];
-            const allChildrenProcessed = children.every((child) => laneAssignments.has(child.hash));
+            // 清理不再活跃的泳道 (优化版本)
+            // 检查当前 commit 的所有子节点是否都已处理
+            const children = childrenMap.get(commit.hash);
+            if (children) {
+                const allChildrenProcessed = children.every((child) => {
+                    const childIdx = commitIndex.get(child.hash);
+                    return childIdx !== undefined && childIdx <= i;
+                });
 
-            if (children.length === 0 || allChildrenProcessed) {
-                // 检查是否有其他 commit 在使用这个泳道
+                if (allChildrenProcessed) {
+                    const laneCommit = activeLanes.get(assignedLane);
+                    if (laneCommit === commit.hash) {
+                        activeLanes.delete(assignedLane);
+                    }
+                }
+            } else {
+                // 没有子节点，立即释放泳道
                 const laneCommit = activeLanes.get(assignedLane);
                 if (laneCommit === commit.hash) {
                     activeLanes.delete(assignedLane);
