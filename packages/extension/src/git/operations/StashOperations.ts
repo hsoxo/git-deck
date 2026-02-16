@@ -2,6 +2,7 @@ import { SimpleGit } from 'simple-git';
 import type { StashInfo } from '@git-gui/shared';
 import { logger } from '../../utils/Logger';
 import { ErrorHandler } from '../../utils/ErrorHandler';
+import { InputValidator } from '../../utils/InputValidator';
 
 export class StashOperations {
     constructor(private git: SimpleGit) {}
@@ -25,6 +26,10 @@ export class StashOperations {
     }
 
     async push(message?: string, includeUntracked: boolean = false): Promise<void> {
+        if (message) {
+            message = InputValidator.sanitizeCommitMessage(message);
+        }
+
         try {
             logger.debug('Creating stash', { message, includeUntracked });
 
@@ -45,6 +50,8 @@ export class StashOperations {
     }
 
     async pop(index: number = 0): Promise<void> {
+        InputValidator.validateStashIndex(index);
+
         try {
             logger.debug('Popping stash', { index });
             await this.git.stash(['pop', `stash@{${index}}`]);
@@ -56,6 +63,8 @@ export class StashOperations {
     }
 
     async apply(index: number): Promise<void> {
+        InputValidator.validateStashIndex(index);
+
         try {
             logger.debug('Applying stash', { index });
             await this.git.stash(['apply', `stash@{${index}}`]);
@@ -67,6 +76,8 @@ export class StashOperations {
     }
 
     async drop(index: number): Promise<void> {
+        InputValidator.validateStashIndex(index);
+
         try {
             logger.debug('Dropping stash', { index });
             await this.git.stash(['drop', `stash@{${index}}`]);

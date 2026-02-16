@@ -1,5 +1,6 @@
 import { SimpleGit } from 'simple-git';
 import type { GitStatus } from '@git-gui/shared';
+import { InputValidator } from '../../utils/InputValidator';
 
 export class StageOperations {
     constructor(private git: SimpleGit) {}
@@ -18,10 +19,12 @@ export class StageOperations {
     }
 
     async stage(files: string[]): Promise<void> {
+        InputValidator.validateFilePaths(files);
         await this.git.add(files);
     }
 
     async unstage(files: string[]): Promise<void> {
+        InputValidator.validateFilePaths(files);
         await this.git.reset(['HEAD', '--', ...files]);
     }
 
@@ -34,10 +37,12 @@ export class StageOperations {
     }
 
     async commit(message: string): Promise<void> {
-        await this.git.commit(message);
+        const sanitized = InputValidator.sanitizeCommitMessage(message);
+        await this.git.commit(sanitized);
     }
 
     async discard(files: string[]): Promise<void> {
+        InputValidator.validateFilePaths(files);
         await this.git.checkout(['--', ...files]);
     }
 }

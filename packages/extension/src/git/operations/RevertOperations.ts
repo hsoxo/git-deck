@@ -2,6 +2,7 @@ import { SimpleGit } from 'simple-git';
 import type { RevertState } from '@git-gui/shared';
 import { logger } from '../../utils/Logger';
 import { ErrorHandler } from '../../utils/ErrorHandler';
+import { InputValidator } from '../../utils/InputValidator';
 
 export class RevertOperations {
     private state: RevertState = { type: 'idle' };
@@ -13,6 +14,8 @@ export class RevertOperations {
      * Creates new commits that undo the changes
      */
     async revert(commits: string[], noEdit: boolean = true): Promise<void> {
+        InputValidator.validateCommitRefs(commits);
+
         try {
             logger.debug('Reverting commits', { commits, noEdit });
 
@@ -55,6 +58,8 @@ export class RevertOperations {
      * Useful for reviewing changes before committing
      */
     async revertNoCommit(commit: string): Promise<void> {
+        InputValidator.validateCommitRef(commit);
+
         try {
             logger.debug('Reverting commit without committing', { commit });
             await this.git.raw(['revert', '--no-commit', commit]);

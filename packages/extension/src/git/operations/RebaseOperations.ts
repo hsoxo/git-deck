@@ -1,9 +1,11 @@
 import { SimpleGit } from 'simple-git';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 import type { RebaseState } from '@git-gui/shared';
 import { logger } from '../../utils/Logger';
 import { ErrorHandler } from '../../utils/ErrorHandler';
+import { InputValidator } from '../../utils/InputValidator';
 
 export type RebaseAction = 'pick' | 'reword' | 'edit' | 'squash' | 'fixup' | 'drop';
 
@@ -26,6 +28,8 @@ export class RebaseOperations {
      * 开始普通 rebase
      */
     async rebase(onto: string, interactive: boolean = false): Promise<void> {
+        InputValidator.validateCommitRef(onto);
+
         try {
             logger.debug('Starting rebase', { onto, interactive });
 
@@ -61,15 +65,24 @@ export class RebaseOperations {
      * 开始交互式 rebase
      */
     async interactiveRebase(onto: string, commits: RebaseCommit[]): Promise<void> {
+        InputValidator.validateCommitRef(onto);
+
         try {
             logger.debug('Starting interactive rebase', { onto, commits: commits.length });
 
-            // 创建 rebase todo 文件
+            // 创建临时 todo 文件
             const todoContent = this.createRebaseTodo(commits);
+            const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'git-rebase-'));
+            const todoFile = path.join(tmpDir, 'git-rebase-todo');
+            const editorScript = path.join(tmpDir, 'editor.sh');
 
-            // 设置 GIT_SEQUENCE_EDITOR 来使用我们的 todo
-            const gitDir = path.join(this.repoPath, '.git');
-            const todoFile = path.join(gitDir, 'rebase-merge', 'git-rebase-todo');
+            // 写入 todo 内容
+            fs.writeFileSync(todoFile, todoContent, 'utf-8');
+
+            // 创建编辑器脚本，将我们的 todo 复制到 Git 的 todo 文件
+            const scriptContent = `#!/bin/sh\ncat "${todoFile}" > "$1"\n`;
+            fs.writeFileSync(editorScript, scriptContent, 'utf-8');
+            fs.chmodSync(editorScript, 0o755);
 
             this.state = {
                 type: 'in_progress',
@@ -78,13 +91,22 @@ export class RebaseOperations {
                 onto,
             };
 
-            // 开始交互式 rebase
-            await this.git.rebase(['-i', onto]);
+            // 使用自定义编辑器执行交互式 rebase
+            const env = process.env || {};
+            await this.git
+                .env({
+                    ...env,
+                    GIT_SEQUENCE_EDITOR: editorScript,
+                })
+                .rebase(['-i', onto]);
 
-            // 如果 rebase-merge 目录存在，更新 todo 文件
-            if (fs.existsSync(path.dirname(todoFile))) {
-                fs.writeFileSync(todoFile, todoContent);
-                await this.git.rebase(['--continue']);
+            // 清理临时文件
+            try {
+                fs.unlinkSync(todoFile);
+                fs.unlinkSync(editorScript);
+                fs.rmdirSync(tmpDir);
+            } catch (cleanupError) {
+                logger.warn('Failed to cleanup temp files', cleanupError);
             }
 
             this.state = { type: 'completed' };

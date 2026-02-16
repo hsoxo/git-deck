@@ -39,24 +39,16 @@ class RPCClient {
         const request: RPCRequest = { id, method, params };
 
         return new Promise((resolve, reject) => {
-            this.pending.set(id, { resolve, reject });
-            this.vscode.postMessage(request);
-
             // Timeout handling
             const timeoutId = setTimeout(() => {
-                if (this.pending.has(id)) {
-                    this.pending.delete(id);
-                    reject(new Error(`RPC timeout: ${method}`));
-                }
+                this.pending.delete(id);
+                reject(new Error(`RPC timeout: ${method}`));
             }, this.REQUEST_TIMEOUT);
-
-            // Store timeout ID for cleanup
-            const originalResolve = resolve;
-            const originalReject = reject;
 
             this.pending.set(id, {
                 resolve: (value: any) => {
                     clearTimeout(timeoutId);
+                    this.pending.delete(id);
 
                     // Cache result for read-only operations
                     if (this.isReadOnlyMethod(method)) {
@@ -67,13 +59,16 @@ class RPCClient {
                         });
                     }
 
-                    originalResolve(value);
+                    resolve(value);
                 },
                 reject: (error: any) => {
                     clearTimeout(timeoutId);
-                    originalReject(error);
+                    this.pending.delete(id);
+                    reject(error);
                 },
             });
+
+            this.vscode.postMessage(request);
         });
     }
 

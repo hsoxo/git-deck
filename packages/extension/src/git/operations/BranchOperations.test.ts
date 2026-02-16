@@ -278,9 +278,7 @@ describe('BranchOperations', () => {
         it('should throw error on failure', async () => {
             vi.mocked(mockGit.branch).mockRejectedValue(new Error('Git error'));
 
-            await expect(branchOps.getCurrentBranch()).rejects.toThrow(
-                'Get current branch failed'
-            );
+            await expect(branchOps.getCurrentBranch()).rejects.toThrow('Get current branch failed');
         });
     });
 });

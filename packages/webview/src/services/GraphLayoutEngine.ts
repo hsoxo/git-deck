@@ -1,5 +1,18 @@
 import type { CommitNode, GraphNode, GraphEdge, Point } from '@git-gui/shared';
 
+interface LayoutResult {
+    nodes: Map<string, GraphNode>;
+    edges: GraphEdge[];
+    lanes: number;
+    height: number;
+}
+
+interface CacheEntry {
+    result: LayoutResult;
+    timestamp: number;
+    accessCount: number;
+}
+
 /**
  * 图形布局引擎
  * 计算 commit 图的布局，包括节点位置和连接线路径
@@ -8,6 +21,10 @@ export class GraphLayoutEngine {
     private readonly ROW_HEIGHT = 50; // 每行高度
     private readonly COLUMN_WIDTH = 30; // 每列宽度
     private readonly NODE_RADIUS = 5; // 节点半径
+    private readonly MAX_CACHE_SIZE = 50; // 最大缓存条目数
+    private readonly CACHE_TTL = 60000; // 缓存过期时间 (60秒)
+
+    private layoutCache = new Map<string, CacheEntry>();
 
     private colors = [
         '#4285F4', // Blue
@@ -21,18 +38,36 @@ export class GraphLayoutEngine {
     ];
 
     /**
-     * 计算完整的图形布局
+     * 计算完整的图形布局（带缓存）
      */
-    calculateLayout(commits: CommitNode[]): {
-        nodes: Map<string, GraphNode>;
-        edges: GraphEdge[];
-        lanes: number;
-        height: number;
-    } {
+    calculateLayout(commits: CommitNode[]): LayoutResult {
         if (commits.length === 0) {
             return { nodes: new Map(), edges: [], lanes: 0, height: 0 };
         }
 
+        // 生成缓存键
+        const cacheKey = this.getCacheKey(commits);
+
+        // 检查缓存
+        const cached = this.layoutCache.get(cacheKey);
+        if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
+            cached.accessCount++;
+            return cached.result;
+        }
+
+        // 计算布局
+        const result = this.calculateLayoutInternal(commits);
+
+        // 缓存结果
+        this.cacheResult(cacheKey, result);
+
+        return result;
+    }
+
+    /**
+     * 内部布局计算（无缓存）
+     */
+    private calculateLayoutInternal(commits: CommitNode[]): LayoutResult {
         // 构建父子关系图
         const childrenMap = this.buildChildrenMap(commits);
 
@@ -50,6 +85,84 @@ export class GraphLayoutEngine {
         const height = commits.length * this.ROW_HEIGHT;
 
         return { nodes, edges, lanes, height };
+    }
+
+    /**
+     * 生成缓存键
+     */
+    private getCacheKey(commits: CommitNode[]): string {
+        // 使用前10个和后10个commit的hash生成键
+        // 这样可以快速识别相同的commit列表，同时避免处理整个列表
+        const start = commits.slice(0, Math.min(10, commits.length));
+        const end = commits.slice(Math.max(0, commits.length - 10));
+        const hashes = [...start, ...end].map((c) => c.hash);
+        return `${commits.length}:${hashes.join(',')}`;
+    }
+
+    /**
+     * 缓存结果（带LRU淘汰）
+     */
+    private cacheResult(key: string, result: LayoutResult): void {
+        // 如果缓存已满，使用LRU淘汰
+        if (this.layoutCache.size >= this.MAX_CACHE_SIZE) {
+            this.evictLRU();
+        }
+
+        this.layoutCache.set(key, {
+            result,
+            timestamp: Date.now(),
+            accessCount: 1,
+        });
+    }
+
+    /**
+     * LRU淘汰策略
+     */
+    private evictLRU(): void {
+        let oldestKey: string | null = null;
+        let oldestScore = Infinity;
+
+        // 计算每个条目的分数（时间戳 / 访问次数）
+        // 分数越低，越应该被淘汰
+        for (const [key, entry] of this.layoutCache.entries()) {
+            const score = entry.timestamp / Math.max(1, entry.accessCount);
+            if (score < oldestScore) {
+                oldestScore = score;
+                oldestKey = key;
+            }
+        }
+
+        if (oldestKey) {
+            this.layoutCache.delete(oldestKey);
+        }
+    }
+
+    /**
+     * 清除缓存
+     */
+    clearCache(): void {
+        this.layoutCache.clear();
+    }
+
+    /**
+     * 获取缓存统计
+     */
+    getCacheStats(): { size: number; maxSize: number; hitRate: number } {
+        let totalAccess = 0;
+        let totalHits = 0;
+
+        for (const entry of this.layoutCache.values()) {
+            totalAccess += entry.accessCount;
+            if (entry.accessCount > 1) {
+                totalHits += entry.accessCount - 1;
+            }
+        }
+
+        return {
+            size: this.layoutCache.size,
+            maxSize: this.MAX_CACHE_SIZE,
+            hitRate: totalAccess > 0 ? totalHits / totalAccess : 0,
+        };
     }
 
     /**

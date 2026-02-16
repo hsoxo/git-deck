@@ -133,9 +133,7 @@ describe('GitService Integration Tests', () => {
     describe('commit validation', () => {
         it('should throw error for empty message', async () => {
             await git.add('test.txt');
-            await expect(gitService.commit('')).rejects.toThrow(
-                'Commit message cannot be empty'
-            );
+            await expect(gitService.commit('')).rejects.toThrow('Commit message cannot be empty');
         });
 
         it('should throw error for whitespace-only message', async () => {

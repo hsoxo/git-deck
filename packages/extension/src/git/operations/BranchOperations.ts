@@ -1,6 +1,7 @@
 import { SimpleGit } from 'simple-git';
 import { Logger } from '../../utils/Logger';
 import { ErrorHandler } from '../../utils/ErrorHandler';
+import { InputValidator } from '../../utils/InputValidator';
 
 export interface BranchInfo {
     name: string;
@@ -24,7 +25,7 @@ export interface BranchListResult {
 export class BranchOperations {
     private logger = Logger.getInstance();
 
-    constructor(private git: SimpleGit) { }
+    constructor(private git: SimpleGit) {}
 
     /**
      * List all branches (local and remote)
@@ -58,8 +59,12 @@ export class BranchOperations {
                     if (parts[1]) {
                         const aheadMatch = parts[1].match(/ahead (\d+)/);
                         const behindMatch = parts[1].match(/behind (\d+)/);
-                        if (aheadMatch) info.ahead = parseInt(aheadMatch[1]);
-                        if (behindMatch) info.behind = parseInt(behindMatch[1]);
+                        if (aheadMatch) {
+                            info.ahead = parseInt(aheadMatch[1]);
+                        }
+                        if (behindMatch) {
+                            info.behind = parseInt(behindMatch[1]);
+                        }
                     }
                 }
 
@@ -90,6 +95,11 @@ export class BranchOperations {
      * Create a new branch
      */
     async createBranch(name: string, startPoint?: string): Promise<void> {
+        InputValidator.validateBranchName(name);
+        if (startPoint) {
+            InputValidator.validateCommitRef(startPoint);
+        }
+
         this.logger.info(`BranchOperations: Creating branch '${name}'`);
 
         try {
@@ -111,6 +121,7 @@ export class BranchOperations {
      * Delete a branch
      */
     async deleteBranch(name: string, force: boolean = false): Promise<void> {
+        InputValidator.validateBranchName(name);
         this.logger.info(`BranchOperations: Deleting branch '${name}' (force: ${force})`);
 
         try {
@@ -127,6 +138,8 @@ export class BranchOperations {
      * Rename a branch
      */
     async renameBranch(oldName: string, newName: string, force: boolean = false): Promise<void> {
+        InputValidator.validateBranchName(oldName);
+        InputValidator.validateBranchName(newName);
         this.logger.info(`BranchOperations: Renaming branch '${oldName}' to '${newName}'`);
 
         try {
@@ -150,6 +163,7 @@ export class BranchOperations {
      * Checkout (switch to) a branch
      */
     async checkoutBranch(name: string, create: boolean = false): Promise<void> {
+        InputValidator.validateBranchName(name);
         this.logger.info(`BranchOperations: Checking out branch '${name}' (create: ${create})`);
 
         try {
@@ -216,9 +230,8 @@ export class BranchOperations {
      * Merge a branch into current branch
      */
     async mergeBranch(branch: string, noFastForward: boolean = false): Promise<void> {
-        this.logger.info(
-            `BranchOperations: Merging branch '${branch}' (no-ff: ${noFastForward})`
-        );
+        InputValidator.validateBranchName(branch);
+        this.logger.info(`BranchOperations: Merging branch '${branch}' (no-ff: ${noFastForward})`);
 
         try {
             const args = [branch];

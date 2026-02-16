@@ -2,6 +2,7 @@ import { SimpleGit } from 'simple-git';
 import type { CherryPickState } from '@git-gui/shared';
 import { logger } from '../../utils/Logger';
 import { ErrorHandler } from '../../utils/ErrorHandler';
+import { InputValidator } from '../../utils/InputValidator';
 
 export class CherryPickOperations {
     private state: CherryPickState = { type: 'idle' };
@@ -9,6 +10,8 @@ export class CherryPickOperations {
     constructor(private git: SimpleGit) {}
 
     async cherryPick(commits: string[]): Promise<void> {
+        InputValidator.validateCommitRefs(commits);
+
         try {
             logger.debug('Starting cherry-pick', { commits });
 

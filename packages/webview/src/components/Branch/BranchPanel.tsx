@@ -39,9 +39,7 @@ const BranchItem: React.FC<BranchItemProps> = ({
                 <div className="branch-tracking">
                     <span className="tracking-icon">🔗</span>
                     <span className="tracking-name">{upstream}</span>
-                    {ahead !== undefined && ahead > 0 && (
-                        <span className="ahead">↑{ahead}</span>
-                    )}
+                    {ahead !== undefined && ahead > 0 && <span className="ahead">↑{ahead}</span>}
                     {behind !== undefined && behind > 0 && (
                         <span className="behind">↓{behind}</span>
                     )}
@@ -61,9 +59,7 @@ const BranchItem: React.FC<BranchItemProps> = ({
 
                 {showMenu && (
                     <div className="branch-menu">
-                        {!current && (
-                            <button onClick={onCheckout}>Checkout</button>
-                        )}
+                        {!current && <button onClick={onCheckout}>Checkout</button>}
                         <button onClick={onMerge}>Merge into current</button>
                         <button onClick={onRename}>Rename</button>
                         {!current && (
@@ -111,10 +107,7 @@ export const BranchPanel: React.FC = () => {
         }
 
         try {
-            await createBranch(
-                newBranchName,
-                createFromCurrent ? undefined : startPoint
-            );
+            await createBranch(newBranchName, createFromCurrent ? undefined : startPoint);
             setShowCreateDialog(false);
             setNewBranchName('');
             setStartPoint('');
@@ -136,11 +129,7 @@ export const BranchPanel: React.FC = () => {
             await deleteBranch(name, false);
         } catch (error) {
             // Try force delete if normal delete fails
-            if (
-                confirm(
-                    `Branch '${name}' has unmerged changes.\n\nForce delete anyway?`
-                )
-            ) {
+            if (confirm(`Branch '${name}' has unmerged changes.\n\nForce delete anyway?`)) {
                 await deleteBranch(name, true);
             }
         }
@@ -194,10 +183,7 @@ export const BranchPanel: React.FC = () => {
         <div className="branch-panel">
             <div className="branch-header">
                 <h3>Branches</h3>
-                <button
-                    className="create-branch-button"
-                    onClick={() => setShowCreateDialog(true)}
-                >
+                <button className="create-branch-button" onClick={() => setShowCreateDialog(true)}>
                     + New Branch
                 </button>
             </div>
@@ -232,11 +218,9 @@ export const BranchPanel: React.FC = () => {
                                 key={branch.name}
                                 name={branch.name}
                                 current={false}
-                                onCheckout={() =>
-                                    handleCheckoutBranch(branch.name)
-                                }
-                                onDelete={() => { }}
-                                onRename={() => { }}
+                                onCheckout={() => handleCheckoutBranch(branch.name)}
+                                onDelete={() => {}}
+                                onRename={() => {}}
                                 onMerge={() => handleMergeBranch(branch.name)}
                             />
                         ))}
@@ -265,9 +249,7 @@ export const BranchPanel: React.FC = () => {
                                 <input
                                     type="checkbox"
                                     checked={createFromCurrent}
-                                    onChange={(e) =>
-                                        setCreateFromCurrent(e.target.checked)
-                                    }
+                                    onChange={(e) => setCreateFromCurrent(e.target.checked)}
                                 />
                                 Create from current branch ({currentBranch})
                             </label>
@@ -308,11 +290,7 @@ export const BranchPanel: React.FC = () => {
 
                         <div className="form-group">
                             <label>Old Name</label>
-                            <input
-                                type="text"
-                                value={renameDialog.oldName}
-                                disabled
-                            />
+                            <input type="text" value={renameDialog.oldName} disabled />
                         </div>
 
                         <div className="form-group">

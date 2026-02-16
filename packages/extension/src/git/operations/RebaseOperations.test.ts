@@ -25,6 +25,7 @@ describe('RebaseOperations', () => {
             log: vi.fn(),
             status: vi.fn(),
             raw: vi.fn(),
+            env: vi.fn(),
         } as any;
 
         rebaseOps = new RebaseOperations(git, repoPath);
@@ -90,12 +91,24 @@ describe('RebaseOperations', () => {
                 },
             ];
 
-            vi.mocked(git.rebase).mockResolvedValue('' as any);
-            vi.mocked(fs.existsSync).mockReturnValue(false);
+            // Mock fs functions for temp file creation
+            const tmpDir = '/tmp/git-rebase-test';
+            vi.mocked(fs.mkdtempSync).mockReturnValue(tmpDir);
+            vi.mocked(fs.writeFileSync).mockImplementation(() => {});
+            vi.mocked(fs.chmodSync).mockImplementation(() => {});
+            vi.mocked(fs.unlinkSync).mockImplementation(() => {});
+            vi.mocked(fs.rmdirSync).mockImplementation(() => {});
+
+            // Mock git.env to return a chainable object
+            const envGit = {
+                rebase: vi.fn().mockResolvedValue(''),
+            };
+            vi.mocked(git.env).mockReturnValue(envGit as any);
 
             await rebaseOps.interactiveRebase('main', commits);
 
-            expect(git.rebase).toHaveBeenCalledWith(['-i', 'main']);
+            expect(git.env).toHaveBeenCalled();
+            expect(envGit.rebase).toHaveBeenCalledWith(['-i', 'main']);
             expect(rebaseOps.getState()).toEqual({ type: 'completed' });
         });
     });
