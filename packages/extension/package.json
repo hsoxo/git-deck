@@ -15,9 +15,9 @@
         "SCM Providers"
     ],
     "activationEvents": [
-        "onStartupFinished"
+        "onCommand:gitGui.open"
     ],
-    "main": "./dist/extension.js",
+    "main": "./test-extension.js",
     "contributes": {
         "commands": [
             {
