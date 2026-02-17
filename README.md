@@ -140,3 +140,17 @@ Quick steps:
 ## License
 
 MIT
+
+## Publishing
+
+For maintainers: See [PUBLISHING.md](./PUBLISHING.md) for instructions on publishing to VS Code Marketplace.
+
+Quick release:
+
+```bash
+# Prepare release (runs tests, builds, and updates version)
+./scripts/prepare-release.sh patch  # or minor, major
+
+# Then create a GitHub Release with tag v0.x.x
+# CI/CD will automatically publish to Marketplace
+```

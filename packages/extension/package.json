@@ -4,9 +4,33 @@
     "description": "Visual Git GUI for VS Code",
     "version": "0.1.0",
     "publisher": "git-gui",
+    "author": {
+        "name": "HHe"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/your-org/git-gui-vscode#readme",
+    "bugs": {
+        "url": "https://github.com/your-org/git-gui-vscode/issues"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/your-org/git-gui-vscode.git"
+    },
+    "keywords": [
+        "git",
+        "gui",
+        "version control",
+        "scm",
+        "source control",
+        "git graph",
+        "git history",
+        "git commit",
+        "git diff"
+    ],
+    "icon": "resources/icon.png",
+    "galleryBanner": {
+        "color": "#1e1e1e",
+        "theme": "dark"
     },
     "engines": {
         "vscode": "^1.80.0"
@@ -228,7 +252,11 @@
         "prebuild": "npm run build --workspace=@git-gui/webview",
         "postbuild": "rm -rf webview-dist && cp -r ../webview/dist ./webview-dist",
         "prepackage": "npm run build",
-        "package": "vsce package --allow-missing-repository --no-dependencies",
+        "package": "vsce package --no-dependencies",
+        "publish": "vsce publish --no-dependencies",
+        "publish:patch": "vsce publish patch --no-dependencies",
+        "publish:minor": "vsce publish minor --no-dependencies",
+        "publish:major": "vsce publish major --no-dependencies",
         "test": "vitest --run",
         "test:watch": "vitest",
         "test:coverage": "vitest --run --coverage"
