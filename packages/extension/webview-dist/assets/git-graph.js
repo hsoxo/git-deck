@@ -86,7 +86,13 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-refs", children: [
           branches.map((ref, index) => {
             const isRemote = ref.includes("origin/") || ref.includes("remotes/");
-            const displayName = ref.replace("HEAD -> ", "").replace("origin/", "").replace("remotes/", "").trim();
+            let displayName = ref.replace("HEAD -> ", "").trim();
+            if (isRemote) {
+              displayName = displayName.replace("remotes/origin/", "origin/");
+              if (!displayName.startsWith("origin/")) {
+                displayName = "origin/" + displayName;
+              }
+            }
             const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
             const labelClass = isCurrent ? "current" : isRemote ? "remote" : "local";
             return /* @__PURE__ */ jsxRuntimeExports.jsx(

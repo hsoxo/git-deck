@@ -53,11 +53,20 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
                     {/* 显示分支 */}
                     {branches.map((ref, index) => {
                         const isRemote = ref.includes('origin/') || ref.includes('remotes/');
-                        const displayName = ref
-                            .replace('HEAD -> ', '')
-                            .replace('origin/', '')
-                            .replace('remotes/', '')
-                            .trim();
+
+                        // 处理显示名称
+                        let displayName = ref.replace('HEAD -> ', '').trim();
+
+                        // 如果是远程分支，保留 origin/ 前缀
+                        if (isRemote) {
+                            // 将 remotes/origin/ 转换为 origin/
+                            displayName = displayName.replace('remotes/origin/', 'origin/');
+                            // 确保有 origin/ 前缀
+                            if (!displayName.startsWith('origin/')) {
+                                displayName = 'origin/' + displayName;
+                            }
+                        }
+
                         const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
                         const labelClass = isCurrent ? 'current' : (isRemote ? 'remote' : 'local');
 
