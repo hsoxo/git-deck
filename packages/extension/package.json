@@ -95,8 +95,9 @@
                     "type": "webview"
                 },
                 {
-                    "id": "gitGui.changes",
-                    "name": "Changes"
+                    "id": "gitGui.changesView",
+                    "name": "Changes",
+                    "type": "webview"
                 }
             ]
         },
@@ -126,43 +127,18 @@
             "view/title": [
                 {
                     "command": "gitGui.refresh",
-                    "when": "view == gitGui.changes",
+                    "when": "view == gitGui.changesView",
                     "group": "navigation"
                 },
                 {
                     "command": "gitGui.openGraph",
-                    "when": "view == gitGui.changes",
+                    "when": "view == gitGui.changesView",
                     "group": "navigation"
                 },
                 {
                     "command": "gitGui.stageSelected",
-                    "when": "view == gitGui.changes",
+                    "when": "view == gitGui.changesView",
                     "group": "navigation"
-                }
-            ],
-            "view/item/context": [
-                {
-                    "command": "gitGui.stageFile",
-                    "when": "view == gitGui.changes && viewItem == unstagedFile",
-                    "group": "inline"
-                },
-                {
-                    "command": "gitGui.unstageFile",
-                    "when": "view == gitGui.changes && viewItem == stagedFile",
-                    "group": "inline"
-                },
-                {
-                    "command": "gitGui.discardChanges",
-                    "when": "view == gitGui.changes && viewItem == unstagedFile",
-                    "group": "inline"
-                },
-                {
-                    "command": "gitGui.stageSelected",
-                    "when": "view == gitGui.changes && viewItem == unstaged"
-                },
-                {
-                    "command": "gitGui.unstageAll",
-                    "when": "view == gitGui.changes && viewItem == staged"
                 }
             ]
         },

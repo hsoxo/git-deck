@@ -3,6 +3,53 @@ import * as path from 'path';
 import { GitService } from '../git/GitService';
 import type { FileChange } from '@git-gui/shared';
 
+// 文件装饰提供者，用于设置文件颜色
+class GitFileDecorationProvider implements vscode.FileDecorationProvider {
+    private _onDidChangeFileDecorations = new vscode.EventEmitter<vscode.Uri | vscode.Uri[]>();
+    readonly onDidChangeFileDecorations = this._onDidChangeFileDecorations.event;
+
+    private decorations = new Map<string, FileChange['status']>();
+
+    provideFileDecoration(uri: vscode.Uri): vscode.FileDecoration | undefined {
+        if (uri.scheme !== 'git-status') {
+            return undefined;
+        }
+
+        const status = this.decorations.get(uri.fsPath);
+        if (!status) {
+            return undefined;
+        }
+
+        const colorMap: Record<FileChange['status'], vscode.ThemeColor> = {
+            'added': new vscode.ThemeColor('gitDecoration.addedResourceForeground'),
+            'modified': new vscode.ThemeColor('gitDecoration.modifiedResourceForeground'),
+            'deleted': new vscode.ThemeColor('gitDecoration.deletedResourceForeground'),
+            'renamed': new vscode.ThemeColor('gitDecoration.renamedResourceForeground'),
+            'untracked': new vscode.ThemeColor('gitDecoration.untrackedResourceForeground')
+        };
+
+        return {
+            color: colorMap[status]
+        };
+    }
+
+    setDecoration(filePath: string, status: FileChange['status']): void {
+        this.decorations.set(filePath, status);
+        const uri = vscode.Uri.file(filePath).with({ scheme: 'git-status' });
+        this._onDidChangeFileDecorations.fire(uri);
+    }
+
+    clearDecorations(): void {
+        const uris = Array.from(this.decorations.keys()).map(path =>
+            vscode.Uri.file(path).with({ scheme: 'git-status' })
+        );
+        this.decorations.clear();
+        this._onDidChangeFileDecorations.fire(uris);
+    }
+}
+
+export const gitFileDecorationProvider = new GitFileDecorationProvider();
+
 export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
     private _onDidChangeTreeData = new vscode.EventEmitter<TreeItem | undefined | null | void>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
@@ -148,12 +195,13 @@ class FolderItem extends TreeItem {
 
 class FileItem extends TreeItem {
     constructor(
-        public readonly label: string,
+        public readonly fileName: string,
         public readonly filePath: string,
         public readonly section: 'unstaged' | 'staged',
         public readonly status: FileChange['status']
     ) {
-        super(label, vscode.TreeItemCollapsibleState.None);
+        super(fileName, vscode.TreeItemCollapsibleState.None);
+
         this.contextValue = section === 'unstaged' ? 'unstagedFile' : 'stagedFile';
         this.resourceUri = vscode.Uri.file(filePath);
         this.command = {
@@ -162,38 +210,50 @@ class FileItem extends TreeItem {
             arguments: [filePath, section === 'staged']
         };
 
-        // 根据状态设置颜色和装饰
+        // 设置带颜色的图标和标签
         this.applyStatusDecoration();
     }
 
     private applyStatusDecoration(): void {
-        // 设置颜色
-        const colorMap: Record<FileChange['status'], string> = {
-            'added': 'gitDecoration.addedResourceForeground',      // 绿色 - 新增
-            'modified': 'gitDecoration.modifiedResourceForeground', // 橙色 - 修改
-            'deleted': 'gitDecoration.deletedResourceForeground',   // 红色 - 删除
-            'renamed': 'gitDecoration.renamedResourceForeground',   // 蓝色 - 重命名
-            'untracked': 'gitDecoration.untrackedResourceForeground' // 绿色 - 未跟踪
+        // 使用 ThemeColor 设置图标颜色
+        const colorMap: Record<FileChange['status'], vscode.ThemeColor> = {
+            'added': new vscode.ThemeColor('gitDecoration.addedResourceForeground'),
+            'modified': new vscode.ThemeColor('gitDecoration.modifiedResourceForeground'),
+            'deleted': new vscode.ThemeColor('gitDecoration.deletedResourceForeground'),
+            'renamed': new vscode.ThemeColor('gitDecoration.renamedResourceForeground'),
+            'untracked': new vscode.ThemeColor('gitDecoration.untrackedResourceForeground')
         };
 
-        this.iconPath = new vscode.ThemeIcon(
-            'file',
-            new vscode.ThemeColor(colorMap[this.status])
-        );
+        // 使用不同的图标表示不同状态
+        const iconMap: Record<FileChange['status'], string> = {
+            'added': 'diff-added',
+            'modified': 'diff-modified',
+            'deleted': 'diff-removed',
+            'renamed': 'diff-renamed',
+            'untracked': 'diff-added'
+        };
 
-        // 对于删除的文件，添加删除线
+        // 设置带颜色的图标
+        this.iconPath = new vscode.ThemeIcon(iconMap[this.status], colorMap[this.status]);
+
+        // 添加状态标签和前缀
+        const statusPrefix: Record<FileChange['status'], string> = {
+            'added': '[A] ',
+            'modified': '[M] ',
+            'deleted': '[D] ',
+            'renamed': '[R] ',
+            'untracked': '[U] '
+        };
+
+        // 修改 label 添加前缀
+        this.label = statusPrefix[this.status] + this.fileName;
+
+        // 添加描述标签
         if (this.status === 'deleted') {
             this.description = '(deleted)';
-            // VS Code 不直接支持删除线，但我们可以通过 description 来标注
-        }
-
-        // 对于重命名的文件，显示旧路径
-        if (this.status === 'renamed') {
+        } else if (this.status === 'renamed') {
             this.description = '(renamed)';
-        }
-
-        // 对于新增的文件，添加标注
-        if (this.status === 'added' || this.status === 'untracked') {
+        } else if (this.status === 'added' || this.status === 'untracked') {
             this.description = '(new)';
         }
     }

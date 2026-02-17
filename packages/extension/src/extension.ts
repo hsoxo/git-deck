@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { GitService } from './git/GitService';
 import { logger } from './utils/Logger';
 import { Config } from './config/Config';
-import { ChangesTreeProvider } from './views/ChangesTreeProvider';
+import { ChangesView } from './views/ChangesView';
 import { CommitView } from './views/CommitView';
 import { GitGraphPanel } from './webview/GitGraphPanel';
 
@@ -24,9 +24,9 @@ export function activate(context: vscode.ExtensionContext) {
     const logLevel = Config.getLogLevel();
     logger.setDebugMode(logLevel === 'debug');
 
-    // 初始化 Git 服务和 Changes Tree Provider
+    // 初始化 Git 服务和视图
     let gitService: GitService | undefined;
-    let changesTreeProvider: ChangesTreeProvider | undefined;
+    let changesView: ChangesView | undefined;
     let commitView: CommitView | undefined;
 
     // 创建防抖刷新函数
@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
             clearTimeout(refreshTimer);
         }
         refreshTimer = setTimeout(() => {
-            changesTreeProvider?.refresh();
+            changesView?.refresh();
             commitView?.refresh();
             refreshTimer = undefined;
         }, DEBOUNCE_DELAY);
@@ -50,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
             clearTimeout(refreshTimer);
             refreshTimer = undefined;
         }
-        changesTreeProvider?.refresh();
+        changesView?.refresh();
         commitView?.refresh();
     };
 
@@ -59,9 +59,13 @@ export function activate(context: vscode.ExtensionContext) {
         try {
             gitService = new GitService(workspaceFolder.uri.fsPath);
 
-            changesTreeProvider = new ChangesTreeProvider(gitService);
+            // Register changes view
+            changesView = new ChangesView(context.extensionUri, gitService, immediateRefreshAllViews);
             context.subscriptions.push(
-                vscode.window.registerTreeDataProvider('gitGui.changes', changesTreeProvider)
+                vscode.window.registerWebviewViewProvider(
+                    ChangesView.viewType,
+                    changesView
+                )
             );
 
             // Register commit view
@@ -166,23 +170,7 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 
-    context.subscriptions.push(
-        vscode.commands.registerCommand('gitGui.stageSelected', async () => {
-            if (gitService) {
-                try {
-                    const status = await gitService.getStatus();
-                    const allFiles = [...status.unstaged, ...status.untracked].map(f => f.path);
-                    if (allFiles.length > 0) {
-                        await gitService.stageFiles(allFiles);
-                        immediateRefreshAllViews();
-                    }
-                } catch (error) {
-                    logger.error('Failed to stage selected', error);
-                    vscode.window.showErrorMessage(`Failed to stage selected: ${error}`);
-                }
-            }
-        })
-    );
+
 
     context.subscriptions.push(
         vscode.commands.registerCommand('gitGui.unstageAll', async () => {
