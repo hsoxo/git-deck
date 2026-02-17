@@ -1,8 +1,27 @@
 # Git GUI for VS Code - 文档导航
 
+## 核心文档
+
+1. [项目概述](./01-PROJECT_OVERVIEW.md) - 项目介绍和功能特性
+2. [用户指南](./USER_GUIDE.md) - 安装和使用指南
+3. [开发者指南](./DEVELOPER_GUIDE.md) - 开发、构建和发布指南
+4. [已实现功能](./04-IMPLEMENTED_FEATURES.md) - 功能清单和实现状态
+
+## 快速开始
+
+- 新用户: 从 [用户指南](./USER_GUIDE.md) 开始
+- 开发者: 查看 [开发者指南](./DEVELOPER_GUIDE.md)
+
 ## 文档结构
 
-本项目文档按照逻辑顺序组织为以下核心文档:
+```
+docs/
+├── README.md                      # 本文件 - 文档导航
+├── 01-PROJECT_OVERVIEW.md         # 项目概述
+├── USER_GUIDE.md                  # 用户指南
+├── DEVELOPER_GUIDE.md             # 开发者指南
+└── 04-IMPLEMENTED_FEATURES.md     # 已实现功能
+```
 
 ### 📋 核心文档 (按阅读顺序)
 

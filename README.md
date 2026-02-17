@@ -108,38 +108,27 @@ git-gui-vscode/
 │   │   └── package.json
 │   └── shared/         # Shared types and utilities
 │       └── src/types.ts
-├── tests/
-│   ├── integration/    # Integration tests
-│   └── e2e/           # End-to-end tests
 └── docs/              # Documentation
+    ├── USER_GUIDE.md              # User guide
+    ├── 03-DEVELOPER_GUIDE.md      # Developer guide
+    └── ...
 ```
-
-See [File Structure](./docs/FILE_STRUCTURE.md) for complete file listing.
 
 ## Documentation
 
-### Getting Started
-
-- [Quick Start Guide](./docs/QUICK_START.md) - 5-minute quick start
-- [Development Guide](./docs/DEVELOPMENT.md) - Complete development guide
-
-### Technical Documentation
-
-- [Architecture](./docs/ARCHITECTURE.md) - System architecture and design
-- [Testing Guide](./docs/TESTING.md) - Testing strategy and guidelines
-
-### Project Documentation
-
-- [需求文档](./docs/需求文档.md) - Detailed requirements (Chinese)
-- [技术实现计划](./docs/技术实现计划.md) - Technical implementation plan (Chinese)
-- [Project Progress](./docs/PROJECT_PROGRESS.md) - Project progress tracking
-- [Project Summary](./docs/PROJECT_SUMMARY.md) - Project summary (Chinese)
+- [User Guide](./docs/USER_GUIDE.md) - Installation and usage guide
+- [Developer Guide](./docs/DEVELOPER_GUIDE.md) - Development and contribution guide
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Developer Guide](./docs/DEVELOPER_GUIDE.md) for details on:
 
-### Quick Contribution Steps
+- Setting up development environment
+- Code style and conventions
+- Testing requirements
+- Pull request process
+
+Quick steps:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -147,8 +136,6 @@ We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md)
 4. Commit using conventional commits (`git commit -m 'feat: add amazing feature'`)
 5. Push to your fork (`git push origin feature/amazing-feature`)
 6. Open a Pull Request
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ## License
 
