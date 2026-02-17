@@ -2,7 +2,41 @@
 
 ## Icon
 
-在发布到 Marketplace 之前，需要添加扩展图标。
+扩展图标文件。
+
+### 当前状态
+
+- ✅ SVG 图标已创建：`icon.svg`
+- ⚠️ PNG 图标待创建：`icon.png`（发布到 Marketplace 需要）
+
+### 创建 PNG 图标
+
+你可以使用以下任一方法将 SVG 转换为 PNG：
+
+#### 方法 1: 使用在线工具
+1. 访问 [CloudConvert](https://cloudconvert.com/svg-to-png) 或 [Convertio](https://convertio.co/svg-png/)
+2. 上传 `icon.svg`
+3. 设置尺寸为 128x128 像素
+4. 下载并保存为 `icon.png`
+
+#### 方法 2: 使用 ImageMagick（如果已安装）
+```bash
+cd packages/extension/resources
+convert -background none -size 128x128 icon.svg icon.png
+```
+
+#### 方法 3: 使用 Inkscape（如果已安装）
+```bash
+cd packages/extension/resources
+inkscape icon.svg --export-type=png --export-width=128 --export-height=128 -o icon.png
+```
+
+#### 方法 4: 使用 Node.js (sharp)
+```bash
+npm install -g sharp-cli
+cd packages/extension/resources
+sharp -i icon.svg -o icon.png resize 128 128
+```
 
 ### 要求
 
@@ -17,29 +51,35 @@
 
 ### 更新 package.json
 
-确保 `packages/extension/package.json` 中的 `icon` 字段指向正确的路径：
+创建 PNG 图标后，在 `packages/extension/package.json` 中取消注释：
 
 ```json
 {
-  "icon": "resources/icon.png"
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  }
 }
 ```
 
-### 设计建议
+### 设计说明
 
-- 使用简洁的设计，在小尺寸下也能清晰识别
-- 使用与 Git 相关的图标元素（如分支、提交节点等）
-- 考虑使用品牌色彩
-- 确保在深色和浅色主题下都清晰可见
+当前图标设计：
+- 深色背景 (#1e1e1e)
+- Git 分支图示意（蓝色主分支 + 绿色分支）
+- 简洁的 "Git GUI" 文字
+
+你可以根据需要修改 `icon.svg` 来自定义设计。
 
 ### 在线工具
 
-可以使用以下工具创建图标：
+可以使用以下工具创建或编辑图标：
 
 - [Figma](https://www.figma.com/)
 - [Canva](https://www.canva.com/)
-- [GIMP](https://www.gimp.org/)
-- [Inkscape](https://inkscape.org/)
+- [Inkscape](https://inkscape.org/)（开源）
+- [GIMP](https://www.gimp.org/)（开源）
 
 ### 示例
 

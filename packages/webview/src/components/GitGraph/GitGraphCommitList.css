@@ -10,7 +10,12 @@
     position: relative;
 }
 
+.git-graph-row-svg {
+    position: relative;
+    overflow: visible;
+}
+
 .git-graph-info-container {
     flex: 1;
-    overflow: hidden;
+    min-height: 100%;
 }

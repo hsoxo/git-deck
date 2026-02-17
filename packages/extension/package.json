@@ -27,11 +27,6 @@
         "git commit",
         "git diff"
     ],
-    "icon": "resources/icon.png",
-    "galleryBanner": {
-        "color": "#1e1e1e",
-        "theme": "dark"
-    },
     "engines": {
         "vscode": "^1.80.0"
     },

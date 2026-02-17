@@ -7856,6 +7856,9 @@ const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
   onRevert,
   onCreateBranch,
   onCopyHash,
+  onResetSoft,
+  onResetMixed,
+  onResetHard,
   onClose
 }) {
   const menuRef = reactExports.useRef(null);
@@ -7880,6 +7883,11 @@ const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onCreateBranch, children: "Branch Here" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onCherryPick, children: "Cherry-pick" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onRevert, children: "Revert" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-separator" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onResetSoft, children: "Reset (Soft)" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onResetMixed, children: "Reset (Mixed)" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item context-menu-item-danger", onClick: onResetHard, children: "Reset (Hard)" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-separator" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onCopyHash, children: "Copy Hash" })
       ]
     }
@@ -8008,6 +8016,18 @@ function useGitGraphLogic(props) {
     (_a = props.onCopyHash) == null ? void 0 : _a.call(props, hash);
     setContextMenu(null);
   }, [props]);
+  const handleResetSoft = reactExports.useCallback((hash) => {
+    vscode == null ? void 0 : vscode.postMessage({ type: "reset", commit: hash, mode: "soft" });
+    setContextMenu(null);
+  }, [vscode]);
+  const handleResetMixed = reactExports.useCallback((hash) => {
+    vscode == null ? void 0 : vscode.postMessage({ type: "reset", commit: hash, mode: "mixed" });
+    setContextMenu(null);
+  }, [vscode]);
+  const handleResetHard = reactExports.useCallback((hash) => {
+    vscode == null ? void 0 : vscode.postMessage({ type: "reset", commit: hash, mode: "hard" });
+    setContextMenu(null);
+  }, [vscode]);
   const closeContextMenu = reactExports.useCallback(() => {
     setContextMenu(null);
   }, []);
@@ -8030,6 +8050,9 @@ function useGitGraphLogic(props) {
     handleRevert,
     handleCreateBranch,
     handleCopyHash,
+    handleResetSoft,
+    handleResetMixed,
+    handleResetHard,
     closeContextMenu
   };
 }
@@ -8052,6 +8075,9 @@ const GitGraphView = reactExports.memo(function GitGraphView2(props) {
     handleRevert,
     handleCreateBranch,
     handleCopyHash,
+    handleResetSoft,
+    handleResetMixed,
+    handleResetHard,
     closeContextMenu
   } = useGitGraphLogic(props);
   if (error) {
@@ -8099,6 +8125,9 @@ const GitGraphView = reactExports.memo(function GitGraphView2(props) {
         onRevert: () => handleRevert(contextMenu.hash),
         onCreateBranch: () => handleCreateBranch(contextMenu.hash),
         onCopyHash: () => handleCopyHash(contextMenu.hash),
+        onResetSoft: () => handleResetSoft(contextMenu.hash),
+        onResetMixed: () => handleResetMixed(contextMenu.hash),
+        onResetHard: () => handleResetHard(contextMenu.hash),
         onClose: closeContextMenu
       }
     )

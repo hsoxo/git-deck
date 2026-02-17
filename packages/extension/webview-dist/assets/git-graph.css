@@ -147,9 +147,14 @@
     position: relative;
 }
 
+.git-graph-row-svg {
+    position: relative;
+    overflow: visible;
+}
+
 .git-graph-info-container {
     flex: 1;
-    overflow: hidden;
+    min-height: 100%;
 }.git-graph-context-menu {
     position: fixed;
     background: var(--vscode-menu-background);
@@ -169,6 +174,21 @@
 .context-menu-item:hover {
     background: var(--vscode-menu-selectionBackground);
     color: var(--vscode-menu-selectionForeground);
+}
+
+.context-menu-item-danger {
+    color: var(--vscode-errorForeground);
+}
+
+.context-menu-item-danger:hover {
+    background: var(--vscode-inputValidation-errorBackground);
+    color: var(--vscode-errorForeground);
+}
+
+.context-menu-separator {
+    height: 1px;
+    background: var(--vscode-menu-separatorBackground);
+    margin: 4px 0;
 }.git-graph-view {
     display: flex;
     flex-direction: column;

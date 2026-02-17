@@ -1,0 +1,22 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="128" height="128" fill="#1e1e1e" rx="16"/>
+  
+  <!-- Git 分支图标 -->
+  <!-- 主分支线 -->
+  <line x1="40" y1="40" x2="64" y2="64" stroke="#4285f4" stroke-width="4" stroke-linecap="round"/>
+  <line x1="64" y1="64" x2="88" y2="88" stroke="#4285f4" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- 分支线 -->
+  <line x1="64" y1="64" x2="88" y2="40" stroke="#34a853" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- 提交点 -->
+  <circle cx="40" cy="40" r="8" fill="#4285f4"/>
+  <circle cx="64" cy="64" r="8" fill="#4285f4"/>
+  <circle cx="88" cy="88" r="8" fill="#4285f4"/>
+  <circle cx="88" cy="40" r="8" fill="#34a853"/>
+  
+  <!-- 文字 -->
+  <text x="64" y="115" font-family="Arial, sans-serif" font-size="16" font-weight="bold" 
+        fill="#ffffff" text-anchor="middle">Git GUI</text>
+</svg>
