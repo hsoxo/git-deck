@@ -106,12 +106,6 @@ export function activate(context: vscode.ExtensionContext) {
 
             fileWatcher.onDidDelete((uri) => {
                 if (!shouldIgnoreFile(uri)) {
-                    debouncedRefresh();
-                }
-            });
-
-            fileWatcher.onDidDelete((uri) => {
-                if (!shouldIgnoreFile(uri)) {
                     debouncedRefreshAllViews();
                 }
             });
