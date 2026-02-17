@@ -15,8 +15,26 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
     onContextMenu,
     style,
 }: GitGraphCommitRowProps) {
-    const branchRefs = commit.refs?.filter(r => !r.includes('tag:')) || [];
-    const isCurrentBranch = branchRefs.some(b => b.includes(currentBranch || ''));
+    // 解析 refs 为分支和标签
+    const branches: string[] = [];
+    const tags: string[] = [];
+
+    commit.refs?.forEach(ref => {
+        if (ref.includes('tag:')) {
+            // 提取标签名
+            const tagName = ref.replace('tag:', '').trim();
+            tags.push(tagName);
+        } else {
+            // 分支引用
+            branches.push(ref);
+        }
+    });
+
+    const isCurrentBranch = branches.some(b =>
+        b.includes(`HEAD -> ${currentBranch}`) ||
+        b === currentBranch
+    );
+
     const graphDisplay = commit.graph || '* ';
 
     const handleContextMenu = useCallback((e: React.MouseEvent) => {
@@ -34,15 +52,20 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
 
             <div className="commit-info">
                 <div className="commit-refs">
-                    {branchRefs.map((ref, index) => {
-                        const isRemote = ref.includes('/');
-                        const displayName = ref.replace('HEAD -> ', '').replace('origin/', '');
-                        const isCurrent = ref.includes(currentBranch || '');
-                        const labelClass = isCurrent ? 'current' : (isRemote ? 'remote' : '');
+                    {/* 显示分支 */}
+                    {branches.map((ref, index) => {
+                        const isRemote = ref.includes('origin/') || ref.includes('remotes/');
+                        const displayName = ref
+                            .replace('HEAD -> ', '')
+                            .replace('origin/', '')
+                            .replace('remotes/', '')
+                            .trim();
+                        const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
+                        const labelClass = isCurrent ? 'current' : (isRemote ? 'remote' : 'local');
 
                         return (
                             <span
-                                key={index}
+                                key={`branch-${index}`}
                                 className={`branch-label ${labelClass}`}
                                 title={ref}
                             >
@@ -50,6 +73,17 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
                             </span>
                         );
                     })}
+
+                    {/* 显示标签 */}
+                    {tags.map((tag, index) => (
+                        <span
+                            key={`tag-${index}`}
+                            className="tag-label"
+                            title={`tag: ${tag}`}
+                        >
+                            {tag}
+                        </span>
+                    ))}
                 </div>
 
                 <span className="commit-message" title={commit.message}>

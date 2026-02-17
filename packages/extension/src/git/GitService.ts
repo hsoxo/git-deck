@@ -296,6 +296,49 @@ export class GitService {
         }
     }
 
+    async getTags(): Promise<import('@git-gui/shared').TagInfo[]> {
+        try {
+            logger.debug('Getting tags');
+            logger.time('git.tags');
+
+            // 获取所有标签及其详细信息
+            const result = await this.git.raw([
+                'tag',
+                '-l',
+                '--format=%(refname:short)%09%(objectname)%09%(creatordate:iso8601)%09%(subject)%09%(taggername)'
+            ]);
+
+            logger.timeEnd('git.tags');
+
+            const tags: import('@git-gui/shared').TagInfo[] = [];
+            const lines = result.trim().split('\n');
+
+            for (const line of lines) {
+                if (!line.trim()) {
+                    continue;
+                }
+
+                const parts = line.split('\t');
+                if (parts.length >= 2) {
+                    tags.push({
+                        name: parts[0],
+                        hash: parts[1],
+                        date: parts[2] ? new Date(parts[2]) : new Date(),
+                        message: parts[3] || '',
+                        tagger: parts[4] || ''
+                    });
+                }
+            }
+
+            logger.debug(`Retrieved ${tags.length} tags`);
+            return tags;
+        } catch (error) {
+            logger.error('Failed to get tags', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Get tags'));
+        }
+    }
+
+
     async getCurrentBranch(): Promise<string | null> {
         try {
             const branches = await this.git.branch();

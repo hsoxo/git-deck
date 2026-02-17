@@ -84,12 +84,14 @@ export class GitGraphPanel {
         try {
             const commits = await this.gitService.getGraphLog(100);
             const branches = await this.gitService.getBranches();
+            const tags = await this.gitService.getTags();
             const currentBranch = await this.gitService.getCurrentBranch();
 
             this._panel.webview.postMessage({
                 type: 'graphData',
                 commits,
                 branches,
+                tags,
                 currentBranch,
             });
         } catch (error) {

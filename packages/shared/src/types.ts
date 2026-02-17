@@ -44,6 +44,15 @@ export interface BranchInfo {
     behind?: number;
 }
 
+// 标签相关类型
+export interface TagInfo {
+    name: string;
+    hash: string;
+    date: Date;
+    message?: string;
+    tagger?: string;
+}
+
 // Remote 相关类型
 export interface RemoteInfo {
     name: string;

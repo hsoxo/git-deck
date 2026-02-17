@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { CommitNode, BranchInfo } from '@git-gui/shared';
+import type { CommitNode, BranchInfo, TagInfo } from '@git-gui/shared';
 import type { GitGraphViewProps } from './GitGraphView';
 import { getVsCodeApi } from '../../utils/vscodeApi';
 
@@ -12,6 +12,7 @@ interface ContextMenuState {
 export function useGitGraphLogic(props: GitGraphViewProps) {
     const [commits, setCommits] = useState<CommitNode[]>([]);
     const [branches, setBranches] = useState<BranchInfo[]>([]);
+    const [tags, setTags] = useState<TagInfo[]>([]);
     const [currentBranch, setCurrentBranch] = useState<string | null>(null);
     const [selectedBranch, setSelectedBranch] = useState<string>('');
     const [loading, setLoading] = useState(true);
@@ -44,6 +45,7 @@ export function useGitGraphLogic(props: GitGraphViewProps) {
                 case 'graphData':
                     setCommits(message.commits || []);
                     setBranches(message.branches || []);
+                    setTags(message.tags || []);
                     setCurrentBranch(message.currentBranch || null);
                     setSelectedBranch(message.currentBranch || '');
                     setLoading(false);
@@ -131,6 +133,7 @@ export function useGitGraphLogic(props: GitGraphViewProps) {
     return {
         commits,
         branches,
+        tags,
         currentBranch,
         selectedBranch,
         loading,

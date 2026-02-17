@@ -53,8 +53,19 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
   style
 }) {
   var _a;
-  const branchRefs = ((_a = commit.refs) == null ? void 0 : _a.filter((r) => !r.includes("tag:"))) || [];
-  const isCurrentBranch = branchRefs.some((b) => b.includes(currentBranch || ""));
+  const branches = [];
+  const tags = [];
+  (_a = commit.refs) == null ? void 0 : _a.forEach((ref) => {
+    if (ref.includes("tag:")) {
+      const tagName = ref.replace("tag:", "").trim();
+      tags.push(tagName);
+    } else {
+      branches.push(ref);
+    }
+  });
+  const isCurrentBranch = branches.some(
+    (b) => b.includes(`HEAD -> ${currentBranch}`) || b === currentBranch
+  );
   const graphDisplay = commit.graph || "* ";
   const handleContextMenu = reactExports.useCallback((e) => {
     onContextMenu(e, commit.hash);
@@ -69,21 +80,32 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "graph-column", children: graphDisplay }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-info", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "commit-refs", children: branchRefs.map((ref, index) => {
-            const isRemote = ref.includes("/");
-            const displayName = ref.replace("HEAD -> ", "").replace("origin/", "");
-            const isCurrent = ref.includes(currentBranch || "");
-            const labelClass = isCurrent ? "current" : isRemote ? "remote" : "";
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-refs", children: [
+            branches.map((ref, index) => {
+              const isRemote = ref.includes("origin/") || ref.includes("remotes/");
+              const displayName = ref.replace("HEAD -> ", "").replace("origin/", "").replace("remotes/", "").trim();
+              const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
+              const labelClass = isCurrent ? "current" : isRemote ? "remote" : "local";
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "span",
+                {
+                  className: `branch-label ${labelClass}`,
+                  title: ref,
+                  children: displayName
+                },
+                `branch-${index}`
+              );
+            }),
+            tags.map((tag, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               "span",
               {
-                className: `branch-label ${labelClass}`,
-                title: ref,
-                children: displayName
+                className: "tag-label",
+                title: `tag: ${tag}`,
+                children: tag
               },
-              index
-            );
-          }) }),
+              `tag-${index}`
+            ))
+          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-message", title: commit.message, children: commit.message }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-hash", children: commit.hash.substring(0, 7) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-author", children: commit.author_name || commit.author }),
@@ -145,6 +167,7 @@ const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
 function useGitGraphLogic(props) {
   const [commits, setCommits] = reactExports.useState([]);
   const [branches, setBranches] = reactExports.useState([]);
+  const [tags, setTags] = reactExports.useState([]);
   const [currentBranch, setCurrentBranch] = reactExports.useState(null);
   const [selectedBranch, setSelectedBranch] = reactExports.useState("");
   const [loading, setLoading] = reactExports.useState(true);
@@ -168,6 +191,7 @@ function useGitGraphLogic(props) {
         case "graphData":
           setCommits(message.commits || []);
           setBranches(message.branches || []);
+          setTags(message.tags || []);
           setCurrentBranch(message.currentBranch || null);
           setSelectedBranch(message.currentBranch || "");
           setLoading(false);
@@ -246,6 +270,7 @@ function useGitGraphLogic(props) {
   return {
     commits,
     branches,
+    tags,
     currentBranch,
     selectedBranch,
     loading,
