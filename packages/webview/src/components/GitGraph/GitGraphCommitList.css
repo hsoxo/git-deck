@@ -1,12 +1,16 @@
 .git-graph-commit-list {
     overflow-y: auto;
     flex: 1;
+    display: flex;
     position: relative;
 }
 
-.git-graph-lines {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+.git-graph-svg-container {
+    flex-shrink: 0;
+    position: relative;
+}
+
+.git-graph-info-container {
+    flex: 1;
+    overflow: hidden;
 }

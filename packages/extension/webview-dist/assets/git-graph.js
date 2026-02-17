@@ -55,13 +55,10 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
   graphCommit,
   currentBranch,
   onContextMenu,
-  style,
-  columnWidth,
-  rowHeight,
-  dotRadius
+  rowHeight
 }) {
-  var _a, _b;
-  const { commit, x, columns } = graphCommit;
+  var _a;
+  const { commit } = graphCommit;
   const branches = [];
   const tags = [];
   (_a = commit.refs) == null ? void 0 : _a.forEach((ref) => {
@@ -78,89 +75,45 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
   const handleContextMenu = reactExports.useCallback((e) => {
     onContextMenu(e, commit.hash);
   }, [onContextMenu, commit.hash]);
-  const svgWidth = Math.max(columns.length * columnWidth, (x + 1) * columnWidth);
-  const dotX = x * columnWidth + columnWidth / 2;
-  const dotY = rowHeight / 2;
-  const dotColor = ((_b = columns[x]) == null ? void 0 : _b.color) || "#4285f4";
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
       className: `git-graph-commit-row ${isCurrentBranch ? "current-branch" : ""}`,
       "data-hash": commit.hash,
       onContextMenu: handleContextMenu,
-      style,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "graph-column", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "svg",
-          {
-            width: svgWidth,
-            height: rowHeight,
-            style: { display: "block", overflow: "visible" },
-            children: [
-              columns.map((col, idx) => {
-                if (!col.branch)
-                  return null;
-                const lineX = idx * columnWidth + columnWidth / 2;
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "line",
-                  {
-                    x1: lineX,
-                    y1: -rowHeight / 2,
-                    x2: lineX,
-                    y2: rowHeight * 1.5,
-                    stroke: col.color,
-                    strokeWidth: "2"
-                  },
-                  `col-${idx}`
-                );
-              }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "circle",
-                {
-                  cx: dotX,
-                  cy: dotY,
-                  r: dotRadius,
-                  fill: dotColor,
-                  stroke: dotColor,
-                  strokeWidth: "2"
-                }
-              )
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-info", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-refs", children: [
-            branches.map((ref, index) => {
-              const isRemote = ref.includes("origin/") || ref.includes("remotes/");
-              const displayName = ref.replace("HEAD -> ", "").replace("origin/", "").replace("remotes/", "").trim();
-              const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
-              const labelClass = isCurrent ? "current" : isRemote ? "remote" : "local";
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "span",
-                {
-                  className: `branch-label ${labelClass}`,
-                  title: ref,
-                  children: displayName
-                },
-                `branch-${index}`
-              );
-            }),
-            tags.map((tag, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      style: { height: rowHeight },
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-info", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-refs", children: [
+          branches.map((ref, index) => {
+            const isRemote = ref.includes("origin/") || ref.includes("remotes/");
+            const displayName = ref.replace("HEAD -> ", "").replace("origin/", "").replace("remotes/", "").trim();
+            const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
+            const labelClass = isCurrent ? "current" : isRemote ? "remote" : "local";
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
               "span",
               {
-                className: "tag-label",
-                title: `tag: ${tag}`,
-                children: tag
+                className: `branch-label ${labelClass}`,
+                title: ref,
+                children: displayName
               },
-              `tag-${index}`
-            ))
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-message", title: commit.message, children: commit.message }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-hash", children: commit.hash.substring(0, 7) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-author", children: commit.author_name || commit.author }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-date", children: new Date(commit.date).toLocaleString() })
-        ] })
-      ]
+              `branch-${index}`
+            );
+          }),
+          tags.map((tag, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "span",
+            {
+              className: "tag-label",
+              title: `tag: ${tag}`,
+              children: tag
+            },
+            `tag-${index}`
+          ))
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-message", title: commit.message, children: commit.message }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-hash", children: commit.hash.substring(0, 7) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-author", children: commit.author_name || commit.author }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-date", children: new Date(commit.date).toLocaleString() })
+      ] })
     }
   );
 });
@@ -294,18 +247,66 @@ const GitGraphCommitList = reactExports.memo(function GitGraphCommitList2({
   const columnWidth = renderer.getColumnWidth();
   const rowHeight = renderer.getRowHeight();
   const dotRadius = renderer.getDotRadius();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "git-graph-commit-list", children: graphCommits.map((graphCommit) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-    GitGraphCommitRow,
-    {
-      graphCommit,
-      currentBranch,
-      onContextMenu,
-      columnWidth,
-      rowHeight,
-      dotRadius
-    },
-    graphCommit.commit.hash
-  )) });
+  const maxColumns = Math.max(...graphCommits.map((gc) => gc.columns.length), 1);
+  const svgWidth = maxColumns * columnWidth;
+  const svgHeight = graphCommits.length * rowHeight;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "git-graph-commit-list", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "git-graph-svg-container", style: { width: svgWidth }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "svg",
+      {
+        width: svgWidth,
+        height: svgHeight,
+        style: { display: "block" },
+        children: graphCommits.map((graphCommit, index) => {
+          var _a;
+          const y = index * rowHeight;
+          const dotX = graphCommit.x * columnWidth + columnWidth / 2;
+          const dotY = y + rowHeight / 2;
+          const dotColor = ((_a = graphCommit.columns[graphCommit.x]) == null ? void 0 : _a.color) || "#4285f4";
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("g", { children: [
+            graphCommit.columns.map((col, idx) => {
+              if (!col.branch)
+                return null;
+              const lineX = idx * columnWidth + columnWidth / 2;
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "line",
+                {
+                  x1: lineX,
+                  y1: y,
+                  x2: lineX,
+                  y2: y + rowHeight,
+                  stroke: col.color,
+                  strokeWidth: "2"
+                },
+                `line-${index}-${idx}`
+              );
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "circle",
+              {
+                cx: dotX,
+                cy: dotY,
+                r: dotRadius,
+                fill: dotColor,
+                stroke: dotColor,
+                strokeWidth: "2"
+              }
+            )
+          ] }, graphCommit.commit.hash);
+        })
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "git-graph-info-container", children: graphCommits.map((graphCommit) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      GitGraphCommitRow,
+      {
+        graphCommit,
+        currentBranch,
+        onContextMenu,
+        rowHeight
+      },
+      graphCommit.commit.hash
+    )) })
+  ] });
 });
 const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
   x,

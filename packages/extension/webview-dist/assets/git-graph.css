@@ -35,8 +35,7 @@
     align-items: center;
     padding: 0 12px;
     cursor: pointer;
-    min-height: 32px;
-    position: relative;
+    box-sizing: border-box;
 }
 
 .git-graph-commit-row:hover {
@@ -45,22 +44,6 @@
 
 .git-graph-commit-row.current-branch {
     background: var(--vscode-list-inactiveSelectionBackground);
-}
-
-.graph-column {
-    min-width: 150px;
-    flex-shrink: 0;
-    font-family: 'Courier New', Consolas, monospace;
-    font-size: 13px;
-    line-height: 32px;
-    white-space: pre;
-    padding-left: 8px;
-    letter-spacing: 0.5px;
-}
-
-/* 为图形字符添加颜色 */
-.graph-column {
-    color: var(--vscode-gitDecoration-modifiedResourceForeground);
 }
 
 .commit-info {
@@ -144,14 +127,18 @@
 }.git-graph-commit-list {
     overflow-y: auto;
     flex: 1;
+    display: flex;
     position: relative;
 }
 
-.git-graph-lines {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+.git-graph-svg-container {
+    flex-shrink: 0;
+    position: relative;
+}
+
+.git-graph-info-container {
+    flex: 1;
+    overflow: hidden;
 }.git-graph-context-menu {
     position: fixed;
     background: var(--vscode-menu-background);

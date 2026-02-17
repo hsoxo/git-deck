@@ -6,22 +6,16 @@ export interface GitGraphCommitRowProps {
     graphCommit: GraphCommit;
     currentBranch: string | null;
     onContextMenu: (e: React.MouseEvent, hash: string) => void;
-    style?: React.CSSProperties;
-    columnWidth: number;
     rowHeight: number;
-    dotRadius: number;
 }
 
 export const GitGraphCommitRow = memo(function GitGraphCommitRow({
     graphCommit,
     currentBranch,
     onContextMenu,
-    style,
-    columnWidth,
     rowHeight,
-    dotRadius,
 }: GitGraphCommitRowProps) {
-    const { commit, x, columns } = graphCommit;
+    const { commit } = graphCommit;
 
     // 解析 refs 为分支和标签
     const branches: string[] = [];
@@ -47,54 +41,13 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
         onContextMenu(e, commit.hash);
     }, [onContextMenu, commit.hash]);
 
-    // 计算 SVG 宽度
-    const svgWidth = Math.max(columns.length * columnWidth, (x + 1) * columnWidth);
-    const dotX = x * columnWidth + columnWidth / 2;
-    const dotY = rowHeight / 2;
-    const dotColor = columns[x]?.color || '#4285f4';
-
     return (
         <div
             className={`git-graph-commit-row ${isCurrentBranch ? 'current-branch' : ''}`}
             data-hash={commit.hash}
             onContextMenu={handleContextMenu}
-            style={style}
+            style={{ height: rowHeight }}
         >
-            <div className="graph-column">
-                <svg
-                    width={svgWidth}
-                    height={rowHeight}
-                    style={{ display: 'block', overflow: 'visible' }}
-                >
-                    {/* 绘制所有列的线条，延伸到下一行 */}
-                    {columns.map((col, idx) => {
-                        if (!col.branch) return null;
-                        const lineX = idx * columnWidth + columnWidth / 2;
-                        return (
-                            <line
-                                key={`col-${idx}`}
-                                x1={lineX}
-                                y1={-rowHeight / 2}
-                                x2={lineX}
-                                y2={rowHeight * 1.5}
-                                stroke={col.color}
-                                strokeWidth="2"
-                            />
-                        );
-                    })}
-
-                    {/* 绘制提交点 */}
-                    <circle
-                        cx={dotX}
-                        cy={dotY}
-                        r={dotRadius}
-                        fill={dotColor}
-                        stroke={dotColor}
-                        strokeWidth="2"
-                    />
-                </svg>
-            </div>
-
             <div className="commit-info">
                 <div className="commit-refs">
                     {/* 显示分支 */}
