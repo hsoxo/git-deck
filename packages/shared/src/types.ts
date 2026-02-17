@@ -1,8 +1,8 @@
 // Git 状态相关类型
 export interface GitStatus {
-    staged: string[];
-    unstaged: string[];
-    untracked: string[];
+    staged: FileChange[];
+    unstaged: FileChange[];
+    untracked: FileChange[];
     current: string | null;
     tracking: string | null;
 }

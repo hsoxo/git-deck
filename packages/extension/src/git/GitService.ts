@@ -1,6 +1,6 @@
 import simpleGit, { SimpleGit, LogResult, StatusResult } from 'simple-git';
 import * as path from 'path';
-import type { GitStatus, CommitNode, LogOptions, BranchInfo } from '@git-gui/shared';
+import type { GitStatus, CommitNode, LogOptions, BranchInfo, FileChange } from '@git-gui/shared';
 import { logger } from '../utils/Logger';
 import { ErrorHandler } from '../utils/ErrorHandler';
 
@@ -23,12 +23,12 @@ export class GitService {
 
             // simple-git 的 status.files 包含每个文件的详细状态
             // 每个文件有 index 和 working_dir 两个状态字段
-            // index: 暂存区的状态 (M=modified, A=added, D=deleted, ' '=unchanged)
+            // index: 暂存区的状态 (M=modified, A=added, D=deleted, R=renamed, ' '=unchanged)
             // working_dir: 工作区的状态 (M=modified, D=deleted, ' '=unchanged)
 
-            const staged: string[] = [];
-            const unstaged: string[] = [];
-            const untracked: string[] = [];
+            const staged: FileChange[] = [];
+            const unstaged: FileChange[] = [];
+            const untracked: FileChange[] = [];
 
             status.files.forEach(file => {
                 const hasIndexChanges = file.index && file.index !== ' ' && file.index !== '?';
@@ -36,14 +36,38 @@ export class GitService {
 
                 if (file.working_dir === '?') {
                     // Untracked file
-                    untracked.push(file.path);
+                    untracked.push({
+                        path: file.path,
+                        status: 'untracked'
+                    });
                 } else {
                     // Tracked file
                     if (hasIndexChanges) {
-                        staged.push(file.path);
+                        let status: FileChange['status'] = 'modified';
+                        if (file.index === 'A') {
+                            status = 'added';
+                        } else if (file.index === 'D') {
+                            status = 'deleted';
+                        } else if (file.index === 'R') {
+                            status = 'renamed';
+                        }
+
+                        staged.push({
+                            path: file.path,
+                            status,
+                            oldPath: file.index === 'R' ? file.path : undefined
+                        });
                     }
                     if (hasWorkingChanges) {
-                        unstaged.push(file.path);
+                        let status: FileChange['status'] = 'modified';
+                        if (file.working_dir === 'D') {
+                            status = 'deleted';
+                        }
+
+                        unstaged.push({
+                            path: file.path,
+                            status
+                        });
                     }
                 }
             });

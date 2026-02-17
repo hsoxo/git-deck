@@ -44,8 +44,8 @@
                 "icon": "$(remove)"
             },
             {
-                "command": "gitGui.stageAll",
-                "title": "Stage All Changes",
+                "command": "gitGui.stageSelected",
+                "title": "Stage Selected",
                 "icon": "$(add)"
             },
             {
@@ -135,12 +135,7 @@
                     "group": "navigation"
                 },
                 {
-                    "command": "gitGui.stageAll",
-                    "when": "view == gitGui.changes",
-                    "group": "navigation"
-                },
-                {
-                    "command": "gitGui.commit",
+                    "command": "gitGui.stageSelected",
                     "when": "view == gitGui.changes",
                     "group": "navigation"
                 }
@@ -162,7 +157,7 @@
                     "group": "inline"
                 },
                 {
-                    "command": "gitGui.stageAll",
+                    "command": "gitGui.stageSelected",
                     "when": "view == gitGui.changes && viewItem == unstaged"
                 },
                 {

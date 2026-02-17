@@ -167,18 +167,18 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('gitGui.stageAll', async () => {
+        vscode.commands.registerCommand('gitGui.stageSelected', async () => {
             if (gitService) {
                 try {
                     const status = await gitService.getStatus();
-                    const allFiles = [...status.unstaged, ...status.untracked];
+                    const allFiles = [...status.unstaged, ...status.untracked].map(f => f.path);
                     if (allFiles.length > 0) {
                         await gitService.stageFiles(allFiles);
                         immediateRefreshAllViews();
                     }
                 } catch (error) {
-                    logger.error('Failed to stage all', error);
-                    vscode.window.showErrorMessage(`Failed to stage all: ${error}`);
+                    logger.error('Failed to stage selected', error);
+                    vscode.window.showErrorMessage(`Failed to stage selected: ${error}`);
                 }
             }
         })
@@ -190,7 +190,7 @@ export function activate(context: vscode.ExtensionContext) {
                 try {
                     const status = await gitService.getStatus();
                     if (status.staged.length > 0) {
-                        await gitService.unstageFiles(status.staged);
+                        await gitService.unstageFiles(status.staged.map(f => f.path));
                         immediateRefreshAllViews();
                     }
                 } catch (error) {

@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { GitService } from '../git/GitService';
+import type { FileChange } from '@git-gui/shared';
 
 export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
     private _onDidChangeTreeData = new vscode.EventEmitter<TreeItem | undefined | null | void>();
@@ -45,16 +46,17 @@ export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
         return [];
     }
 
-    private buildFileTree(files: string[], section: 'unstaged' | 'staged'): TreeItem[] {
+    private buildFileTree(files: FileChange[], section: 'unstaged' | 'staged'): TreeItem[] {
         const tree: Map<string, FolderItem> = new Map();
         const rootItems: TreeItem[] = [];
 
-        files.forEach(filePath => {
+        files.forEach(fileChange => {
+            const filePath = fileChange.path;
             const parts = filePath.split('/');
 
             if (parts.length === 1) {
                 // File in root
-                rootItems.push(new FileItem(filePath, filePath, section));
+                rootItems.push(new FileItem(filePath, filePath, section, fileChange.status));
             } else {
                 // File in folder(s)
                 let currentPath = '';
@@ -80,7 +82,7 @@ export class ChangesTreeProvider implements vscode.TreeDataProvider<TreeItem> {
                 }
 
                 // Add the file
-                const fileItem = new FileItem(parts[parts.length - 1], filePath, section);
+                const fileItem = new FileItem(parts[parts.length - 1], filePath, section, fileChange.status);
                 if (parentFolder) {
                     parentFolder.children.push(fileItem);
                 } else {
@@ -148,7 +150,8 @@ class FileItem extends TreeItem {
     constructor(
         public readonly label: string,
         public readonly filePath: string,
-        public readonly section: 'unstaged' | 'staged'
+        public readonly section: 'unstaged' | 'staged',
+        public readonly status: FileChange['status']
     ) {
         super(label, vscode.TreeItemCollapsibleState.None);
         this.contextValue = section === 'unstaged' ? 'unstagedFile' : 'stagedFile';
@@ -159,7 +162,39 @@ class FileItem extends TreeItem {
             arguments: [filePath, section === 'staged']
         };
 
-        // 让 VS Code 根据文件扩展名自动选择图标
-        // 通过设置 resourceUri，VS Code 会显示正确的文件类型图标
+        // 根据状态设置颜色和装饰
+        this.applyStatusDecoration();
+    }
+
+    private applyStatusDecoration(): void {
+        // 设置颜色
+        const colorMap: Record<FileChange['status'], string> = {
+            'added': 'gitDecoration.addedResourceForeground',      // 绿色 - 新增
+            'modified': 'gitDecoration.modifiedResourceForeground', // 橙色 - 修改
+            'deleted': 'gitDecoration.deletedResourceForeground',   // 红色 - 删除
+            'renamed': 'gitDecoration.renamedResourceForeground',   // 蓝色 - 重命名
+            'untracked': 'gitDecoration.untrackedResourceForeground' // 绿色 - 未跟踪
+        };
+
+        this.iconPath = new vscode.ThemeIcon(
+            'file',
+            new vscode.ThemeColor(colorMap[this.status])
+        );
+
+        // 对于删除的文件，添加删除线
+        if (this.status === 'deleted') {
+            this.description = '(deleted)';
+            // VS Code 不直接支持删除线，但我们可以通过 description 来标注
+        }
+
+        // 对于重命名的文件，显示旧路径
+        if (this.status === 'renamed') {
+            this.description = '(renamed)';
+        }
+
+        // 对于新增的文件，添加标注
+        if (this.status === 'added' || this.status === 'untracked') {
+            this.description = '(new)';
+        }
     }
 }
