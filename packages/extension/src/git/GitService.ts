@@ -116,11 +116,13 @@ export class GitService {
             logger.time('git.graphLog');
 
             // 使用 --all 获取所有分支，--graph 获取图形信息
+            // 使用特殊分隔符来避免解析问题
             const result = await this.git.raw([
                 'log',
                 '--all',
                 '--graph',
-                '--pretty=format:%H%n%h%n%P%n%an%n%ae%n%at%n%D%n%s%n%b%n<COMMIT_END>',
+                '--date=iso',
+                '--pretty=format:%H|%h|%P|%an|%ae|%ad|%D|%s',
                 `--max-count=${maxCount}`
             ]);
 
@@ -128,44 +130,32 @@ export class GitService {
 
             const commits: CommitNode[] = [];
             const lines = result.split('\n');
-            let i = 0;
 
-            while (i < lines.length) {
-                const line = lines[i];
-
-                // 跳过空行
+            for (const line of lines) {
                 if (!line.trim()) {
-                    i++;
                     continue;
                 }
 
                 // 解析图形字符和提交信息
-                const graphMatch = line.match(/^([*|\/\\ ]+)/);
+                // 图形字符包括: * | / \ _ 和空格
+                const graphMatch = line.match(/^([\s*|/\\_]+)/);
                 const graphChars = graphMatch ? graphMatch[1] : '';
 
-                // 提取提交哈希（去掉图形字符）
-                const hashLine = line.replace(/^[*|\/\\ ]+/, '').trim();
+                // 提取提交信息（去掉图形字符）
+                const commitInfo = line.substring(graphChars.length).trim();
 
-                if (hashLine && hashLine.length === 40) {
-                    // 这是一个提交的开始
-                    const hash = hashLine;
-                    i++;
+                // 使用 | 分隔符解析提交信息
+                const parts = commitInfo.split('|');
 
-                    const shortHash = lines[i++]?.trim() || hash.substring(0, 7);
-                    const parents = lines[i++]?.trim().split(' ').filter(p => p) || [];
-                    const author_name = lines[i++]?.trim() || '';
-                    const author_email = lines[i++]?.trim() || '';
-                    const timestamp = lines[i++]?.trim() || '0';
-                    const refs = lines[i++]?.trim() || '';
-                    const message = lines[i++]?.trim() || '';
-
-                    // 读取 body 直到 <COMMIT_END>
-                    let body = '';
-                    while (i < lines.length && !lines[i].includes('<COMMIT_END>')) {
-                        body += lines[i] + '\n';
-                        i++;
-                    }
-                    i++; // 跳过 <COMMIT_END>
+                if (parts.length >= 7) {
+                    const hash = parts[0];
+                    const shortHash = parts[1];
+                    const parents = parts[2] ? parts[2].split(' ').filter(p => p) : [];
+                    const author_name = parts[3];
+                    const author_email = parts[4];
+                    const dateStr = parts[5];
+                    const refs = parts[6];
+                    const message = parts.slice(7).join('|'); // 消息可能包含 |
 
                     commits.push({
                         hash,
@@ -175,14 +165,12 @@ export class GitService {
                         author_name,
                         email: author_email,
                         author_email,
-                        date: new Date(parseInt(timestamp) * 1000),
+                        date: new Date(dateStr),
                         parents,
                         refs: this.parseRefs(refs),
                         isHead: false,
                         graph: graphChars
                     });
-                } else {
-                    i++;
                 }
             }
 

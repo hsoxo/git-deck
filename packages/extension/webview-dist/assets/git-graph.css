@@ -48,14 +48,19 @@
 }
 
 .graph-column {
-    min-width: 120px;
+    min-width: 150px;
     flex-shrink: 0;
-    font-family: monospace;
-    font-size: 14px;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 13px;
     line-height: 32px;
-    color: var(--vscode-gitDecoration-modifiedResourceForeground);
     white-space: pre;
     padding-left: 8px;
+    letter-spacing: 0.5px;
+}
+
+/* 为图形字符添加颜色 */
+.graph-column {
+    color: var(--vscode-gitDecoration-modifiedResourceForeground);
 }
 
 .commit-info {
