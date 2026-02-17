@@ -101,7 +101,7 @@ export class LogParser {
         commits: CommitNode[];
         graphLines: string[];
     } {
-        const lines = graphOutput.split('\n');
+        const lines = graphOutput.split('\n').filter(line => line.trim());
         const commits: CommitNode[] = [];
         const graphLines: string[] = [];
 
@@ -113,10 +113,27 @@ export class LogParser {
             }
 
             // 提取 commit 信息
-            const commitMatch = line.match(/\*\s+(.+)$/);
+            // 格式: * hash (HEAD -> main, origin/main) message
+            const commitMatch = line.match(/\*\s+([a-f0-9]+)\s+(?:\(([^)]+)\)\s+)?(.+)$/);
             if (commitMatch) {
-                // 这里需要进一步解析 commit 信息
-                // 暂时只提取图形部分
+                const [, hash, refsStr, message] = commitMatch;
+
+                // 解析 refs
+                const refs = refsStr ? refsStr.split(',').map(r => r.trim()) : [];
+
+                // 创建 commit 对象
+                commits.push({
+                    hash,
+                    shortHash: hash.substring(0, 7),
+                    message: message.trim(),
+                    author: '',
+                    author_name: '',
+                    email: '',
+                    date: new Date(),
+                    parents: [], // 需要从后续的 git 命令获取
+                    refs,
+                    isHead: refs.some(r => r.includes('HEAD')),
+                });
             }
         }
 

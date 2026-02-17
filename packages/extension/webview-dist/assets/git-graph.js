@@ -90,23 +90,42 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
       onContextMenu: handleContextMenu,
       style,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "graph-column", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "graph-column", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "svg",
           {
             width: svgWidth,
             height: rowHeight,
             style: { display: "block" },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "circle",
-              {
-                cx: dotX,
-                cy: dotY,
-                r: dotRadius,
-                fill: dotColor,
-                stroke: dotColor,
-                strokeWidth: "2"
-              }
-            )
+            children: [
+              columns.map((col, idx) => {
+                if (!col.branch)
+                  return null;
+                const lineX = idx * columnWidth + columnWidth / 2;
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "line",
+                  {
+                    x1: lineX,
+                    y1: 0,
+                    x2: lineX,
+                    y2: rowHeight,
+                    stroke: col.color,
+                    strokeWidth: "2"
+                  },
+                  `col-${idx}`
+                );
+              }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "circle",
+                {
+                  cx: dotX,
+                  cy: dotY,
+                  r: dotRadius,
+                  fill: dotColor,
+                  stroke: dotColor,
+                  strokeWidth: "2"
+                }
+              )
+            ]
           }
         ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-info", children: [
@@ -275,50 +294,18 @@ const GitGraphCommitList = reactExports.memo(function GitGraphCommitList2({
   const columnWidth = renderer.getColumnWidth();
   const rowHeight = renderer.getRowHeight();
   const dotRadius = renderer.getDotRadius();
-  const maxColumns = Math.max(...graphCommits.map((gc) => gc.columns.length), 1);
-  const svgWidth = maxColumns * columnWidth;
-  const svgHeight = graphCommits.length * rowHeight;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "git-graph-commit-list", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "svg",
-      {
-        className: "git-graph-lines",
-        width: svgWidth,
-        height: svgHeight,
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          pointerEvents: "none",
-          zIndex: 0
-        },
-        children: graphCommits.map(
-          (graphCommit, index) => graphCommit.routes.map((route, routeIndex) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "path",
-            {
-              d: renderer.generateSVGPath(route),
-              stroke: route.color,
-              strokeWidth: "2",
-              fill: "none"
-            },
-            `${index}-${routeIndex}`
-          ))
-        )
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "relative", zIndex: 1 }, children: graphCommits.map((graphCommit) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-      GitGraphCommitRow,
-      {
-        graphCommit,
-        currentBranch,
-        onContextMenu,
-        columnWidth,
-        rowHeight,
-        dotRadius
-      },
-      graphCommit.commit.hash
-    )) })
-  ] });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "git-graph-commit-list", children: graphCommits.map((graphCommit) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+    GitGraphCommitRow,
+    {
+      graphCommit,
+      currentBranch,
+      onContextMenu,
+      columnWidth,
+      rowHeight,
+      dotRadius
+    },
+    graphCommit.commit.hash
+  )) });
 });
 const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
   x,

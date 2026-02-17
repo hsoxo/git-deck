@@ -1,20 +1,28 @@
 import { memo, useCallback } from 'react';
-import type { CommitNode } from '@git-gui/shared';
+import type { GraphCommit } from './GitGraphRenderer';
 import './GitGraphCommitRow.css';
 
 export interface GitGraphCommitRowProps {
-    commit: CommitNode;
+    graphCommit: GraphCommit;
     currentBranch: string | null;
     onContextMenu: (e: React.MouseEvent, hash: string) => void;
     style?: React.CSSProperties;
+    columnWidth: number;
+    rowHeight: number;
+    dotRadius: number;
 }
 
 export const GitGraphCommitRow = memo(function GitGraphCommitRow({
-    commit,
+    graphCommit,
     currentBranch,
     onContextMenu,
     style,
+    columnWidth,
+    rowHeight,
+    dotRadius,
 }: GitGraphCommitRowProps) {
+    const { commit, x, columns } = graphCommit;
+
     // 解析 refs 为分支和标签
     const branches: string[] = [];
     const tags: string[] = [];
@@ -35,11 +43,15 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
         b === currentBranch
     );
 
-    const graphDisplay = commit.graph || '* ';
-
     const handleContextMenu = useCallback((e: React.MouseEvent) => {
         onContextMenu(e, commit.hash);
     }, [onContextMenu, commit.hash]);
+
+    // 计算 SVG 宽度
+    const svgWidth = Math.max(columns.length * columnWidth, (x + 1) * columnWidth);
+    const dotX = x * columnWidth + columnWidth / 2;
+    const dotY = rowHeight / 2;
+    const dotColor = columns[x]?.color || '#4285f4';
 
     return (
         <div
@@ -48,7 +60,40 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
             onContextMenu={handleContextMenu}
             style={style}
         >
-            <div className="graph-column">{graphDisplay}</div>
+            <div className="graph-column">
+                <svg
+                    width={svgWidth}
+                    height={rowHeight}
+                    style={{ display: 'block' }}
+                >
+                    {/* 绘制所有列的线条 */}
+                    {columns.map((col, idx) => {
+                        if (!col.branch) return null;
+                        const lineX = idx * columnWidth + columnWidth / 2;
+                        return (
+                            <line
+                                key={`col-${idx}`}
+                                x1={lineX}
+                                y1={0}
+                                x2={lineX}
+                                y2={rowHeight}
+                                stroke={col.color}
+                                strokeWidth="2"
+                            />
+                        );
+                    })}
+
+                    {/* 绘制提交点 */}
+                    <circle
+                        cx={dotX}
+                        cy={dotY}
+                        r={dotRadius}
+                        fill={dotColor}
+                        stroke={dotColor}
+                        strokeWidth="2"
+                    />
+                </svg>
+            </div>
 
             <div className="commit-info">
                 <div className="commit-refs">

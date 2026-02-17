@@ -9,7 +9,7 @@ import { ErrorHandler } from '../../utils/ErrorHandler';
  * 处理所有与 commit 历史相关的操作
  */
 export class LogOperations {
-    constructor(private git: SimpleGit) {}
+    constructor(private git: SimpleGit) { }
 
     /**
      * 获取 commit 历史
@@ -68,18 +68,20 @@ export class LogOperations {
 
             const maxCount = options.maxCount || 100;
 
+            // 使用完整格式获取提交信息
             const args = [
                 'log',
-                '--graph',
-                '--oneline',
-                '--decorate',
                 `--max-count=${maxCount}`,
+                `--format=${LogParser.getLogFormat()}`,
+                '--date-order',
                 '--all',
             ];
 
             const output = await this.git.raw(args);
-            const { commits } = LogParser.parseGraphLog(output);
+            const headHash = await this.getHeadHash();
+            const commits = LogParser.parseLog(output, headHash);
 
+            logger.debug(`Loaded ${commits.length} commits for graph`);
             return commits;
         } catch (error) {
             logger.error('Failed to get graph log', error);
