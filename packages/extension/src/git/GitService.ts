@@ -516,6 +516,17 @@ export class GitService {
         logger.info(`Pushed successfully${force ? ' (force)' : ''}`);
     }
 
+    async resetToCommit(commitHash: string, mode: 'soft' | 'mixed' | 'hard'): Promise<void> {
+        try {
+            logger.debug('Resetting to commit', { commitHash, mode });
+            await this.git.reset([`--${mode}`, commitHash]);
+            logger.info(`Reset to ${commitHash} (${mode}) successfully`);
+        } catch (error) {
+            logger.error('Failed to reset', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Reset'));
+        }
+    }
+
     getRepoPath(): string {
         return this.repoPath;
     }

@@ -132,6 +132,21 @@ export function useGitGraphLogic(props: GitGraphViewProps) {
         setContextMenu(null);
     }, [props]);
 
+    const handleResetSoft = useCallback((hash: string) => {
+        vscode?.postMessage({ type: 'reset', commit: hash, mode: 'soft' });
+        setContextMenu(null);
+    }, [vscode]);
+
+    const handleResetMixed = useCallback((hash: string) => {
+        vscode?.postMessage({ type: 'reset', commit: hash, mode: 'mixed' });
+        setContextMenu(null);
+    }, [vscode]);
+
+    const handleResetHard = useCallback((hash: string) => {
+        vscode?.postMessage({ type: 'reset', commit: hash, mode: 'hard' });
+        setContextMenu(null);
+    }, [vscode]);
+
     const closeContextMenu = useCallback(() => {
         setContextMenu(null);
     }, []);
@@ -155,6 +170,9 @@ export function useGitGraphLogic(props: GitGraphViewProps) {
         handleRevert,
         handleCreateBranch,
         handleCopyHash,
+        handleResetSoft,
+        handleResetMixed,
+        handleResetHard,
         closeContextMenu,
     };
 }

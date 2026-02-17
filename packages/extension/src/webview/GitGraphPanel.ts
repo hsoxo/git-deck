@@ -72,6 +72,9 @@ export class GitGraphPanel {
                     case 'createBranchFromCommit':
                         await this.handleCreateBranchFromCommit(message.commit);
                         break;
+                    case 'reset':
+                        await this.handleReset(message.commit, message.mode);
+                        break;
                 }
             },
             null,
@@ -215,6 +218,37 @@ export class GitGraphPanel {
         } catch (error) {
             logger.error('Failed to create branch', error);
             vscode.window.showErrorMessage(`Failed to create branch: ${error}`);
+        }
+    }
+
+    private async handleReset(commit: string, mode: 'soft' | 'mixed' | 'hard') {
+        try {
+            const modeDescriptions = {
+                soft: 'Soft (keep changes staged)',
+                mixed: 'Mixed (keep changes unstaged)',
+                hard: 'Hard (discard all changes)'
+            };
+
+            const warningMessages = {
+                soft: `Reset to ${commit.substring(0, 7)} (soft)?\n\nThis will move HEAD but keep all changes staged.`,
+                mixed: `Reset to ${commit.substring(0, 7)} (mixed)?\n\nThis will move HEAD and unstage changes, but keep them in working directory.`,
+                hard: `⚠️ Reset to ${commit.substring(0, 7)} (hard)?\n\nWARNING: This will PERMANENTLY DISCARD all uncommitted changes!`
+            };
+
+            const answer = await vscode.window.showWarningMessage(
+                warningMessages[mode],
+                { modal: true },
+                `Reset (${mode})`
+            );
+
+            if (answer === `Reset (${mode})`) {
+                await this.gitService.resetToCommit(commit, mode);
+                vscode.window.showInformationMessage(`Reset to ${commit.substring(0, 7)} (${mode})`);
+                await this.sendGraphData();
+            }
+        } catch (error) {
+            logger.error('Failed to reset', error);
+            vscode.window.showErrorMessage(`Failed to reset: ${error}`);
         }
     }
 

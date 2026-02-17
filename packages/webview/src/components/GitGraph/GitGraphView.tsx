@@ -35,6 +35,9 @@ export const GitGraphView = memo(function GitGraphView(props: GitGraphViewProps)
         handleRevert,
         handleCreateBranch,
         handleCopyHash,
+        handleResetSoft,
+        handleResetMixed,
+        handleResetHard,
         closeContextMenu,
     } = useGitGraphLogic(props);
 
@@ -85,6 +88,9 @@ export const GitGraphView = memo(function GitGraphView(props: GitGraphViewProps)
                     onRevert={() => handleRevert(contextMenu.hash)}
                     onCreateBranch={() => handleCreateBranch(contextMenu.hash)}
                     onCopyHash={() => handleCopyHash(contextMenu.hash)}
+                    onResetSoft={() => handleResetSoft(contextMenu.hash)}
+                    onResetMixed={() => handleResetMixed(contextMenu.hash)}
+                    onResetHard={() => handleResetHard(contextMenu.hash)}
                     onClose={closeContextMenu}
                 />
             )}

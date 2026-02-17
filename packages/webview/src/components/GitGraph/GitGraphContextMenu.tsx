@@ -8,6 +8,9 @@ export interface GitGraphContextMenuProps {
     onRevert: () => void;
     onCreateBranch: () => void;
     onCopyHash: () => void;
+    onResetSoft: () => void;
+    onResetMixed: () => void;
+    onResetHard: () => void;
     onClose: () => void;
 }
 
@@ -18,6 +21,9 @@ export const GitGraphContextMenu = memo(function GitGraphContextMenu({
     onRevert,
     onCreateBranch,
     onCopyHash,
+    onResetSoft,
+    onResetMixed,
+    onResetHard,
     onClose,
 }: GitGraphContextMenuProps) {
     const menuRef = useRef<HTMLDivElement>(null);
@@ -50,6 +56,17 @@ export const GitGraphContextMenu = memo(function GitGraphContextMenu({
             <div className="context-menu-item" onClick={onRevert}>
                 Revert
             </div>
+            <div className="context-menu-separator"></div>
+            <div className="context-menu-item" onClick={onResetSoft}>
+                Reset (Soft)
+            </div>
+            <div className="context-menu-item" onClick={onResetMixed}>
+                Reset (Mixed)
+            </div>
+            <div className="context-menu-item context-menu-item-danger" onClick={onResetHard}>
+                Reset (Hard)
+            </div>
+            <div className="context-menu-separator"></div>
             <div className="context-menu-item" onClick={onCopyHash}>
                 Copy Hash
             </div>
