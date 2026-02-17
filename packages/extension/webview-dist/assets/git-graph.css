@@ -33,10 +33,10 @@
 }.git-graph-commit-row {
     display: flex;
     align-items: center;
-    padding: 4px 12px;
-    border-bottom: 1px solid var(--vscode-panel-border);
+    padding: 0 12px;
     cursor: pointer;
     min-height: 32px;
+    position: relative;
 }
 
 .git-graph-commit-row:hover {

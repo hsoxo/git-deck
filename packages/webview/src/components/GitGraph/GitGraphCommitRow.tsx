@@ -64,9 +64,9 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
                 <svg
                     width={svgWidth}
                     height={rowHeight}
-                    style={{ display: 'block' }}
+                    style={{ display: 'block', overflow: 'visible' }}
                 >
-                    {/* 绘制所有列的线条 */}
+                    {/* 绘制所有列的线条，延伸到下一行 */}
                     {columns.map((col, idx) => {
                         if (!col.branch) return null;
                         const lineX = idx * columnWidth + columnWidth / 2;
@@ -74,9 +74,9 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
                             <line
                                 key={`col-${idx}`}
                                 x1={lineX}
-                                y1={0}
+                                y1={-rowHeight / 2}
                                 x2={lineX}
-                                y2={rowHeight}
+                                y2={rowHeight * 1.5}
                                 stroke={col.color}
                                 strokeWidth="2"
                             />

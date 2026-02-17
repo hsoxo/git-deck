@@ -95,7 +95,7 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
           {
             width: svgWidth,
             height: rowHeight,
-            style: { display: "block" },
+            style: { display: "block", overflow: "visible" },
             children: [
               columns.map((col, idx) => {
                 if (!col.branch)
@@ -105,9 +105,9 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
                   "line",
                   {
                     x1: lineX,
-                    y1: 0,
+                    y1: -rowHeight / 2,
                     x2: lineX,
-                    y2: rowHeight,
+                    y2: rowHeight * 1.5,
                     stroke: col.color,
                     strokeWidth: "2"
                   },
