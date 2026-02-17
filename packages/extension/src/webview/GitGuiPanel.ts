@@ -50,7 +50,9 @@ export class GitGuiPanel {
       column || vscode.ViewColumn.One,
       {
         enableScripts: true,
-        localResourceRoots: [extensionUri],
+        localResourceRoots: [
+          vscode.Uri.joinPath(extensionUri, 'webview-dist')
+        ],
         retainContextWhenHidden: true,
       }
     );
@@ -101,13 +103,21 @@ export class GitGuiPanel {
     // Handle messages from the webview
     this.panel.webview.onDidReceiveMessage(
       async (message) => {
-        logger.debug('Received message from webview', { method: message.method, id: message.id });
+        logger.debug('Received message from webview', { method: message.method, id: message.id, params: message.params });
         try {
           const response = await this.rpcServer.handle(message);
-          logger.debug('Sending response to webview', { id: response.id, hasError: !!response.error });
-          this.panel.webview.postMessage(response);
+          logger.debug('Sending response to webview', { id: response.id, hasError: !!response.error, resultType: typeof response.result });
+          await this.panel.webview.postMessage(response);
+          logger.debug('Response sent successfully', { id: response.id });
         } catch (error) {
           logger.error('Error handling webview message', error);
+          // Send error response back to webview
+          if (message.id) {
+            await this.panel.webview.postMessage({
+              id: message.id,
+              error: error instanceof Error ? error.message : String(error)
+            });
+          }
         }
       },
       null,
@@ -238,12 +248,8 @@ export class GitGuiPanel {
     const scriptUri = webview.asWebviewUri(
       vscode.Uri.joinPath(webviewPath, 'assets', 'index.js')
     );
-    const styleUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(webviewPath, 'assets', 'index.css')
-    );
 
     logger.debug(`Script URI: ${scriptUri.toString()}`);
-    logger.debug(`Style URI: ${styleUri.toString()}`);
 
     // 使用 nonce 来增强安全性
     const nonce = getNonce();
@@ -254,7 +260,6 @@ export class GitGuiPanel {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}'; img-src ${webview.cspSource} https:; font-src ${webview.cspSource}; connect-src ${webview.cspSource};">
-  <link rel="stylesheet" href="${styleUri}">
   <title>Git GUI</title>
   <style>
     .loading-container {

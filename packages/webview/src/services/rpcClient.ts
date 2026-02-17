@@ -1,6 +1,5 @@
 import type { RPCRequest, RPCResponse } from '@git-gui/shared';
-
-declare const acquireVsCodeApi: () => any;
+import { getVsCodeApi } from '../utils/vscodeApi';
 
 class RPCClient {
     private vscode: any;
@@ -20,15 +19,14 @@ class RPCClient {
 
     constructor() {
         console.log('[RPC Client] Initializing...');
-        console.log('[RPC Client] acquireVsCodeApi available:', typeof acquireVsCodeApi !== 'undefined');
 
-        if (typeof acquireVsCodeApi !== 'undefined') {
-            this.vscode = acquireVsCodeApi();
+        this.vscode = getVsCodeApi();
+        if (this.vscode) {
             window.addEventListener('message', this.handleMessage.bind(this));
             console.log('[RPC Client] Initialized successfully');
             console.log('[RPC Client] VS Code API:', this.vscode);
         } else {
-            console.error('[RPC Client] acquireVsCodeApi is not available');
+            console.error('[RPC Client] VS Code API is not available');
         }
     }
 
