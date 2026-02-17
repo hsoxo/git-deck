@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { GitService } from './git/GitService';
 import { logger } from './utils/Logger';
 import { Config } from './config/Config';
-import { GitGuiPanel } from './webview/GitGuiPanel';
 import { ChangesTreeProvider } from './views/ChangesTreeProvider';
 import { CommitView } from './views/CommitView';
 import { GitGraphPanel } from './webview/GitGraphPanel';
@@ -41,7 +40,6 @@ export function activate(context: vscode.ExtensionContext) {
         refreshTimer = setTimeout(() => {
             changesTreeProvider?.refresh();
             commitView?.refresh();
-            GitGuiPanel.refresh();
             refreshTimer = undefined;
         }, DEBOUNCE_DELAY);
     };
@@ -54,7 +52,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
         changesTreeProvider?.refresh();
         commitView?.refresh();
-        GitGuiPanel.refresh();
     };
 
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
@@ -126,31 +123,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // 注册命令（总是注册，在命令执行时检查工作区）
-    context.subscriptions.push(
-        vscode.commands.registerCommand('gitGui.open', () => {
-            logger.debug('Open command triggered');
-
-            // 检查工作区
-            const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-            if (!workspaceFolder) {
-                vscode.window.showErrorMessage('Git GUI: No workspace folder found. Please open a folder first.');
-                logger.warn('No workspace folder found');
-                return;
-            }
-
-            try {
-                // 初始化 Git 服务
-                if (!gitService) {
-                    gitService = new GitService(workspaceFolder.uri.fsPath);
-                }
-                GitGuiPanel.createOrShow(context.extensionUri, gitService);
-            } catch (error) {
-                logger.error('Failed to open Git GUI', error);
-                vscode.window.showErrorMessage(`Git GUI: Failed to open - ${error}`);
-            }
-        })
-    );
-
     context.subscriptions.push(
         vscode.commands.registerCommand('gitGui.refresh', () => {
             logger.debug('Refresh command triggered');

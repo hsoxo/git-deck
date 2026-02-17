@@ -1,9 +1,0 @@
-.commit-graph {
-    flex-shrink: 0;
-    background: var(--vscode-editor-background);
-}
-
-.commit-graph-canvas {
-    display: block;
-    height: 100%;
-}

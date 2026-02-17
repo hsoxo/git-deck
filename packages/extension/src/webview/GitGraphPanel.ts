@@ -221,7 +221,7 @@ export class GitGraphPanel {
     private _getHtmlForWebview(webview: vscode.Webview): string {
         const webviewPath = vscode.Uri.joinPath(this.extensionUri, 'webview-dist');
         const scriptUri = webview.asWebviewUri(
-            vscode.Uri.joinPath(webviewPath, 'assets', 'index.js')
+            vscode.Uri.joinPath(webviewPath, 'assets', 'git-graph.js')
         );
         const styleUri = webview.asWebviewUri(
             vscode.Uri.joinPath(webviewPath, 'assets', 'git-graph.css')

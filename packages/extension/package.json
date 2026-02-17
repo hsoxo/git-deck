@@ -24,11 +24,6 @@
     "contributes": {
         "commands": [
             {
-                "command": "gitGui.open",
-                "title": "Git GUI: Open",
-                "icon": "$(git-branch)"
-            },
-            {
                 "command": "gitGui.refresh",
                 "title": "Git GUI: Refresh",
                 "icon": "$(refresh)"
@@ -37,14 +32,6 @@
                 "command": "gitGui.showOutput",
                 "title": "Git GUI: Show Output",
                 "icon": "$(output)"
-            },
-            {
-                "command": "gitGui.rebase",
-                "title": "Git GUI: Rebase"
-            },
-            {
-                "command": "gitGui.cherryPick",
-                "title": "Git GUI: Cherry-pick"
             },
             {
                 "command": "gitGui.stageFile",
@@ -116,10 +103,6 @@
         "menus": {
             "commandPalette": [
                 {
-                    "command": "gitGui.open",
-                    "when": "workspaceFolderCount != 0"
-                },
-                {
                     "command": "gitGui.refresh",
                     "when": "workspaceFolderCount != 0"
                 },
@@ -185,13 +168,6 @@
                 {
                     "command": "gitGui.unstageAll",
                     "when": "view == gitGui.changes && viewItem == staged"
-                }
-            ],
-            "scm/title": [
-                {
-                    "command": "gitGui.open",
-                    "group": "navigation",
-                    "when": "scmProvider == git"
                 }
             ]
         },
