@@ -189,7 +189,7 @@ export class CommitView implements vscode.WebviewViewProvider {
         }
         .button-row {
             display: flex;
-            gap: 4px;
+            gap: 0;
             align-items: stretch;
         }
         .button {
@@ -200,7 +200,7 @@ export class CommitView implements vscode.WebviewViewProvider {
             background-color: var(--vscode-button-background);
             color: var(--vscode-button-foreground);
             border: none;
-            border-radius: 2px;
+            border-radius: 2px 0 0 2px;
             cursor: pointer;
             white-space: nowrap;
             overflow: hidden;
@@ -231,9 +231,10 @@ export class CommitView implements vscode.WebviewViewProvider {
             background-color: var(--vscode-button-background);
             color: var(--vscode-button-foreground);
             border: none;
-            border-radius: 2px;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0 2px 2px 0;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -241,17 +242,28 @@ export class CommitView implements vscode.WebviewViewProvider {
         .dropdown-toggle:hover {
             background-color: var(--vscode-button-hoverBackground);
         }
+        .dropdown-toggle:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .dropdown.secondary .dropdown-toggle {
+            background-color: var(--vscode-button-secondaryBackground);
+            color: var(--vscode-button-secondaryForeground);
+        }
+        .dropdown.secondary .dropdown-toggle:hover {
+            background-color: var(--vscode-button-secondaryHoverBackground);
+        }
         .dropdown-menu {
             display: none;
             position: absolute;
             bottom: 100%;
-            left: 0;
+            right: 0;
             background-color: var(--vscode-menu-background);
             border: 1px solid var(--vscode-menu-border);
             border-radius: 2px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             z-index: 1000;
-            min-width: 120px;
+            min-width: 150px;
             margin-bottom: 4px;
         }
         .dropdown-menu.show {
@@ -262,10 +274,17 @@ export class CommitView implements vscode.WebviewViewProvider {
             cursor: pointer;
             font-size: 12px;
             color: var(--vscode-menu-foreground);
+            white-space: nowrap;
         }
         .dropdown-item:hover {
             background-color: var(--vscode-menu-selectionBackground);
             color: var(--vscode-menu-selectionForeground);
+        }
+        .dropdown-item:first-child {
+            border-radius: 2px 2px 0 0;
+        }
+        .dropdown-item:last-child {
+            border-radius: 0 0 2px 2px;
         }
         .info-text {
             font-size: 11px;
@@ -298,7 +317,7 @@ export class CommitView implements vscode.WebviewViewProvider {
 
         <div id="pushRow" class="button-row hidden">
             <button id="pushBtn" class="button button-secondary">Push</button>
-            <div class="dropdown">
+            <div class="dropdown secondary">
                 <button id="pushDropdown" class="dropdown-toggle">▼</button>
                 <div id="pushMenu" class="dropdown-menu">
                     <div class="dropdown-item" data-action="force">Force Push</div>
@@ -409,6 +428,7 @@ export class CommitView implements vscode.WebviewViewProvider {
 
             // Enable/disable commit button
             commitBtn.disabled = data.stagedCount === 0;
+            commitDropdown.disabled = data.stagedCount === 0;
         }
 
         // Notify ready

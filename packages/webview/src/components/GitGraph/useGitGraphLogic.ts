@@ -120,6 +120,12 @@ export function useGitGraphLogic(props: GitGraphViewProps) {
         setContextMenu(null);
     }, [vscode, props]);
 
+    const handleCreateBranch = useCallback((hash: string) => {
+        vscode?.postMessage({ type: 'createBranchFromCommit', commit: hash });
+        props.onCreateBranch?.(hash);
+        setContextMenu(null);
+    }, [vscode, props]);
+
     const handleCopyHash = useCallback((hash: string) => {
         navigator.clipboard.writeText(hash);
         props.onCopyHash?.(hash);
@@ -147,6 +153,7 @@ export function useGitGraphLogic(props: GitGraphViewProps) {
         handleContextMenu,
         handleCherryPick,
         handleRevert,
+        handleCreateBranch,
         handleCopyHash,
         closeContextMenu,
     };

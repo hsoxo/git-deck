@@ -6,6 +6,7 @@ export interface GitGraphContextMenuProps {
     y: number;
     onCherryPick: () => void;
     onRevert: () => void;
+    onCreateBranch: () => void;
     onCopyHash: () => void;
     onClose: () => void;
 }
@@ -15,6 +16,7 @@ export const GitGraphContextMenu = memo(function GitGraphContextMenu({
     y,
     onCherryPick,
     onRevert,
+    onCreateBranch,
     onCopyHash,
     onClose,
 }: GitGraphContextMenuProps) {
@@ -39,6 +41,9 @@ export const GitGraphContextMenu = memo(function GitGraphContextMenu({
             className="git-graph-context-menu"
             style={{ left: `${x}px`, top: `${y}px` }}
         >
+            <div className="context-menu-item" onClick={onCreateBranch}>
+                Branch Here
+            </div>
             <div className="context-menu-item" onClick={onCherryPick}>
                 Cherry-pick
             </div>

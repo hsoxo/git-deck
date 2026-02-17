@@ -8,6 +8,7 @@ describe('GitGraphContextMenu', () => {
         y: 200,
         onCherryPick: vi.fn(),
         onRevert: vi.fn(),
+        onCreateBranch: vi.fn(),
         onCopyHash: vi.fn(),
         onClose: vi.fn(),
     };
@@ -15,6 +16,7 @@ describe('GitGraphContextMenu', () => {
     it('renders all menu items', () => {
         render(<GitGraphContextMenu {...defaultProps} />);
 
+        expect(screen.getByText('Branch Here')).toBeInTheDocument();
         expect(screen.getByText('Cherry-pick')).toBeInTheDocument();
         expect(screen.getByText('Revert')).toBeInTheDocument();
         expect(screen.getByText('Copy Hash')).toBeInTheDocument();
@@ -46,6 +48,13 @@ describe('GitGraphContextMenu', () => {
 
         fireEvent.click(screen.getByText('Copy Hash'));
         expect(defaultProps.onCopyHash).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onCreateBranch when branch here is clicked', () => {
+        render(<GitGraphContextMenu {...defaultProps} />);
+
+        fireEvent.click(screen.getByText('Branch Here'));
+        expect(defaultProps.onCreateBranch).toHaveBeenCalledTimes(1);
     });
 
     it('calls onClose when clicking outside menu', () => {

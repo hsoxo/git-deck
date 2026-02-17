@@ -73,13 +73,18 @@
     color: var(--vscode-descriptionForeground);
 }
 
+.commit-button-group {
+    display: flex;
+    gap: 0;
+}
+
 .commit-button {
     padding: 6px 16px;
     font-size: 13px;
     background-color: var(--vscode-button-background);
     color: var(--vscode-button-foreground);
     border: none;
-    border-radius: 2px;
+    border-radius: 2px 0 0 2px;
     cursor: pointer;
 }
 
@@ -90,4 +95,64 @@
 .commit-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.commit-menu-container {
+    position: relative;
+}
+
+.commit-menu-button {
+    padding: 6px 8px;
+    font-size: 10px;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0 2px 2px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.commit-menu-button:hover:not(:disabled) {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+.commit-menu-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.commit-dropdown-menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 4px;
+    background-color: var(--vscode-menu-background);
+    border: 1px solid var(--vscode-menu-border);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    min-width: 180px;
+    z-index: 1000;
+}
+
+.commit-menu-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--vscode-menu-foreground);
+}
+
+.commit-menu-item:hover {
+    background-color: var(--vscode-menu-selectionBackground);
+    color: var(--vscode-menu-selectionForeground);
+}
+
+.commit-menu-item:first-child {
+    border-radius: 4px 4px 0 0;
+}
+
+.commit-menu-item:last-child {
+    border-radius: 0 0 4px 4px;
 }

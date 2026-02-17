@@ -37,6 +37,9 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
         b === currentBranch
     );
 
+    // 获取当前提交的分支颜色（从分支图中）
+    const branchColor = graphCommit.columns[graphCommit.x]?.color || '#4285f4';
+
     const handleContextMenu = useCallback((e: React.MouseEvent) => {
         onContextMenu(e, commit.hash);
     }, [onContextMenu, commit.hash]);
@@ -68,6 +71,7 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
                         }
 
                         const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
+                        const isLocal = !isRemote;
                         const labelClass = isCurrent ? 'current' : (isRemote ? 'remote' : 'local');
 
                         return (
@@ -75,7 +79,11 @@ export const GitGraphCommitRow = memo(function GitGraphCommitRow({
                                 key={`branch-${index}`}
                                 className={`branch-label ${labelClass}`}
                                 title={ref}
+                                style={{
+                                    '--branch-color': branchColor
+                                } as React.CSSProperties}
                             >
+                                {isCurrent && isLocal && <span className="active-icon">●</span>}
                                 {displayName}
                             </span>
                         );

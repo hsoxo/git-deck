@@ -762,6 +762,8 @@ function FileList({
 function CommitBox() {
   const [message, setMessage] = reactExports.useState("");
   const [isAmend, setIsAmend] = reactExports.useState(false);
+  const [showMenu, setShowMenu] = reactExports.useState(false);
+  const menuRef = reactExports.useRef(null);
   const { status, commit, amendCommit, commits } = useGitStore();
   reactExports.useEffect(() => {
     if (isAmend && commits.length > 0) {
@@ -770,6 +772,19 @@ function CommitBox() {
       setMessage("");
     }
   }, [isAmend, commits]);
+  reactExports.useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
   const handleCommit = async () => {
     if (message.trim()) {
       if (isAmend) {
@@ -821,7 +836,45 @@ function CommitBox() {
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-footer", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "commit-info", children: isAmend ? "Amending last commit" : `${(status == null ? void 0 : status.staged.length) || 0} file(s) staged` }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "commit-button", onClick: handleCommit, disabled: !canCommit, children: isAmend ? "Amend Commit" : "Commit" })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-button-group", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "commit-button", onClick: handleCommit, disabled: !canCommit, children: isAmend ? "Amend Commit" : "Commit" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-menu-container", ref: menuRef, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: "commit-menu-button",
+              onClick: () => setShowMenu(!showMenu),
+              disabled: !canCommit,
+              "aria-label": "Commit options",
+              children: "▼"
+            }
+          ),
+          showMenu && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-dropdown-menu", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "commit-menu-item",
+                onClick: () => {
+                  handleCommit();
+                  setShowMenu(false);
+                },
+                children: "Commit"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "commit-menu-item",
+                onClick: () => {
+                  setIsAmend(true);
+                  setShowMenu(false);
+                },
+                children: "Commit & Amend"
+              }
+            )
+          ] })
+        ] })
+      ] })
     ] })
   ] });
 }

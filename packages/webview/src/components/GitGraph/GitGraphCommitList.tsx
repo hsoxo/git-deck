@@ -52,9 +52,9 @@ export const GitGraphCommitList = memo(function GitGraphCommitList({
                                         <line
                                             key={`line-${index}-${idx}`}
                                             x1={lineX}
-                                            y1={y}
+                                            y1={y + rowHeight / 2}
                                             x2={lineX}
-                                            y2={y + rowHeight}
+                                            y2={y + rowHeight + rowHeight / 2}
                                             stroke={col.color}
                                             strokeWidth="2"
                                         />

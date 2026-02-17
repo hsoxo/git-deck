@@ -69,6 +69,9 @@ export class GitGraphPanel {
                     case 'revert':
                         await this.handleRevert(message.commit);
                         break;
+                    case 'createBranchFromCommit':
+                        await this.handleCreateBranchFromCommit(message.commit);
+                        break;
                 }
             },
             null,
@@ -185,6 +188,33 @@ export class GitGraphPanel {
         } catch (error) {
             logger.error('Failed to revert', error);
             vscode.window.showErrorMessage(`Failed to revert: ${error}`);
+        }
+    }
+
+    private async handleCreateBranchFromCommit(commit: string) {
+        try {
+            const branchName = await vscode.window.showInputBox({
+                prompt: `Create branch from commit ${commit.substring(0, 7)}`,
+                placeHolder: 'Enter branch name',
+                validateInput: (value) => {
+                    if (!value) {
+                        return 'Branch name cannot be empty';
+                    }
+                    if (!/^[a-zA-Z0-9/_-]+$/.test(value)) {
+                        return 'Branch name contains invalid characters';
+                    }
+                    return null;
+                }
+            });
+
+            if (branchName) {
+                await this.gitService.createBranch(branchName, commit);
+                vscode.window.showInformationMessage(`Created branch: ${branchName}`);
+                await this.sendGraphData();
+            }
+        } catch (error) {
+            logger.error('Failed to create branch', error);
+            vscode.window.showErrorMessage(`Failed to create branch: ${error}`);
         }
     }
 

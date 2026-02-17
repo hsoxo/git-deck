@@ -57,7 +57,7 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
   onContextMenu,
   rowHeight
 }) {
-  var _a;
+  var _a, _b;
   const { commit } = graphCommit;
   const branches = [];
   const tags = [];
@@ -72,6 +72,7 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
   const isCurrentBranch = branches.some(
     (b) => b.includes(`HEAD -> ${currentBranch}`) || b === currentBranch
   );
+  const branchColor = ((_b = graphCommit.columns[graphCommit.x]) == null ? void 0 : _b.color) || "#4285f4";
   const handleContextMenu = reactExports.useCallback((e) => {
     onContextMenu(e, commit.hash);
   }, [onContextMenu, commit.hash]);
@@ -94,13 +95,20 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
               }
             }
             const isCurrent = ref.includes(`HEAD -> ${currentBranch}`) || ref === currentBranch;
+            const isLocal = !isRemote;
             const labelClass = isCurrent ? "current" : isRemote ? "remote" : "local";
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "span",
               {
                 className: `branch-label ${labelClass}`,
                 title: ref,
-                children: displayName
+                style: {
+                  "--branch-color": branchColor
+                },
+                children: [
+                  isCurrent && isLocal && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "active-icon", children: "●" }),
+                  displayName
+                ]
               },
               `branch-${index}`
             );
@@ -278,9 +286,9 @@ const GitGraphCommitList = reactExports.memo(function GitGraphCommitList2({
                 "line",
                 {
                   x1: lineX,
-                  y1: y,
+                  y1: y + rowHeight / 2,
                   x2: lineX,
-                  y2: y + rowHeight,
+                  y2: y + rowHeight + rowHeight / 2,
                   stroke: col.color,
                   strokeWidth: "2"
                 },
@@ -319,6 +327,7 @@ const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
   y,
   onCherryPick,
   onRevert,
+  onCreateBranch,
   onCopyHash,
   onClose
 }) {
@@ -341,6 +350,7 @@ const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
       className: "git-graph-context-menu",
       style: { left: `${x}px`, top: `${y}px` },
       children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onCreateBranch, children: "Branch Here" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onCherryPick, children: "Cherry-pick" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onRevert, children: "Revert" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "context-menu-item", onClick: onCopyHash, children: "Copy Hash" })
@@ -442,6 +452,12 @@ function useGitGraphLogic(props) {
     (_a = props.onRevert) == null ? void 0 : _a.call(props, hash);
     setContextMenu(null);
   }, [vscode, props]);
+  const handleCreateBranch = reactExports.useCallback((hash) => {
+    var _a;
+    vscode == null ? void 0 : vscode.postMessage({ type: "createBranchFromCommit", commit: hash });
+    (_a = props.onCreateBranch) == null ? void 0 : _a.call(props, hash);
+    setContextMenu(null);
+  }, [vscode, props]);
   const handleCopyHash = reactExports.useCallback((hash) => {
     var _a;
     navigator.clipboard.writeText(hash);
@@ -468,6 +484,7 @@ function useGitGraphLogic(props) {
     handleContextMenu,
     handleCherryPick,
     handleRevert,
+    handleCreateBranch,
     handleCopyHash,
     closeContextMenu
   };
@@ -489,6 +506,7 @@ const GitGraphView = reactExports.memo(function GitGraphView2(props) {
     handleContextMenu,
     handleCherryPick,
     handleRevert,
+    handleCreateBranch,
     handleCopyHash,
     closeContextMenu
   } = useGitGraphLogic(props);
@@ -535,6 +553,7 @@ const GitGraphView = reactExports.memo(function GitGraphView2(props) {
         y: contextMenu.y,
         onCherryPick: () => handleCherryPick(contextMenu.hash),
         onRevert: () => handleRevert(contextMenu.hash),
+        onCreateBranch: () => handleCreateBranch(contextMenu.hash),
         onCopyHash: () => handleCopyHash(contextMenu.hash),
         onClose: closeContextMenu
       }

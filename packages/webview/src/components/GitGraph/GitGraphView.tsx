@@ -12,6 +12,7 @@ export interface GitGraphViewProps {
     onRebase?: (branch: string) => void;
     onCherryPick?: (commits: string[]) => void;
     onRevert?: (commit: string) => void;
+    onCreateBranch?: (commit: string) => void;
     onCopyHash?: (hash: string) => void;
 }
 
@@ -32,6 +33,7 @@ export const GitGraphView = memo(function GitGraphView(props: GitGraphViewProps)
         handleContextMenu,
         handleCherryPick,
         handleRevert,
+        handleCreateBranch,
         handleCopyHash,
         closeContextMenu,
     } = useGitGraphLogic(props);
@@ -81,6 +83,7 @@ export const GitGraphView = memo(function GitGraphView(props: GitGraphViewProps)
                     y={contextMenu.y}
                     onCherryPick={() => handleCherryPick(contextMenu.hash)}
                     onRevert={() => handleRevert(contextMenu.hash)}
+                    onCreateBranch={() => handleCreateBranch(contextMenu.hash)}
                     onCopyHash={() => handleCopyHash(contextMenu.hash)}
                     onClose={closeContextMenu}
                 />
