@@ -70,4 +70,28 @@ export class Config {
     static getAutoRefreshInterval(): number {
         return this.get('autoRefreshInterval', 5000);
     }
+
+    /**
+     * 获取文件监听防抖延迟（毫秒）
+     */
+    static getFileWatcherDebounceDelay(): number {
+        return this.get('fileWatcherDebounceDelay', 300);
+    }
+
+    /**
+     * 获取文件监听忽略的目录模式
+     */
+    static getFileWatcherIgnorePatterns(): string[] {
+        return this.get('fileWatcherIgnorePatterns', [
+            'node_modules',
+            '.git',
+            'dist',
+            'build',
+            '.vscode',
+            'coverage',
+            'out',
+            '.next',
+            '.nuxt'
+        ]);
+    }
 }

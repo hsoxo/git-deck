@@ -246,6 +246,31 @@
                     "minimum": 1000,
                     "maximum": 60000,
                     "description": "Auto refresh interval in milliseconds"
+                },
+                "gitGui.fileWatcherDebounceDelay": {
+                    "type": "number",
+                    "default": 300,
+                    "minimum": 100,
+                    "maximum": 2000,
+                    "description": "Debounce delay for file watcher in milliseconds (lower = more responsive, higher = better performance)"
+                },
+                "gitGui.fileWatcherIgnorePatterns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "node_modules",
+                        ".git",
+                        "dist",
+                        "build",
+                        ".vscode",
+                        "coverage",
+                        "out",
+                        ".next",
+                        ".nuxt"
+                    ],
+                    "description": "Directory patterns to ignore in file watcher"
                 }
             }
         }

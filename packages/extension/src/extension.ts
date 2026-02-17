@@ -30,17 +30,37 @@ export function activate(context: vscode.ExtensionContext) {
     let changesTreeProvider: ChangesTreeProvider | undefined;
     let commitView: CommitView | undefined;
 
+    // 创建防抖刷新函数
+    let refreshTimer: NodeJS.Timeout | undefined;
+    const DEBOUNCE_DELAY = Config.getFileWatcherDebounceDelay();
+
+    const debouncedRefreshAllViews = () => {
+        if (refreshTimer) {
+            clearTimeout(refreshTimer);
+        }
+        refreshTimer = setTimeout(() => {
+            changesTreeProvider?.refresh();
+            commitView?.refresh();
+            GitGuiPanel.refresh();
+            refreshTimer = undefined;
+        }, DEBOUNCE_DELAY);
+    };
+
+    // 立即刷新（用于用户主动触发的操作）
+    const immediateRefreshAllViews = () => {
+        if (refreshTimer) {
+            clearTimeout(refreshTimer);
+            refreshTimer = undefined;
+        }
+        changesTreeProvider?.refresh();
+        commitView?.refresh();
+        GitGuiPanel.refresh();
+    };
+
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
     if (workspaceFolder) {
         try {
             gitService = new GitService(workspaceFolder.uri.fsPath);
-
-            // Refresh function for all views
-            const refreshAllViews = () => {
-                changesTreeProvider?.refresh();
-                commitView?.refresh();
-                GitGuiPanel.refresh();
-            };
 
             changesTreeProvider = new ChangesTreeProvider(gitService);
             context.subscriptions.push(
@@ -48,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
             );
 
             // Register commit view
-            commitView = new CommitView(context.extensionUri, gitService, refreshAllViews);
+            commitView = new CommitView(context.extensionUri, gitService, immediateRefreshAllViews);
             context.subscriptions.push(
                 vscode.window.registerWebviewViewProvider(
                     CommitView.viewType,
@@ -56,20 +76,56 @@ export function activate(context: vscode.ExtensionContext) {
                 )
             );
 
-            // 监听文件变化
+            // 监听文件变化 - 使用防抖优化性能
             const fileWatcher = vscode.workspace.createFileSystemWatcher('**/*');
 
-            const refreshChanges = () => {
-                refreshAllViews();
+            // 过滤不需要监听的文件
+            const ignorePatterns = Config.getFileWatcherIgnorePatterns();
+            const shouldIgnoreFile = (uri: vscode.Uri): boolean => {
+                const path = uri.fsPath;
+                // 检查路径是否包含任何忽略模式
+                return ignorePatterns.some(pattern =>
+                    path.includes(`/${pattern}/`) ||
+                    path.includes(`\\${pattern}\\`) ||
+                    path.endsWith(`/${pattern}`) ||
+                    path.endsWith(`\\${pattern}`)
+                );
             };
 
-            fileWatcher.onDidChange(refreshChanges);
-            fileWatcher.onDidCreate(refreshChanges);
-            fileWatcher.onDidDelete(refreshChanges);
+            fileWatcher.onDidChange((uri) => {
+                if (!shouldIgnoreFile(uri)) {
+                    debouncedRefreshAllViews();
+                }
+            });
+
+            fileWatcher.onDidCreate((uri) => {
+                if (!shouldIgnoreFile(uri)) {
+                    debouncedRefreshAllViews();
+                }
+            });
+
+            fileWatcher.onDidDelete((uri) => {
+                if (!shouldIgnoreFile(uri)) {
+                    debouncedRefresh();
+                }
+            });
+
+            fileWatcher.onDidDelete((uri) => {
+                if (!shouldIgnoreFile(uri)) {
+                    debouncedRefreshAllViews();
+                }
+            });
 
             context.subscriptions.push(fileWatcher);
+            context.subscriptions.push({
+                dispose: () => {
+                    if (refreshTimer) {
+                        clearTimeout(refreshTimer);
+                    }
+                }
+            });
 
-            logger.info('Changes tree view and commit view registered with file watcher');
+            logger.info('Changes tree view and commit view registered with debounced file watcher');
         } catch (error) {
             logger.error('Failed to initialize Git service', error);
         }
@@ -104,8 +160,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('gitGui.refresh', () => {
             logger.debug('Refresh command triggered');
-            GitGuiPanel.refresh();
-            changesTreeProvider?.refresh();
+            immediateRefreshAllViews();
         })
     );
 
@@ -122,8 +177,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (gitService && item.filePath) {
                 try {
                     await gitService.stageFiles([item.filePath]);
-                    changesTreeProvider?.refresh();
-                    GitGuiPanel.refresh();
+                    immediateRefreshAllViews();
                 } catch (error) {
                     logger.error('Failed to stage file', error);
                     vscode.window.showErrorMessage(`Failed to stage file: ${error}`);
@@ -137,8 +191,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (gitService && item.filePath) {
                 try {
                     await gitService.unstageFiles([item.filePath]);
-                    changesTreeProvider?.refresh();
-                    GitGuiPanel.refresh();
+                    immediateRefreshAllViews();
                 } catch (error) {
                     logger.error('Failed to unstage file', error);
                     vscode.window.showErrorMessage(`Failed to unstage file: ${error}`);
@@ -155,8 +208,7 @@ export function activate(context: vscode.ExtensionContext) {
                     const allFiles = [...status.unstaged, ...status.untracked];
                     if (allFiles.length > 0) {
                         await gitService.stageFiles(allFiles);
-                        changesTreeProvider?.refresh();
-                        GitGuiPanel.refresh();
+                        immediateRefreshAllViews();
                     }
                 } catch (error) {
                     logger.error('Failed to stage all', error);
@@ -173,8 +225,7 @@ export function activate(context: vscode.ExtensionContext) {
                     const status = await gitService.getStatus();
                     if (status.staged.length > 0) {
                         await gitService.unstageFiles(status.staged);
-                        changesTreeProvider?.refresh();
-                        GitGuiPanel.refresh();
+                        immediateRefreshAllViews();
                     }
                 } catch (error) {
                     logger.error('Failed to unstage all', error);
@@ -245,8 +296,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if (answer === 'Discard') {
                     try {
                         await gitService.discardChanges([item.filePath]);
-                        changesTreeProvider?.refresh();
-                        GitGuiPanel.refresh();
+                        immediateRefreshAllViews();
                     } catch (error) {
                         logger.error('Failed to discard changes', error);
                         vscode.window.showErrorMessage(`Failed to discard changes: ${error}`);
@@ -283,8 +333,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 if (message) {
                     await gitService.commit(message);
-                    changesTreeProvider?.refresh();
-                    GitGuiPanel.refresh();
+                    immediateRefreshAllViews();
                     vscode.window.showInformationMessage(`Committed: ${message}`);
                 }
             } catch (error) {
@@ -321,8 +370,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 if (message) {
                     await gitService.amendCommit(message);
-                    changesTreeProvider?.refresh();
-                    GitGuiPanel.refresh();
+                    immediateRefreshAllViews();
                     vscode.window.showInformationMessage(`Amended commit: ${message}`);
                 }
             } catch (error) {
