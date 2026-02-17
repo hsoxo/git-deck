@@ -1,9 +1,9 @@
 {
-    "name": "git-gui",
-    "displayName": "Git GUI",
+    "name": "git-deck",
+    "displayName": "Git Deck",
     "description": "Visual Git GUI for VS Code",
-    "version": "0.1.0",
-    "publisher": "git-gui",
+    "version": "0.0.1",
+    "publisher": "HHeBy",
     "author": {
         "name": "HHe"
     },
