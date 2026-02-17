@@ -1,21 +1,26 @@
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
 import { r as reactExports, j as jsxRuntimeExports, c as client, R as React } from "./vendor-cwqlfVzE.js";
-function getVsCodeApi() {
+let vscodeApi = null;
+if (typeof window !== "undefined") {
   if (window.__vscodeApi) {
-    return window.__vscodeApi;
-  }
-  const acquireVsCodeApi = window.acquireVsCodeApi;
-  if (acquireVsCodeApi) {
+    vscodeApi = window.__vscodeApi;
+  } else if (window.acquireVsCodeApi) {
     try {
-      window.__vscodeApi = acquireVsCodeApi();
+      vscodeApi = window.acquireVsCodeApi();
+      window.__vscodeApi = vscodeApi;
     } catch (error) {
-      console.warn("[vscodeApi] Failed to acquire, checking if already available:", error);
-      if (window.__vscodeApi) {
-        return window.__vscodeApi;
-      }
-      throw error;
+      console.warn("[vscodeApi] API already acquired, using cached version");
+      vscodeApi = window.__vscodeApi;
     }
   }
-  return window.__vscodeApi;
+}
+function getVsCodeApi() {
+  return vscodeApi;
 }
 const GitGraphToolbar = reactExports.memo(function GitGraphToolbar2({
   branches,
@@ -47,12 +52,16 @@ const GitGraphToolbar = reactExports.memo(function GitGraphToolbar2({
   ] });
 });
 const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
-  commit,
+  graphCommit,
   currentBranch,
   onContextMenu,
-  style
+  style,
+  columnWidth,
+  rowHeight,
+  dotRadius
 }) {
-  var _a;
+  var _a, _b;
+  const { commit, x, columns } = graphCommit;
   const branches = [];
   const tags = [];
   (_a = commit.refs) == null ? void 0 : _a.forEach((ref) => {
@@ -66,10 +75,13 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
   const isCurrentBranch = branches.some(
     (b) => b.includes(`HEAD -> ${currentBranch}`) || b === currentBranch
   );
-  const graphDisplay = commit.graph || "* ";
   const handleContextMenu = reactExports.useCallback((e) => {
     onContextMenu(e, commit.hash);
   }, [onContextMenu, commit.hash]);
+  const svgWidth = Math.max(columns.length * columnWidth, (x + 1) * columnWidth);
+  const dotX = x * columnWidth + columnWidth / 2;
+  const dotY = rowHeight / 2;
+  const dotColor = ((_b = columns[x]) == null ? void 0 : _b.color) || "#4285f4";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
@@ -78,7 +90,25 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
       onContextMenu: handleContextMenu,
       style,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "graph-column", children: graphDisplay }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "graph-column", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "svg",
+          {
+            width: svgWidth,
+            height: rowHeight,
+            style: { display: "block" },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "circle",
+              {
+                cx: dotX,
+                cy: dotY,
+                r: dotRadius,
+                fill: dotColor,
+                stroke: dotColor,
+                strokeWidth: "2"
+              }
+            )
+          }
+        ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-info", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "commit-refs", children: [
             branches.map((ref, index) => {
@@ -115,20 +145,180 @@ const GitGraphCommitRow = reactExports.memo(function GitGraphCommitRow2({
     }
   );
 });
+const COLORS = [
+  "#4285f4",
+  // 蓝色
+  "#ea4335",
+  // 红色
+  "#fbbc04",
+  // 黄色
+  "#34a853",
+  // 绿色
+  "#ff6d00",
+  // 橙色
+  "#46bdc6",
+  // 青色
+  "#7baaf7",
+  // 浅蓝
+  "#f07b72",
+  // 浅红
+  "#fdd663",
+  // 浅黄
+  "#81c995"
+  // 浅绿
+];
+class GitGraphRenderer {
+  constructor() {
+    __publicField(this, "columnWidth", 20);
+    __publicField(this, "rowHeight", 32);
+    __publicField(this, "dotRadius", 4);
+  }
+  /**
+   * 计算 git graph 的布局
+   */
+  calculateLayout(commits) {
+    const result = [];
+    const columns = /* @__PURE__ */ new Map();
+    const activeColumns = [];
+    for (let i = 0; i < commits.length; i++) {
+      const commit = commits[i];
+      const routes = [];
+      let columnIndex = columns.get(commit.hash);
+      if (columnIndex === void 0) {
+        columnIndex = activeColumns.findIndex((h) => h === null);
+        if (columnIndex === -1) {
+          columnIndex = activeColumns.length;
+          activeColumns.push(commit.hash);
+        } else {
+          activeColumns[columnIndex] = commit.hash;
+        }
+        columns.set(commit.hash, columnIndex);
+      }
+      const currentY = i;
+      const currentX = columnIndex;
+      const color = COLORS[columnIndex % COLORS.length];
+      if (commit.parents && commit.parents.length > 0) {
+        commit.parents.forEach((parentHash, idx) => {
+          let parentColumn = columns.get(parentHash) ?? -1;
+          if (parentColumn === -1) {
+            if (idx === 0) {
+              parentColumn = columnIndex;
+              columns.set(parentHash, parentColumn);
+              activeColumns[parentColumn] = parentHash;
+            } else {
+              const newColumn = activeColumns.findIndex((h) => h === null);
+              if (newColumn === -1) {
+                parentColumn = activeColumns.length;
+                activeColumns.push(parentHash);
+              } else {
+                parentColumn = newColumn;
+                activeColumns[parentColumn] = parentHash;
+              }
+              columns.set(parentHash, parentColumn);
+            }
+          }
+          routes.push({
+            from: { x: currentX, y: currentY },
+            to: { x: parentColumn, y: currentY + 1 },
+            color: idx === 0 ? color : COLORS[parentColumn % COLORS.length]
+          });
+        });
+      }
+      if (!commit.parents || commit.parents.length === 0 || columns.get(commit.parents[0]) !== columnIndex) {
+        activeColumns[columnIndex] = null;
+      }
+      const currentColumns = activeColumns.map((hash, idx) => ({
+        color: COLORS[idx % COLORS.length],
+        branch: hash || void 0
+      }));
+      result.push({
+        commit,
+        x: currentX,
+        columns: currentColumns,
+        routes
+      });
+    }
+    return result;
+  }
+  /**
+   * 生成 SVG 路径
+   */
+  generateSVGPath(route) {
+    const fromX = route.from.x * this.columnWidth + this.columnWidth / 2;
+    const fromY = route.from.y * this.rowHeight + this.rowHeight / 2;
+    const toX = route.to.x * this.columnWidth + this.columnWidth / 2;
+    const toY = route.to.y * this.rowHeight + this.rowHeight / 2;
+    if (route.from.x === route.to.x) {
+      return `M ${fromX} ${fromY} L ${toX} ${toY}`;
+    } else {
+      const controlPointY = fromY + (toY - fromY) / 2;
+      return `M ${fromX} ${fromY} C ${fromX} ${controlPointY}, ${toX} ${controlPointY}, ${toX} ${toY}`;
+    }
+  }
+  getColumnWidth() {
+    return this.columnWidth;
+  }
+  getRowHeight() {
+    return this.rowHeight;
+  }
+  getDotRadius() {
+    return this.dotRadius;
+  }
+}
 const GitGraphCommitList = reactExports.memo(function GitGraphCommitList2({
   commits,
   currentBranch,
   onContextMenu
 }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "git-graph-commit-list", children: commits.map((commit) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-    GitGraphCommitRow,
-    {
-      commit,
-      currentBranch,
-      onContextMenu
-    },
-    commit.hash
-  )) });
+  const renderer = reactExports.useMemo(() => new GitGraphRenderer(), []);
+  const graphCommits = reactExports.useMemo(() => renderer.calculateLayout(commits), [renderer, commits]);
+  const columnWidth = renderer.getColumnWidth();
+  const rowHeight = renderer.getRowHeight();
+  const dotRadius = renderer.getDotRadius();
+  const maxColumns = Math.max(...graphCommits.map((gc) => gc.columns.length), 1);
+  const svgWidth = maxColumns * columnWidth;
+  const svgHeight = graphCommits.length * rowHeight;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "git-graph-commit-list", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "svg",
+      {
+        className: "git-graph-lines",
+        width: svgWidth,
+        height: svgHeight,
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          pointerEvents: "none",
+          zIndex: 0
+        },
+        children: graphCommits.map(
+          (graphCommit, index) => graphCommit.routes.map((route, routeIndex) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "path",
+            {
+              d: renderer.generateSVGPath(route),
+              stroke: route.color,
+              strokeWidth: "2",
+              fill: "none"
+            },
+            `${index}-${routeIndex}`
+          ))
+        )
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { position: "relative", zIndex: 1 }, children: graphCommits.map((graphCommit) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      GitGraphCommitRow,
+      {
+        graphCommit,
+        currentBranch,
+        onContextMenu,
+        columnWidth,
+        rowHeight,
+        dotRadius
+      },
+      graphCommit.commit.hash
+    )) })
+  ] });
 });
 const GitGraphContextMenu = reactExports.memo(function GitGraphContextMenu2({
   x,
@@ -357,7 +547,6 @@ const GitGraphView = reactExports.memo(function GitGraphView2(props) {
     )
   ] });
 });
-getVsCodeApi();
 console.log("[Git Graph] Starting initialization...");
 try {
   const rootElement = document.getElementById("root");

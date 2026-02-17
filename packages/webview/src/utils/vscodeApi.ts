@@ -3,33 +3,30 @@
 declare global {
     interface Window {
         __vscodeApi?: any;
+        acquireVsCodeApi?: () => any;
+    }
+}
+
+// Acquire the API immediately when this module loads (before any React rendering)
+let vscodeApi: any = null;
+
+if (typeof window !== 'undefined') {
+    // Check if already stored
+    if (window.__vscodeApi) {
+        vscodeApi = window.__vscodeApi;
+    } else if (window.acquireVsCodeApi) {
+        // Acquire it once and store it
+        try {
+            vscodeApi = window.acquireVsCodeApi();
+            window.__vscodeApi = vscodeApi;
+        } catch (error) {
+            // Already acquired - this shouldn't happen but handle it gracefully
+            console.warn('[vscodeApi] API already acquired, using cached version');
+            vscodeApi = window.__vscodeApi;
+        }
     }
 }
 
 export function getVsCodeApi() {
-    // Check if we already have the API stored on window
-    if (window.__vscodeApi) {
-        return window.__vscodeApi;
-    }
-
-    // Try to acquire it
-    const acquireVsCodeApi = (window as any).acquireVsCodeApi;
-    if (acquireVsCodeApi) {
-        try {
-            window.__vscodeApi = acquireVsCodeApi();
-        } catch (error) {
-            // If it was already acquired, it might be stored elsewhere
-            // In VS Code, after acquisition, the API is available but acquireVsCodeApi throws
-            console.warn('[vscodeApi] Failed to acquire, checking if already available:', error);
-
-            // The API might already be on window from a previous call
-            if (window.__vscodeApi) {
-                return window.__vscodeApi;
-            }
-
-            throw error;
-        }
-    }
-
-    return window.__vscodeApi;
+    return vscodeApi;
 }

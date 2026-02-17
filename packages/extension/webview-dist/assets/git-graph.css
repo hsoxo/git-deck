@@ -144,6 +144,14 @@
 }.git-graph-commit-list {
     overflow-y: auto;
     flex: 1;
+    position: relative;
+}
+
+.git-graph-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }.git-graph-context-menu {
     position: fixed;
     background: var(--vscode-menu-background);
