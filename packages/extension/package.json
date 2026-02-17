@@ -84,6 +84,11 @@
                 "command": "gitGui.commitAmend",
                 "title": "Commit (Amend)",
                 "icon": "$(edit)"
+            },
+            {
+                "command": "gitGui.openGraph",
+                "title": "Open Git Graph",
+                "icon": "$(git-commit)"
             }
         ],
         "viewsContainers": {
@@ -97,11 +102,6 @@
         },
         "views": {
             "git-gui": [
-                {
-                    "id": "gitGui.welcome",
-                    "name": "Welcome",
-                    "type": "webview"
-                },
                 {
                     "id": "gitGui.commitView",
                     "name": "Commit",
@@ -142,13 +142,13 @@
             ],
             "view/title": [
                 {
-                    "command": "gitGui.open",
-                    "when": "view == gitGui.welcome",
+                    "command": "gitGui.refresh",
+                    "when": "view == gitGui.changes",
                     "group": "navigation"
                 },
                 {
-                    "command": "gitGui.refresh",
-                    "when": "view == gitGui.welcome || view == gitGui.changes",
+                    "command": "gitGui.openGraph",
+                    "when": "view == gitGui.changes",
                     "group": "navigation"
                 },
                 {
@@ -254,7 +254,8 @@
         "build": "tsup",
         "dev": "tsup --watch",
         "prebuild": "npm run build --workspace=@git-gui/webview",
-        "prepackage": "npm run build && cp -r ../webview/dist ./webview-dist",
+        "postbuild": "rm -rf webview-dist && cp -r ../webview/dist ./webview-dist",
+        "prepackage": "npm run build",
         "package": "vsce package --allow-missing-repository --no-dependencies",
         "test": "vitest --run",
         "test:watch": "vitest",

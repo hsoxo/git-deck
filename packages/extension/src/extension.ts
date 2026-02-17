@@ -3,9 +3,9 @@ import { GitService } from './git/GitService';
 import { logger } from './utils/Logger';
 import { Config } from './config/Config';
 import { GitGuiPanel } from './webview/GitGuiPanel';
-import { GitGuiWelcomeView } from './webview/GitGuiWelcomeView';
 import { ChangesTreeProvider } from './views/ChangesTreeProvider';
 import { CommitView } from './views/CommitView';
+import { GitGraphPanel } from './webview/GitGraphPanel';
 
 export function activate(context: vscode.ExtensionContext) {
     // 创建 Output Channel - 使用更明确的名称
@@ -24,15 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
     // Set debug mode based on configuration
     const logLevel = Config.getLogLevel();
     logger.setDebugMode(logLevel === 'debug');
-
-    // 注册欢迎视图（总是注册，即使没有工作区）
-    const welcomeViewProvider = new GitGuiWelcomeView(context.extensionUri);
-    context.subscriptions.push(
-        vscode.window.registerWebviewViewProvider(
-            GitGuiWelcomeView.viewType,
-            welcomeViewProvider
-        )
-    );
 
     // 初始化 Git 服务和 Changes Tree Provider
     let gitService: GitService | undefined;
@@ -337,6 +328,30 @@ export function activate(context: vscode.ExtensionContext) {
             } catch (error) {
                 logger.error('Failed to amend commit', error);
                 vscode.window.showErrorMessage(`Failed to amend commit: ${error}`);
+            }
+        })
+    );
+
+    // Git Graph 命令
+    context.subscriptions.push(
+        vscode.commands.registerCommand('gitGui.openGraph', () => {
+            logger.debug('Open Graph command triggered');
+
+            const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+            if (!workspaceFolder) {
+                vscode.window.showErrorMessage('Git GUI: No workspace folder found. Please open a folder first.');
+                logger.warn('No workspace folder found');
+                return;
+            }
+
+            try {
+                if (!gitService) {
+                    gitService = new GitService(workspaceFolder.uri.fsPath);
+                }
+                GitGraphPanel.createOrShow(context.extensionUri, gitService);
+            } catch (error) {
+                logger.error('Failed to open Git Graph', error);
+                vscode.window.showErrorMessage(`Git GUI: Failed to open Git Graph - ${error}`);
             }
         })
     );

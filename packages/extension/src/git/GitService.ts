@@ -110,6 +110,95 @@ export class GitService {
             throw new Error(ErrorHandler.createUserMessage(error, 'Get log'));
         }
     }
+    async getGraphLog(maxCount: number = 100): Promise<CommitNode[]> {
+        try {
+            logger.debug('Getting git graph log');
+            logger.time('git.graphLog');
+
+            // 使用 --all 获取所有分支，--graph 获取图形信息
+            const result = await this.git.raw([
+                'log',
+                '--all',
+                '--graph',
+                '--pretty=format:%H%n%h%n%P%n%an%n%ae%n%at%n%D%n%s%n%b%n<COMMIT_END>',
+                `--max-count=${maxCount}`
+            ]);
+
+            logger.timeEnd('git.graphLog');
+
+            const commits: CommitNode[] = [];
+            const lines = result.split('\n');
+            let i = 0;
+
+            while (i < lines.length) {
+                const line = lines[i];
+
+                // 跳过空行
+                if (!line.trim()) {
+                    i++;
+                    continue;
+                }
+
+                // 解析图形字符和提交信息
+                const graphMatch = line.match(/^([*|\/\\ ]+)/);
+                const graphChars = graphMatch ? graphMatch[1] : '';
+
+                // 提取提交哈希（去掉图形字符）
+                const hashLine = line.replace(/^[*|\/\\ ]+/, '').trim();
+
+                if (hashLine && hashLine.length === 40) {
+                    // 这是一个提交的开始
+                    const hash = hashLine;
+                    i++;
+
+                    const shortHash = lines[i++]?.trim() || hash.substring(0, 7);
+                    const parents = lines[i++]?.trim().split(' ').filter(p => p) || [];
+                    const author_name = lines[i++]?.trim() || '';
+                    const author_email = lines[i++]?.trim() || '';
+                    const timestamp = lines[i++]?.trim() || '0';
+                    const refs = lines[i++]?.trim() || '';
+                    const message = lines[i++]?.trim() || '';
+
+                    // 读取 body 直到 <COMMIT_END>
+                    let body = '';
+                    while (i < lines.length && !lines[i].includes('<COMMIT_END>')) {
+                        body += lines[i] + '\n';
+                        i++;
+                    }
+                    i++; // 跳过 <COMMIT_END>
+
+                    commits.push({
+                        hash,
+                        shortHash,
+                        message,
+                        author: author_name,
+                        author_name,
+                        email: author_email,
+                        author_email,
+                        date: new Date(parseInt(timestamp) * 1000),
+                        parents,
+                        refs: this.parseRefs(refs),
+                        isHead: false,
+                        graph: graphChars
+                    });
+                } else {
+                    i++;
+                }
+            }
+
+            // 标记 HEAD
+            const headHash = await this.getHeadHash();
+            commits.forEach(commit => {
+                commit.isHead = commit.hash === headHash;
+            });
+
+            logger.debug(`Retrieved ${commits.length} commits with graph`);
+            return commits;
+        } catch (error) {
+            logger.error('Failed to get graph log', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Get graph log'));
+        }
+    }
 
     async stageFiles(files: string[]): Promise<void> {
         try {
@@ -326,6 +415,34 @@ export class GitService {
             throw new Error(ErrorHandler.createUserMessage(error, 'Merge branch'));
         }
     }
+
+    async cherryPick(commits: string[]): Promise<void> {
+        try {
+            logger.debug('Cherry-picking commits', commits);
+            for (const commit of commits) {
+                await this.git.raw(['cherry-pick', commit]);
+            }
+        } catch (error) {
+            logger.error('Failed to cherry-pick', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Cherry-pick'));
+        }
+    }
+
+    async rebase(branch: string, interactive: boolean = false): Promise<void> {
+        try {
+            logger.debug('Rebasing onto branch', { branch, interactive });
+            const args = ['rebase'];
+            if (interactive) {
+                args.push('-i');
+            }
+            args.push(branch);
+            await this.git.raw(args);
+        } catch (error) {
+            logger.error('Failed to rebase', error);
+            throw new Error(ErrorHandler.createUserMessage(error, 'Rebase'));
+        }
+    }
+
 
     private parseRefs(refs: string): string[] {
         if (!refs) {

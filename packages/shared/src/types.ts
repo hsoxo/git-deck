@@ -24,6 +24,9 @@ export interface CommitNode {
     parents: string[];
     refs: string[];
     isHead: boolean;
+    graph?: string;
+    author_name?: string;
+    author_email?: string;
 }
 
 export interface CommitDetails extends CommitNode {

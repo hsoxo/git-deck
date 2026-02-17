@@ -1,0 +1,4 @@
+.git-graph-commit-list {
+    overflow-y: auto;
+    flex: 1;
+}

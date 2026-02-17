@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StagePanel } from './components/Stage/StagePanel';
 import { HistoryPanel } from './components/History/HistoryPanel';
+import { GitGraphView } from './components/GitGraph/GitGraphView';
 import { useGitStore } from './store/gitStore';
 import './App.css';
 
@@ -8,8 +9,24 @@ function App() {
     const { fetchStatus, fetchHistory } = useGitStore();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [view, setView] = useState<'main' | 'graph'>('main');
 
     console.log('[Git GUI App] Component mounted');
+
+    useEffect(() => {
+        // 监听来自扩展的消息，判断显示哪个视图
+        const handleMessage = (event: MessageEvent) => {
+            const message = event.data;
+            if (message.type === 'setView') {
+                setView(message.view);
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        };
+    }, []);
 
     useEffect(() => {
         console.log('[Git GUI App] useEffect triggered for data loading');
@@ -44,8 +61,11 @@ function App() {
             }
         };
 
-        loadData();
-    }, [fetchStatus, fetchHistory]);
+        // 只在主视图加载数据
+        if (view === 'main') {
+            loadData();
+        }
+    }, [fetchStatus, fetchHistory, view]);
 
     // 隐藏初始加载动画
     useEffect(() => {
@@ -57,6 +77,12 @@ function App() {
         }
     }, [loading]);
 
+    // Git Graph 视图
+    if (view === 'graph') {
+        return <GitGraphView />;
+    }
+
+    // 主视图
     if (error) {
         return (
             <div className="app-error">

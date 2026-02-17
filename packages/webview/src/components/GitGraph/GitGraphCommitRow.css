@@ -1,0 +1,93 @@
+.git-graph-commit-row {
+    display: flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    cursor: pointer;
+    min-height: 32px;
+}
+
+.git-graph-commit-row:hover {
+    background: var(--vscode-list-hoverBackground);
+}
+
+.git-graph-commit-row.current-branch {
+    background: var(--vscode-list-inactiveSelectionBackground);
+}
+
+.graph-column {
+    min-width: 120px;
+    flex-shrink: 0;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 32px;
+    color: var(--vscode-gitDecoration-modifiedResourceForeground);
+    white-space: pre;
+    padding-left: 8px;
+}
+
+.commit-info {
+    flex: 1;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.commit-refs {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.branch-label {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    white-space: nowrap;
+}
+
+.branch-label.current {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    font-weight: bold;
+}
+
+.branch-label.remote {
+    background: var(--vscode-gitDecoration-untrackedResourceForeground);
+    color: var(--vscode-editor-background);
+    opacity: 0.8;
+}
+
+.commit-message {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.commit-hash {
+    font-family: var(--vscode-editor-font-family);
+    color: var(--vscode-descriptionForeground);
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.commit-author {
+    color: var(--vscode-descriptionForeground);
+    font-size: 11px;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.commit-date {
+    color: var(--vscode-descriptionForeground);
+    font-size: 11px;
+    width: 140px;
+    flex-shrink: 0;
+}
